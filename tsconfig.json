@@ -22,7 +22,8 @@
     "baseUrl": ".",
     "paths": {
       "@features/*": ["src/features/*"],
-      "@utils/*": ["src/utils/*"]
+      "@common/*": ["src/common/*"],
+      "@utils/*": ["src/utils/*"],
     },
   },
   "include": ["src"],

@@ -8,6 +8,7 @@ interface ITextFieldWithLabelProps {
   name: string;
   value: string;
   placeholder: string;
+  fullWidth?: boolean;
   onChange: (ev: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean | null;
   multiline?: boolean | null;
@@ -18,7 +19,7 @@ interface ITextFieldWithLabelProps {
   helperText?: string | null;
 }
 
-const   TextFieldWithLabel: React.FunctionComponent<ITextFieldWithLabelProps> = ({
+const TextFieldWithLabel: React.FunctionComponent<ITextFieldWithLabelProps> = ({
   label,
   caption,
   id,
@@ -27,6 +28,7 @@ const   TextFieldWithLabel: React.FunctionComponent<ITextFieldWithLabelProps> = 
   placeholder,
   onChange,
   required,
+  fullWidth,
   multiline = false,
   variant,
   size,
@@ -56,7 +58,7 @@ const   TextFieldWithLabel: React.FunctionComponent<ITextFieldWithLabelProps> = 
         multiline={multiline}
         error={error}
         rows={rows}
-        fullWidth
+        fullWidth={fullWidth}
         helperText={helperText}
       />
     </Stack>

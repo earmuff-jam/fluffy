@@ -12,7 +12,7 @@ import {
 
 interface ISimpleModalProps {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   handleClose: () => void;
   maxSize: Breakpoint | undefined;
   showSecondaryButton?: boolean;

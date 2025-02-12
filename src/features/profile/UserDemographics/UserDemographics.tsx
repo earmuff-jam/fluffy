@@ -14,7 +14,7 @@ import { EditRounded } from "@mui/icons-material";
 
 import ImagePicker from "@utils/ImagePicker";
 import { UserDemographicsType } from "@features/profile/types";
-import UserDemographicsRow from "@features/profile/UserDemographicsRow";
+import UserDemographicsRow from "@features/profile/UserDemographics/UserDemographicsRow";
 
 interface IUserDemographicsProps {
   data: UserDemographicsType;

@@ -8,11 +8,11 @@ import type {
 } from "@features/profile/types";
 
 import SimpleModal from "@utils/SimpleModal";
-import UserStatus from "@features/profile/UserStatus";
-import ProfileForm from "@features/profile/ProfileForm";
-import UserDetails from "@features/profile/UserDetails";
-import UserDemographics from "@features/profile/UserDemographics";
-import AppearanceSettings from "@features/profile/AppearanceSettings";
+import UserStatus from "@features/profile/UserStatus/UserStatus";
+import ProfileForm from "@features/profile/ProfileForm/ProfileForm";
+import UserDetails from "@features/profile/UserDetails/UserDetails";
+import UserDemographics from "@features/profile/UserDemographics/UserDemographics";
+import AppearanceSettings from "@features/profile/AppearanceSettings/AppearanceSettings";
 
 const Profile: React.FunctionComponent = () => {
   const theme = useTheme();

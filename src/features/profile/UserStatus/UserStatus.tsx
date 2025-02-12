@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 
-import UserStats from "@features/profile/UserStats";
+import UserStats from "@features/profile/UserStats/UserStats";
 import { ProfileStatsType } from "@features/profile/types";
 
 interface IUserStatusProps {
