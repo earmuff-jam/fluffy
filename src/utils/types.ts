@@ -1,7 +1,7 @@
 // used for variantions between text fields color
 export type TextFieldVariants = "outlined" | "filled" | "standard";
 // used for variants between text field sizes
-export type TextFieldSizeVariants = "small" | "medium" | "large" | string;
+export type TextFieldSizeVariants = "small" | "medium";
 
 // Snackbar content valid types
 export type SnackbarContent = {

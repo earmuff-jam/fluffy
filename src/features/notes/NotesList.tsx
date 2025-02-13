@@ -2,14 +2,11 @@ import * as React from 'react';
 
 import { Stack } from '@mui/material';
 import SimpleModal from '@utils/SimpleModal';
-import NoteHeader from '@features/notes/NoteHeader/NoteHeader';
 import Note from '@features/notes/Note/Note';
 import AddNote from '@features/notes/AddNote/AddNote';
+import NoteHeader from '@features/notes/NoteHeader/NoteHeader';
 
-interface INotesListProps {
-}
-
-const NotesList: React.FunctionComponent<INotesListProps> = (props) => {
+const NotesList: React.FunctionComponent = () => {
     const notes = [];
     const loading = false;
 

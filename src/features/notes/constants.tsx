@@ -1,4 +1,4 @@
-import { TextFieldVariants } from "@utils/types";
+import { TextFieldSizeVariants, TextFieldVariants } from "@utils/types";
 
 interface IGeneralFormFields {
   type: string;
@@ -30,7 +30,7 @@ export const ADD_NOTES_FORM_FIELDS = {
     placeholder: 'Short note title',
     value: '',
     name: 'title',
-    size: 'small',
+    size: 'small' as TextFieldSizeVariants,
     errorMsg: '',
     required: true,
     fullWidth: true,
@@ -51,7 +51,7 @@ export const ADD_NOTES_FORM_FIELDS = {
     placeholder: 'Note description in less than 500 characters',
     value: '',
     name: 'description',
-    size: 'small',
+    size: 'small' as TextFieldSizeVariants,
     errorMsg: '',
     required: false,
     fullWidth: true,
