@@ -1,17 +1,21 @@
-import * as React from 'react';
-import { Button, Stack } from '@mui/material';
-import { AddRounded, CheckCircleRounded } from '@mui/icons-material';
-import dayjs from 'dayjs';
-import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
-import { AddNoteFormFields, LocationType, NoteType } from '@features/notes/types';
-import { ADD_NOTES_FORM_FIELDS } from '@features/notes/constants';
-import AddNoteHeader from '@features/notes/AddNote/AddNoteHeader';
-import CustomSnackbar from '@utils/Snackbar';
-import { SnackbarContent } from '@utils/types';
-import AddNoteStatusOptions from '@features/notes/AddNote/AddNoteStatusOptions';
-import ColorPicker from '@common/ColorPicker/ColorPicker';
-import CustomDatePicker from '@common/CustomDatePicker/CustomDatePicker';
-import LocationPicker from '@common/Location/LocationPicker';
+import * as React from "react";
+import { Button, Stack } from "@mui/material";
+import { AddRounded, CheckCircleRounded } from "@mui/icons-material";
+import dayjs from "dayjs";
+import { STATUS_OPTIONS } from "@common/StatusOptions/constants";
+import {
+  AddNoteFormFields,
+  LocationType,
+  NoteType,
+} from "@features/notes/types";
+import { ADD_NOTES_FORM_FIELDS } from "@features/notes/constants";
+import AddNoteHeader from "@features/notes/AddNote/AddNoteHeader";
+import CustomSnackbar from "@utils/Snackbar";
+import { SnackbarContent } from "@utils/types";
+import AddNoteStatusOptions from "@features/notes/AddNote/AddNoteStatusOptions";
+import ColorPicker from "@common/ColorPicker/ColorPicker";
+import CustomDatePicker from "@common/CustomDatePicker/CustomDatePicker";
+import LocationPicker from "@common/Location/LocationPicker";
 
 interface IAddNoteProps {
   noteID: string;
@@ -20,14 +24,23 @@ interface IAddNoteProps {
   setSelectedNoteID: (value: string | null) => void;
 }
 
-const AddNote: React.FunctionComponent<IAddNoteProps> = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
-
-  const [planColor, setPlanColor] = React.useState<string>('#f7f7f7');
-  const [location, setLocation] = React.useState<LocationType>({ lat: 0, lon: 0 });
+const AddNote: React.FunctionComponent<IAddNoteProps> = ({
+  setEditMode,
+  setSelectedNoteID,
+  noteID,
+  notes,
+}) => {
+  const [planColor, setPlanColor] = React.useState<string>("#f7f7f7");
+  const [location, setLocation] = React.useState<LocationType>({
+    lat: 0,
+    lon: 0,
+  });
 
   const [status, setStatus] = React.useState(STATUS_OPTIONS[0].label);
   const [completionDate, setCompletionDate] = React.useState(dayjs());
-  const [formFields, setFormFields] = React.useState<AddNoteFormFields>(ADD_NOTES_FORM_FIELDS);
+  const [formFields, setFormFields] = React.useState<AddNoteFormFields>(
+    ADD_NOTES_FORM_FIELDS
+  );
 
   const [snackbarContent, setSnackbarContent] = React.useState<SnackbarContent>(
     {
@@ -51,7 +64,7 @@ const AddNote: React.FunctionComponent<IAddNoteProps> = ({ setEditMode, setSelec
       [name]: {
         ...formFields[name],
         value: value,
-        errorMsg: '',
+        errorMsg: "",
       },
     });
     for (const validator of updatedFormFields[name].validators) {
@@ -65,19 +78,23 @@ const AddNote: React.FunctionComponent<IAddNoteProps> = ({ setEditMode, setSelec
 
   const isDisabled = () => {
     const containsErr = Object.values(formFields).some((el) => el.errorMsg);
-    const requiredFormFields = Object.values(formFields).filter((v) => v.required);
-    const isRequiredFieldsEmpty = requiredFormFields.some((el) => el.value.trim() === '');
+    const requiredFormFields = Object.values(formFields).filter(
+      (v) => v.required
+    );
+    const isRequiredFieldsEmpty = requiredFormFields.some(
+      (el) => el.value.trim() === ""
+    );
 
     return (
       containsErr ||
       isRequiredFieldsEmpty ||
       !dayjs(completionDate).isValid() ||
-      !dayjs(completionDate).isAfter(dayjs().add(-1, 'day'))
+      !dayjs(completionDate).isAfter(dayjs().add(-1, "day"))
     );
   };
 
   const submit = () => {
-    const userID = localStorage.getItem('userID');
+    const userID = localStorage.getItem("userID");
 
     if (isDisabled()) {
       setSnackbarContent({
@@ -90,7 +107,7 @@ const AddNote: React.FunctionComponent<IAddNoteProps> = ({ setEditMode, setSelec
 
     const formattedNotes = Object.values(formFields).reduce((acc, el) => {
       if (el.value) {
-        acc['noteID'] = noteID;
+        acc["noteID"] = noteID;
         acc[el.name] = el.value;
       }
       return acc;
@@ -113,12 +130,14 @@ const AddNote: React.FunctionComponent<IAddNoteProps> = ({ setEditMode, setSelec
 
     setEditMode(false);
     setSelectedNoteID(null);
-    setPlanColor('#f7f7f7');
+    setPlanColor("#f7f7f7");
     setStatus(STATUS_OPTIONS[0].label);
     setFormFields(ADD_NOTES_FORM_FIELDS);
     setSnackbarContent({
       open: true,
-      message: noteID ? 'Successfully updated existing item.' : 'Successfully added new item.',
+      message: noteID
+        ? "Successfully updated existing item."
+        : "Successfully added new item.",
       severity: "success",
     });
   };
@@ -130,11 +149,11 @@ const AddNote: React.FunctionComponent<IAddNoteProps> = ({ setEditMode, setSelec
       const updatedFormFields = Object.assign({}, formFields, {
         title: {
           ...formFields.title,
-          value: draftNote?.title || '',
+          value: draftNote?.title || "",
         },
         description: {
           ...formFields.description,
-          value: draftNote?.description || '',
+          value: draftNote?.description || "",
         },
       });
 
@@ -149,32 +168,48 @@ const AddNote: React.FunctionComponent<IAddNoteProps> = ({ setEditMode, setSelec
     } else {
       setFormFields(ADD_NOTES_FORM_FIELDS);
       setStatus(STATUS_OPTIONS[0].label);
-      setPlanColor('#f7f7f7');
+      setPlanColor("#f7f7f7");
     }
   }, [noteID]);
 
   return (
     <Stack spacing={1}>
-      <AddNoteHeader formFields={formFields} handleInput={handleInput} setLocation={setLocation} />
-      <AddNoteStatusOptions label="Selected status" name="status" value={status} handleStatus={handleStatus} />
-      <ColorPicker label="Assign Color" value={planColor} handleChange={handleColorChange} />
+      <AddNoteHeader
+        formFields={formFields}
+        handleInput={handleInput}
+        setLocation={setLocation}
+      />
+      <AddNoteStatusOptions
+        label="Selected status"
+        name="status"
+        value={status}
+        handleStatus={handleStatus}
+      />
+      <ColorPicker
+        label="Assign Color"
+        value={planColor}
+        handleChange={handleColorChange}
+      />
       <CustomDatePicker
         label="Assign estimated completion date"
         completionDate={completionDate}
         setCompletionDate={setCompletionDate}
       />
-      {
-        location?.lat ? (
-          <LocationPicker subtitle="Select location" location={location} onLocationChange={setLocation} editMode={true} />
-        ) : null
-      }
+      {location?.lat ? (
+        <LocationPicker
+          subtitle="Select location"
+          location={location}
+          onLocationChange={setLocation}
+          editMode={true}
+        />
+      ) : null}
       <Button
         onClick={submit}
         variant="outlined"
         disabled={isDisabled()}
         startIcon={noteID ? <CheckCircleRounded /> : <AddRounded />}
       >
-        {noteID ? 'Save' : 'Add'}
+        {noteID ? "Save" : "Add"}
       </Button>
       <CustomSnackbar
         open={snackbarContent.open}
