@@ -4,9 +4,10 @@ import { InputAdornment, Stack, TextField, Typography } from "@mui/material";
 import RetrieveUserLocation from "@common/Location/RetrieveUserLocation";
 import TextFieldWithLabel from "@utils/TextFieldWithLabel";
 import { LocationType } from "@features/notes/types";
+import { AddCategoryFormFields } from "@features/categories/types";
 
 interface IAddFormHeaderProps {
-  formFields: Array;
+  formFields: AddCategoryFormFields;
   handleInputChange: (ev: React.ChangeEvent<HTMLInputElement>) => void;
   setLocation: (value: LocationType) => void;
 }
@@ -22,7 +23,7 @@ const AddFormHeader: React.FunctionComponent<IAddFormHeaderProps> = ({
         {formFields.name.label} {formFields.name.required && "*"}
       </Typography>
       <TextField
-        id={formFields.name.id}
+        id={formFields.name.name}
         name={formFields.name.name}
         value={formFields.name.value}
         onChange={handleInputChange}

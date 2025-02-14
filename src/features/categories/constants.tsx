@@ -1,16 +1,19 @@
+import { TextFieldVariants } from "@mui/material";
+import { TextFieldSizeVariants } from "@utils/types";
+
 const GENERIC_FORM_FIELDS = {
   type: "text",
-  variant: "outlined",
-  size: "small",
+  variant: "outlined" as TextFieldVariants,
+  size: "small" as TextFieldSizeVariants,
 };
 
 const GENERIC_TEXTAREA_VARIANT = {
   type: "text",
   multiline: true,
   rows: 4,
-  variant: "outlined",
+  variant: "outlined" as TextFieldVariants,
   fullWidth: true,
-  size: "small",
+  size: "small" as TextFieldSizeVariants,
 };
 
 export const ADD_CATEGORY_FORM_FIELDS = {
@@ -20,6 +23,7 @@ export const ADD_CATEGORY_FORM_FIELDS = {
     placeholder: "Short category title",
     value: "",
     errorMsg: "",
+    size: "small",
     required: true,
     fullWidth: true,
     validators: [

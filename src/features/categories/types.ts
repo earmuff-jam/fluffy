@@ -1,4 +1,5 @@
 import { LocationType } from "@features/notes/types";
+import { FormField } from "@utils/types";
 
 export type CategoryType = {
   id: string;
@@ -18,3 +19,8 @@ export type CategoryType = {
   updated_by: string;
   sharable_groups: string[];
 };
+
+export type AddCategoryFormFields = {
+  name: FormField;
+  description: FormField;
+}

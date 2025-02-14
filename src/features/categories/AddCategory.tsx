@@ -10,7 +10,7 @@ import CustomSnackbar from "@utils/Snackbar";
 import { ADD_CATEGORY_FORM_FIELDS } from "@features/categories/constants";
 import AddFormHeader from "@common/FormComponents/AddFormHeader";
 import StatusOptions from "@common/StatusOptions/StatusOptions";
-import { CategoryType } from "@features/categories/types";
+import { AddCategoryFormFields, CategoryType } from "@features/categories/types";
 
 interface IAddCategoryProps {
   categories: Array<CategoryType>;
@@ -29,7 +29,7 @@ const AddCategory: React.FunctionComponent<IAddCategoryProps> = ({
 }) => {
   const [planColor, setPlanColor] = React.useState<string>("#f7f7f7");
   const [status, setStatus] = React.useState<string>(STATUS_OPTIONS[0].label);
-  const [formFields, setFormFields] = React.useState(ADD_CATEGORY_FORM_FIELDS);
+  const [formFields, setFormFields] = React.useState<AddCategoryFormFields>(ADD_CATEGORY_FORM_FIELDS);
   const [location, setLocation] = React.useState<LocationType>({
     lat: 0,
     lon: 0,
