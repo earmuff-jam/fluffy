@@ -3,8 +3,8 @@ import * as React from "react";
 import { InputAdornment, Stack, TextField, Typography } from "@mui/material";
 import RetrieveUserLocation from "@common/Location/RetrieveUserLocation";
 import TextFieldWithLabel from "@utils/TextFieldWithLabel";
-import { LocationType } from "@features/notes/types";
 import { AddCategoryFormFields } from "@features/categories/types";
+import { LocationType } from "@utils/types";
 
 interface IAddFormHeaderProps {
   formFields: AddCategoryFormFields;

@@ -15,7 +15,7 @@ interface IImagePickerProps {
   id: string;
   name: string;
   handleUpload: (id: string, selectedImage: File) => void;
-  handleCancel: () => void;
+  handleCancel?: () => void;
   disableCancel?: boolean;
 }
 

@@ -3,6 +3,19 @@ export type TextFieldVariants = "outlined" | "filled" | "standard";
 // used for variants between text field sizes
 export type TextFieldSizeVariants = "small" | "medium";
 
+// Location type for geom point
+export type LocationType = {
+  lat: number;
+  lon: number;
+};
+
+// Collaborators and users in sharable groups
+export type Collaborator = {
+  display: string; // profile email
+  value: string; // profile.id
+  label: string; // profile email
+};
+
 // Snackbar content valid types
 export type SnackbarContent = {
   open: boolean;

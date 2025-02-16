@@ -1,13 +1,8 @@
-import { FormField } from "@utils/types";
+import { FormField, LocationType } from "@utils/types";
 
 export type AddNoteFormFields = {
   title: FormField;
   description: FormField;
-};
-
-export type LocationType = {
-  lat: number;
-  lon: number;
 };
 
 export type NoteType = {
