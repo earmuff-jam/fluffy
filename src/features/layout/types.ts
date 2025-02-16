@@ -18,3 +18,14 @@ export type FavouriteItem = {
   maintenance_plan_name?: string;
   maintenance_plan_id?: string;
 };
+
+// ToolbarPopoverContentOptions...
+//
+// used to build the popover content options
+// for maintenance plan
+export type ToolbarPopoverContentOptions = {
+  id: string;
+  name: string;
+  is_read: boolean;
+  plan_due: string;
+};

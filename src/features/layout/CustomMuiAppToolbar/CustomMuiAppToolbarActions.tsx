@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Badge, IconButton, Stack } from '@mui/material';
 import { CircleNotifications } from '@mui/icons-material';
 import { UserDemographicsType } from '@features/profile/types';
+import AppToolbarMoreButtons from '@features/layout/CustomMuiAppToolbar/AppToolBarMoreButtons';
+import AppToolbarPopoverContent from '@features/layout/CustomMuiAppToolbar/AppToolbarPopoverContent';
 
 
 interface ICustomMuiAppToolbarActionsProps {
@@ -37,8 +39,8 @@ const CustomMuiAppToolbarActions: React.FunctionComponent<ICustomMuiAppToolbarAc
                 >
                     <CircleNotifications />
                 </Badge>
-            </IconButton>
-            <AppToolBarMoreButtons profileDetails={profileDetails} />
+            </IconButton> 
+            <AppToolbarMoreButtons profileDetails={profileDetails} />
             <AppToolbarPopoverContent
                 loading={loading}
                 anchorEl={anchorEl}

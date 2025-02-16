@@ -1,7 +1,12 @@
 // used for variantions between text fields color
-export type TextFieldVariants = "outlined" | "filled" | "standard";
+export type TextFieldVariants = 'outlined' | 'filled' | 'standard';
 // used for variants between text field sizes
-export type TextFieldSizeVariants = "small" | "medium";
+export type TextFieldSizeVariants = 'small' | 'medium';
+
+// used for the tour component
+export type TourStepsType = {
+  title: string;
+};
 
 // Location type for geom point
 export type LocationType = {
@@ -37,7 +42,7 @@ export type Collaborator = {
 export type SnackbarContent = {
   open: boolean;
   message: string | null;
-  severity: "success" | "error" | "info" | "warning";
+  severity: 'success' | 'error' | 'info' | 'warning';
 };
 
 // validator type

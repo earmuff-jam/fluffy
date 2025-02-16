@@ -1,4 +1,6 @@
-import { NoteType } from "@features/notes/types";
+import { NoteType } from '@features/notes/types';
+import { useTour } from '@reactour/tour';
+import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/TourSteps';
 
 /**
  * Takes array of notes and transforms them into objects categorized by the date and time
@@ -17,22 +19,20 @@ export const categorizeNotes = (notes: Array<NoteType>): Array<NoteType> => {
 
   const categorizedNotes = notes.reduce((acc, item) => {
     const updatedTime = new Date(item.updated_at).getTime();
-    const differenceInDays = Math.floor(
-      (currentTime - updatedTime) / (1000 * 3600 * 24)
-    );
+    const differenceInDays = Math.floor((currentTime - updatedTime) / (1000 * 3600 * 24));
 
     let category: string;
     let color: string;
 
     if (differenceInDays <= 7) {
-      category = "Recently Edited";
-      color = "primary";
+      category = 'Recently Edited';
+      color = 'primary';
     } else if (differenceInDays <= 14) {
-      category = "Edited within last week";
-      color = "secondary";
+      category = 'Edited within last week';
+      color = 'secondary';
     } else {
-      category = "Edited couple of months ago";
-      color = "default";
+      category = 'Edited couple of months ago';
+      color = 'default';
     }
 
     if (!acc[category]) {
@@ -61,10 +61,7 @@ export const categorizeNotes = (notes: Array<NoteType>): Array<NoteType> => {
  * Function used to pluralize the selected word. If the word does not exist, it will
  * ignore the word. Eg, ('Dog', 2) -> 2 dogs, ('', 2) -> 2
  */
-export const pluralizeWord = (
-  stringToEdit: string = "",
-  size: number
-): string => {
+export const pluralizeWord = (stringToEdit: string = '', size: number): string => {
   if (!stringToEdit) {
     return `${size}`;
   }
@@ -73,4 +70,24 @@ export const pluralizeWord = (
   } else {
     return `${size} ${stringToEdit}s`;
   }
+};
+
+// setTour function is used to setup tour in the application.
+// helps users with the usage of the app.
+export const setTour = (id: string, uri: string) => {
+  const { setIsOpen, setCurrentStep, setSteps } = useTour();
+
+  // let uri = location.pathname;
+  if (id && uri.includes('/category/')) {
+    uri = '/category/id';
+  }
+  if (id && uri.includes('/plan/')) {
+    uri = '/plan/id';
+  }
+
+  const currentStep = DEFAULT_STEP_MAPPER[uri];
+  const formattedSteps = DEFAULT_TOUR_STEPS.slice(currentStep.start, currentStep.end);
+  setIsOpen(true);
+  setCurrentStep(0);
+  setSteps(formattedSteps);
 };

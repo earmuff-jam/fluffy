@@ -30,10 +30,22 @@ const AppLayout: React.FunctionComponent<IAppLayoutProps> = (props) => {
     const smScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('sm'));
     const lgScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('lg'));
 
-    const profileDetails: UserDemographicsType = {};
+    const profileDetails: UserDemographicsType = {
+        id: '',
+        full_name: "",
+        email_address: "",
+        about_me: "",
+        is_dark_theme: false,
+        is_inventory_layout: false,
+        online_status: false,
+        phone_number: '',
+        username: '',
+        created_at: '',
+        updated_at: ''
+    };
     const loading = false;
-
-    const [openDrawer, setOpenDrawer] = React.useState(lgScreenSizeAndHigher ? true : false);
+    
+    const [openDrawer, setOpenDrawer] = React.useState<boolean>(lgScreenSizeAndHigher ? true : false);
 
     const handleDrawerOpen = () => setOpenDrawer(true);
     const handleDrawerClose = () => setOpenDrawer(false);

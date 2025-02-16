@@ -1,52 +1,22 @@
-import type { Schema } from "../amplify/data/resource";
+import * as React from 'react';
+import { TourProvider } from '@reactour/tour';
+import DEFAULT_TOUR_STEPS from '@utils/TourSteps';
+import { router } from '@utils/Router';
+import { RouterProvider } from 'react-router-dom';
 
-import { generateClient } from "aws-amplify/data";
-import { useAuthenticator } from "@aws-amplify/ui-react";
-import { Stack } from "@mui/material";
-
-const client = generateClient<Schema>();
-
-function App() {
-  //   const { user, signOut } = useAuthenticator();
-
-  //   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-
-  //   function deleteTodo(id: string) {
-  //     client.models.Todo.delete({ id })
-  //   }
-
-  //   useEffect(() => {
-  //     client.models.Todo.observeQuery().subscribe({
-  //       next: (data) => setTodos([...data.items]),
-  //     });
-  //   }, []);
-
-  //   function createTodo() {
-  //     client.models.Todo.create({ content: window.prompt("Todo content") });
-  //   }
+const App: React.FC = () => {
 
   return (
-    <Stack>Welcome to Climate. Asset management made easy.</Stack>
-    // <main>
-    //   <button onClick={signOut}>Sign out</button>
-    //   <h1>{user?.signInDetails?.loginId}'s todo</h1>
-    //   <button onClick={createTodo}>+ new</button>
-    //   <ul>
-    //     {todos.map((todo) => (
-    //       <li key={todo.id}
-
-    //         onClick={() => deleteTodo(todo.id)}>{todo.content}</li>
-    //     ))}
-    //   </ul>
-    //   <div>
-    //     🥳 App successfully hosted. Try creating a new todo.
-    //     <br />
-    //     <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-    //       Review next step of this tutorial.
-    //     </a>
-    //   </div>
-    // </main>
-  );
-}
+    <TourProvider steps={DEFAULT_TOUR_STEPS}>
+      <React.Suspense
+        fallback={
+          <div>Loading...</div>
+        }
+      >
+        <RouterProvider router={router} />
+      </React.Suspense>
+    </TourProvider>
+  )
+};
 
 export default App;

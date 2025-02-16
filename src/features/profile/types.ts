@@ -13,6 +13,7 @@ export type UserDemographicsType = {
   about_me: string;
   online_status: boolean;
   is_dark_theme: boolean;
+  appearance?: boolean;
   is_inventory_layout: boolean;
   created_at?: string;
   updated_at?: string;
