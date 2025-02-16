@@ -1,14 +1,15 @@
 import * as React from "react";
 import { IconButton, Stack, TableCell } from "@mui/material";
 import { EditRounded, FileOpenRounded } from "@mui/icons-material";
+import { SelectedAssetType } from "@features/categories/types";
 
 interface ICustomMuiTableButtonActionsProps {
-  row: string;
+  row: SelectedAssetType;
   selectedID: string;
   hideIconButton: boolean;
   hideMoreDetailsButton: boolean;
   handleEdit: (id: string) => void;
-  onRowSelect: () => void;
+  onRowSelect: (value: SelectedAssetType) => void;
 }
 
 const CustomMuiTableButtonActions: React.FunctionComponent<

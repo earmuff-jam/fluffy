@@ -9,6 +9,23 @@ export type LocationType = {
   lon: number;
 };
 
+// AssetListColumnHeader obj
+export type AssetListColumnHeader = {
+  id: number;
+  colName: string;
+  label: string;
+  displayConcise: boolean;
+  modifier: (value: any) => JSX.Element | string;
+};
+
+// AssetType
+export type AssetType = {
+  id: string;
+  name: string;
+  title: string;
+  description: string;
+};
+
 // Collaborators and users in sharable groups
 export type Collaborator = {
   display: string; // profile email

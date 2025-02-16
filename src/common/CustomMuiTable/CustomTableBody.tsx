@@ -3,26 +3,22 @@ import * as React from "react";
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import CustomMuiTableCellCheckbox from "@common/CustomMuiTable/CustomMuiTableCellCheckbox";
 import CustomMuiTableButtonActions from "@common/CustomMuiTable/CustomMuiTableButtonActions";
-
-interface TableColumn {
-  id: string;
-  colName: string;
-  [key: string]: any;
-}
+import { AssetListColumnHeader } from "@utils/types";
+import { SelectedAssetType } from "@features/categories/types";
 
 interface ICustomTableBodyProps {
   data: any[];
-  columns: Record<string, TableColumn>;
+  columns: AssetListColumnHeader[];
   selectedIDList: string[];
   hideCheckBox?: boolean;
   handleRowSelection: (
     ev: React.MouseEvent<HTMLButtonElement>,
     id: string
   ) => void;
-  rowFormatter: (row: any, colName: string, column: TableColumn) => JSX.Element;
+  rowFormatter: (row: SelectedAssetType, colName: string, column: AssetListColumnHeader) => string | JSX.Element;
   showActions?: boolean;
   handleEdit: (row: any) => void;
-  onRowSelect: (row: any) => void;
+  onRowSelect: (value: SelectedAssetType) => void;
   hideIconButton?: boolean;
   hideMoreDetailsButton?: boolean;
 }

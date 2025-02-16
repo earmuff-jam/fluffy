@@ -6,6 +6,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { AssetListColumnHeader } from "@utils/types";
 
 interface ICustomTableHeaderProps {
   selectedIDList: string[];
@@ -14,7 +15,7 @@ interface ICustomTableHeaderProps {
     ev: React.MouseEvent<HTMLButtonElement>,
     type: string
   ) => void;
-  columns: string[];
+  columns: AssetListColumnHeader[];
   showActions: boolean;
 }
 

@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { CheckRounded, CloseRounded } from "@mui/icons-material";
 import QRCodeGen from "@utils/QrCodeGen";
+import { AssetListColumnHeader } from "@utils/types";
 
 dayjs.extend(relativeTime);
 
@@ -100,16 +101,9 @@ export const BUILD_TABLE_CONSTANTS = (columnLabels) => (selectedRow) => {
   return tableRows;
 };
 
-interface AssetListColumnHeader {
-  id: number;
-  colName: string;
-  label: string;
-  displayConcise: boolean;
-  modifier: (value: any) => JSX.Element | string;
-}
 
 /**
- * INVENTORY LIST HEADERS STATIC COMPONENT
+ * ASSET_LIST_TABLE_HEADERS STATIC COMPONENT
  * displayConcise lets users view the column name in bookmarked inventories
  * modifier fn lets the value be modified, for eg date will be modified with this property
  */

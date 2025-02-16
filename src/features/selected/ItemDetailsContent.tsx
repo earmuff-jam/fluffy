@@ -5,11 +5,13 @@ import RowHeader from "@utils/RowHeader";
 import { pluralizeWord } from "@utils/utility";
 import CustomMuiTable from "@common/CustomMuiTable/CustomMuiTable";
 import { ASSET_LIST_TABLE_HEADERS } from "@features/assets/contants";
+import { SelectedAssetType } from "@features/categories/types";
+import { AssetListColumnHeader } from "@utils/types";
 
 interface IItemDetailsContentProps {
   selectedIDList: string[];
   setSelectedIDList: (arrVal: string[]) => void;
-  items: string[];
+  items: Array<SelectedAssetType>;
   handleOpenModal: () => void;
   handleRemoveAssociation: () => void;
   primaryBtnDataTour: string;
@@ -27,7 +29,7 @@ const ItemDetailsContent: React.FunctionComponent<IItemDetailsContentProps> = ({
   secondaryBtnDataTour,
   tableDataTour,
 }) => {
-  const handleRowSelection = (_, id: string): void => {
+  const handleRowSelection = (_: React.MouseEvent<HTMLButtonElement>, id: string): void => {
     if (id === "all") {
       if (selectedIDList.length !== 0) {
         setSelectedIDList([]);
@@ -54,10 +56,10 @@ const ItemDetailsContent: React.FunctionComponent<IItemDetailsContentProps> = ({
   };
 
   const rowFormatter = (
-    row: string[],
+    row: SelectedAssetType,
     columnName: string,
-    columnData: string[]
-  ): string => {
+    columnData: AssetListColumnHeader
+  ): string | JSX.Element => {
     if (columnData.modifier) {
       return columnData.modifier(row[columnName] || "-");
     } else {
@@ -82,15 +84,15 @@ const ItemDetailsContent: React.FunctionComponent<IItemDetailsContentProps> = ({
           secondaryBtnDataTour={secondaryBtnDataTour}
         />
         <CustomMuiTable
-          showActions={false}
           data={items}
-          columns={Object.values(ASSET_LIST_TABLE_HEADERS).filter(
-            (v) => v.displayConcise
-          )}
+          showActions={false}
           rowFormatter={rowFormatter}
           selectedIDList={selectedIDList}
           handleRowSelection={handleRowSelection}
           emptyComponentSubtext="Associate assets."
+          columns={Object.values(ASSET_LIST_TABLE_HEADERS).filter(
+            (v) => v.displayConcise
+          )}
         />
       </Stack>
     </Paper>

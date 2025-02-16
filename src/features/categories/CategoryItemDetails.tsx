@@ -31,8 +31,10 @@ const CategoryItemDetails: React.FunctionComponent = () => {
     updated_by: "",
     sharable_groups: [],
   };
+
+  const itemsInCategory: SelectedAssetType[] = []; 
+  
   const selectedCategoryImage = "";
-  const itemsInCategory = [];
   const loading = false;
 
   const [displayModal, setDisplayModal] = React.useState<boolean>(false);
@@ -40,7 +42,7 @@ const CategoryItemDetails: React.FunctionComponent = () => {
   const [selectedIDList, setSelectedIDList] = React.useState<string[]>([]);
 
   const [openConfirmationBoxModal, setOpenConfirmationBoxModal] =
-    React.useState(false);
+    React.useState<boolean>(false);
 
   const [snackbarContent, setSnackbarContent] = React.useState<SnackbarContent>(
     {

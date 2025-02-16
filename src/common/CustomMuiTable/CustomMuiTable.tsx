@@ -1,15 +1,10 @@
 import CustomTableBody from "@common/CustomMuiTable/CustomTableBody";
 import CustomTableHeader from "@common/CustomMuiTable/CustomTableHeader";
+import { SelectedAssetType } from "@features/categories/types";
 import { Paper, Skeleton, Table, TableContainer } from "@mui/material";
 import EmptyComponent from "@utils/EmptyComponent";
+import { AssetListColumnHeader } from "@utils/types";
 
-interface TableColumn {
-  id: string;
-  label: string;
-  align?: "left" | "center" | "right";
-  width?: string;
-  [key: string]: any;
-}
 
 interface CustomMuiTableProps {
   paper?: boolean;
@@ -18,13 +13,15 @@ interface CustomMuiTableProps {
   hideIconButton?: boolean;
   hideMoreDetailsButton?: boolean;
   isLoading?: boolean;
-  columns: TableColumn[];
+  columns: AssetListColumnHeader[];
   data: any[];
-  rowFormatter: (row: any) => JSX.Element;
+  rowFormatter: (row: SelectedAssetType,
+    columnName: string,
+    columnData: AssetListColumnHeader) => string | JSX.Element;
   selectedIDList: string[];
-  onRowSelect: (id: string) => void;
-  handleRowSelection: (id: string) => void;
-  handleEdit: (id: string) => void;
+  onRowSelect?: (value: SelectedAssetType) => void;
+  handleRowSelection?: (ev: React.MouseEvent<HTMLButtonElement>, id: string) => void;
+  handleEdit?: (id: string) => void;
   emptyComponentSubtext?: string;
   maxHeight?: string;
 }
