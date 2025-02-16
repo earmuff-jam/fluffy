@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Box, Button, Link, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Link,
+  Stack,
+  Typography,
+  TypographyVariant,
+} from "@mui/material";
 
 interface IRowHeaderProps {
   title: string;
@@ -12,17 +19,17 @@ interface IRowHeaderProps {
   primaryStartIcon?: React.ReactElement;
   secondaryButtonTextLabel?: string;
   secondaryStartIcon?: React.ReactElement;
-  secondaryButtonDisabled?: string;
+  secondaryButtonDisabled?: boolean;
   handleClickPrimaryButton?: () => void;
   handleClickSecondaryButton?: () => void;
-  primaryBtnDataTour?: React.ReactElement;
-  secondaryBtnDataTour?: React.ReactElement;
+  primaryBtnDataTour?: string;
+  secondaryBtnDataTour?: string;
   children?: React.ReactElement;
 }
 
 const RowHeader: React.FunctionComponent<IRowHeaderProps> = ({
   title,
-  titleVariant = "h4",
+  titleVariant = "h4" as TypographyVariant,
   caption,
   showRedirectLink,
   redirectTo,
@@ -42,7 +49,7 @@ const RowHeader: React.FunctionComponent<IRowHeaderProps> = ({
     <Box display="flex" justifyContent="space-between" alignItems="center">
       <Stack>
         <Typography
-          variant={titleVariant}
+          variant={titleVariant as TypographyVariant}
           component="h2"
           color="text.secondary"
         >

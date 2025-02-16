@@ -56,3 +56,21 @@ export const categorizeNotes = (notes: Array<NoteType>): Array<NoteType> => {
 
   return Object.values(categorizedNotes);
 };
+
+/**
+ * Function used to pluralize the selected word. If the word does not exist, it will
+ * ignore the word. Eg, ('Dog', 2) -> 2 dogs, ('', 2) -> 2
+ */
+export const pluralizeWord = (
+  stringToEdit: string = "",
+  size: number
+): string => {
+  if (!stringToEdit) {
+    return `${size}`;
+  }
+  if (size <= 1) {
+    return `${size} ${stringToEdit}`;
+  } else {
+    return `${size} ${stringToEdit}s`;
+  }
+};

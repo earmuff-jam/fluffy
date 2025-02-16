@@ -6,12 +6,14 @@ import CustomSnackbar from "@utils/Snackbar";
 import { SnackbarContent } from "@utils/types";
 import SimpleModal from "@utils/SimpleModal";
 import ConfirmationBox from "@utils/ConfirmationBox";
-import ItemDetailsHeader from "@common/ItemDetails/ItemDetailsHeader";
-import { CategoryType } from "@features/categories/types";
+import ItemDetailsHeader from "@features/selected/ItemDetailsHeader";
+import { SelectedAssetType } from "@features/categories/types";
 import { LocationType } from "@utils/types";
+import ItemDetailsContent from "@features/selected/ItemDetailsContent";
+import ItemGraphWrapper from "@features/selected/ItemGraph/ItemGraphWrapper";
 
 const CategoryItemDetails: React.FunctionComponent = () => {
-  const selectedCategory: CategoryType = {
+  const selectedCategory: SelectedAssetType = {
     id: "",
     name: "",
     description: "",
@@ -124,7 +126,7 @@ const CategoryItemDetails: React.FunctionComponent = () => {
         shareBtnDataTour="selected-category-2"
         imageBtnDataTour="selected-category-3"
       />
-      <ItemContent
+      <ItemDetailsContent
         selectedIDList={selectedIDList}
         setSelectedIDList={setSelectedIDList}
         items={itemsInCategory}

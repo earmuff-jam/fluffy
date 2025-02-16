@@ -1,5 +1,5 @@
-import ItemDetailsCard from "@common/ItemDetails/ItemDetailsCard";
-import { CategoryType } from "@features/categories/types";
+import ItemDetailsCard from "@features/selected/ItemDetailsCard";
+import { SelectedAssetType } from "@features/categories/types";
 import RowHeader from "@utils/RowHeader";
 import * as React from "react";
 
@@ -10,7 +10,7 @@ interface IItemDetailsHeaderProps {
   shareBtnDataTour: string;
   label: string;
   caption: string;
-  item: CategoryType;
+  item: SelectedAssetType;
   image: string;
 }
 
