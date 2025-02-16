@@ -11,6 +11,7 @@ import { SelectedAssetType } from "@features/categories/types";
 import { LocationType } from "@utils/types";
 import ItemDetailsContent from "@features/selected/ItemDetailsContent";
 import ItemGraphWrapper from "@features/selected/ItemGraph/ItemGraphWrapper";
+import AddItem from "@common/ItemCard/AddItem";
 
 const CategoryItemDetails: React.FunctionComponent = () => {
   const selectedCategory: SelectedAssetType = {
@@ -155,7 +156,6 @@ const CategoryItemDetails: React.FunctionComponent = () => {
           <AddItem
             selectedIDList={selectedIDList}
             setSelectedIDList={setSelectedIDList}
-            resetSelection={resetSelection}
             associatedItems={itemsInCategory}
           />
         </SimpleModal>
