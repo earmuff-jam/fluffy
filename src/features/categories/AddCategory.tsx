@@ -4,8 +4,7 @@ import { Button, Stack } from "@mui/material";
 import { STATUS_OPTIONS } from "@common/StatusOptions/constants";
 import ColorPicker from "@common/ColorPicker/ColorPicker";
 import LocationPicker from "@common/Location/LocationPicker";
-import { LocationType } from "@features/notes/types";
-import { SnackbarContent } from "@utils/types";
+import { FormField, LocationType, SnackbarContent } from "@utils/types";
 import CustomSnackbar from "@utils/Snackbar";
 import { ADD_CATEGORY_FORM_FIELDS } from "@features/categories/constants";
 import AddFormHeader from "@common/FormComponents/AddFormHeader";
@@ -86,10 +85,10 @@ const AddCategory: React.FunctionComponent<IAddCategoryProps> = ({
     }, false);
 
     const requiredFormFields = Object.values(formFields).filter(
-      (v) => v.required
+      (v: FormField) => v.required
     );
     const isRequiredFieldsEmpty = requiredFormFields.some((el) => {
-      return el.value.trim() === "";
+      return String(el.value).trim() === "";
     });
 
     return containsErr || isRequiredFieldsEmpty;
@@ -109,7 +108,7 @@ const AddCategory: React.FunctionComponent<IAddCategoryProps> = ({
 
     const formattedData = Object.values(formFields).reduce((acc, el) => {
       if (["min_items_limit", "max_items_limit"].includes(el.name)) {
-        acc[el.name] = parseFloat(el.value);
+        acc[el.name] = parseFloat(String(el.value));
       } else if (el.value) {
         acc[el.name] = el.value;
       }

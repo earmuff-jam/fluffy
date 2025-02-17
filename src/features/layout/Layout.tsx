@@ -17,6 +17,7 @@ import LayoutOverheadBanner from '@features/layout/Banner';
 import MenuActionBar from '@features/layout/MenuActionBar/MenuActionBar';
 import { UserDemographicsType } from '@features/profile/types';
 import CustomMuiAppToolbar from '@features/layout/CustomMuiAppToolbar/CustomMuiAppToolbar';
+import { darkTheme, lightTheme } from '@utils/Theme';
 
 
 interface IAppLayoutProps {

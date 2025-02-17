@@ -72,6 +72,15 @@ export const pluralizeWord = (stringToEdit: string = '', size: number): string =
   }
 };
 
+/**
+ * capitalizeFirstLetter function
+ *
+ * used to capitalize the first letter of passed in string
+ */
+export const capitalizeFirstLetter = (value: string): string => {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+};
+
 // setTour function is used to setup tour in the application.
 // helps users with the usage of the app.
 export const setTour = (id: string, uri: string) => {

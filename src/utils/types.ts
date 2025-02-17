@@ -2,6 +2,8 @@
 export type TextFieldVariants = 'outlined' | 'filled' | 'standard';
 // used for variants between text field sizes
 export type TextFieldSizeVariants = 'small' | 'medium';
+// used for variants between different values for text field
+// export type TextFieldValueVariants = string | number | boolean | string[] | null;
 
 // used for the tour component
 export type TourStepsType = {

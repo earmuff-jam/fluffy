@@ -21,6 +21,7 @@
     "aws-amplify": "^6.6.6",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
+    "immer": "^10.1.1",
     "material-react-table": "^3.1.0",
     "mui-color-input": "^5.0.1",
     "ol": "^10.4.0",
@@ -35,8 +36,8 @@
   "devDependencies": {
     "@aws-amplify/backend": "^1.5.0",
     "@aws-amplify/backend-cli": "^1.2.9",
-    "@types/react": "^19.0.9",
-    "@types/react-dom": "^19.0.3",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",

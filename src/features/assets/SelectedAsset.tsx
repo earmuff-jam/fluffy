@@ -12,7 +12,7 @@ import RowHeader from '@utils/RowHeader';
 import SimpleModal from '@utils/SimpleModal';
 import ImagePicker from '@utils/ImagePicker';
 import { BLANK_INVENTORY_FORM } from '@features/assets/contants';
-import { LocationType, SnackbarContent } from '@utils/types';
+import { FormField, LocationType, SnackbarContent } from '@utils/types';
 import CustomSnackbar from '@utils/Snackbar';
 import { AssetDetailsFormFieldType, AssetType } from '@features/assets/types';
 import SelectedAssetFormFields from '@features/assets/SelectedAssetFormFields';
@@ -21,7 +21,7 @@ import SelectedAssetWeightDimension from '@features/assets/SelectedAssetWeightDi
 
 dayjs.extend(relativeTime);
 
-interface ISelectedAssetProps {}
+interface ISelectedAssetProps { }
 
 const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
   const { id } = useParams();
@@ -56,7 +56,7 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
     severity: 'success',
   });
 
-  const handleInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = ev.target;
     const updatedFormData = { ...formData };
     let errorMsg = '';
@@ -95,23 +95,18 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
     }));
   };
 
-  const isFormDisabled = () => {
-    const containsErr = Object.values(formData).reduce((acc, el) => {
-      if (el?.errorMsg) {
-        return true;
-      }
-      return acc;
-    }, false);
+  const isFormDisabled = (): boolean => {
+    const containsErr = Object.values(formData).some((el: FormField) => el?.errorMsg?.trim().length > 0);
 
-    const requiredFormFields = Object.values(formData).filter((v) => v?.required);
+    const requiredFormFields = Object.values(formData).filter((v: FormField) => v?.required);
     const isRequiredFieldsEmpty = requiredFormFields
-      .filter((el) => el.type === 'text')
-      .some((el) => String(el.value).trim() === '');
+      .filter((el: FormField) => el.type === 'text')
+      .some((el: FormField) => String(el.value).trim() === '');
 
     return containsErr || isRequiredFieldsEmpty || storageLocation === null || Object.keys(storageLocation).length <= 0;
   };
 
-  const handleSubmit = (ev: React.MouseEvent<MouseEvent>) => {
+  const handleSubmit = (ev: React.MouseEvent<HTMLButtonElement>): void => {
     ev.preventDefault();
 
     if (isFormDisabled()) {
@@ -123,7 +118,7 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
       return;
     }
 
-    const formattedData = Object.values(formData).reduce((acc, el) => {
+    const formattedData = Object.values(formData).reduce((acc, el: FormField) => {
       if (el.type === 'number') {
         acc[el.name] = Number(el.value);
       } else if (el.value) {
@@ -224,8 +219,8 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
         selectedImage={selectedImage}
         handleInputChange={handleInputChange}
         options={storageLocations}
-        storageLocation={storageLocation}
-        setStorageLocation={setStorageLocation}
+        // storageLocation={storageLocation}
+        // setStorageLocation={setStorageLocation}
       />
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
         <Typography variant="caption">More information</Typography>
@@ -243,7 +238,7 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
         <Typography variant="caption">Weight and Dimension</Typography>
       </Divider>
-      <SelectedAssetWeightDimension formFields={formData} handleInputChange={handleInputChange} />
+      <SelectedAssetWeightDimension formFields={formData} onChange={handleInputChange} />
       <Stack sx={{ margin: '1rem 0rem' }}>
         <Button
           startIcon={<CheckRounded fontSize="small" />}
@@ -261,7 +256,7 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
           handleClose={() => setEditImgMode(false)}
           maxSize="sm"
         >
-          <ImagePicker id={id} name={formData.name.value} handleUpload={handleUpload} disableCancel />
+          <ImagePicker id={id} name={String(formData.name.value)} handleUpload={handleUpload} disableCancel />
         </SimpleModal>
       )}
       <CustomSnackbar

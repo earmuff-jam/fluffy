@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 import AppLayout from '@features/layout/Layout'; // Can't be lazy-loaded
+import SelectedAsset from '@features/assets/SelectedAsset';
 
 
 const Overview = lazy(() => import('@features/overview/Overview'));
@@ -31,12 +32,12 @@ const routes: RouteObject[] = [
             { path: '/inventories/:id/update', element: <SelectedAsset /> },
             { path: '/categories/list', element: <CategoryList /> },
             { path: '/category/:id', element: <CategoryItemDetails /> },
-            { path: '/plans/list', element: <MaintenancePlanList /> },
-            { path: '/plan/:id', element: <MaintenancePlanItemDetails /> },
-            { path: '/reports', element: <Reports /> },
+            // { path: '/plans/list', element: <MaintenancePlanList /> },
+            // { path: '/plan/:id', element: <MaintenancePlanItemDetails /> },
+            // { path: '/reports', element: <Reports /> },
             { path: '/profile', element: <Profile /> },
             { path: '/profile/notes', element: <NotesList /> },
-            { path: '/recent/activities', element: <RecentActivityList /> },
+            // { path: '/recent/activities', element: <RecentActivityList /> },
         ],
     },
 ];

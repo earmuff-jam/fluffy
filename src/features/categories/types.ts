@@ -1,29 +1,22 @@
-import { FormField, LocationType } from "@utils/types";
+import { AuditColumns, FormField, LocationType } from '@utils/types';
 
-// Selected asset type is used for displaying items in
-// selected cateogory or maintenance plans
-export type SelectedAssetType = {
+// AddCategoryFormFields
+//
+// used to build out add category form fields
+export type AddCategoryFormFields = {
+  name: FormField;
+  description: FormField;
+};
+
+// Category Type
+//
+// Category type coupled with Audit Columns
+// used to build out a single category
+export type CategoryType = AuditColumns & {
   id: string;
   name: string;
   description: string;
   color: string;
-  image?: string;
+  location: LocationType;
   status: string;
-  min_items_limit: number;
-  max_items_limit: number;
-  location?: LocationType;
-  status_name?: string; // used for categories
-  maintenance_status?: string; // used for maintenance plan
-  maintenance_status_name?: string; // used for maintenance plan
-  created_at: string;
-  created_by: string;
-  updated_at: string;
-  updator: string;
-  updated_by: string;
-  sharable_groups: string[];
-};
-
-export type AddCategoryFormFields = {
-  name: FormField;
-  description: FormField;
 };

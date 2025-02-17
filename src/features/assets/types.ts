@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { Dayjs } from 'dayjs';
 
 import { AuditColumns, AuditColumnsFormField, FormField } from '@utils/types';

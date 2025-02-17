@@ -43,21 +43,21 @@ const CategoryList: React.FunctionComponent = () => {
     }
   };
 
-  React.useEffect(() => {
-    if (sortingOrder) {
-      if (categories && categories.length > 0) {
-        const draft = [...categories].sort(
-          (a, b) =>
-            new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
-        );
-        setSortedData(draft);
-      } else {
-        setSortedData(categories);
-      }
-    } else {
-      setSortedData(categories);
-    }
-  }, [sortingOrder, categories]);
+  // React.useEffect(() => {
+  //   if (sortingOrder) {
+  //     if (categories && categories.length > 0) {
+  //       const draft = [...categories].sort(
+  //         (a, b) =>
+  //           new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+  //       );
+  //       setSortedData(draft);
+  //     } else {
+  //       setSortedData(categories);
+  //     }
+  //   } else {
+  //     setSortedData(categories);
+  //   }
+  // }, [sortingOrder, categories]);
 
   React.useEffect(() => {
     //   dispatch(categoryActions.getCategories(100));

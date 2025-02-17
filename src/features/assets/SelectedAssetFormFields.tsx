@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import { Autocomplete, CardMedia, Stack, TextField, createFilterOptions } from '@mui/material';
+
 import TextFieldWithLabel from '@utils/TextFieldWithLabel';
 import ColorPicker from '@common/ColorPicker/ColorPicker';
 import { AssetDetailsFormFieldType } from '@features/assets/types';
+import { LocationType } from '@utils/types';
 
 const filter = createFilterOptions<{ location: string; inputValue?: string }>();
 
@@ -14,8 +16,8 @@ interface ISelectedAssetFormFieldsProps {
   handleColorChange: (color: string) => void;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   options: { location: string }[];
-  storageLocation: { location: string } | null;
-  setStorageLocation: (value: { location: string } | null) => void;
+  storageLocation?: { location: LocationType } | null;
+  setStorageLocation?: (value: { location: string } | null) => void;
 }
 
 const SelectedAssetFormFields: React.FunctionComponent<ISelectedAssetFormFieldsProps> = ({
@@ -79,7 +81,7 @@ const SelectedAssetFormFields: React.FunctionComponent<ISelectedAssetFormFieldsP
         forcePopupIcon
         value={storageLocation || null}
         // onOpen={() => dispatch(inventoryActions.getStorageLocations())}
-        onChange={(_, newValue) => {
+        onChange={(_: React.ChangeEvent<HTMLInputElement>, newValue: any) => {
           if (typeof newValue === 'string') {
             setStorageLocation({ location: newValue });
           } else if (newValue?.inputValue) {
@@ -88,14 +90,14 @@ const SelectedAssetFormFields: React.FunctionComponent<ISelectedAssetFormFieldsP
             setStorageLocation(newValue);
           }
         }}
-        filterOptions={(options, params) => {
-          const filtered = filter(options, params);
-          const { inputValue } = params;
-          if (inputValue && !options.some((option) => inputValue === option.location)) {
-            filtered.push({ inputValue, location: `Add "${inputValue}"` });
-          }
-          return filtered;
-        }}
+        // filterOptions={(options: Array<LocationType>, params: string): Array<LocationType> => {
+        //   const filtered = filter(options, params);
+        //   const { inputValue } = params;
+        //   if (inputValue && !options.some((option: LocationType) => inputValue === /* option.location */ option.lat)) { // this is wrong. fix it later
+        //     filtered.push({ inputValue, location: `Add "${inputValue}"` });
+        //   }
+        //   return filtered;
+        // }}
         selectOnFocus
         clearOnBlur
         handleHomeEndKeys

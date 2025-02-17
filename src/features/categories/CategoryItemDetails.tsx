@@ -33,13 +33,12 @@ const CategoryItemDetails: React.FunctionComponent = () => {
     sharable_groups: [],
   };
 
-  const itemsInCategory: SelectedAssetType[] = []; 
-  
+  const itemsInCategory: SelectedAssetType[] = [];
+
   const selectedCategoryImage = "";
   const loading = false;
 
   const [displayModal, setDisplayModal] = React.useState<boolean>(false);
-
   const [selectedIDList, setSelectedIDList] = React.useState<string[]>([]);
 
   const [openConfirmationBoxModal, setOpenConfirmationBoxModal] =
