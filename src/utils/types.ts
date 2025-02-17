@@ -20,7 +20,7 @@ export type AssetListColumnHeader = {
   colName: string;
   label: string;
   displayConcise: boolean;
-  modifier: (value: any) => JSX.Element | string;
+  modifier: (value: any) => React.ReactElement | string;
 };
 
 // AssetType
@@ -53,15 +53,16 @@ type Validator = {
 
 // common form field types
 export type FormField = {
-  label: string;
-  placeholder: string;
-  value: string;
   name: string;
-  variant: TextFieldVariants;
-  size: TextFieldSizeVariants;
+  label?: string;
+  placeholder?: string;
+  value: string | number | boolean | null;
+  type?: string;
+  variant?: TextFieldVariants;
+  size?: TextFieldSizeVariants;
   errorMsg: string;
-  required: boolean;
-  fullWidth: boolean;
+  required?: boolean;
+  fullWidth?: boolean;
   rows?: number | null;
   multiline?: boolean | null;
   validators?: Validator[];

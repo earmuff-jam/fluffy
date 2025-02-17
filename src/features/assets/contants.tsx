@@ -1,8 +1,9 @@
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import { CheckRounded, CloseRounded } from "@mui/icons-material";
-import QRCodeGen from "@utils/QrCodeGen";
-import { AssetListColumnHeader } from "@utils/types";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { CheckRounded, CloseRounded } from '@mui/icons-material';
+import QRCodeGen from '@utils/QrCodeGen';
+import { AssetListColumnHeader } from '@utils/types';
+import { AssetDetailsFormFieldType } from '@features/assets/types';
 
 dayjs.extend(relativeTime);
 
@@ -12,31 +13,31 @@ dayjs.extend(relativeTime);
  *
  */
 export const MODAL_STATE = {
-  NONE: "none",
-  ADD_ITEM: "item",
-  BULK_ITEM: "bulk",
-  MORE_DETAILS: "more",
-  ASSIGN_CATEGORY: "assign_category",
-  ASSIGN_MAINTENANCE_PLAN: "assign_maintenance_plan",
+  NONE: 'none',
+  ADD_ITEM: 'item',
+  BULK_ITEM: 'bulk',
+  MORE_DETAILS: 'more',
+  ASSIGN_CATEGORY: 'assign_category',
+  ASSIGN_MAINTENANCE_PLAN: 'assign_maintenance_plan',
 };
 
 /**
  * Bulk Asset Headers for template download.
  */
 export const BULK_ASSETS_HEADERS = [
-  { label: "Name" },
-  { label: "Description" },
-  { label: "Price" },
-  { label: "Quantity" },
-  { label: "Storage Location" },
-  { label: "Color" },
-  { label: "SKU" },
-  { label: "Barcode" },
-  { label: "Purchase Location" },
-  { label: "Minimum Height" },
-  { label: "Maximum Height" },
-  { label: "Minimum Weight" },
-  { label: "Maximum Weight" },
+  { label: 'Name' },
+  { label: 'Description' },
+  { label: 'Price' },
+  { label: 'Quantity' },
+  { label: 'Storage Location' },
+  { label: 'Color' },
+  { label: 'SKU' },
+  { label: 'Barcode' },
+  { label: 'Purchase Location' },
+  { label: 'Minimum Height' },
+  { label: 'Maximum Height' },
+  { label: 'Minimum Weight' },
+  { label: 'Maximum Weight' },
 ];
 
 /**
@@ -45,27 +46,25 @@ export const BULK_ASSETS_HEADERS = [
  */
 export const DEFAULT_INVENTORIES_LANDING_PAGE_TEXT = [
   {
-    name: "Create and view maintenance request",
-    description: "Create periodic maintenance of inventory items",
-    imageSrc: "images/books.jpg",
-    imageAlt: "default-maintenance-inventory-items-img",
-    href: "/inventories/maintenance/list",
+    name: 'Create and view maintenance request',
+    description: 'Create periodic maintenance of inventory items',
+    imageSrc: 'images/books.jpg',
+    imageAlt: 'default-maintenance-inventory-items-img',
+    href: '/inventories/maintenance/list',
   },
   {
-    name: "Track record of inventories",
-    description:
-      "Visualize items which are due for maintenance or need attention",
-    imageSrc: "images/items.jpg",
-    imageAlt: "default-track-record-inventory-items-img",
-    href: "inventories/forecast/list",
+    name: 'Track record of inventories',
+    description: 'Visualize items which are due for maintenance or need attention',
+    imageSrc: 'images/items.jpg',
+    imageAlt: 'default-track-record-inventory-items-img',
+    href: 'inventories/forecast/list',
   },
   {
-    name: "Categories inventories and stay in sync",
-    description:
-      "Understand your inventories better. Keep tabs on more important inventories",
-    imageSrc: "images/kitchen-items.jpg",
-    imageAlt: "default-bookmarked-inventory-items-img",
-    href: "/inventories/categories/list",
+    name: 'Categories inventories and stay in sync',
+    description: 'Understand your inventories better. Keep tabs on more important inventories',
+    imageSrc: 'images/kitchen-items.jpg',
+    imageAlt: 'default-bookmarked-inventory-items-img',
+    href: '/inventories/categories/list',
   },
 ];
 
@@ -82,13 +81,13 @@ export const BUILD_TABLE_CONSTANTS = (columnLabels) => (selectedRow) => {
   const tableRows = columnLabels.map(({ id, colName, label, modifier }) => {
     let value = selectedRow[colName];
     if (modifier) {
-      if (colName === "qr_code") {
-        value = modifier(selectedRow["name"]);
+      if (colName === 'qr_code') {
+        value = modifier(selectedRow['name']);
       } else {
         value = modifier(value, { colName, label });
       }
     } else {
-      value = value || "N/A";
+      value = value || 'N/A';
     }
     return {
       id,
@@ -101,7 +100,6 @@ export const BUILD_TABLE_CONSTANTS = (columnLabels) => (selectedRow) => {
   return tableRows;
 };
 
-
 /**
  * ASSET_LIST_TABLE_HEADERS STATIC COMPONENT
  * displayConcise lets users view the column name in bookmarked inventories
@@ -110,443 +108,431 @@ export const BUILD_TABLE_CONSTANTS = (columnLabels) => (selectedRow) => {
 export const ASSET_LIST_TABLE_HEADERS: Record<string, AssetListColumnHeader> = {
   name: {
     id: 1,
-    colName: "name",
-    label: "Name",
+    colName: 'name',
+    label: 'Name',
     displayConcise: true,
-    modifier: (value: string) => `${value || "-"}`,
+    modifier: (value: string) => `${value || '-'}`,
   },
   description: {
     id: 2,
-    colName: "description",
-    label: "Description",
+    colName: 'description',
+    label: 'Description',
     displayConcise: false,
-    modifier: (value: string) => `${value || "-"}`,
+    modifier: (value: string) => `${value || '-'}`,
   },
   price: {
     id: 3,
-    colName: "price",
-    label: "Cost",
+    colName: 'price',
+    label: 'Cost',
     displayConcise: true,
-    modifier: (value: number) => `${value || "-"}`,
+    modifier: (value: number) => `${value || '-'}`,
   },
   barcode: {
     id: 5,
-    colName: "barcode",
+    colName: 'barcode',
     displayConcise: false,
-    label: "Barcode",
-    modifier: (value: string) => `${value || "-"}`,
+    label: 'Barcode',
+    modifier: (value: string) => `${value || '-'}`,
   },
   sku: {
     id: 6,
-    colName: "sku",
+    colName: 'sku',
     displayConcise: false,
-    label: "SKU",
-    modifier: (value: string) => `${value || "-"}`,
+    label: 'SKU',
+    modifier: (value: string) => `${value || '-'}`,
   },
   color: {
     id: 7,
-    colName: "color",
+    colName: 'color',
     displayConcise: false,
-    label: "Asset Color",
-    modifier: (value: string) => `${value || "-"}`,
+    label: 'Asset Color',
+    modifier: (value: string) => `${value || '-'}`,
   },
   quantity: {
     id: 8,
-    colName: "quantity",
-    label: "Qty",
+    colName: 'quantity',
+    label: 'Qty',
     displayConcise: true,
-    modifier: (value: number) => `${value || "-"}`,
+    modifier: (value: number) => `${value || '-'}`,
   },
   location: {
     id: 9,
-    colName: "location",
-    label: "Location",
+    colName: 'location',
+    label: 'Location',
     displayConcise: true,
-    modifier: (value: string) => `${value || "-"}`,
+    modifier: (value: string) => `${value || '-'}`,
   },
   is_returnable: {
     id: 10,
-    colName: "is_returnable",
+    colName: 'is_returnable',
     displayConcise: false,
-    label: "Returnable",
-    modifier: (value: boolean) =>
-      value ? (
-        <CheckRounded color="primary" />
-      ) : (
-        <CloseRounded color="warning" />
-      ),
+    label: 'Returnable',
+    modifier: (value: boolean) => (value ? <CheckRounded color="primary" /> : <CloseRounded color="warning" />),
   },
   return_location: {
     id: 11,
-    colName: "return_location",
+    colName: 'return_location',
     displayConcise: false,
-    label: "Return Location",
-    modifier: (value: string) => `${value || "-"}`,
+    label: 'Return Location',
+    modifier: (value: string) => `${value || '-'}`,
   },
   max_weight: {
     id: 12,
-    colName: "max_weight",
+    colName: 'max_weight',
     displayConcise: false,
-    label: "Max Weight",
-    modifier: (value: string) => `${value || "-"}`,
+    label: 'Max Weight',
+    modifier: (value: string) => `${value || '-'}`,
   },
   min_weight: {
     id: 13,
-    colName: "min_weight",
+    colName: 'min_weight',
     displayConcise: false,
-    label: "Min Weight",
-    modifier: (value: string) => `${value || "-"}`,
+    label: 'Min Weight',
+    modifier: (value: string) => `${value || '-'}`,
   },
   max_height: {
     id: 14,
-    colName: "max_height",
+    colName: 'max_height',
     displayConcise: false,
-    label: "Max Height",
-    modifier: (value: string) => `${value || "-"}`,
+    label: 'Max Height',
+    modifier: (value: string) => `${value || '-'}`,
   },
   min_height: {
     id: 15,
-    colName: "min_height",
+    colName: 'min_height',
     displayConcise: false,
-    label: "Min Height",
-    modifier: (value: string) => `${value || "-"}`,
+    label: 'Min Height',
+    modifier: (value: string) => `${value || '-'}`,
   },
   bought_at: {
     id: 16,
-    colName: "bought_at",
+    colName: 'bought_at',
     displayConcise: false,
-    label: "Purchase Location",
-    modifier: (value: string) => `${value || "-"}`,
+    label: 'Purchase Location',
+    modifier: (value: string) => `${value || '-'}`,
   },
   qr_code: {
     id: 17,
-    colName: "qr_code",
+    colName: 'qr_code',
     displayConcise: false,
-    label: "QR Code",
+    label: 'QR Code',
     modifier: (value: string) => <QRCodeGen value={value} />,
   },
   updated_at: {
     id: 18,
-    colName: "updated_at",
-    label: "Updated",
+    colName: 'updated_at',
+    label: 'Updated',
     displayConcise: true,
     modifier: (value: string) => `${dayjs(value).fromNow()}`,
   },
   updator_name: {
     id: 19,
-    colName: "updator",
-    label: "Updated By",
+    colName: 'updator',
+    label: 'Updated By',
     displayConcise: true,
-    modifier: (value: string) => `${value || "-"}`,
+    modifier: (value: string) => `${value || '-'}`,
   },
 };
 
 // blank form to add inventory details
-export const BLANK_INVENTORY_FORM = {
+export const BLANK_INVENTORY_FORM: AssetDetailsFormFieldType = {
   name: {
-    id: "name",
-    label: "Asset name",
-    name: "name",
-    size: "small",
-    placeholder: "Asset name",
-    value: "",
-    type: "text",
-    isRequired: true,
-    errorMsg: "",
+    label: 'Asset name',
+    name: 'name',
+    size: 'small',
+    placeholder: 'Asset name',
+    value: '',
+    type: 'text',
+    required: true,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => value.trim().length === 0,
-        message: "Item name is required",
+        message: 'Item name is required',
       },
       {
         validate: (value: string) => value.trim().length >= 200,
-        message: "Item name should be less than 50 characters",
+        message: 'Item name should be less than 50 characters',
       },
     ],
   },
   description: {
-    id: "description",
-    label: "Asset description",
-    value: "",
-    name: "description",
-    placeholder: "Asset description in less than 500 characters",
-    type: "text",
-    size: "small",
-    isRequired: true,
-    errorMsg: "",
+    label: 'Asset description',
+    value: '',
+    name: 'description',
+    placeholder: 'Asset description in less than 500 characters',
+    type: 'text',
+    size: 'small',
+    required: true,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => value.trim().length === 0,
-        message: "Item description is required",
+        message: 'Item description is required',
       },
       {
         validate: (value: string) => value.trim().length >= 500,
-        message: "Item description should be less than 50 characters",
+        message: 'Item description should be less than 50 characters',
       },
     ],
   },
   price: {
-    id: "price",
-    label: "Asset price (per unit)",
-    value: "",
-    name: "price",
-    size: "small",
-    placeholder: "Asset price per unit",
-    type: "number",
-    isRequired: false,
-    errorMsg: "",
+    label: 'Asset price (per unit)',
+    value: '',
+    name: 'price',
+    size: 'small',
+    placeholder: 'Asset price per unit',
+    type: 'number',
+    required: false,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => value.trim().length === 0,
-        message: "Price for the selected item is required",
+        message: 'Price for the selected item is required',
       },
       {
         validate: (value: string) => isNaN(+value) || parseInt(value) <= 0,
-        message: "A positive number is required",
+        message: 'A positive number is required',
       },
       {
         validate: (value: string) => parseInt(value) > Number.MAX_SAFE_INTEGER,
-        message: "Value cannot exceed limit",
+        message: 'Value cannot exceed limit',
       },
     ],
   },
   barcode: {
-    id: "barcode",
-    name: "barcode",
-    label: "Barcode",
-    value: "",
-    type: "text",
-    size: "small",
-    placeholder: "Barcode of the selected asset",
-    isRequired: false,
-    errorMsg: "",
+    name: 'barcode',
+    label: 'Barcode',
+    value: '',
+    type: 'text',
+    size: 'small',
+    placeholder: 'Barcode of the selected asset',
+    required: false,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => value.trim().length >= 50,
-        message: "Item barcode should be less than 50 characters",
+        message: 'Item barcode should be less than 50 characters',
       },
     ],
   },
   sku: {
-    id: "sku",
-    name: "sku",
-    label: "SKU",
-    value: "",
-    type: "text",
-    size: "small",
-    placeholder: "SKU of the selected asset",
-    isRequired: false,
-    errorMsg: "",
+    name: 'sku',
+    label: 'SKU',
+    value: '',
+    type: 'text',
+    size: 'small',
+    placeholder: 'SKU of the selected asset',
+    required: false,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => value.trim().length >= 50,
-        message: "SKU of item should be less than 50 characters",
+        message: 'SKU of item should be less than 50 characters',
       },
     ],
   },
   quantity: {
-    id: "quantity",
-    name: "quantity",
-    label: "Asset quantity",
-    value: "",
-    type: "number",
-    placeholder: "The quantity of the asset",
-    size: "small",
-    isRequired: true,
-    errorMsg: "",
+    name: 'quantity',
+    label: 'Asset quantity',
+    value: '',
+    type: 'number',
+    placeholder: 'The quantity of the asset',
+    size: 'small',
+    required: true,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => value.trim().length === 0,
-        message: "Quantity for the selected item is required",
+        message: 'Quantity for the selected item is required',
       },
       {
         validate: (value: string) => isNaN(+value) || parseInt(value) <= 0,
-        message: "A positive number is required",
+        message: 'A positive number is required',
       },
       {
         validate: (value: string) => parseInt(value) > Number.MAX_SAFE_INTEGER,
-        message: "Value cannot exceed limit",
+        message: 'Value cannot exceed limit',
       },
     ],
   },
-  bought_at: {
-    id: "bought_at",
-    name: "bought_at",
-    label: "Place of purchase",
-    placeholder: "Where did you buy this item?",
-    value: "",
-    type: "text",
-    size: "small",
-    isRequired: false,
-    errorMsg: "",
+  boughtAt: {
+    name: 'boughtAt',
+    label: 'Place of purchase',
+    placeholder: 'Where did you buy this item?',
+    value: '',
+    type: 'text',
+    size: 'small',
+    required: false,
+    errorMsg: '',
     validators: [],
   },
   location: {
-    id: "location",
-    label: "Storage location",
-    placeholder: "Where do you want to store the item",
-    type: "text",
-    isRequired: false,
-    errorMsg: "",
+    name: 'location',
+    value: '',
+    label: 'Storage location',
+    placeholder: 'Where do you want to store the item',
+    type: 'text',
+    required: false,
+    errorMsg: '',
     validators: [],
   },
-  is_bookmarked: {
-    id: "is_bookmarked",
+  isBookmarked: {
+    name: 'isBookmarked',
     value: false,
-    type: "boolean",
-    isRequired: false,
-    errorMsg: "",
+    type: 'boolean',
+    required: false,
+    errorMsg: '',
     validators: [],
   },
-  is_returnable: {
-    id: "is_returnable",
+  isReturnable: {
+    name: 'isReturnable',
     value: false,
-    type: "boolean",
-    isRequired: false,
-    errorMsg: "",
+    type: 'boolean',
+    required: false,
+    errorMsg: '',
     validators: [],
   },
-  return_location: {
-    id: "return_location",
-    name: "return_location",
-    label: "Return location",
-    placeholder: "Where to return the item",
-    value: "",
-    type: "text",
-    size: "small",
-    isRequired: false,
-    errorMsg: "",
+  returnLocation: {
+    name: 'returnLocation',
+    label: 'Return location',
+    placeholder: 'Where to return the item',
+    value: '',
+    type: 'text',
+    size: 'small',
+    required: false,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => value.trim().length >= 50,
-        message: "Return location should be less than 50 characters",
+        message: 'Return location should be less than 50 characters',
       },
     ],
   },
-  max_weight: {
-    id: "max_weight",
-    name: "max_weight",
-    label: "Maxmimum weight",
-    placeholder: "Maximum weight of the selected asset in kg",
-    value: "",
-    type: "number",
-    size: "small",
-    isRequired: false,
-    errorMsg: "",
+  maxWeight: {
+    name: 'maxWeight',
+    label: 'Maxmimum weight',
+    placeholder: 'Maximum weight of the selected asset in kg',
+    value: '',
+    type: 'number',
+    size: 'small',
+    required: false,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => isNaN(+value) || parseInt(value) <= 0,
-        message: "A positive number is required",
+        message: 'A positive number is required',
       },
       {
         validate: (value: string) => parseInt(value) > Number.MAX_SAFE_INTEGER,
-        message: "Value cannot exceed limit",
+        message: 'Value cannot exceed limit',
       },
     ],
   },
-  min_weight: {
-    id: "min_weight",
-    name: "min_weight",
-    label: "Minimum Weight",
-    placeholder: "Minimum weight of the selected asset in kg",
-    value: "",
-    type: "number",
-    size: "small",
-    isRequired: false,
-    errorMsg: "",
+  minWeight: {
+    name: 'minWeight',
+    label: 'Minimum Weight',
+    placeholder: 'Minimum weight of the selected asset in kg',
+    value: '',
+    type: 'number',
+    size: 'small',
+    required: false,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => isNaN(+value) || parseInt(value) <= 0,
-        message: "A positive number is required",
+        message: 'A positive number is required',
       },
       {
         validate: (value: string) => parseInt(value) > Number.MAX_SAFE_INTEGER,
-        message: "Value cannot exceed limit",
+        message: 'Value cannot exceed limit',
       },
     ],
   },
-  max_height: {
-    id: "max_height",
-    name: "max_height",
-    label: "Maximum height",
-    placeholder: "Maximum height of selected asset in inches",
-    value: "",
-    type: "number",
-    size: "small",
-    isRequired: false,
-    errorMsg: "",
+  maxHeight: {
+    name: 'maxHeight',
+    label: 'Maximum height',
+    placeholder: 'Maximum height of selected asset in inches',
+    value: '',
+    type: 'number',
+    size: 'small',
+    required: false,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => isNaN(+value) || parseInt(value) <= 0,
-        message: "A positive number is required",
+        message: 'A positive number is required',
       },
       {
         validate: (value: string) => parseInt(value) > Number.MAX_SAFE_INTEGER,
-        message: "Value cannot exceed limit",
+        message: 'Value cannot exceed limit',
       },
     ],
   },
-  min_height: {
-    id: "min_height",
-    name: "min_height",
-    label: "Minimum height",
-    placeholder: "Minimum height of selected asset in inches",
-    value: "",
-    type: "number",
-    size: "small",
-    isRequired: false,
-    errorMsg: "",
+  minHeight: {
+    name: 'minHeight',
+    label: 'Minimum height',
+    placeholder: 'Minimum height of selected asset in inches',
+    value: '',
+    type: 'number',
+    size: 'small',
+    required: false,
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => isNaN(+value) || parseInt(value) <= 0,
-        message: "A positive number is required",
+        message: 'A positive number is required',
       },
       {
         validate: (value: string) => parseInt(value) > Number.MAX_SAFE_INTEGER,
-        message: "Value cannot exceed limit",
+        message: 'Value cannot exceed limit',
       },
     ],
   },
-  return_notes: {
-    id: "return_notes",
-    name: "return_notes",
-    label: "Return notes",
-    placeholder: "Add return notes in less than 500 characters",
-    value: "",
-    type: "text",
-    isRequired: false,
-    size: "small",
-    errorMsg: "",
+  returnNotes: {
+    name: 'returnNotes',
+    label: 'Return notes',
+    placeholder: 'Add return notes in less than 500 characters',
+    value: '',
+    type: 'text',
+    required: false,
+    size: 'small',
+    errorMsg: '',
     validators: [
       {
         validate: (value: string) => value.trim().length >= 500,
-        message: "Return notes should be less than 500 characters",
+        message: 'Return notes should be less than 500 characters',
       },
     ],
   },
-  created_at: {
-    id: "created_at",
-    errorMsg: "",
+  createdAt: {
+    name: 'createdAt',
+    errorMsg: '',
+    value: '',
     validators: [],
   },
-  created_by: {
-    id: "created_by",
-    errorMsg: "",
+  createdBy: {
+    name: 'createdBy',
+    errorMsg: '',
+    value: '',
     validators: [],
   },
-  updated_at: {
-    id: "updated_at",
-    errorMsg: "",
+  updatedAt: {
+    name: 'updatedAt',
+    errorMsg: '',
+    value: '',
     validators: [],
   },
-  updated_by: {
-    id: "updated_by",
-    errorMsg: "",
+  updatedBy: {
+    name: 'updatedBy',
+    errorMsg: '',
+    value: '',
     validators: [],
   },
-  sharable_groups: {
-    id: "sharable_groups",
-    errorMsg: "",
+  collaborators: {
+    name: 'collaborators',
+    errorMsg: '',
+    value: '',
     validators: [],
   },
 };
