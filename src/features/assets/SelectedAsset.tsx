@@ -14,7 +14,10 @@ import ImagePicker from '@utils/ImagePicker';
 import { BLANK_INVENTORY_FORM } from '@features/assets/contants';
 import { LocationType, SnackbarContent } from '@utils/types';
 import CustomSnackbar from '@utils/Snackbar';
-import { AssetDetailsFormFieldType } from '@features/assets/types';
+import { AssetDetailsFormFieldType, AssetType } from '@features/assets/types';
+import SelectedAssetFormFields from '@features/assets/SelectedAssetFormFields';
+import SelectedAssetMoreInformation from '@features/assets/SelectedAssetMoreInformation';
+import SelectedAssetWeightDimension from '@features/assets/SelectedAssetWeightDimension';
 
 dayjs.extend(relativeTime);
 
@@ -26,7 +29,7 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
   const loading = false;
   const storageLocationsLoading = false;
   const storageLocations = [];
-  const inventory = [];
+  const inventory = {} as AssetType;
   const selectedImage = '';
 
   // const {
@@ -44,7 +47,7 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
   const [color, setColor] = React.useState<string>('#f7f7f7');
   const [returnDateTime, setReturnDateTime] = React.useState<Dayjs | null>(null);
 
-  const [storageLocation, setStorageLocation] = React.useState({} as LocationType);
+  const [storageLocation, setStorageLocation] = React.useState<LocationType>();
   const [formData, setFormData] = React.useState<AssetDetailsFormFieldType>(BLANK_INVENTORY_FORM);
 
   const [snackbarContent, setSnackbarContent] = React.useState<SnackbarContent>({
@@ -133,7 +136,7 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
       id: id, // bring id from the params
       ...formattedData,
       return_datetime: returnDateTime !== null ? returnDateTime.toISOString() : null,
-      location: storageLocation.location,
+      //   location: storageLocation.location,
       color: color,
     };
 
@@ -170,38 +173,37 @@ const SelectedAsset: React.FunctionComponent<ISelectedAssetProps> = () => {
       selectedAsset.description.value = inventory.description || '';
       selectedAsset.barcode.value = inventory.barcode || '';
       selectedAsset.sku.value = inventory.sku || '';
-      selectedAsset.boughtAt.value = inventory.bought_at || '';
-      selectedAsset.returnLocation.value = inventory.return_location || '';
-      selectedAsset.maxWeight.value = inventory.max_weight || '';
-      selectedAsset.minWeight.value = inventory.min_weight || '';
-      selectedAsset.maxHeight.value = inventory.max_height || '';
-      selectedAsset.minHeight.value = inventory.min_height || '';
+      selectedAsset.boughtAt.value = inventory.boughtAt || '';
+      selectedAsset.returnLocation.value = inventory.returnLocation || '';
+      selectedAsset.maxWeight.value = inventory.maxWeight || '';
+      selectedAsset.minWeight.value = inventory.minWeight || '';
+      selectedAsset.maxHeight.value = inventory.maxHeight || '';
+      selectedAsset.minHeight.value = inventory.minHeight || '';
       selectedAsset.price.value = inventory.price || '';
       selectedAsset.quantity.value = inventory.quantity || '';
-      selectedAsset.isBookmarked.value = inventory.is_bookmarked || false;
-      selectedAsset.isReturnable.value = inventory.is_returnable || Boolean(inventory.return_location) || false;
-      selectedAsset.createdBy.value = inventory.created_by || '';
-      selectedAsset.createdAt.value = inventory.created_at || '';
-      selectedAsset.updatedBy.value = inventory.updated_by || '';
-      selectedAsset.updatedAt.value = inventory.updated_at || '';
-      selectedAsset.collaborators.value = inventory.sharable_groups || [];
-      selectedAsset.creator_name = inventory?.creator_name || '';
-      selectedAsset.updator_name = inventory?.updater_name || '';
+      selectedAsset.isBookmarked.value = inventory.isBookmarked || false;
+      selectedAsset.isReturnable.value = inventory.isReturnable || Boolean(inventory.returnLocation) || false;
+      selectedAsset.location.value = inventory.location;
+      selectedAsset.createdBy.value = inventory.createdBy || '';
+      selectedAsset.createdAt.value = inventory.createdAt || '';
+      selectedAsset.updatedBy.value = inventory.updatedBy || '';
+      selectedAsset.updatedAt.value = inventory.updatedAt || '';
+      selectedAsset.collaborators.value = inventory.collaborators || [];
+      selectedAsset.creator.value = inventory?.creator || '';
+      selectedAsset.updator.value = inventory?.updator || '';
 
-      if (inventory?.return_datetime) {
-        setReturnDateTime(dayjs(inventory.return_datetime));
+      if (inventory?.returnDatetime) {
+        setReturnDateTime(dayjs(inventory.returnDatetime));
       }
 
-      if (inventory?.return_notes) {
+      if (inventory?.returnNotes) {
         setOpenReturnNote(true);
-        selectedAsset.returnNotes.value = inventory.return_notes;
+        selectedAsset.returnNotes.value = inventory.returnNotes;
       }
 
       if (inventory?.color) {
         setColor(inventory.color);
       }
-
-      setStorageLocation({ location: inventory.location });
       setFormData(selectedAsset);
     }
   }, [loading, inventory]);

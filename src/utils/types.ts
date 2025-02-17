@@ -14,21 +14,26 @@ export type LocationType = {
   lon: number;
 };
 
-// AssetListColumnHeader obj
-export type AssetListColumnHeader = {
-  id: number;
-  colName: string;
-  label: string;
-  displayConcise: boolean;
-  modifier: (value: any) => React.ReactElement | string;
+// Audit Columns
+export type AuditColumns = {
+  createdAt: string;
+  createdBy: string;
+  creator: string;
+  updatedAt: string;
+  updatedBy: string;
+  updator: string;
+  collaborators: string[];
 };
 
-// AssetType
-export type AssetType = {
-  id: string;
-  name: string;
-  title: string;
-  description: string;
+// Audit Columns form mode
+export type AuditColumnsFormField = {
+  createdAt: FormField;
+  createdBy: FormField;
+  creator: FormField;
+  updatedAt: FormField;
+  updatedBy: FormField;
+  updator: FormField;
+  collaborators: FormField;
 };
 
 // Collaborators and users in sharable groups
@@ -56,7 +61,7 @@ export type FormField = {
   name: string;
   label?: string;
   placeholder?: string;
-  value: string | number | boolean | null;
+  value: string | number | boolean | string[] | null;
   type?: string;
   variant?: TextFieldVariants;
   size?: TextFieldSizeVariants;

@@ -2,28 +2,28 @@ import * as React from "react";
 import { Stack, TextField, TextFieldVariants, Typography } from "@mui/material";
 
 interface ITextFieldWithLabelProps {
-  label: string;
+  label?: string;
   caption?: string;
-  id: string;
+  id?: string;
   name: string;
   value: string;
-  placeholder: string;
+  placeholder?: string;
   fullWidth?: boolean;
   onChange: (ev: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean | null;
   multiline?: boolean | null;
-  variant: TextFieldVariants;
-  size: "small" | "medium";
+  variant?: TextFieldVariants;
+  size?: "small" | "medium";
   rows?: string | number | null;
   error?: boolean | null;
   helperText?: string | null;
 }
 
 const TextFieldWithLabel: React.FunctionComponent<ITextFieldWithLabelProps> = ({
-  label,
-  caption,
   id,
+  label,
   name,
+  caption,
   value,
   placeholder,
   onChange,

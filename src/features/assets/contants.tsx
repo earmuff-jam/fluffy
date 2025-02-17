@@ -2,8 +2,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { CheckRounded, CloseRounded } from '@mui/icons-material';
 import QRCodeGen from '@utils/QrCodeGen';
-import { AssetListColumnHeader } from '@utils/types';
-import { AssetDetailsFormFieldType } from '@features/assets/types';
+import { AssetDetailsFormFieldType, AssetListColumnHeader } from '@features/assets/types';
 
 dayjs.extend(relativeTime);
 
@@ -517,6 +516,12 @@ export const BLANK_INVENTORY_FORM: AssetDetailsFormFieldType = {
     value: '',
     validators: [],
   },
+  creator: {
+    name: 'creator',
+    errorMsg: '',
+    value: '',
+    validators: [],
+  },
   updatedAt: {
     name: 'updatedAt',
     errorMsg: '',
@@ -525,6 +530,12 @@ export const BLANK_INVENTORY_FORM: AssetDetailsFormFieldType = {
   },
   updatedBy: {
     name: 'updatedBy',
+    errorMsg: '',
+    value: '',
+    validators: [],
+  },
+  updator: {
+    name: 'updator',
     errorMsg: '',
     value: '',
     validators: [],
