@@ -6,7 +6,7 @@ interface IConfirmationBoxProps {
     title: string;
     handleClose: () => void;
     maxSize: Breakpoint;
-    deleteID: string | number;
+    deleteID?: string | number;
     confirmDelete: (id: string | number) => void;
 }
 

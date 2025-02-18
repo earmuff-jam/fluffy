@@ -1,16 +1,16 @@
-import ItemDetailsCard from "@features/selected/ItemDetailsCard";
-import { SelectedAssetType } from "@features/categories/types";
-import RowHeader from "@utils/RowHeader";
-import * as React from "react";
+import * as React from 'react';
+import RowHeader from '@utils/RowHeader';
+import { AssetType } from '@features/assets/types';
+import ItemDetailsCard from '@features/selected/ItemDetailsCard';
 
 interface IItemDetailsHeaderProps {
-  categoryMode: boolean;
+  categoryMode?: boolean;
   favBtnDataTour: string;
   imageBtnDataTour: string;
   shareBtnDataTour: string;
   label: string;
   caption: string;
-  item: SelectedAssetType;
+  item: AssetType;
   image: string;
 }
 

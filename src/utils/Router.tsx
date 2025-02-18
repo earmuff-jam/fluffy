@@ -4,18 +4,16 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import AppLayout from '@features/layout/Layout'; // Can't be lazy-loaded
 
 const Assets = lazy(() => import('@features/assets/Assets'));
-const Report = lazy(() => import('@features/report/Report'));
 const Profile = lazy(() => import('@features/profile/Profile'));
-const NotesList = lazy(() => import('@features/notes/NotesList'));
-const Overview = lazy(() => import('@features/overview/Overview'));
 const SelectedAsset = lazy(() => import('@features/assets/SelectedAsset'));
-const CategoryList = lazy(() => import('@features/categories/CategoryList'));
+const RecentActivities = lazy(() => import('@features/recent/RecentActivities'));
+const Plan = lazy(() => import('@features/maintenance/plan'));
+const NotesList = lazy(() => import('@features/notes/NotesList'));
 const CategoryItemDetails = lazy(() => import('@features/categories/CategoryItemDetails'));
-const RecentActivityList = lazy(() => import('@features/recentActivities/RecentActivityList'));
-const MaintenancePlanList = lazy(() => import('@features/maintenancePlan/MaintenancePlanList'));
-const MaintenancePlanItemDetails = lazy(
-  () => import('@features/MaintenancePlanItemDetails/MaintenancePlanItemDetails')
-);
+const Overview = lazy(() => import('@features/overview/Overview'));
+const Report = lazy(() => import('@features/report/Report'));
+const CategoryList = lazy(() => import('@features/categories/CategoryList'));
+const PlanDetails = lazy(() => import('@features/maintenance/PlanDetails'));
 
 const routes: RouteObject[] = [
   {
@@ -28,11 +26,11 @@ const routes: RouteObject[] = [
       { path: '/inventories/list', element: <Assets /> },
       { path: '/profile/notes', element: <NotesList /> },
       { path: '/categories/list', element: <CategoryList /> },
-      { path: '/plans/list', element: <MaintenancePlanList /> },
+      { path: '/plans/list', element: <Plan /> },
       { path: '/category/:id', element: <CategoryItemDetails /> },
-      { path: '/plan/:id', element: <MaintenancePlanItemDetails /> },
+      { path: '/plan/:id', element: <PlanDetails /> },
       { path: '/inventories/:id/update', element: <SelectedAsset /> },
-      { path: '/recent/activities', element: <RecentActivityList /> },
+      { path: '/recent/activities', element: <RecentActivities /> },
     ],
   },
 ];
