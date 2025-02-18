@@ -7,7 +7,7 @@ const Assets = lazy(() => import('@features/assets/Assets'));
 const Profile = lazy(() => import('@features/profile/Profile'));
 const SelectedAsset = lazy(() => import('@features/assets/SelectedAsset'));
 const RecentActivities = lazy(() => import('@features/recent/RecentActivities'));
-const Plan = lazy(() => import('@features/maintenance/plan'));
+const Plan = lazy(() => import('@features/maintenance/Plan'));
 const NotesList = lazy(() => import('@features/notes/NotesList'));
 const CategoryItemDetails = lazy(() => import('@features/categories/CategoryItemDetails'));
 const Overview = lazy(() => import('@features/overview/Overview'));
