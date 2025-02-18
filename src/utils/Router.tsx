@@ -6,7 +6,7 @@ import SelectedAsset from '@features/assets/SelectedAsset';
 
 
 const Overview = lazy(() => import('@features/overview/Overview'));
-// const Reports = lazy(() => import('@features/Reports/Reports'));
+const Report = lazy(() => import('@features/report/Report'));
 const NotesList = lazy(() => import('@features/notes/NotesList'));
 
 const Profile = lazy(() => import('@features/profile/Profile'));
@@ -34,7 +34,7 @@ const routes: RouteObject[] = [
             { path: '/category/:id', element: <CategoryItemDetails /> },
             // { path: '/plans/list', element: <MaintenancePlanList /> },
             // { path: '/plan/:id', element: <MaintenancePlanItemDetails /> },
-            // { path: '/reports', element: <Reports /> },
+            { path: '/reports', element: <Report /> },
             { path: '/profile', element: <Profile /> },
             { path: '/profile/notes', element: <NotesList /> },
             // { path: '/recent/activities', element: <RecentActivityList /> },
