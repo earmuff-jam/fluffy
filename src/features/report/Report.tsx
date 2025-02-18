@@ -1,17 +1,20 @@
 import * as React from 'react';
 
 import { Stack } from '@mui/material';
+
+import SimpleModal from '@utils/SimpleModal';
 import { AssetType } from '@features/assets/types';
 import { FILTER_OPTIONS } from '@features/report/constants';
-import { FilterOptionsType } from '@features/report/types';
-import SimpleModal from '@utils/SimpleModal';
+import { FilterOptionsType, ReportType } from '@features/report/types';
 import ReportHeader from '@features/report/ReportHeader/ReportHeader';
+import ReportContent from '@features/report/ReportContent/ReportContent';
+import ReportFilterMenu from '@features/report/ReportFilterMenu/ReportFilterMenu';
 
 const Report: React.FunctionComponent = () => {
   const inventories = [] as AssetType[];
   const loading = false;
 
-  const reports = [];
+  const reports = [] as ReportType[];
   const reportsLoading = false;
 
   const maintenancePlanList = [];
@@ -74,7 +77,7 @@ const Report: React.FunctionComponent = () => {
           handleClose={closeFilter}
           maxSize="xs"
         >
-          <ReportsFilterMenu
+          <ReportFilterMenu
             handleClose={closeFilter}
             sinceValue={sinceValue}
             setSinceValue={setSinceValue}

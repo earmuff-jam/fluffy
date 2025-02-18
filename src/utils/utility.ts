@@ -1,5 +1,7 @@
-import { NoteType } from '@features/notes/types';
+import dayjs from 'dayjs';
+
 import { useTour } from '@reactour/tour';
+import { NoteType } from '@features/notes/types';
 import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/TourSteps';
 
 /**
@@ -79,6 +81,16 @@ export const pluralizeWord = (stringToEdit: string = '', size: number): string =
  */
 export const capitalizeFirstLetter = (value: string): string => {
   return value.charAt(0).toUpperCase() + value.slice(1);
+};
+
+/**
+ * formatDate function
+ *
+ * used to format the selected date. Returns null if not exists.
+ */
+export const formatDate = (date: string, layout = 'MMM, YYYY') => {
+  if (!date) return null;
+  return dayjs(date).isValid() && `${dayjs(date).format(layout)}`;
 };
 
 // setTour function is used to setup tour in the application.

@@ -38,6 +38,18 @@ export type AuditColumnsFormField = {
   collaborators: FormField;
 };
 
+// used for maintenance plan type
+export type MaintenancePlanType = AuditColumns & {
+  name: string;
+  description: string;
+  type: string;
+  color: string;
+  location: LocationType;
+  planType: string;
+  planDue: string;
+  maintenanceStatus: string;
+};
+
 // Collaborators and users in sharable groups
 export type Collaborator = {
   display: string; // profile email
