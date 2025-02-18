@@ -62,7 +62,7 @@ Consequence: A permanent ban from any sort of public interaction within the comm
 
 ### Reporting Code of Conduct Issues:
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting opensource-codeofconduct@amazon.com. All complaints will be reviewed and investigated promptly and fairly. Any member of the community may report a Code of Conduct issue, even if they were not the target of unacceptable behavior or harassment. Reports will be kept private and secure.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting earmuffjam@gmail.com. All complaints will be reviewed and investigated promptly and fairly. Any member of the community may report a Code of Conduct issue, even if they were not the target of unacceptable behavior or harassment. Reports will be kept private and secure.
 
 
 ### Attribution:

@@ -1,10 +1,10 @@
 # Fleetwise Application
 
-![Build Status](https://github.com/earmuff-jam/fleetwise/actions/workflows/mashed-main.yml/badge.svg)
+![Build Status](https://github.com/earmuff-jam/fluffy/actions/workflows/main.yml/badge.svg)
 
 [![License][license-image]][license]
 
-<img src="https://raw.githubusercontent.com/earmuff-jam/fleetwise/main/public/fleetwise.png" alt="Fleetwise Asset Tracker" title="Fleetwise asset tracker" align="right" width="400px" height="400px" />
+<img src="https://raw.githubusercontent.com/earmuff-jam/fluffy/main/public/fleetwise.png" alt="Fleetwise Asset Tracker" title="Fleetwise asset tracker" align="right" width="400px" height="400px" />
 
 ## Overview
 
@@ -50,3 +50,6 @@ limitations under the License.
 ## Contact
 
 If you have any questions or need support, feel free to reach out to us at earmuffjam@gmail.com
+
+[license-image]: http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
+[license]: https://www.mit.edu/~amini/LICENSE.md
