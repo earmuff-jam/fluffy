@@ -1,11 +1,12 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Stack } from "@mui/material";
-import SimpleModal from "@utils/SimpleModal";
-import AddCategory from "@features/categories/AddCategory";
-import SectionCardHeader from "@common/SectionCard/SectionCardHeader";
-import SectionCardContent from "@common/SectionCard/SectionCardContent";
-import { CategoryType } from "@features/categories/types";
+import { Stack } from '@mui/material';
+import SimpleModal from '@utils/SimpleModal';
+import AddCategory from '@features/categories/AddCategory';
+import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
+import SectionCardContent from '@common/SectionCard/SectionCardContent';
+import { CategoryType } from '@features/categories/types';
+import { fetchAllCategories } from '@features/api/Categories';
 
 const CategoryList: React.FunctionComponent = () => {
   const categories = [];
@@ -15,12 +16,12 @@ const CategoryList: React.FunctionComponent = () => {
   const [sortingOrder, setSortingOrder] = React.useState(true); // false ascending
 
   const [displayModal, setDisplayModal] = React.useState(false);
-  const [selectedFilter, setSelectedFilter] = React.useState("");
-  const [selectedCategoryID, setSelectedCategoryID] = React.useState("");
+  const [selectedFilter, setSelectedFilter] = React.useState('');
+  const [selectedCategoryID, setSelectedCategoryID] = React.useState('');
 
   const handleClose = () => {
     setDisplayModal(false);
-    setSelectedCategoryID("");
+    setSelectedCategoryID('');
   };
 
   const toggleModal = () => setDisplayModal(!displayModal);
@@ -61,17 +62,15 @@ const CategoryList: React.FunctionComponent = () => {
 
   React.useEffect(() => {
     //   dispatch(categoryActions.getCategories(100));
+    fetchAllCategories('', setSortedData);
   }, []);
 
+  console.log(sortedData);
   return (
     <Stack sx={{ py: 2 }} data-tour="categories-0">
       <SectionCardHeader
         title="Categories"
-        caption={
-          selectedFilter
-            ? `Applying ${selectedFilter} status filter`
-            : "Organize items into categories"
-        }
+        caption={selectedFilter ? `Applying ${selectedFilter} status filter` : 'Organize items into categories'}
         primaryBtnTitle="Add category"
         toggleModal={toggleModal}
         selectedFilter={selectedFilter}
@@ -79,10 +78,10 @@ const CategoryList: React.FunctionComponent = () => {
         sortingOrder={sortingOrder}
         setSortingOrder={setSortingOrder}
         handleDownload={handleDownload}
-        addBtnDataTour={"categories-1"}
-        downloadBtnDataTour={"categories-2"}
-        filterBtnDataTour={"categories-3"}
-        sortBtnDataTour={"categories-4"}
+        addBtnDataTour={'categories-1'}
+        downloadBtnDataTour={'categories-2'}
+        filterBtnDataTour={'categories-3'}
+        sortBtnDataTour={'categories-4'}
         disableDownloadIcon={Boolean(categories) && categories.length <= 0}
       />
       <SectionCardContent
@@ -91,7 +90,7 @@ const CategoryList: React.FunctionComponent = () => {
         setDisplayModal={setDisplayModal}
         setSelectedID={setSelectedCategoryID}
         removeItem={removeSelectedCategory}
-        prefixURI={"category"}
+        prefixURI={'category'}
         content={filterAndBuildCategories(false, categories, selectedFilter)}
       />
       {displayModal && (

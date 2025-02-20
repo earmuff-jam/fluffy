@@ -18,6 +18,7 @@ import {
 import { useLocation, useParams } from 'react-router-dom';
 import { UserDemographicsType } from '@features/profile/types';
 import { setTour } from '@utils/utility';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 interface IAppToolbarMoreButtonsProps {
   profileDetails: UserDemographicsType;
@@ -26,6 +27,7 @@ interface IAppToolbarMoreButtonsProps {
 const AppToolbarMoreButtons: React.FunctionComponent<IAppToolbarMoreButtonsProps> = ({ profileDetails }) => {
   const { id } = useParams();
   const location = useLocation();
+  const { signOut } = useAuthenticator();
 
   const anchorRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
@@ -35,7 +37,7 @@ const AppToolbarMoreButtons: React.FunctionComponent<IAppToolbarMoreButtonsProps
   };
 
   const handleLogout = () => {
-    //   dispatch(authActions.getLogout());
+    signOut();
     localStorage.clear();
     window.location.href = '/';
   };

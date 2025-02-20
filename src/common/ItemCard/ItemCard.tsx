@@ -37,7 +37,7 @@ const ItemCard: React.FunctionComponent<IItemCardProps> = ({
             >
               <CardMedia
                 sx={{ height: "10rem" }}
-                image={item.image || "/blank_canvas.png"}
+                image={item?.image || "/blank_canvas.png"}
               />
               <CardContent>
                 <Stack direction="row">
