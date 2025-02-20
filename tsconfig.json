@@ -21,9 +21,9 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@features/*": ["src/features/*"],
       "@common/*": ["src/common/*"],
-      "@utils/*": ["src/utils/*"],
+      "@features/*": ["src/features/*"],
+      "@utils/*": ["src/utils/*"]
     },
   },
   "include": ["src", "src/features/recent/.tsx"],
