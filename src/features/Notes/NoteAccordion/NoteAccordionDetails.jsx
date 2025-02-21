@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
-
 import { DeleteRounded, EditRounded } from '@mui/icons-material';
 import { AccordionDetails, Box, IconButton, Stack, Tooltip, Typography, useMediaQuery } from '@mui/material';
-
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
 import LocationPicker from '@common/Location/LocationPicker';
@@ -47,7 +45,7 @@ export default function NoteAccordionDetails({
                   <IconButton
                     onClick={() => {
                       setConfirmDelete(true);
-                      setDeleteID(note.noteID);
+                      setDeleteID(note.id);
                     }}
                     size="small"
                   >
@@ -58,7 +56,7 @@ export default function NoteAccordionDetails({
                   <IconButton
                     onClick={() => {
                       setEditMode(true);
-                      setSelectedNoteID(note.noteID);
+                      setSelectedNoteID(note.id);
                     }}
                     size="small"
                   >
@@ -73,7 +71,7 @@ export default function NoteAccordionDetails({
             </Stack>
             <Box>
               <Typography variant="caption">
-                By {note.updator} {dayjs(note.updated_at).fromNow()}
+                By {note.updator || 'Anonymous'} {dayjs(note.updatedAt).fromNow()}
               </Typography>
             </Box>
           </Stack>

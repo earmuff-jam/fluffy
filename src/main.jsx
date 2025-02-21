@@ -1,23 +1,23 @@
-// import { store } from '@src/Store';
-import rtkStore from './rtkStore';
-import { Provider } from 'react-redux';
 import { lightTheme } from '@utils/Theme';
 import * as ReactDOM from 'react-dom/client';
 import { SnackbarProvider } from 'notistack';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import ApplicationValidator from '@src/ApplicationValidator';
-import { Amplify } from 'aws-amplify';
-import outputs from '../amplify_outputs.json';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+import { Amplify } from 'aws-amplify';
+import outputs from '../amplify_outputs.json';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 Amplify.configure(outputs);
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Authenticator>
-    <ThemeProvider theme={lightTheme}>
-      <CssBaseline />
-      <Provider store={rtkStore}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={lightTheme}>
+        <CssBaseline />
         <SnackbarProvider
           dense
           preventDuplicate
@@ -27,7 +27,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         >
           <ApplicationValidator />
         </SnackbarProvider>
-      </Provider>
-    </ThemeProvider>
+      </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   </Authenticator>
 );

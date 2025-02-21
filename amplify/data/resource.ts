@@ -16,7 +16,7 @@ const schema = a.schema({
   //     onlineStatus: a.boolean(),
   //     lastOnlineLocationPoint: a.customType({
   //       lat: a.float(),
-  //       long: a.float(),
+  //       lon: a.float(),
   //     }),
   //     updated_at: a.string(),
   //     createdLocations: a.hasMany("StorageLocations", "createdLocationId"),
@@ -78,7 +78,7 @@ const schema = a.schema({
   //     location: a.string(),
   //     storageLocationPoint: a.customType({
   //       lat: a.float(),
-  //       long: a.float(),
+  //       lon: a.float(),
   //     }),
   //     created_at: a.string(),
   //     createdLocationId: a.id(),
@@ -113,7 +113,7 @@ const schema = a.schema({
       completionDate: a.string(),
       location: a.customType({
         lat: a.float(),
-        long: a.float(),
+        lon: a.float(),
       }),
       createdAt: a.string(),
       // createdNoteId: a.id(),
@@ -140,7 +140,7 @@ const schema = a.schema({
   //     bought_at: a.string(),
   //     location: a.customType({
   //       lat: a.float(),
-  //       long: a.float(),
+  //       lon: a.float(),
   //     }),
   //     storage_location_id: a.string(),
   //     is_returnable: a.boolean(),
@@ -176,7 +176,7 @@ const schema = a.schema({
   //     max_items_limit: a.string(),
   //     categoryLocationPoint: a.customType({
   //       lat: a.float(),
-  //       long: a.float(),
+  //       lon: a.float(),
   //     }),
   //     created_at: a.string(),
   //     createdCategoryId: a.id(),
@@ -222,7 +222,7 @@ const schema = a.schema({
   //     plan_type: a.string(),
   //     maintenancePlanLocationPoint: a.customType({
   //       lat: a.float(),
-  //       long: a.float(),
+  //       lon: a.float(),
   //     }),
   //     created_at: a.string(),
   //     createdMaintenancePlanId: a.id(),

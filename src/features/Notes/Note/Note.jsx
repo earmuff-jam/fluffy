@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
-
 import dayjs from 'dayjs';
-import { useDispatch } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
-
 import { Accordion, Skeleton } from '@mui/material';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { notesActions } from '@features/Notes/notesSlice';
 import { categorizeNotes, ConfirmationBoxModal, EmptyComponent } from '@common/utils';
 import NoteAccordionSummary from '@features/Notes/NoteAccordion/NoteAccordionSummary';
 import NoteAccordionDetails from '@features/Notes/NoteAccordion/NoteAccordionDetails';
+import { useRemoveNote } from '@services/notesApi';
+
+dayjs.extend(relativeTime);
 
 const Note = ({ notes, loading, setEditMode, setSelectedNoteID }) => {
-  const dispatch = useDispatch();
-  dayjs.extend(relativeTime);
+  const { mutate: removeNote } = useRemoveNote();
 
   const [deleteID, setDeleteID] = useState(-1);
   const [formattedNotes, setFormattedNotes] = useState([]);
@@ -30,7 +28,7 @@ const Note = ({ notes, loading, setEditMode, setSelectedNoteID }) => {
   };
 
   const removeSelectedNote = (noteID) => {
-    dispatch(notesActions.removeNote({ noteID }));
+    removeNote(noteID);
     enqueueSnackbar('Successfully removed notes.', {
       variant: 'success',
     });

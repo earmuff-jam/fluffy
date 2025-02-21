@@ -13,7 +13,7 @@ import { defaults as defaultControls } from 'ol/control.js';
 import { Box, Stack, Typography } from '@mui/material';
 
 const LocationPicker = ({
-  location = { lon: 0, lat: 0 },
+  location = { long: 0, lat: 0 },
   onLocationChange,
   subtitle,
   height = '15vh',
@@ -25,7 +25,7 @@ const LocationPicker = ({
 
   useEffect(() => {
     const defaultCenter = fromLonLat([95.7129, 37.0902]); // USA Default Center
-    const initialCenter = location.lon && location.lat ? fromLonLat([location.lon, location.lat]) : defaultCenter;
+    const initialCenter = location.long && location.lat ? fromLonLat([location.long, location.lat]) : defaultCenter;
     const zoom = 1;
 
     const map = new Map({

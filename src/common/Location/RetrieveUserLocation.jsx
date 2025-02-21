@@ -2,12 +2,15 @@ import { LocationOnRounded } from '@mui/icons-material';
 import { IconButton, Tooltip } from '@mui/material';
 import CryptoJS from 'crypto-js';
 
+// TODO: CHANGE THIS
+// DO NOT PUSH TO PRODUCTION
+const ks = 'this-si-no-bueno-hidden-khabar';
+
 const RetrieveUserLocation = ({ setLocation }) => {
   const handleLocation = async () => {
     navigator.geolocation.getCurrentPosition((position) => {
       const foundCoordinates = { lat: position.coords.latitude || 0, lon: position.coords.longitude || 0 };
-      const userID = localStorage.getItem('userID');
-      const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(foundCoordinates), userID).toString();
+      const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(foundCoordinates), ks).toString();
       localStorage.setItem('client_location', ciphertext);
       return setLocation(foundCoordinates);
     });

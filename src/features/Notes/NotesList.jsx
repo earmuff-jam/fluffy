@@ -4,11 +4,10 @@ import Note from '@features/Notes/Note/Note';
 import SimpleModal from '@common/SimpleModal';
 import AddNote from '@features/Notes/AddNote/AddNote';
 import NoteHeader from '@features/Notes/Header/NoteHeader';
-import { useFetchNotesQuery } from '../../services/notesApi';
+import { useNotes } from '@services/notesApi';
 
 const NotesList = () => {
-  // const { notes, loading } = useFetchNotes();
-  const { data: notes, error, isLoading: loading } = useFetchNotesQuery();
+  const { data: notes, isLoading } = useNotes();
 
   const [editMode, setEditMode] = useState(false);
   const [selecteNoteID, setSelectedNoteID] = useState(null);
@@ -23,7 +22,7 @@ const NotesList = () => {
   return (
     <Stack spacing="1rem" data-tour="notes-0">
       <NoteHeader handleClick={handleEditMode} />
-      <Note notes={notes} loading={loading} setEditMode={setEditMode} setSelectedNoteID={setSelectedNoteID} />
+      <Note notes={notes} loading={isLoading} setEditMode={setEditMode} setSelectedNoteID={setSelectedNoteID} />
       {editMode && (
         <SimpleModal
           title="Add New Note"

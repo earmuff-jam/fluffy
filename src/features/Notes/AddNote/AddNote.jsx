@@ -1,23 +1,23 @@
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Button, Stack } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import { AddRounded, CheckCircleRounded } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
 import ColorPicker from '@common/ColorPicker';
 import CustomDatePicker from '@common/DatePicker/CustomDatePicker';
 import { ADD_NOTES_FORM_FIELDS } from '@features/Notes/constants';
-import { notesActions } from '@features/Notes/notesSlice';
 import AddNoteHeader from '@features/Notes/AddNote/AddNoteHeader';
 import AddNoteStatusOptions from '@features/Notes/AddNote/AddNoteStatusOptions';
-import AddNoteLocationPicker from '@features/Notes/AddNote/AddNoteLocationPicker';
+import LocationPicker from '@common/Location/LocationPicker';
+import { useCreateNote, useUpdateNote } from '@services/notesApi';
 
 const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
-  const dispatch = useDispatch();
+  const { mutate: createNote } = useCreateNote();
+  const { mutate: updateNote } = useUpdateNote();
 
   const [planColor, setPlanColor] = useState('#f7f7f7');
-  const [location, setLocation] = useState({ lat: 0, long: 0 });
+  const [location, setLocation] = useState({ lat: 0, lon: 0 });
   const [completionDate, setCompletionDate] = useState(dayjs());
   const [formFields, setFormFields] = useState(ADD_NOTES_FORM_FIELDS);
   const [status, setStatus] = useState(STATUS_OPTIONS[0].label);
@@ -61,9 +61,7 @@ const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
     );
   };
 
-  const submit = () => {
-    const userID = localStorage.getItem('userID');
-
+  const submit = async () => {
     if (isDisabled()) {
       enqueueSnackbar('Cannot add new item.', {
         variant: 'error',
@@ -73,8 +71,10 @@ const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
 
     const formattedNotes = Object.values(formFields).reduce((acc, el) => {
       if (el.value) {
-        acc['noteID'] = noteID;
         acc[el.name] = el.value;
+      }
+      if (noteID) {
+        acc['id'] = noteID;
       }
       return acc;
     }, {});
@@ -82,16 +82,16 @@ const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
     const formattedDraftNotes = {
       ...formattedNotes,
       color: planColor,
-      status: status,
+      // status: status,
       location: location,
       completionDate: completionDate.toISOString(),
-      updated_by: userID,
+      // updated_by: userID,
     };
 
     if (noteID) {
-      dispatch(notesActions.updateNote(formattedDraftNotes));
+      updateNote(formattedDraftNotes);
     } else {
-      dispatch(notesActions.createNote(formattedDraftNotes));
+      createNote(formattedDraftNotes);
     }
 
     setEditMode(false);
@@ -106,26 +106,25 @@ const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
 
   useEffect(() => {
     if (noteID !== null) {
-      const selectedNote = notes.filter((v) => v.noteID === noteID);
-      const draftNote = selectedNote[0];
+      const selectedNote = notes.find((v) => v.id === noteID);
       const updatedFormFields = Object.assign({}, formFields, {
         title: {
           ...formFields.title,
-          value: draftNote?.title || '',
+          value: selectedNote?.title || '',
         },
         description: {
           ...formFields.description,
-          value: draftNote?.description || '',
+          value: selectedNote?.description || '',
         },
       });
 
-      if (draftNote?.completionDate) {
-        setCompletionDate(dayjs(draftNote.completionDate));
+      if (selectedNote?.completionDate) {
+        setCompletionDate(dayjs(selectedNote.completionDate));
       }
 
-      setPlanColor(draftNote.color);
-      setStatus(draftNote.status_name);
-      setLocation(draftNote.location);
+      setPlanColor(selectedNote?.color || '#ffffff');
+      setStatus(selectedNote.status_name || STATUS_OPTIONS[0].label);
+      setLocation(selectedNote.location);
       setFormFields(updatedFormFields);
     } else {
       setFormFields(ADD_NOTES_FORM_FIELDS);
@@ -144,13 +143,7 @@ const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
         completionDate={completionDate}
         setCompletionDate={setCompletionDate}
       />
-      <AddNoteLocationPicker
-        subtitle="Select location"
-        location={location}
-        setLocation={setLocation}
-        editMode={true}
-        displayLocationPicker={location?.lat}
-      />
+      {location?.lat ? <LocationPicker location={location} onLocationChange={setLocation} editMode /> : null}
       <Button
         onClick={submit}
         variant="outlined"

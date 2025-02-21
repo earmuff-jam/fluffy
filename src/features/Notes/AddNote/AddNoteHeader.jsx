@@ -1,5 +1,4 @@
 import { InputAdornment, TextField, Typography } from '@mui/material';
-
 import RetrieveUserLocation from '@common/Location/RetrieveUserLocation';
 import TextFieldWithLabel from '@common/TextFieldWithLabel/TextFieldWithLabel';
 
