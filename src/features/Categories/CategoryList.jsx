@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Stack } from '@mui/material';
-
 import SimpleModal from '@common/SimpleModal';
 import AddCategory from '@features/Categories/AddCategory';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';

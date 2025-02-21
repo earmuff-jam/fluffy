@@ -1,17 +1,14 @@
-import { useEffect, useState } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useState } from 'react';
 import { Stack } from '@mui/material';
 import Note from '@features/Notes/Note/Note';
 import SimpleModal from '@common/SimpleModal';
 import AddNote from '@features/Notes/AddNote/AddNote';
-import { notesActions } from '@features/Notes/notesSlice';
 import NoteHeader from '@features/Notes/Header/NoteHeader';
+import { useFetchNotesQuery } from '../../services/notesApi';
 
 const NotesList = () => {
-  const dispatch = useDispatch();
-  const { loading, notes } = useSelector((state) => state.notes);
+  // const { notes, loading } = useFetchNotes();
+  const { data: notes, error, isLoading: loading } = useFetchNotesQuery();
 
   const [editMode, setEditMode] = useState(false);
   const [selecteNoteID, setSelectedNoteID] = useState(null);
@@ -22,10 +19,6 @@ const NotesList = () => {
     setEditMode(false);
     setSelectedNoteID(null);
   };
-
-  useEffect(() => {
-    dispatch(notesActions.getNotes());
-  }, []);
 
   return (
     <Stack spacing="1rem" data-tour="notes-0">
