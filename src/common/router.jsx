@@ -4,10 +4,10 @@ import Layout from '@features/Layout/Layout'; // can't lazy load this
 
 // const Overview = lazy(() => import('@features/Home/Overview'));
 // const Reports = lazy(() => import('@features/Reports/Reports'));
-const NotesList = lazy(() => import('@features/Notes/NotesList'));
+// const NotesList = lazy(() => import('@features/Notes/NotesList'));
 
 // const ProfilePage = lazy(() => import('@features/Profile/ProfilePage'));
-// const CategoryList = lazy(() => import('@features/Categories/CategoryList'));
+const CategoryList = lazy(() => import('@features/Categories/CategoryList'));
 // const AssetList = lazy(() => import('@features/Assets/AssetList'));
 // const RecentActivityList = lazy(() => import('@features/RecentActivities/RecentActivityList'));
 
@@ -22,7 +22,7 @@ const NotesList = lazy(() => import('@features/Notes/NotesList'));
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <NotesList />,
+    element: <CategoryList />,
     // children: [
     //   {
     //     path: '/',
