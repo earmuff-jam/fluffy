@@ -1,4 +1,4 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 
 const schema = a.schema({
   // Profiles: a
@@ -163,32 +163,30 @@ const schema = a.schema({
   //   })
   //   .authorization((allow) => [allow.authenticated()]),
 
-  // Categories: a
-  //   .model({
-  //     id: a.id(),
-  //     name: a.string(),
-  //     description: a.string(),
-  //     color: a.string(),
-  //     imageURL: a.string(),
-  //     statusId: a.id(),
-  //     status: a.belongsTo("Status", "statusId"),
-  //     min_items_limit: a.string(),
-  //     max_items_limit: a.string(),
-  //     categoryLocationPoint: a.customType({
-  //       lat: a.float(),
-  //       lon: a.float(),
-  //     }),
-  //     created_at: a.string(),
-  //     createdCategoryId: a.id(),
-  //     created_by: a.belongsTo("Profiles", "createdCategoryId"),
-  //     updated_at: a.string(),
-  //     updatedCategoryId: a.id(),
-  //     updated_by: a.belongsTo("Profiles", "updatedCategoryId"),
-  //     sharable_groups: a.string().array(),
-  //     associatedCategories: a.hasMany("CategoryItems", "categoryId"),
-  //     associatedFavouriteCategories: a.hasMany("FavouriteItems", "categoryId"),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+  Categories: a
+    .model({
+      id: a.id(),
+      name: a.string(),
+      description: a.string(),
+      color: a.string(),
+      imageURL: a.string(),
+      // statusId: a.id(),
+      // status: a.belongsTo('Status', 'statusId'),
+      location: a.customType({
+        lat: a.float(),
+        lon: a.float(),
+      }),
+      createdAt: a.string(),
+      // createdCategoryId: a.id(),
+      // created_by: a.belongsTo("Profiles", "createdCategoryId"),
+      updatedAt: a.string(),
+      // updatedCategoryId: a.id(),
+      // updated_by: a.belongsTo("Profiles", "updatedCategoryId"),
+      // sharable_groups: a.string().array(),
+      // associatedCategories: a.hasMany("CategoryItems", "categoryId"),
+      // associatedFavouriteCategories: a.hasMany("FavouriteItems", "categoryId"),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 
   // CategoryItems: a
   //   .model({
@@ -322,7 +320,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: "userPool",
+    defaultAuthorizationMode: 'userPool',
     // API Key is used for a.allow.public() rules
     apiKeyAuthorizationMode: {
       expiresInDays: 30,

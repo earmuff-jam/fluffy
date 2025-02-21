@@ -32,7 +32,7 @@ export default function ItemCardActions({ statusName, updatedAtTimestamp, updato
           </Typography>
         </Tooltip>
       )}
-      {displayTooltip(statusName)}
+      {statusName && displayTooltip(statusName)}
     </CardActions>
   );
 }

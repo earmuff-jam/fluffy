@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Stack } from '@mui/material';
 import SimpleModal from '@common/SimpleModal';
 import AddCategory from '@features/Categories/AddCategory';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
-import { categoryActions } from '@features/Categories/categoriesSlice';
 import SectionCardContent from '@common/SectionCard/SectionCardContent';
+import { useCategories, useDownloadCategories, useRemoveCategory } from '@services/categoriesApi';
 
 const CategoryList = ({ displayConcise = false }) => {
-  const dispatch = useDispatch();
-  const { categories = [], loading } = useSelector((state) => state.categories);
+  const { data: categories, isLoading } = useCategories();
+  const { mutate: removeCategory } = useRemoveCategory();
+  const { mutate: downloadCategories } = useDownloadCategories();
 
   const [sortedData, setSortedData] = useState([]);
   const [sortingOrder, setSortingOrder] = useState(true); // false ascending
@@ -22,11 +22,6 @@ const CategoryList = ({ displayConcise = false }) => {
     setDisplayModal(false);
     setSelectedCategoryID('');
   };
-
-  const toggleModal = () => setDisplayModal(!displayModal);
-  const handleDownload = () => dispatch(categoryActions.download());
-
-  const removeSelectedCategory = (id) => dispatch(categoryActions.removeCategory({ id }));
 
   const filterAndBuildCategories = (displayConcise, categories, selectedFilter) => {
     if (displayConcise) {
@@ -51,34 +46,30 @@ const CategoryList = ({ displayConcise = false }) => {
     }
   }, [sortingOrder, categories]);
 
-  useEffect(() => {
-    dispatch(categoryActions.getCategories(100));
-  }, []);
-
   return (
     <Stack sx={{ py: 2 }} data-tour="categories-0">
       <SectionCardHeader
         title="Categories"
         caption={selectedFilter ? `Applying ${selectedFilter} status filter` : 'Organize items into categories'}
         primaryBtnTitle="Add category"
-        toggleModal={toggleModal}
+        toggleModal={() => setDisplayModal(!displayModal)}
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
         sortingOrder={sortingOrder}
         setSortingOrder={setSortingOrder}
-        handleDownload={handleDownload}
+        handleDownload={() => downloadCategories()}
         addBtnDataTour={'categories-1'}
         downloadBtnDataTour={'categories-2'}
         filterBtnDataTour={'categories-3'}
         sortBtnDataTour={'categories-4'}
-        disableDownloadIcon={Boolean(categories) && categories.length <= 0}
+        disableDownloadIcon={!categories || (Boolean(categories) && categories.length <= 0)}
       />
       <SectionCardContent
-        loading={loading}
+        loading={isLoading}
         displayModal={displayModal}
         setDisplayModal={setDisplayModal}
         setSelectedID={setSelectedCategoryID}
-        removeItem={removeSelectedCategory}
+        removeItem={(id) => removeCategory(id)}
         prefixURI={'category'}
         content={filterAndBuildCategories(displayConcise, categories, selectedFilter)}
       />
@@ -91,7 +82,7 @@ const CategoryList = ({ displayConcise = false }) => {
         >
           <AddCategory
             categories={categories}
-            loading={loading}
+            loading={isLoading}
             handleCloseAddCategory={handleClose}
             selectedCategoryID={selectedCategoryID}
             setSelectedCategoryID={setSelectedCategoryID}

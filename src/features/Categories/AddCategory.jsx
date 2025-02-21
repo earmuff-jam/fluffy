@@ -2,18 +2,15 @@ import { produce } from 'immer';
 import { useDispatch } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
-
 import { Button, Stack } from '@mui/material';
-
 import ColorPicker from '@common/ColorPicker';
 import LocationPicker from '@common/Location/LocationPicker';
 import StatusOptions from '@common/StatusOptions/StatusOptions';
-
 import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
-import { categoryActions } from '@features/Categories/categoriesSlice';
-
 import AddFormHeader from '@features/FormComponents/AddFormHeader';
 import { ADD_CATEGORY_FORM_FIELDS } from '@features/Categories/constants';
+import { useCreateCategory, useUpdateCategory } from '@services/categoriesApi';
+import dayjs from 'dayjs';
 
 export default function AddCategory({
   categories,
@@ -22,9 +19,10 @@ export default function AddCategory({
   selectedCategoryID,
   setSelectedCategoryID,
 }) {
-  const dispatch = useDispatch();
+  const { mutate: createCategory } = useCreateCategory();
+  const { mutate: updateCategory } = useUpdateCategory();
 
-  const [location, setLocation] = useState();
+  const [location, setLocation] = useState({ lat: 0, lon: 0 });
   const [planColor, setPlanColor] = useState('#f7f7f7');
   const [status, setStatus] = useState(STATUS_OPTIONS[0].label);
   const [formFields, setFormFields] = useState(ADD_CATEGORY_FORM_FIELDS);
@@ -101,27 +99,30 @@ export default function AddCategory({
     // seperated to prevent updating sharable groups
     if (selectedCategoryID) {
       const selectedCategory = categories.find((v) => v.id === selectedCategoryID);
-      const draftCategories = {
+      const draftCategory = {
         id: selectedCategoryID,
         ...selectedCategory,
         ...formattedData,
         color: planColor,
-        status: status,
+        // status: status,
         location: location,
-        updated_by: userID,
+        // updated_by: userID,
       };
-      dispatch(categoryActions.updateCategory(draftCategories));
+      updateCategory(draftCategory);
     } else {
-      const draftCategories = {
+      const draftCategory = {
         ...formattedData,
         color: planColor,
-        status: status,
+        // status: status,
         location: location,
-        created_by: userID,
-        updated_by: userID,
-        sharable_groups: [userID],
+        createdAt: dayjs().toISOString(),
+        updatedAt: dayjs().toISOString(),
+        // created_by: userID,
+        // updated_by: userID,
+        // sharable_groups: [userID],
       };
-      dispatch(categoryActions.createCategory(draftCategories));
+      console.log(draftCategory);
+      createCategory(draftCategory);
     }
 
     enqueueSnackbar(
@@ -144,8 +145,8 @@ export default function AddCategory({
       );
 
       setLocation(draftCategory.location);
-      setPlanColor(draftCategory.color);
-      setStatus(draftCategory.status_name);
+      setPlanColor(draftCategory.color || '#ffffff');
+      setStatus(draftCategory.status_name || STATUS_OPTIONS[0].label);
     } else {
       setFormFields(ADD_CATEGORY_FORM_FIELDS);
       setPlanColor('#f7f7f7');
