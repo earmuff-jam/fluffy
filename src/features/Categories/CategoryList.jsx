@@ -5,6 +5,7 @@ import AddCategory from '@features/Categories/AddCategory';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
 import SectionCardContent from '@common/SectionCard/SectionCardContent';
 import { useCategories, useDownloadCategories, useRemoveCategory } from '@services/categoriesApi';
+import dayjs from 'dayjs';
 
 const CategoryList = ({ displayConcise = false }) => {
   const { data: categories, isLoading } = useCategories();
@@ -34,13 +35,9 @@ const CategoryList = ({ displayConcise = false }) => {
   };
 
   useEffect(() => {
-    if (sortingOrder) {
-      if (categories && categories.length > 0) {
-        const draft = [...categories].sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
-        setSortedData(draft);
-      } else {
-        setSortedData(categories);
-      }
+    if (sortingOrder && categories?.length > 0) {
+      const draft = [...categories].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+      setSortedData(draft);
     } else {
       setSortedData(categories);
     }

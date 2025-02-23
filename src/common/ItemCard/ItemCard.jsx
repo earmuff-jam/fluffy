@@ -38,7 +38,7 @@ export default function ItemCard({ data, handleEdit, handleDelete, prefixURI }) 
               </CardContent>
               <ItemCardActions
                 updator={item.updator}
-                updatedAtTimestamp={item.updated_at}
+                updatedAtTimestamp={item.updatedAt}
                 statusName={prefixURI === 'plan' ? item.maintenance_status_name : item.status_name}
               />
             </Card>
