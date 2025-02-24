@@ -1,33 +1,30 @@
 import { useEffect, useState } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Box } from '@mui/material';
 import SimpleModal from '@common/SimpleModal';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
 import SectionCardContent from '@common/SectionCard/SectionCardContent';
 import AddMaintenancePlan from '@features/MaintenancePlan/AddMaintenancePlan';
-import { maintenancePlanActions } from '@features/MaintenancePlan/maintenanceSlice';
+import {
+  useDownloadMaintenancePlans,
+  useMaintenancePlans,
+  useRemoveMaintenancePlan,
+} from '@services/maintenancePlanApi';
 
 const MaintenancePlanList = () => {
-  const dispatch = useDispatch();
-  const { maintenancePlan, loading } = useSelector((state) => state.maintenance);
+  const { data: maintenancePlans, isLoading } = useMaintenancePlans();
+  const { mutate: removeMaintenancePlan } = useRemoveMaintenancePlan();
+  const { mutate: downloadMaintenancePlans } = useDownloadMaintenancePlans();
 
   const [sortedData, setSortedData] = useState([]);
-  const [displayModal, setDisplayModal] = useState(false);
-
-  const [selectedFilter, setSelectedFilter] = useState('');
   const [sortingOrder, setSortingOrder] = useState(true); // false ascending
+
+  const [displayModal, setDisplayModal] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('');
   const [selectedMaintenancePlanID, setSelectedMaintenancePlanID] = useState('');
 
-  const toggleModal = () => setDisplayModal(!displayModal);
-  const handleCloseAddNewPlan = () => {
+  const handleClose = () => {
     setDisplayModal(false);
     setSelectedMaintenancePlanID('');
-  };
-
-  const handleDownload = () => {
-    dispatch(maintenancePlanActions.download());
   };
 
   const filterAndBuildMaintenancePlans = (plans, selectedFilter) => {
@@ -38,20 +35,18 @@ const MaintenancePlanList = () => {
     }
   };
 
-  const removeSelectedMaintenancePlan = (id) => dispatch(maintenancePlanActions.removePlan(id));
-
   useEffect(() => {
-    if (sortingOrder) {
-      const draft = [...maintenancePlan].sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
+    if (maintenancePlans?.length > 0) {
+      const draft = [...maintenancePlans].sort((a, b) => {
+        return sortingOrder
+          ? new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime() // Descending
+          : new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime(); // Ascending
+      });
       setSortedData(draft);
     } else {
-      setSortedData(maintenancePlan);
+      setSortedData(maintenancePlans);
     }
-  }, [sortingOrder, maintenancePlan]);
-
-  useEffect(() => {
-    dispatch(maintenancePlanActions.getPlans(100));
-  }, []);
+  }, [sortingOrder, maintenancePlans]);
 
   return (
     <Box sx={{ py: 2 }} data-tour="plans-0">
@@ -59,38 +54,38 @@ const MaintenancePlanList = () => {
         title="Maintenance Plans"
         caption={selectedFilter ? `Applying ${selectedFilter} status filter` : 'Assign items to maintenance plans'}
         primaryBtnTitle="Add plan"
-        toggleModal={toggleModal}
+        toggleModal={() => setDisplayModal(!displayModal)}
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
         sortingOrder={sortingOrder}
         setSortingOrder={setSortingOrder}
-        handleDownload={handleDownload}
+        handleDownload={() => downloadMaintenancePlans()}
         addBtnDataTour={'plans-1'}
         downloadBtnDataTour={'plans-2'}
         filterBtnDataTour={'plans-3'}
         sortBtnDataTour={'plans-4'}
-        disableDownloadIcon={Boolean(maintenancePlan) && maintenancePlan.length <= 0}
+        disableDownloadIcon={!maintenancePlans || (Boolean(maintenancePlans) && maintenancePlans.length <= 0)}
       />
       <SectionCardContent
-        loading={loading}
+        loading={isLoading}
         prefixURI={'plan'}
         displayModal={displayModal}
         setDisplayModal={setDisplayModal}
         setSelectedID={setSelectedMaintenancePlanID}
-        removeItem={removeSelectedMaintenancePlan}
-        content={filterAndBuildMaintenancePlans(maintenancePlan, selectedFilter)}
+        removeItem={(id) => removeMaintenancePlan(id)}
+        content={filterAndBuildMaintenancePlans(maintenancePlans, selectedFilter)}
       />
       {displayModal && (
         <SimpleModal
           title="Add new maintenance plan"
           subtitle="Create maintenance plan to associate assets and periodically perform checks on them.
 "
-          handleClose={handleCloseAddNewPlan}
+          handleClose={handleClose}
           maxSize="sm"
         >
           <AddMaintenancePlan
-            maintenancePlan={maintenancePlan}
-            handleCloseAddNewPlan={handleCloseAddNewPlan}
+            maintenancePlan={maintenancePlans}
+            handleClose={handleClose}
             selectedMaintenancePlanID={selectedMaintenancePlanID}
             setSelectedMaintenancePlanID={setSelectedMaintenancePlanID}
           />

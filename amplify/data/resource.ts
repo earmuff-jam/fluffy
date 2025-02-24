@@ -205,44 +205,42 @@ const schema = a.schema({
   //   })
   //   .authorization((allow) => [allow.authenticated()]),
 
-  // MaintenancePlans: a
-  //   .model({
-  //     id: a.id(),
-  //     name: a.string(),
-  //     description: a.string(),
-  //     color: a.string(),
-  //     statusId: a.id(),
-  //     status: a.belongsTo("Status", "statusId"),
-  //     imageURL: a.string(),
-  //     plan_due: a.string(),
-  //     min_items_limit: a.string(),
-  //     max_items_limit: a.string(),
-  //     plan_type: a.string(),
-  //     maintenancePlanLocationPoint: a.customType({
-  //       lat: a.float(),
-  //       lon: a.float(),
-  //     }),
-  //     created_at: a.string(),
-  //     createdMaintenancePlanId: a.id(),
-  //     created_by: a.belongsTo("Profiles", "createdMaintenancePlanId"),
-  //     updated_at: a.string(),
-  //     updatedMaintenancePlanId: a.id(),
-  //     updated_by: a.belongsTo("Profiles", "updatedMaintenancePlanId"),
-  //     sharable_groups: a.string().array(),
-  //     associatedMaintenancePlans: a.hasMany(
-  //       "MaintenancePlanItems",
-  //       "maintenancePlanId"
-  //     ),
-  //     associatedMaintenancePlanAlerts: a.hasMany(
-  //       "MaintenanceAlert",
-  //       "maintenancePlanId"
-  //     ),
-  //     associatedFavouriteMaintenancePlans: a.hasMany(
-  //       "FavouriteItems",
-  //       "maintenancePlanId"
-  //     ),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+  MaintenancePlans: a
+    .model({
+      id: a.id(),
+      name: a.string(),
+      description: a.string(),
+      color: a.string(),
+      imageURL: a.string(),
+      // statusId: a.id(),
+      // status: a.belongsTo("Status", "statusId"),
+      // plan_due: a.string(),
+      // plan_type: a.string(),
+      location: a.customType({
+        lat: a.float(),
+        lon: a.float(),
+      }),
+      createdAt: a.string(),
+      // createdMaintenancePlanId: a.id(),
+      // created_by: a.belongsTo("Profiles", "createdMaintenancePlanId"),
+      updatedAt: a.string(),
+      // updatedMaintenancePlanId: a.id(),
+      // updated_by: a.belongsTo("Profiles", "updatedMaintenancePlanId"),
+      // sharable_groups: a.string().array(),
+      // associatedMaintenancePlans: a.hasMany(
+      //   "MaintenancePlanItems",
+      //   "maintenancePlanId"
+      // ),
+      // associatedMaintenancePlanAlerts: a.hasMany(
+      //   "MaintenanceAlert",
+      //   "maintenancePlanId"
+      // ),
+      // associatedFavouriteMaintenancePlans: a.hasMany(
+      //   "FavouriteItems",
+      //   "maintenancePlanId"
+      // ),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 
   // MaintenancePlanItems: a
   //   .model({

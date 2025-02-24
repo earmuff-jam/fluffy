@@ -7,12 +7,12 @@ import Layout from '@features/Layout/Layout'; // can't lazy load this
 // const NotesList = lazy(() => import('@features/Notes/NotesList'));
 
 // const ProfilePage = lazy(() => import('@features/Profile/ProfilePage'));
-const CategoryList = lazy(() => import('@features/Categories/CategoryList'));
+// const CategoryList = lazy(() => import('@features/Categories/CategoryList'));
 // const AssetList = lazy(() => import('@features/Assets/AssetList'));
 // const RecentActivityList = lazy(() => import('@features/RecentActivities/RecentActivityList'));
 
 // const SelectedAsset = lazy(() => import('@features/SelectedAsset/SelectedAsset'));
-// const MaintenancePlanList = lazy(() => import('@features/MaintenancePlan/MaintenancePlanList'));
+const MaintenancePlanList = lazy(() => import('@features/MaintenancePlan/MaintenancePlanList'));
 // const CategoryItemDetails = lazy(() => import('@features/CategoryItemDetails/CategoryItemDetails'));
 
 // const MaintenancePlanItemDetails = lazy(() =>
@@ -22,7 +22,7 @@ const CategoryList = lazy(() => import('@features/Categories/CategoryList'));
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <CategoryList />,
+    element: <MaintenancePlanList />,
     // children: [
     //   {
     //     path: '/',

@@ -1,5 +1,4 @@
 import { produce } from 'immer';
-import { useDispatch } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Button, Stack } from '@mui/material';
@@ -27,13 +26,8 @@ export default function AddCategory({
   const [status, setStatus] = useState(STATUS_OPTIONS[0].label);
   const [formFields, setFormFields] = useState(ADD_CATEGORY_FORM_FIELDS);
 
-  const handleColorChange = (newValue) => {
-    setPlanColor(newValue);
-  };
-
-  const handleStatus = (e) => {
-    setStatus(e.target.value);
-  };
+  const handleColorChange = (el) => setPlanColor(el);
+  const handleStatus = (e) => setStatus(e.target.value);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -78,9 +72,7 @@ export default function AddCategory({
   };
 
   const submit = () => {
-    const userID = localStorage.getItem('userID');
-
-    if (isDisabled()) {
+    if (isDisabled() || status == null) {
       enqueueSnackbar('Cannot add new category. Fill all required fields.', {
         variant: 'error',
       });
@@ -99,7 +91,7 @@ export default function AddCategory({
     // seperated to prevent updating sharable groups
     if (selectedCategoryID) {
       const selectedCategory = categories.find((v) => v.id === selectedCategoryID);
-      const draftCategory = {
+      const draftRequest = {
         id: selectedCategoryID,
         ...selectedCategory,
         ...formattedData,
@@ -108,9 +100,9 @@ export default function AddCategory({
         location: location,
         // updated_by: userID,
       };
-      updateCategory(draftCategory);
+      updateCategory(draftRequest);
     } else {
-      const draftCategory = {
+      const draftRequest = {
         ...formattedData,
         color: planColor,
         // status: status,
@@ -121,8 +113,7 @@ export default function AddCategory({
         // updated_by: userID,
         // sharable_groups: [userID],
       };
-      console.log(draftCategory);
-      createCategory(draftCategory);
+      createCategory(draftRequest);
     }
 
     enqueueSnackbar(
@@ -148,9 +139,7 @@ export default function AddCategory({
       setPlanColor(draftCategory.color || '#ffffff');
       setStatus(draftCategory.status_name || STATUS_OPTIONS[0].label);
     } else {
-      setFormFields(ADD_CATEGORY_FORM_FIELDS);
-      setPlanColor('#f7f7f7');
-      setStatus(STATUS_OPTIONS[0].label);
+      resetData();
     }
   }, [selectedCategoryID]);
 

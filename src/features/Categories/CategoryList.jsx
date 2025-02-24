@@ -5,7 +5,6 @@ import AddCategory from '@features/Categories/AddCategory';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
 import SectionCardContent from '@common/SectionCard/SectionCardContent';
 import { useCategories, useDownloadCategories, useRemoveCategory } from '@services/categoriesApi';
-import dayjs from 'dayjs';
 
 const CategoryList = ({ displayConcise = false }) => {
   const { data: categories, isLoading } = useCategories();

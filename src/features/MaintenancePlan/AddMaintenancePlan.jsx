@@ -1,42 +1,35 @@
 import { useEffect, useState } from 'react';
-
-import dayjs from 'dayjs';
 import { produce } from 'immer';
-import { useDispatch } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
-
 import { Button, Stack } from '@mui/material';
-
 import ColorPicker from '@common/ColorPicker';
 import LocationPicker from '@common/Location/LocationPicker';
 import StatusOptions from '@common/StatusOptions/StatusOptions';
-
 import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
 import AddFormHeader from '@features/FormComponents/AddFormHeader';
-import AddTypeOptions from '@features/FormComponents/AddTypeOptions';
-import { maintenancePlanActions } from '@features/MaintenancePlan/maintenanceSlice';
-import { BLANK_MAINTENANCE_PLAN, ITEM_TYPE_MAPPER } from '@features/MaintenancePlan/constants';
+import { BLANK_MAINTENANCE_PLAN } from '@features/MaintenancePlan/constants';
+import { useCreateMaintenancePlan, useUpdateMaintenancePlan } from '@services/maintenancePlanApi';
 
 const AddMaintenancePlan = ({
-  handleCloseAddNewPlan,
+  handleClose,
   maintenancePlan,
   selectedMaintenancePlanID,
   setSelectedMaintenancePlanID,
 }) => {
-  const dispatch = useDispatch();
+  const { mutate: createMaintenancePlan } = useCreateMaintenancePlan();
+  const { mutate: updateMaintenancePlan } = useUpdateMaintenancePlan();
 
-  const [location, setLocation] = useState();
+  const [location, setLocation] = useState({ lat: 0, lon: 0 });
   const [planColor, setPlanColor] = useState('#f7f7f7');
   const [status, setStatus] = useState(STATUS_OPTIONS[0].label);
+  const [formData, setFormData] = useState(BLANK_MAINTENANCE_PLAN);
 
-  const [planType, setPlanType] = useState(ITEM_TYPE_MAPPER['daily'].value);
-  const [formData, setFormData] = useState({
-    ...BLANK_MAINTENANCE_PLAN,
-  });
+  // const [planType, setPlanType] = useState(ITEM_TYPE_MAPPER['daily'].value);
 
+  const handleColorChange = (el) => setPlanColor(el);
   const handleStatus = (e) => setStatus(e.target.value);
-  const handlePlanChange = (ev) => setPlanType(ev.target.value);
-  const handleColorChange = (newValue) => setPlanColor(newValue);
+
+  // const handlePlanChange = (ev) => setPlanType(ev.target.value);
 
   const handleInputChange = (ev) => {
     const { id, value } = ev.target;
@@ -59,12 +52,12 @@ const AddMaintenancePlan = ({
   };
 
   const resetData = () => {
-    setFormData({ ...BLANK_MAINTENANCE_PLAN });
-    setPlanType(ITEM_TYPE_MAPPER['daily'].value);
-    setPlanColor('#f7f7f7');
-    handleCloseAddNewPlan();
-    setStatus(STATUS_OPTIONS[0].label);
     setSelectedMaintenancePlanID('');
+    setFormData(BLANK_MAINTENANCE_PLAN);
+    setPlanColor('#f7f7f7');
+    handleClose();
+    // setStatus(STATUS_OPTIONS[0].label);
+    // setPlanType(ITEM_TYPE_MAPPER['daily'].value);
   };
 
   const isDisabled = () => {
@@ -107,28 +100,29 @@ const AddMaintenancePlan = ({
         id: selectedMaintenancePlanID,
         ...currentMaintenancePlan,
         ...formattedData,
-        type: planType,
         color: planColor,
+        // type: planType,
         location: location,
-        plan_type: ITEM_TYPE_MAPPER[planType].value,
-        plan_due: ITEM_TYPE_MAPPER[planType].since,
-        maintenance_status: status,
-        updated_on: dayjs().toISOString(),
+        // plan_type: ITEM_TYPE_MAPPER[planType].value,
+        // plan_due: ITEM_TYPE_MAPPER[planType].since,
+        // maintenance_status: status,
+        // updated_on: dayjs().toISOString(),
       };
-      dispatch(maintenancePlanActions.updatePlan(draftRequest));
+      updateMaintenancePlan(draftRequest);
     } else {
       const draftRequest = {
         ...formattedData,
-        type: planType,
         color: planColor,
-        plan_type: planType,
-        plan_due: ITEM_TYPE_MAPPER[planType].since,
         location: location,
-        maintenance_status: status,
-        created_on: dayjs().toISOString(),
+        // type: planType,
+        // plan_type: planType,
+        // plan_due: ITEM_TYPE_MAPPER[planType].since,
+        // maintenance_status: status,
+        // created_on: dayjs().toISOString(),
       };
-      dispatch(maintenancePlanActions.createPlan(draftRequest));
+      createMaintenancePlan(draftRequest);
     }
+
     enqueueSnackbar(
       selectedMaintenancePlanID
         ? 'Successfully updated existing maintenance plan.'
@@ -142,7 +136,7 @@ const AddMaintenancePlan = ({
 
   useEffect(() => {
     if (selectedMaintenancePlanID !== null) {
-      const draftMaintenancePlan = maintenancePlan.filter((v) => v.id === selectedMaintenancePlanID).find(() => true);
+      const draftMaintenancePlan = maintenancePlan?.filter((v) => v.id === selectedMaintenancePlanID).find(() => true);
       setFormData(
         produce(formData, (draft) => {
           draft.name.value = draftMaintenancePlan?.name || '';
@@ -150,12 +144,12 @@ const AddMaintenancePlan = ({
         })
       );
 
-      const currentPlanType = Object.values(ITEM_TYPE_MAPPER).find((v) => v.value === draftMaintenancePlan?.plan_type);
+      // const currentPlanType = Object.values(ITEM_TYPE_MAPPER).find((v) => v.value === draftMaintenancePlan?.plan_type);
 
-      setStatus(draftMaintenancePlan?.maintenance_status_name || STATUS_OPTIONS[0].label);
-      setPlanType(currentPlanType?.value || Object.values(ITEM_TYPE_MAPPER)[0].value);
       setLocation(draftMaintenancePlan?.location);
-      setPlanColor(draftMaintenancePlan?.color);
+      setPlanColor(draftMaintenancePlan?.color || '#ffffff');
+      setStatus(draftMaintenancePlan?.maintenance_status_name || STATUS_OPTIONS[0].label);
+      // setPlanType(currentPlanType?.value || Object.values(ITEM_TYPE_MAPPER)[0].value);
     } else {
       resetData();
     }
@@ -165,7 +159,7 @@ const AddMaintenancePlan = ({
     <Stack alignItems="center">
       <Stack spacing={2} sx={{ width: '100%' }}>
         <AddFormHeader formFields={formData} setLocation={setLocation} handleInputChange={handleInputChange} />
-        <AddTypeOptions value={planType} handleChange={handlePlanChange} />
+        {/* <AddTypeOptions value={planType} handleChange={handlePlanChange} /> */}
         <StatusOptions value={status} onChange={handleStatus} />
         <ColorPicker value={planColor} handleChange={handleColorChange} label={'Associate color'} />
       </Stack>
