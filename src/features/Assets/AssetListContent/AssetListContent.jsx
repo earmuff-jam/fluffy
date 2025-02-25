@@ -28,7 +28,6 @@ export default function AssetListContent({
   handleCloseModal,
 }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [inputColumn, setInputColumn] = useState('');
   const [selectedRow, setSelectedRow] = useState([]); // to display more details
@@ -44,7 +43,7 @@ export default function AssetListContent({
   };
 
   const updateSelectedCol = (rowID, columnName, inputColumn) => {
-    dispatch(inventoryActions.updateAssetCol({ assetID: rowID, columnName, inputColumn }));
+    // dispatch(inventoryActions.updateAssetCol({ assetID: rowID, columnName, inputColumn }));
   };
 
   // checkbox actions

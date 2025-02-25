@@ -23,7 +23,7 @@ import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/tour/steps';
 export default function AppToolBarMoreButtons({ profileDetails }) {
   const { id } = useParams();
   const location = useLocation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { setIsOpen, setCurrentStep, setSteps } = useTour();
 
@@ -47,14 +47,14 @@ export default function AppToolBarMoreButtons({ profileDetails }) {
   };
 
   const handleLogout = () => {
-    dispatch(authActions.getLogout());
+    // dispatch(authActions.getLogout());
     localStorage.clear();
     window.location.href = '/';
   };
 
   const handleAppearance = () => {
     const draftData = { ...profileDetails, appearance: !profileDetails.appearance || false };
-    dispatch(profileActions.updateProfileDetails({ draftData }));
+    // dispatch(profileActions.updateProfileDetails({ draftData }));
   };
 
   const DEFAULT_MENU_OPTIONS = [

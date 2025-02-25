@@ -16,8 +16,9 @@ export default function MenuActionBar({ openDrawer, handleDrawerClose, smScreenS
   const theme = useTheme();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
-  const { favItems = [] } = useSelector((state) => state.profile);
+  
+  const favItems = [];
+  // const { favItems = [] } = useSelector((state) => state.profile);
   const [openPinnedResources, setOpenPinnedResources] = useState(true);
 
   // the timeout allows to close the drawer first before navigation occurs.

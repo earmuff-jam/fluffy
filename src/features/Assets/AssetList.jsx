@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Stack } from '@mui/material';
 import { ConfirmationBoxModal } from '@common/utils';
 import { MODAL_STATE } from '@features/Assets/constants';
-import { inventoryActions } from '@features/Assets/inventorySlice';
 import AssetListHeader from '@features/Assets/AssetListHeader/AssetListHeader';
 import AssetListContent from '@features/Assets/AssetListContent/AssetListContent';
+import { useAssets } from '@services/assets';
 
 export default function AssetList() {
-  const dispatch = useDispatch();
-  const { loading, inventories = [] } = useSelector((state) => state.inventory);
+  const { assets = [], isLoading: loading } = useAssets();
 
   const [options, setOptions] = useState([]);
   const [rowSelected, setRowSelected] = useState([]); // this is for checkbox and associated actions
@@ -38,19 +34,15 @@ export default function AssetList() {
     if (id === -1) {
       return;
     }
-    dispatch(inventoryActions.removeInventoryRows(rowSelected));
+    // dispatch(inventoryActions.removeInventoryRows(rowSelected));
     reset();
   };
 
   useEffect(() => {
-    if (Array.isArray(inventories)) {
-      setOptions(inventories);
+    if (Array.isArray(assets)) {
+      setOptions(assets);
     }
   }, [loading]);
-
-  useEffect(() => {
-    dispatch(inventoryActions.getAllInventoriesForUser());
-  }, []);
 
   return (
     <Stack flexGrow="1" spacing={2} data-tour="assets-0">
@@ -59,7 +51,7 @@ export default function AssetList() {
         setGridMode={setGridMode}
         options={options}
         setOptions={setOptions}
-        inventories={inventories}
+        inventories={assets}
         setModalState={setModalState}
         handleRemoveInventory={handleRemoveInventory}
         disableDelete={rowSelected.length <= 0}
@@ -69,7 +61,7 @@ export default function AssetList() {
         modalState={modalState}
         setModalState={setModalState}
         gridMode={gridMode}
-        inventories={inventories}
+        inventories={assets}
         options={options}
         rowSelected={rowSelected}
         setRowSelected={setRowSelected}

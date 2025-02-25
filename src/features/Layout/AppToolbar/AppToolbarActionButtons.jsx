@@ -9,9 +9,10 @@ import AppToolbarPopoverContent from '@features/Layout/AppToolbar/AppToolbarPopo
 import AppToolBarMoreButtons from '@features/Layout/AppToolbar/AppToolBarMoreButtons';
 
 export default function AppToolbarActionButtons({ profileDetails }) {
-  const dispatch = useDispatch();
-
-  const { maintenanceNotifications = [], loading } = useSelector((state) => state.profile);
+  // const dispatch = useDispatch();
+  const loading = false;
+  const maintenanceNotifications = [];
+  // const { maintenanceNotifications = [], loading } = useSelector((state) => state.profile);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -19,12 +20,12 @@ export default function AppToolbarActionButtons({ profileDetails }) {
   const handleClose = () => setAnchorEl(null);
 
   const toggleReadOption = (id, selection) => {
-    dispatch(profileActions.toggleMaintenanceNotificationReadOption({ maintenance_plan_id: id, is_read: !selection }));
+    // dispatch(profileActions.toggleMaintenanceNotificationReadOption({ maintenance_plan_id: id, is_read: !selection }));
   };
 
-  useEffect(() => {
-    dispatch(profileActions.getMaintenanceNotifications());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(profileActions.getMaintenanceNotifications());
+  // }, []);
 
   return (
     <Stack direction="row" spacing="0.1rem">

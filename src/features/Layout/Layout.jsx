@@ -24,22 +24,24 @@ import { authActions } from '@features/LandingPage/authSlice';
 
 const Layout = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const isVerified = localStorage.getItem('isVerified');
   const smScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('sm'));
   const lgScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('lg'));
 
-  const { profileDetails, loading } = useSelector((state) => state.profile);
+  const profileDetails = {};
+  const loading = false;
+  // const { profileDetails, loading } = useSelector((state) => state.profile);
 
   const [openDrawer, setOpenDrawer] = useState(lgScreenSizeAndHigher ? true : false);
 
   const handleDrawerOpen = () => setOpenDrawer(true);
   const handleDrawerClose = () => setOpenDrawer(false);
 
-  useEffect(() => {
-    dispatch(profileActions.getProfileDetails());
-    dispatch(profileActions.getFavItems({ limit: 10 }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(profileActions.getProfileDetails());
+  //   dispatch(profileActions.getFavItems({ limit: 10 }));
+  // }, []);
 
   if (loading) {
     return <Skeleton height="100vh" />;

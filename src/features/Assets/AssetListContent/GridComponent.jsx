@@ -25,8 +25,9 @@ import { capitalizeFirstLetter, EmptyComponent } from '@common/utils';
 
 const GridComponent = ({ isLoading, data, rowSelected, handleRowSelection }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { inventories } = useSelector((state) => state.inventory);
+
+  const loading = false;
+  const inventories = [];
 
   const [displayModal, setDisplayModal] = useState(false);
   const [selectedItemID, setSelectedItemID] = useState(-1);
@@ -37,7 +38,7 @@ const GridComponent = ({ isLoading, data, rowSelected, handleRowSelection }) => 
   const handleNavigate = (id) => navigate(`/inventories/${id}/update`);
 
   const handleUpload = (id, imgFormData) => {
-    dispatch(inventoryActions.uploadAndRefreshData({ id: id, selectedImage: imgFormData }));
+    // dispatch(inventoryActions.uploadAndRefreshData({ id: id, selectedImage: imgFormData }));
     handleCloseModal();
   };
 

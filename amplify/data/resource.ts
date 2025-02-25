@@ -125,43 +125,43 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.authenticated()]),
 
-  // Assets: a
-  //   .model({
-  //     id: a.id(),
-  //     name: a.string(),
-  //     description: a.string(),
-  //     price: a.float(),
-  //     status: a.string(),
-  //     barcode: a.string(),
-  //     sku: a.string(),
-  //     color: a.string(),
-  //     imageURL: a.string(),
-  //     quantity: a.integer(),
-  //     bought_at: a.string(),
-  //     location: a.customType({
-  //       lat: a.float(),
-  //       lon: a.float(),
-  //     }),
-  //     storage_location_id: a.string(),
-  //     is_returnable: a.boolean(),
-  //     return_location: a.string(),
-  //     return_datetime: a.string(),
-  //     return_notes: a.string(),
-  //     max_weight: a.float(),
-  //     min_weight: a.float(),
-  //     max_height: a.float(),
-  //     min_height: a.float(),
-  //     created_at: a.string(),
+  Assets: a
+    .model({
+      id: a.id(),
+      name: a.string(),
+      description: a.string(),
+      price: a.float(),
+      status: a.string(),
+      barcode: a.string(),
+      sku: a.string(),
+      color: a.string(),
+      // imageURL: a.string(),
+      quantity: a.integer(),
+      boughtAt: a.string(),
+      location: a.customType({
+        lat: a.float(),
+        lon: a.float(),
+      }),
+      // storage_location_id: a.string(),
+      isReturnable: a.boolean(),
+      returnLocation: a.string(),
+      returnDatetime: a.string(),
+      returnNotes: a.string(),
+       maxWeight: a.float(),
+      minWeight: a.float(),
+      maxHeight: a.float(),
+      minHeight: a.float(),
+      createdAt: a.string(),
   //     createdAssetId: a.id(),
   //     created_by: a.belongsTo("Profiles", "createdAssetId"),
-  //     updated_at: a.string(),
+      updatedAt: a.string(),
   //     updatedAssetId: a.id(),
   //     updated_by: a.belongsTo("Profiles", "updatedAssetId"),
   //     sharable_groups: a.string().array(),
   //     assetsInCategories: a.hasMany("CategoryItems", "assetId"),
   //     assetsInMaintenancePlans: a.hasMany("MaintenancePlanItems", "assetId"),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 
   Categories: a
     .model({
