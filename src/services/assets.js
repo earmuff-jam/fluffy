@@ -45,15 +45,23 @@ export const useUpdateAsset = () => {
   });
 };
 
-export const useRemoveAsset = () => {
+// removes multiple ids if necessary
+export const useRemoveAssets = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (id) => {
-      if (!id) throw new Error('Asset ID is required for deletion.');
-      const { data, errors } = await client.models.Asset.delete({ id });
-      if (errors) throw new Error(errors);
-      return data;
+    mutationFn: async (ids) => {
+      if (!ids || !Array.isArray(ids) || ids.length === 0) {
+        throw new Error('Asset IDs is required for deletion.');
+      }
+
+      const deletePromises = ids.map(async (id) => {
+        const { data, errors } = await client.models.Asset.delete({ id });
+        if (errors) throw new Error(errors);
+        return data;
+      });
+
+      return Promise.all(deletePromises);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['assets'] });

@@ -1,20 +1,19 @@
-import { useEffect, useState } from 'react';
-
+import { useState } from 'react';
 import dayjs from 'dayjs';
 import { enqueueSnackbar } from 'notistack';
-import { useDispatch, useSelector } from 'react-redux';
 import { Box, Skeleton, Typography } from '@mui/material';
-import { inventoryActions } from '@features/Assets/inventorySlice';
-
 import AddAssetSteps from '@features/Assets/AddAssetFormDetails/AddAssetSteps';
 import { ADD_ASSET_FORM } from '@features/Assets/AddAssetFormDetails/constants';
 import AddAssetFormSelection from '@features/Assets/AddAssetFormDetails/AddAssetFormSelection';
 import AddAssetActionButtons from '@features/Assets/AddAssetFormDetails/AddAssetActionButtons';
 import AddAssetFormInstructions from '@features/Assets/AddAssetFormDetails/AddAssetFormInstructions';
+import { useCreateAsset } from '@services/assets';
 
 export default function AddAssetDetails({ handleClose }) {
-  const dispatch = useDispatch();
-  const { storageLocations: options, isLoading } = useSelector((state) => state.inventory);
+  const { mutate: createAsset } = useCreateAsset();
+
+  // const dispatch = useDispatch();
+  // const { storageLocations: options, isLoading } = useSelector((state) => state.inventory);
 
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
@@ -51,6 +50,20 @@ export default function AddAssetDetails({ handleClose }) {
     }));
   };
 
+  const isDisabled = () => {
+    const containsErr = Object.values(formData).reduce((acc, el) => {
+      if (el.errorMsg) {
+        return true;
+      }
+      return acc;
+    }, false);
+
+    const requiredFormFields = Object.values(formData).filter((v) => v.isRequired);
+    const isRequiredFieldsEmpty = requiredFormFields.some((el) => el.value.trim() === '');
+
+    return containsErr || isRequiredFieldsEmpty || storageLocation === null || Object.keys(storageLocation).length <= 0;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const containsErr = Object.values(formData).reduce((acc, el) => {
@@ -60,7 +73,7 @@ export default function AddAssetDetails({ handleClose }) {
       return acc;
     }, false);
 
-    const requiredFormFields = Object.values(formData).filter((v) => v.required);
+    const requiredFormFields = Object.values(formData).filter((v) => v.isRequired);
     const isRequiredFieldsEmpty = requiredFormFields.some((el) => el.value.trim() === '');
 
     if (containsErr || isRequiredFieldsEmpty || storageLocation === null || Object.keys(storageLocation).length <= 0) {
@@ -90,7 +103,7 @@ export default function AddAssetDetails({ handleClose }) {
       return_datetime: returnDateTime !== null ? returnDateTime.toISOString() : null,
       created_at: dayjs().toISOString(),
     };
-    dispatch(inventoryActions.addInventory(draftRequest));
+    createAsset(draftRequest);
     setFormData({ ...ADD_ASSET_FORM });
     enqueueSnackbar('Added new asset.', {
       variant: 'success',
@@ -138,23 +151,9 @@ export default function AddAssetDetails({ handleClose }) {
     setActiveStep(0);
   };
 
-  const isDisabled = () => {
-    const containsErr = Object.values(formData).reduce((acc, el) => {
-      if (el.errorMsg) {
-        return true;
-      }
-      return acc;
-    }, false);
-
-    const requiredFormFields = Object.values(formData).filter((v) => v.isRequired);
-    const isRequiredFieldsEmpty = requiredFormFields.some((el) => el.value.trim() === '');
-
-    return containsErr || isRequiredFieldsEmpty || storageLocation === null || Object.keys(storageLocation).length <= 0;
-  };
-
-  useEffect(() => {
-    dispatch(inventoryActions.getStorageLocations());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(inventoryActions.getStorageLocations());
+  // }, []);
 
   if (isLoading) return <Skeleton height="30vh" />;
 

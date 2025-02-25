@@ -6,7 +6,7 @@ export default function VerticalMenu({
   disableDelete,
   handleAddInventory,
   handleBulkInventory,
-  handleRemoveInventory,
+  handleRemoveAsset,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -17,7 +17,7 @@ export default function VerticalMenu({
   const options = [
     { id: 1, label: 'Add New', action: handleAddInventory, disabled: false },
     { id: 2, label: 'Bulk Add', action: handleBulkInventory, disabled: false },
-    { id: 3, label: 'Delete Chosen', action: handleRemoveInventory, disabled: disableDelete },
+    { id: 3, label: 'Delete Chosen', action: handleRemoveAsset, disabled: disableDelete },
   ];
 
   return (

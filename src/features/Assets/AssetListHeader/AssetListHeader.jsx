@@ -17,7 +17,7 @@ export default function AssetListHeader({
   options,
   setOptions,
   disableDelete,
-  handleRemoveInventory,
+  handleRemoveAsset,
 }) {
   const [showSearch, setShowSearch] = useState(false);
 
@@ -58,7 +58,7 @@ export default function AssetListHeader({
           disableDelete={disableDelete}
           handleAddInventory={() => setModalState(MODAL_STATE.ADD_ITEM)}
           handleBulkInventory={() => setModalState(MODAL_STATE.BULK_ITEM)}
-          handleRemoveInventory={handleRemoveInventory}
+          handleRemoveAsset={handleRemoveAsset}
         />
       </Stack>
     </Stack>

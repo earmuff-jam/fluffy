@@ -4,10 +4,11 @@ import { ConfirmationBoxModal } from '@common/utils';
 import { MODAL_STATE } from '@features/Assets/constants';
 import AssetListHeader from '@features/Assets/AssetListHeader/AssetListHeader';
 import AssetListContent from '@features/Assets/AssetListContent/AssetListContent';
-import { useAssets } from '@services/assets';
+import { useAssets, useRemoveAssets } from '@services/assets';
 
 export default function AssetList() {
   const { assets = [], isLoading: loading } = useAssets();
+  const { mutate: removeAsset } = useRemoveAssets();
 
   const [options, setOptions] = useState([]);
   const [rowSelected, setRowSelected] = useState([]); // this is for checkbox and associated actions
@@ -19,7 +20,7 @@ export default function AssetList() {
 
   const handleCloseModal = () => setModalState(MODAL_STATE.NONE);
 
-  const handleRemoveInventory = () => {
+  const handleRemoveAsset = () => {
     setOpenDialog(true);
     setIdToDelete(rowSelected);
   };
@@ -34,7 +35,7 @@ export default function AssetList() {
     if (id === -1) {
       return;
     }
-    // dispatch(inventoryActions.removeInventoryRows(rowSelected));
+    removeAsset(rowSelected);
     reset();
   };
 
@@ -53,7 +54,7 @@ export default function AssetList() {
         setOptions={setOptions}
         inventories={assets}
         setModalState={setModalState}
-        handleRemoveInventory={handleRemoveInventory}
+        handleRemoveAsset={handleRemoveAsset}
         disableDelete={rowSelected.length <= 0}
       />
       <AssetListContent
