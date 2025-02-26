@@ -55,51 +55,51 @@ export default function AddAssetFormItemDetails({
 
         <Stack direction="row" useFlexGap spacing={2}>
           <TextField
-            id="bought_at"
+            id="boughtAt"
             label="Place of purchase"
-            value={formData.bought_at.value}
-            placeholder={formData.bought_at.placeholder}
+            value={formData.boughtAt.value}
+            placeholder={formData.boughtAt.placeholder}
             onChange={handleInputChange}
             fullWidth
             variant="outlined"
             size="small"
-            error={Boolean(formData.bought_at['errorMsg'].length)}
-            helperText={formData.bought_at['errorMsg']}
+            error={Boolean(formData.boughtAt['errorMsg'].length)}
+            helperText={formData.boughtAt['errorMsg']}
           />
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.is_returnable.value}
-                onChange={(e) => handleCheckbox('is_returnable', e.target.checked)}
+                checked={formData.isReturnable.value}
+                onChange={(e) => handleCheckbox('isReturnable', e.target.checked)}
                 color="primary"
               />
             }
             label={
               <Stack direction="row" alignItems="center" spacing={0.5}>
-                <SwapHorizRounded color={formData.is_returnable.value ? 'primary' : 'secondary'} />
+                <SwapHorizRounded color={formData.isReturnable.value ? 'primary' : 'secondary'} />
                 <Typography variant="caption">Returnable</Typography>
               </Stack>
             }
           />
         </Stack>
-        {formData.is_returnable.value ? (
+        {formData.isReturnable.value ? (
           <Stack direction="row" useFlexGap spacing={2}>
             <TextField
-              id="return_location"
+              id="returnLocation"
               label="Item return location"
-              value={formData.return_location.value}
-              placeholder={formData.return_location.placeholder}
+              value={formData.returnLocation.value}
+              placeholder={formData.returnLocation.placeholder}
               onChange={handleInputChange}
               fullWidth
               variant="outlined"
               size="small"
-              error={Boolean(formData.return_location['errorMsg'].length)}
-              helperText={formData.return_location['errorMsg']}
+              error={Boolean(formData.returnLocation['errorMsg'].length)}
+              helperText={formData.returnLocation['errorMsg']}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 disablePast
-                id="return_datetime"
+                id="returnDatetime"
                 label="Return datetime"
                 value={returnDateTime}
                 onChange={setReturnDateTime}
@@ -112,54 +112,54 @@ export default function AddAssetFormItemDetails({
 
       <Stack direction="row" useFlexGap spacing={2} sx={{ py: 2 }}>
         <TextField
-          id="max_weight"
+          id="maxWeight"
           label="Max weight in kg"
-          value={formData.max_weight.value}
-          placeholder={formData.max_weight.placeholder}
+          value={formData.maxWeight.value}
+          placeholder={formData.maxWeight.placeholder}
           onChange={handleInputChange}
           fullWidth
           variant="outlined"
           size="small"
-          error={Boolean(formData.max_weight['errorMsg'].length)}
-          helperText={formData.max_weight['errorMsg']}
+          error={Boolean(formData.maxWeight['errorMsg'].length)}
+          helperText={formData.maxWeight['errorMsg']}
         />
         <TextField
-          id="min_weight"
+          id="minWeight"
           label="Min weight in kg"
-          value={formData.min_weight.value}
-          placeholder={formData.min_weight.placeholder}
+          value={formData.minWeight.value}
+          placeholder={formData.minWeight.placeholder}
           onChange={handleInputChange}
           fullWidth
           variant="outlined"
           size="small"
-          error={Boolean(formData.min_weight['errorMsg'].length)}
-          helperText={formData.min_weight['errorMsg']}
+          error={Boolean(formData.minWeight['errorMsg'].length)}
+          helperText={formData.minWeight['errorMsg']}
         />
       </Stack>
       <Stack direction="row" useFlexGap spacing={2}>
         <TextField
-          id="max_height"
-          label={formData.max_height.label}
-          value={formData.max_height.value}
-          placeholder={formData.max_height.placeholder}
+          id="maxHeight"
+          label={formData.maxHeight.label}
+          value={formData.maxHeight.value}
+          placeholder={formData.maxHeight.placeholder}
           onChange={handleInputChange}
           fullWidth
           variant="outlined"
           size="small"
-          error={Boolean(formData.max_height['errorMsg'].length)}
-          helperText={formData.max_height['errorMsg']}
+          error={Boolean(formData.maxHeight['errorMsg'].length)}
+          helperText={formData.maxHeight['errorMsg']}
         />
         <TextField
-          id="min_height"
-          label={formData.min_height.label}
-          value={formData.min_height.value}
-          placeholder={formData.min_height.placeholder}
+          id="minHeight"
+          label={formData.minHeight.label}
+          value={formData.minHeight.value}
+          placeholder={formData.minHeight.placeholder}
           onChange={handleInputChange}
           fullWidth
           variant="outlined"
           size="small"
-          error={Boolean(formData.min_height['errorMsg'].length)}
-          helperText={formData.min_height['errorMsg']}
+          error={Boolean(formData.minHeight['errorMsg'].length)}
+          helperText={formData.minHeight['errorMsg']}
         />
       </Stack>
     </Box>

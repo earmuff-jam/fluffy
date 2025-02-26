@@ -11,7 +11,7 @@ const CategoryList = lazy(() => import('@features/Categories/CategoryList'));
 const AssetList = lazy(() => import('@features/Assets/AssetList'));
 const RecentActivityList = lazy(() => import('@features/RecentActivities/RecentActivityList'));
 
-// const SelectedAsset = lazy(() => import('@features/SelectedAsset/SelectedAsset'));
+const SelectedAsset = lazy(() => import('@features/SelectedAsset/SelectedAsset'));
 const MaintenancePlanList = lazy(() => import('@features/MaintenancePlan/MaintenancePlanList'));
 // const CategoryItemDetails = lazy(() => import('@features/CategoryItemDetails/CategoryItemDetails'));
 
@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/inventories/:id/update',
-        // element: <SelectedAsset />,
+        element: <SelectedAsset />,
       },
       {
         path: '/categories/list',

@@ -1,6 +1,4 @@
-import { useDispatch } from 'react-redux';
 import { Autocomplete, CardMedia, Stack, TextField, createFilterOptions } from '@mui/material';
-
 import { inventoryActions } from '@features/Assets/inventorySlice';
 import TextFieldWithLabel from '@common/TextFieldWithLabel/TextFieldWithLabel';
 import ColorPicker from '@common/ColorPicker';
@@ -17,7 +15,6 @@ export default function SelectedAssetFormFields({
   storageLocation,
   setStorageLocation,
 }) {
-  const dispatch = useDispatch();
   return (
     <Stack spacing={2} marginTop={'1rem'}>
       <Stack direction="row" spacing={2} alignItems={'center'}>
@@ -121,18 +118,18 @@ export default function SelectedAssetFormFields({
         />
         <ColorPicker value={assetColor} handleChange={handleColorChange} label={'Associate color'} />
         <TextFieldWithLabel
-          id={formFields.bought_at.name}
-          name={formFields.bought_at.name}
-          label={formFields.bought_at.label}
-          value={formFields.bought_at.value}
-          size={formFields.bought_at.size}
-          placeholder={formFields.bought_at.placeholder}
+          id={formFields.boughtAt.name}
+          name={formFields.boughtAt.name}
+          label={formFields.boughtAt.label}
+          value={formFields.boughtAt.value}
+          size={formFields.boughtAt.size}
+          placeholder={formFields.boughtAt.placeholder}
           handleChange={handleInputChange}
-          required={formFields.bought_at.required}
-          fullWidth={formFields.bought_at.fullWidth}
-          error={Boolean(formFields.bought_at.errorMsg)}
-          helperText={formFields.bought_at.errorMsg}
-          variant={formFields.bought_at.variant}
+          required={formFields.boughtAt.required}
+          fullWidth={formFields.boughtAt.fullWidth}
+          error={Boolean(formFields.boughtAt.errorMsg)}
+          helperText={formFields.boughtAt.errorMsg}
+          variant={formFields.boughtAt.variant}
         />
       </Stack>
       <Autocomplete
@@ -140,7 +137,6 @@ export default function SelectedAssetFormFields({
         freeSolo
         forcePopupIcon
         value={storageLocation || ''}
-        onOpen={() => dispatch(inventoryActions.getStorageLocations())}
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {
             setStorageLocation({

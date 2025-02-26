@@ -6,62 +6,62 @@ export default function SelectedAssetWeightDimension({ formFields, handleInputCh
     <Stack spacing={1}>
       <Stack direction="row" spacing={2}>
         <TextFieldWithLabel
-          id={formFields.max_weight.name}
-          name={formFields.max_weight.name}
-          label={formFields.max_weight.label}
-          value={formFields.max_weight.value}
-          size={formFields.max_weight.size}
-          placeholder={formFields.max_weight.placeholder}
+          id={formFields.maxWeight.name}
+          name={formFields.maxWeight.name}
+          label={formFields.maxWeight.label}
+          value={formFields.maxWeight.value}
+          size={formFields.maxWeight.size}
+          placeholder={formFields.maxWeight.placeholder}
           handleChange={handleInputChange}
-          required={formFields.max_weight.required}
-          fullWidth={formFields.max_weight.fullWidth}
-          error={Boolean(formFields.max_weight.errorMsg)}
-          helperText={formFields.max_weight.errorMsg}
-          variant={formFields.max_weight.variant}
+          required={formFields.maxWeight.required}
+          fullWidth={formFields.maxWeight.fullWidth}
+          error={Boolean(formFields.maxWeight.errorMsg)}
+          helperText={formFields.maxWeight.errorMsg}
+          variant={formFields.maxWeight.variant}
         />
         <TextFieldWithLabel
-          id={formFields.min_weight.name}
-          name={formFields.min_weight.name}
-          label={formFields.min_weight.label}
-          value={formFields.min_weight.value}
-          size={formFields.min_weight.size}
-          placeholder={formFields.min_weight.placeholder}
+          id={formFields.minWeight.name}
+          name={formFields.minWeight.name}
+          label={formFields.minWeight.label}
+          value={formFields.minWeight.value}
+          size={formFields.minWeight.size}
+          placeholder={formFields.minWeight.placeholder}
           handleChange={handleInputChange}
-          required={formFields.min_weight.required}
-          fullWidth={formFields.min_weight.fullWidth}
-          error={Boolean(formFields.min_weight.errorMsg)}
-          helperText={formFields.min_weight.errorMsg}
-          variant={formFields.min_weight.variant}
+          required={formFields.minWeight.required}
+          fullWidth={formFields.minWeight.fullWidth}
+          error={Boolean(formFields.minWeight.errorMsg)}
+          helperText={formFields.minWeight.errorMsg}
+          variant={formFields.minWeight.variant}
         />
       </Stack>
       <Stack direction="row" spacing={2}>
         <TextFieldWithLabel
-          id={formFields.max_height.name}
-          name={formFields.max_height.name}
-          label={formFields.max_height.label}
-          value={formFields.max_height.value}
-          size={formFields.max_height.size}
-          placeholder={formFields.max_height.placeholder}
+          id={formFields.maxHeight.name}
+          name={formFields.maxHeight.name}
+          label={formFields.maxHeight.label}
+          value={formFields.maxHeight.value}
+          size={formFields.maxHeight.size}
+          placeholder={formFields.maxHeight.placeholder}
           handleChange={handleInputChange}
-          required={formFields.max_height.required}
-          fullWidth={formFields.max_height.fullWidth}
-          error={Boolean(formFields.max_height.errorMsg)}
-          helperText={formFields.max_height.errorMsg}
-          variant={formFields.max_height.variant}
+          required={formFields.maxHeight.required}
+          fullWidth={formFields.maxHeight.fullWidth}
+          error={Boolean(formFields.maxHeight.errorMsg)}
+          helperText={formFields.maxHeight.errorMsg}
+          variant={formFields.maxHeight.variant}
         />
         <TextFieldWithLabel
-          id={formFields.min_height.name}
-          name={formFields.min_height.name}
-          label={formFields.min_height.label}
-          value={formFields.min_height.value}
-          size={formFields.min_height.size}
-          placeholder={formFields.min_height.placeholder}
+          id={formFields.minHeight.name}
+          name={formFields.minHeight.name}
+          label={formFields.minHeight.label}
+          value={formFields.minHeight.value}
+          size={formFields.minHeight.size}
+          placeholder={formFields.minHeight.placeholder}
           handleChange={handleInputChange}
-          required={formFields.min_height.required}
-          fullWidth={formFields.min_height.fullWidth}
-          error={Boolean(formFields.min_height.errorMsg)}
-          helperText={formFields.min_height.errorMsg}
-          variant={formFields.min_height.variant}
+          required={formFields.minHeight.required}
+          fullWidth={formFields.minHeight.fullWidth}
+          error={Boolean(formFields.minHeight.errorMsg)}
+          helperText={formFields.minHeight.errorMsg}
+          variant={formFields.minHeight.variant}
         />
       </Stack>
     </Stack>

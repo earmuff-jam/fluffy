@@ -12,7 +12,7 @@ import { useStorageLocations } from '@services/storageLocationApi';
 
 export default function AddAssetDetails({ handleClose }) {
   const { mutate: createAsset } = useCreateAsset();
-  const { storageLocations: options, isLoading } = useStorageLocations();
+  const { data: options = [], isLoading } = useStorageLocations();
 
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
@@ -83,13 +83,7 @@ export default function AddAssetDetails({ handleClose }) {
     }
 
     const formattedData = Object.values(formData).reduce((acc, el) => {
-      if (el.id === 'quantity') {
-        acc[el.id] = parseInt(el.value);
-      } else if (el.id === 'price') {
-        acc[el.id] = parseFloat(el.value);
-      } else if (el.value) {
-        acc[el.id] = el.value;
-      }
+      acc[el.id] = el.value;
       return acc;
     }, {});
 
@@ -98,9 +92,9 @@ export default function AddAssetDetails({ handleClose }) {
 
     const draftRequest = {
       ...formattedData,
-      location: storageLocationID,
-      return_datetime: returnDateTime !== null ? returnDateTime.toISOString() : null,
-      created_at: dayjs().toISOString(),
+      storageLocationIdRef: storageLocationID,
+      returnDatetime: returnDateTime !== null ? returnDateTime.toISOString() : null,
+      createdAt: dayjs().toISOString(),
     };
     createAsset(draftRequest);
     setFormData({ ...ADD_ASSET_FORM });
@@ -149,10 +143,6 @@ export default function AddAssetDetails({ handleClose }) {
   const handleReset = () => {
     setActiveStep(0);
   };
-
-  // useEffect(() => {
-  //   dispatch(inventoryActions.getStorageLocations());
-  // }, []);
 
   if (isLoading) return <Skeleton height="30vh" />;
 

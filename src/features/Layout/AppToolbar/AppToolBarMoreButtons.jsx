@@ -1,4 +1,3 @@
-import Popper from '@material-ui/core/Popper/Popper';
 import { ArrowDropDownCircleRounded, DarkModeOutlined, LightModeOutlined, LogoutRounded } from '@mui/icons-material';
 import {
   Button,
@@ -10,14 +9,12 @@ import {
   Paper,
   Stack,
   Typography,
+  Popper,
 } from '@mui/material';
 
 import { useRef, useState } from 'react';
 import { useTour } from '@reactour/tour';
 import { useLocation, useParams } from 'react-router-dom';
-import { authActions } from '@features/LandingPage/authSlice';
-import { useDispatch } from 'react-redux';
-import { profileActions } from '@features/Profile/profileSlice';
 import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/tour/steps';
 
 export default function AppToolBarMoreButtons({ profileDetails }) {

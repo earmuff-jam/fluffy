@@ -82,7 +82,7 @@ export const BUILD_TABLE_CONSTANTS = (columnLabels) => (selectedRow) => {
   const tableRows = columnLabels.map(({ id, colName, label, modifier }) => {
     let value = selectedRow[colName];
     if (modifier) {
-      if (colName === 'qr_code') {
+      if (colName === 'qrCode') {
         value = modifier(selectedRow['name']);
       } else {
         value = modifier(value, { colName, label });
@@ -161,62 +161,62 @@ export const VIEW_INVENTORY_LIST_HEADERS = {
     displayConcise: true,
     modifier: (value) => `${value || '-'}`,
   },
-  is_returnable: {
+  isReturnable: {
     id: 10,
-    colName: 'is_returnable',
+    colName: 'isReturnable',
     label: 'Returnable',
     modifier: (value) => (value ? <CheckRounded color="primary" /> : <CloseRounded color="warning" />),
   },
-  return_location: {
+  returnLocation: {
     id: 11,
-    colName: 'return_location',
+    colName: 'returnLocation',
     label: 'Return Location',
     modifier: (value) => `${value || '-'}`,
   },
-  max_weight: {
+  maxWeight: {
     id: 12,
-    colName: 'max_weight',
+    colName: 'maxWeight',
     label: 'Max Weight',
     modifier: (value) => `${value || '-'}`,
   },
-  min_weight: {
+  minWeight: {
     id: 13,
-    colName: 'min_weight',
+    colName: 'minWeight',
     label: 'Min Weight',
     modifier: (value) => `${value || '-'}`,
   },
-  max_height: {
+  maxHeight: {
     id: 14,
-    colName: 'max_height',
+    colName: 'maxHeight',
     label: 'Max Height',
     modifier: (value) => `${value || '-'}`,
   },
-  min_height: {
+  minHeight: {
     id: 15,
-    colName: 'min_height',
+    colName: 'minHeight',
     label: 'Min Height',
     modifier: (value) => `${value || '-'}`,
   },
-  bought_at: {
+  boughtAt: {
     id: 16,
-    colName: 'bought_at',
+    colName: 'boughtAt',
     label: 'Purchase Location',
     modifier: (value) => `${value || '-'}`,
   },
-  qr_code: {
+  qrCode: {
     id: 17,
-    colName: 'qr_code',
+    colName: 'qrCode',
     label: 'QR Code',
     modifier: (value) => <QrCodeGen value={value} />,
   },
-  updated_at: {
+  updatedAt: {
     id: 18,
-    colName: 'updated_at',
+    colName: 'updatedAt',
     label: 'Updated',
     displayConcise: true,
     modifier: (value) => `${dayjs(value).fromNow()}`,
   },
-  updator_name: {
+  updator: {
     id: 19,
     colName: 'updator',
     label: 'Updated By',
@@ -353,9 +353,9 @@ export const BLANK_INVENTORY_FORM = {
       },
     ],
   },
-  bought_at: {
-    id: 'bought_at',
-    name: 'bought_at',
+  boughtAt: {
+    id: 'boughtAt',
+    name: 'boughtAt',
     label: 'Place of purchase',
     placeholder: 'Where did you buy this item?',
     value: '',
@@ -374,25 +374,25 @@ export const BLANK_INVENTORY_FORM = {
     errorMsg: '',
     validators: [],
   },
-  is_bookmarked: {
-    id: 'is_bookmarked',
+  isBookmarked: {
+    id: 'isBookmarked',
     value: false,
     type: 'boolean',
     isRequired: false,
     errorMsg: '',
     validators: [],
   },
-  is_returnable: {
-    id: 'is_returnable',
+  isReturnable: {
+    id: 'isReturnable',
     value: false,
     type: 'boolean',
     isRequired: false,
     errorMsg: '',
     validators: [],
   },
-  return_location: {
-    id: 'return_location',
-    name: 'return_location',
+  returnLocation: {
+    id: 'returnLocation',
+    name: 'returnLocation',
     label: 'Return location',
     placeholder: 'Where to return the item',
     value: '',
@@ -407,9 +407,9 @@ export const BLANK_INVENTORY_FORM = {
       },
     ],
   },
-  max_weight: {
-    id: 'max_weight',
-    name: 'max_weight',
+  maxWeight: {
+    id: 'maxWeight',
+    name: 'maxWeight',
     label: 'Maxmimum weight',
     placeholder: 'Maximum weight of the selected asset in kg',
     value: '',
@@ -428,9 +428,9 @@ export const BLANK_INVENTORY_FORM = {
       },
     ],
   },
-  min_weight: {
-    id: 'min_weight',
-    name: 'min_weight',
+  minWeight: {
+    id: 'minWeight',
+    name: 'minWeight',
     label: 'Minimum Weight',
     placeholder: 'Minimum weight of the selected asset in kg',
     value: '',
@@ -449,9 +449,9 @@ export const BLANK_INVENTORY_FORM = {
       },
     ],
   },
-  max_height: {
-    id: 'max_height',
-    name: 'max_height',
+  maxHeight: {
+    id: 'maxHeight',
+    name: 'maxHeight',
     label: 'Maximum height',
     placeholder: 'Maximum height of selected asset in inches',
     value: '',
@@ -470,9 +470,9 @@ export const BLANK_INVENTORY_FORM = {
       },
     ],
   },
-  min_height: {
-    id: 'min_height',
-    name: 'min_height',
+  minHeight: {
+    id: 'minHeight',
+    name: 'minHeight',
     label: 'Minimum height',
     placeholder: 'Minimum height of selected asset in inches',
     value: '',
@@ -491,9 +491,9 @@ export const BLANK_INVENTORY_FORM = {
       },
     ],
   },
-  return_notes: {
-    id: 'return_notes',
-    name: 'return_notes',
+  returnNotes: {
+    id: 'returnNotes',
+    name: 'returnNotes',
     label: 'Return notes',
     placeholder: 'Add return notes in less than 500 characters',
     value: '',
@@ -508,23 +508,23 @@ export const BLANK_INVENTORY_FORM = {
       },
     ],
   },
-  created_at: {
-    id: 'created_at',
+  createdAt: {
+    id: 'createdAt',
     errorMsg: '',
     validators: [],
   },
-  created_by: {
-    id: 'created_by',
+  createdBy: {
+    id: 'createdBy',
     errorMsg: '',
     validators: [],
   },
-  updated_at: {
-    id: 'updated_at',
+  updatedAt: {
+    id: 'updatedAt',
     errorMsg: '',
     validators: [],
   },
-  updated_by: {
-    id: 'updated_by',
+  updatedBy: {
+    id: 'updatedBy',
     errorMsg: '',
     validators: [],
   },

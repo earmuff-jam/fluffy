@@ -13,6 +13,17 @@ export const useAssets = () => {
   });
 };
 
+export const useAssetById = (id) => {
+  return useQuery({
+    queryKey: ['asset', id],
+    queryFn: async () => {
+      const response = await client.models.Assets.get({ id });
+      return response.data || [];
+    },
+    enabled: !!id,
+  });
+};
+
 export const useCreateAsset = () => {
   const queryClient = useQueryClient();
 
@@ -41,6 +52,7 @@ export const useUpdateAsset = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['assets'] });
+      queryClient.invalidateQueries({ queryKey: ['asset', asset.id] }); // used when updating selected asset
     },
   });
 };

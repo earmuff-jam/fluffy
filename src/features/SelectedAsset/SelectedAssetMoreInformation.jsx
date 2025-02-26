@@ -13,15 +13,15 @@ export default function SelectedAssetMoreInformation({
   handleCheckbox,
   handleInputChange,
 }) {
-  const isReturnable = Boolean(formFields.is_returnable.value);
-  const isBookmarked = Boolean(formFields.is_bookmarked.value);
+  const isReturnable = Boolean(formFields.isReturnable.value);
+  const isBookmarked = Boolean(formFields.isBookmarked.value);
 
   return (
     <Stack spacing={2}>
       <SelectedAssetMoreInformationCheckbox
         isChecked={isBookmarked}
         handleCheckbox={handleCheckbox}
-        target="is_bookmarked"
+        target="isBookmarked"
         label="Bookmark"
         icon={<BookmarkAddedRounded color={isBookmarked ? 'primary' : 'secondary'} />}
       />
@@ -29,7 +29,7 @@ export default function SelectedAssetMoreInformation({
         <SelectedAssetMoreInformationCheckbox
           isChecked={isReturnable}
           handleCheckbox={handleCheckbox}
-          target="is_returnable"
+          target="isReturnable"
           label="Returnable"
           icon={<SwapHorizRounded color={isReturnable ? 'primary' : 'secondary'} />}
         />
@@ -46,18 +46,18 @@ export default function SelectedAssetMoreInformation({
       </Stack>
       {openReturnNote && (
         <TextFieldWithLabel
-          id={formFields.return_notes.name}
-          name={formFields.return_notes.name}
-          label={formFields.return_notes.label}
-          value={formFields.return_notes.value}
-          size={formFields.return_notes.size}
-          placeholder={formFields.return_notes.placeholder}
+          id={formFields.returnNotes.name}
+          name={formFields.returnNotes.name}
+          label={formFields.returnNotes.label}
+          value={formFields.returnNotes.value}
+          size={formFields.returnNotes.size}
+          placeholder={formFields.returnNotes.placeholder}
           handleChange={handleInputChange}
-          required={formFields.return_notes.required}
-          fullWidth={formFields.return_notes.fullWidth}
-          error={Boolean(formFields.return_notes.errorMsg)}
-          helperText={formFields.return_notes.errorMsg}
-          variant={formFields.return_notes.variant}
+          required={formFields.returnNotes.required}
+          fullWidth={formFields.returnNotes.fullWidth}
+          error={Boolean(formFields.returnNotes.errorMsg)}
+          helperText={formFields.returnNotes.errorMsg}
+          variant={formFields.returnNotes.variant}
           multiline
           rows={4}
         />

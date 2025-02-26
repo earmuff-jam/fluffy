@@ -16,20 +16,20 @@ export default function SelectedAssetReturnInformationContent({
     <>
       <Stack flexGrow={1}>
         <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-          {formFields.return_location.label}
+          {formFields.returnLocation.label}
         </Typography>
         <TextField
-          id={formFields.return_location.name}
-          name={formFields.return_location.name}
-          value={formFields.return_location.value}
-          size={formFields.return_location.size}
-          placeholder={formFields.return_location.placeholder}
+          id={formFields.returnLocation.name}
+          name={formFields.returnLocation.name}
+          value={formFields.returnLocation.value}
+          size={formFields.returnLocation.size}
+          placeholder={formFields.returnLocation.placeholder}
           onChange={handleInputChange}
-          required={formFields.return_location.required}
-          fullWidth={formFields.return_location.fullWidth}
-          error={Boolean(formFields.return_location.errorMsg)}
-          helperText={formFields.return_location.errorMsg}
-          variant={formFields.return_location.variant}
+          required={formFields.returnLocation.required}
+          fullWidth={formFields.returnLocation.fullWidth}
+          error={Boolean(formFields.returnLocation.errorMsg)}
+          helperText={formFields.returnLocation.errorMsg}
+          variant={formFields.returnLocation.variant}
           InputProps={{
             endAdornment: (
               <InputAdornment position="start">
@@ -49,7 +49,7 @@ export default function SelectedAssetReturnInformationContent({
             Return datetime
           </Typography>
           <DatePicker
-            id="return_datetime"
+            id="returnDatetime"
             disablePast
             value={returnDateTime}
             onChange={setReturnDateTime}

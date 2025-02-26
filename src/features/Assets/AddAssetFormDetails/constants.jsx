@@ -150,8 +150,8 @@ export const ADD_ASSET_FORM = {
       },
     ],
   },
-  bought_at: {
-    id: 'bought_at',
+  boughtAt: {
+    id: 'boughtAt',
     label: 'Where did you buy the item',
     placeholder: 'The purchase location of the asset',
     value: '',
@@ -166,22 +166,22 @@ export const ADD_ASSET_FORM = {
     errorMsg: '',
     validators: [],
   },
-  is_bookmarked: {
-    id: 'is_bookmarked',
+  isBookmarked: {
+    id: 'isBookmarked',
     value: false,
     isRequired: false,
     errorMsg: '',
     validators: [],
   },
-  is_returnable: {
-    id: 'is_returnable',
+  isReturnable: {
+    id: 'isReturnable',
     value: false,
     isRequired: false,
     errorMsg: '',
     validators: [],
   },
-  return_location: {
-    id: 'return_location',
+  returnLocation: {
+    id: 'returnLocation',
     label: 'Where to return the item',
     placeholder: 'The return location of the item',
     value: '',
@@ -194,8 +194,8 @@ export const ADD_ASSET_FORM = {
       },
     ],
   },
-  return_datetime: {
-    id: 'return_datetime',
+  returnDatetime: {
+    id: 'returnDatetime',
     value: '',
     type: 'datetime',
     isRequired: false,
@@ -207,8 +207,8 @@ export const ADD_ASSET_FORM = {
       },
     ],
   },
-  max_weight: {
-    id: 'max_weight',
+  maxWeight: {
+    id: 'maxWeight',
     label: 'Max weight in kg',
     placeholder: 'The maximum weight of the asset in kg',
     value: '',
@@ -221,8 +221,8 @@ export const ADD_ASSET_FORM = {
       },
     ],
   },
-  min_weight: {
-    id: 'min_weight',
+  minWeight: {
+    id: 'minWeight',
     label: 'Min weight in kg',
     placeholder: 'The minimum weight of asset in kg',
     value: '',
@@ -235,8 +235,8 @@ export const ADD_ASSET_FORM = {
       },
     ],
   },
-  max_height: {
-    id: 'max_height',
+  maxHeight: {
+    id: 'maxHeight',
     label: 'Max height in inches',
     placeholder: 'The maximum height of asset in inches',
     value: '',
@@ -249,8 +249,8 @@ export const ADD_ASSET_FORM = {
       },
     ],
   },
-  min_height: {
-    id: 'min_height',
+  minHeight: {
+    id: 'minHeight',
     label: 'Min height in inches',
     placeholder: 'The minimum height of the asset in inches',
     value: '',
@@ -314,63 +314,63 @@ export const VIEW_PERSONAL_INVENTORY_LIST_HEADERS = {
     label: 'Storage location',
     modifier: (title) => `${title}`,
   },
-  is_returnable: {
+  isReturnable: {
     id: 9,
-    colName: 'is_returnable',
+    colName: 'isReturnable',
     label: 'Returnable',
     modifier: (title) => `${title}`,
   },
-  return_location: {
+  returnLocation: {
     id: 10,
-    colName: 'return_location',
+    colName: 'returnLocation',
     label: 'Return Location',
     modifier: (title) => `${title}`,
   },
-  max_weight: {
+  maxWeight: {
     id: 11,
-    colName: 'max_weight',
+    colName: 'maxWeight',
     label: 'Max Weight',
     modifier: (title) => `${title}`,
   },
-  min_weight: {
+  minWeight: {
     id: 12,
-    colName: 'min_weight',
+    colName: 'minWeight',
     label: 'Min Weight',
     modifier: (title) => `${title}`,
   },
-  max_height: {
+  maxHeight: {
     id: 13,
-    colName: 'max_height',
+    colName: 'maxHeight',
     label: 'Max Height',
     modifier: (title) => `${title}`,
   },
-  min_height: {
+  minHeight: {
     id: 14,
-    colName: 'min_height',
+    colName: 'minHeight',
     label: 'Min Height',
     modifier: (title) => `${title}`,
   },
-  updated_at: {
+  updatedAt: {
     id: 15,
-    colName: 'updated_at',
+    colName: 'updatedAt',
     label: 'Updated At',
     modifier: (value) => `${dayjs(value).fromNow()}`,
   },
-  created_at: {
+  createdAt: {
     id: 16,
-    colName: 'created_at',
+    colName: 'createdAt',
     label: 'Created At',
     modifier: (value) => `${dayjs(value).fromNow()}`,
   },
-  updater_name: {
+  updator: {
     id: 17,
-    colName: 'updater_name',
+    colName: 'updator',
     label: 'Updated By',
     modifier: (title) => `${title}`,
   },
-  bought_at: {
+  boughtAt: {
     id: 18,
-    colName: 'bought_at',
+    colName: 'boughtAt',
     label: 'Purchase Location',
     modifier: (title) => `${title}`,
   },

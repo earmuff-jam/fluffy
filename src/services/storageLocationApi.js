@@ -13,6 +13,17 @@ export const useStorageLocations = () => {
   });
 };
 
+export const useStorageLocationById = (id) => {
+  return useQuery({
+    queryKey: ['storageLocation', id],
+    queryFn: async () => {
+      const response = await client.models.StorageLocations.get({ id });
+      return response.data || [];
+    },
+    enabled: !!id,
+  });
+};
+
 export const useCreateStorageLocation = () => {
   const queryClient = useQueryClient();
 

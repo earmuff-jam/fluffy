@@ -9,6 +9,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useCreateStorageLocation } from '@services/storageLocationApi';
+import dayjs from 'dayjs';
 
 const filter = createFilterOptions();
 
@@ -20,6 +22,22 @@ export default function AddAssetFormDetails({
   handleInputChange,
   handleCheckbox,
 }) {
+
+  const { mutate: createStorageLocation } = useCreateStorageLocation();
+
+  const createNewStorageLocation = (value) => {
+    const draftRequest = {
+      location: value,
+      storageLocationPoint: {
+        lat: 0,
+        lon: 0
+      },
+      createdAt: dayjs().toISOString(),
+      updatedAt: dayjs().toISOString(),
+    }
+    createStorageLocation(draftRequest);
+  }
+
   return (
     <Box component="form" sx={{ maxWidth: 600, width: '100%' }}>
       <Stack spacing={2} useFlexGap>
@@ -39,14 +57,14 @@ export default function AddAssetFormDetails({
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.is_bookmarked.value}
-                onChange={(e) => handleCheckbox('is_bookmarked', e.target.checked)}
+                checked={formData.isBookmarked.value}
+                onChange={(e) => handleCheckbox('isBookmarked', e.target.checked)}
                 color="primary"
               />
             }
             label={
               <Stack direction="row" alignItems="center">
-                <BookmarkRounded color={formData.is_bookmarked.value ? 'primary' : 'secondary'} />
+                <BookmarkRounded color={formData.isBookmarked.value ? 'primary' : 'secondary'} />
                 <Typography variant="caption">Bookmark</Typography>
               </Stack>
             }
@@ -90,6 +108,7 @@ export default function AddAssetFormDetails({
               location: newValue,
             });
           } else if (newValue && newValue.inputValue) {
+            createNewStorageLocation(newValue?.inputValue);
             setStorageLocation({
               location: newValue.inputValue,
             });

@@ -6,7 +6,7 @@ export default function AddAssetFormReview({ formData, handleReset, handleSubmit
     <Stack alignItems="center">
       <Stack direction="row" alignSelf={'flex-start'}>
         <IconButton disabled>
-          <BookmarkRounded color={formData.is_bookmarked.value ? 'primary' : 'secondary'} />
+          <BookmarkRounded color={formData.isBookmarked.value ? 'primary' : 'secondary'} />
         </IconButton>
         <Stack spacing={1} justifyContent={'space-between'}>
           <Stack direction={'row'} spacing={1} alignItems={'center'}>

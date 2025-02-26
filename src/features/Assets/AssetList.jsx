@@ -7,7 +7,7 @@ import AssetListContent from '@features/Assets/AssetListContent/AssetListContent
 import { useAssets, useRemoveAssets } from '@services/assets';
 
 export default function AssetList() {
-  const { assets = [], isLoading } = useAssets();
+  const { data: assets = [], isLoading, isFetching } = useAssets();
   const { mutate: removeAsset } = useRemoveAssets();
 
   const [options, setOptions] = useState([]);
@@ -43,7 +43,7 @@ export default function AssetList() {
     if (Array.isArray(assets)) {
       setOptions(assets);
     }
-  }, [isLoading]);
+  }, [isFetching]);
 
   return (
     <Stack flexGrow="1" spacing={2} data-tour="assets-0">

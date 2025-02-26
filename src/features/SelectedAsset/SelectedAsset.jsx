@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-
 import dayjs from 'dayjs';
 import { enqueueSnackbar } from 'notistack';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import RowHeader from '@common/RowHeader';
 import SimpleModal from '@common/SimpleModal';
@@ -15,20 +13,22 @@ import { AddPhotoAlternateRounded, CheckRounded } from '@mui/icons-material';
 import SelectedAssetFormFields from '@features/SelectedAsset/SelectedAssetFormFields';
 import SelectedAssetWeightDimension from '@features/SelectedAsset/SelectedAssetWeightDimension';
 import SelectedAssetMoreInformation from '@features/SelectedAsset/SelectedAssetMoreInformation';
+import { useStorageLocationById, useStorageLocations } from '@services/storageLocationApi';
+import { useAssetById, useUpdateAsset } from '@services/assets';
 
 dayjs.extend(relativeTime);
 
 export default function SelectedAsset() {
   const { id } = useParams();
-  const dispatch = useDispatch();
 
-  const {
-    loading: storageLocationsLoading,
-    storageLocations,
-    inventory,
-    selectedImage,
-    loading,
-  } = useSelector((state) => state.inventory);
+  const selectedImage = '';
+  const { data: asset, isLoading: loading } = useAssetById(id);
+  const { data: assetStorageLocation, isLoading: isSelectedStorageLocationLoading } = useStorageLocationById(
+    asset?.storageLocationIdRef
+  );
+  const { data: storageLocations, isLoading: storageLocationsLoading } = useStorageLocations();
+
+  const { mutate: updateAsset } = useUpdateAsset();
 
   const [editImgMode, setEditImgMode] = useState(false);
   const [openReturnNote, setOpenReturnNote] = useState(false);
@@ -98,34 +98,46 @@ export default function SelectedAsset() {
     event.preventDefault();
 
     if (isFormDisabled()) {
-      enqueueSnackbar('Unable to update inventory details.', {
+      enqueueSnackbar('Unable to update asset details.', {
         variant: 'error',
       });
       return;
     }
 
     const formattedData = Object.values(formData).reduce((acc, el) => {
-      if (el.type === 'number') {
-        acc[el.id] = Number(el.value);
-      } else if (el.value) {
-        acc[el.id] = el.value;
-      }
+      acc[el.id] = el.value;
       return acc;
     }, {});
 
+    const storageLocationID =
+      storageLocations.find((v) => v.location === storageLocation.location)?.id || storageLocation.location;
+
     const draftRequest = {
-      id: id, // bring id from the params
-      ...formattedData,
-      return_datetime: returnDateTime !== null ? returnDateTime.toISOString() : null,
-      location: storageLocation.location,
-      color: color,
+      id,
+      name: formattedData.name,
+      description: formattedData.description,
+      barcode: formattedData.barcode,
+      sku: formattedData.sku,
+      boughtAt: formattedData.boughtAt,
+      returnLocation: formattedData.returnLocation,
+      maxWeight: formattedData.maxWeight,
+      minWeight: formattedData.minWeight,
+      maxHeight: formattedData.maxHeight,
+      minHeight: formattedData.minHeight,
+      price: formattedData.price,
+      quantity: formattedData.quantity,
+      isBookmarked: formattedData.isBookmarked,
+      isReturnable: formattedData.isReturnable,
+      returnDatetime: returnDateTime?.toISOString(),
+      storageLocationIdRef: storageLocationID,
+      color,
     };
 
-    setFormFieldChange(false);
-    dispatch(inventoryActions.updateInventory(draftRequest));
+    updateAsset(draftRequest);
     enqueueSnackbar('Successfully updated selected asset.', {
       variant: 'success',
     });
+    setFormFieldChange(false);
   };
 
   const handleUpload = (id, imgFormData) => {
@@ -134,59 +146,51 @@ export default function SelectedAsset() {
   };
 
   useEffect(() => {
-    if (id.length > 0) {
-      dispatch(inventoryActions.getInvByID(id));
+    if (assetStorageLocation) {
+      setStorageLocation({ location: assetStorageLocation?.location });
     }
-  }, [id]);
-
-  useEffect(() => {
-    if (!loading && !selectedImage) {
-      dispatch(inventoryActions.getSelectedImage({ id }));
-    }
-  }, [loading]);
+  }, [loading, isSelectedStorageLocationLoading]);
 
   useEffect(() => {
     if (!loading || !storageLocationsLoading) {
       const selectedAsset = { ...BLANK_INVENTORY_FORM };
-      selectedAsset.name.value = inventory.name || '';
-      selectedAsset.description.value = inventory.description || '';
-      selectedAsset.barcode.value = inventory.barcode || '';
-      selectedAsset.sku.value = inventory.sku || '';
-      selectedAsset.bought_at.value = inventory.bought_at || '';
-      selectedAsset.return_location.value = inventory.return_location || '';
-      selectedAsset.max_weight.value = inventory.max_weight || '';
-      selectedAsset.min_weight.value = inventory.min_weight || '';
-      selectedAsset.max_height.value = inventory.max_height || '';
-      selectedAsset.min_height.value = inventory.min_height || '';
-      selectedAsset.price.value = inventory.price || '';
-      selectedAsset.quantity.value = inventory.quantity || '';
-      selectedAsset.is_bookmarked.value = inventory.is_bookmarked || false;
-      selectedAsset.is_returnable.value = inventory.is_returnable || Boolean(inventory.return_location) || false;
-      selectedAsset.created_by.value = inventory.created_by || '';
-      selectedAsset.created_at.value = inventory.created_at || '';
-      selectedAsset.updated_by.value = inventory.updated_by || '';
-      selectedAsset.updated_at.value = inventory.updated_at || '';
-      selectedAsset.sharable_groups.value = inventory.sharable_groups || [];
-      selectedAsset.creator_name = inventory?.creator_name || '';
-      selectedAsset.updator_name = inventory?.updater_name || '';
+      selectedAsset.name.value = asset?.name || '';
+      selectedAsset.description.value = asset?.description || '';
+      selectedAsset.barcode.value = asset?.barcode || '';
+      selectedAsset.sku.value = asset?.sku || '';
+      selectedAsset.boughtAt.value = asset?.boughtAt || '';
+      selectedAsset.returnLocation.value = asset?.returnLocation || '';
+      selectedAsset.maxWeight.value = asset?.maxWeight || '';
+      selectedAsset.minWeight.value = asset?.minWeight || '';
+      selectedAsset.maxHeight.value = asset?.maxHeight || '';
+      selectedAsset.minHeight.value = asset?.minHeight || '';
+      selectedAsset.price.value = asset?.price || '';
+      selectedAsset.quantity.value = asset?.quantity || '';
+      selectedAsset.isBookmarked.value = asset?.isBookmarked || false;
+      selectedAsset.isReturnable.value = asset?.isReturnable || Boolean(asset?.returnLocation) || false;
+      selectedAsset.createdBy.value = asset?.createdBy || '';
+      selectedAsset.createdAt.value = asset?.createdAt || '';
+      selectedAsset.updatedBy.value = asset?.updatedBy || '';
+      selectedAsset.updatedAt.value = asset?.updatedAt || '';
+      selectedAsset.sharable_groups.value = asset?.sharable_groups || [];
+      selectedAsset.creator = asset?.creator || '';
+      selectedAsset.updator = asset?.updator || '';
 
-      if (inventory?.return_datetime) {
-        setReturnDateTime(dayjs(inventory.return_datetime));
+      if (asset?.returnDatetime) {
+        setReturnDateTime(dayjs(asset.returnDatetime));
       }
 
-      if (inventory?.return_notes) {
+      if (asset?.returnNotes) {
         setOpenReturnNote(true);
-        selectedAsset.return_notes.value = inventory.return_notes;
+        selectedAsset.returnNotes.value = asset.returnNotes;
       }
 
-      if (inventory?.color) {
-        setColor(inventory.color);
+      if (asset?.color) {
+        setColor(asset.color);
       }
-
-      setStorageLocation({ location: inventory.location });
       setFormData(selectedAsset);
     }
-  }, [loading, inventory]);
+  }, [loading, asset]);
 
   return (
     <>
