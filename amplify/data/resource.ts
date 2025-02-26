@@ -87,6 +87,7 @@ const schema = a.schema({
       // updatedLocationId: a.id(),
       // updated_by: a.belongsTo("Profiles", "updatedLocationId"),
       // sharable_groups: a.string().array(),
+      storageLocationAssociatedAsset: a.hasOne('Assets', 'storageLocationIdRef'),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -129,7 +130,8 @@ const schema = a.schema({
         lat: a.float(),
         lon: a.float(),
       }),
-      // storage_location_id: a.string(),
+      storageLocationIdRef: a.id(),
+      storageLocationId: a.belongsTo('StorageLocations', 'storageLocationIdRef'),
       isReturnable: a.boolean(),
       returnLocation: a.string(),
       returnDatetime: a.string(),
