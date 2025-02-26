@@ -7,7 +7,7 @@ export const useAssets = () => {
   return useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
-      const response = await client.models.Asset.list();
+      const response = await client.models.Assets.list();
       return response.data || [];
     },
   });
@@ -19,7 +19,7 @@ export const useCreateAsset = () => {
   return useMutation({
     mutationFn: async (asset) => {
       if (!asset) throw new Error('Asset details is required for creation.');
-      const { data, errors } = await client.models.Asset.create(asset);
+      const { data, errors } = await client.models.Assets.create(asset);
       if (errors) throw new Error(errors);
       return data;
     },
@@ -35,7 +35,7 @@ export const useUpdateAsset = () => {
   return useMutation({
     mutationFn: async (asset) => {
       if (!asset) throw new Error('Asset details is required for update');
-      const { data, errors } = await client.models.Asset.update(asset);
+      const { data, errors } = await client.models.Assets.update(asset);
       if (errors) throw new Error(errors);
       return data;
     },
@@ -56,7 +56,7 @@ export const useRemoveAssets = () => {
       }
 
       const deletePromises = ids.map(async (id) => {
-        const { data, errors } = await client.models.Asset.delete({ id });
+        const { data, errors } = await client.models.Assets.delete({ id });
         if (errors) throw new Error(errors);
         return data;
       });

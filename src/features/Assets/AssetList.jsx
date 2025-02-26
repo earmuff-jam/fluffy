@@ -7,7 +7,7 @@ import AssetListContent from '@features/Assets/AssetListContent/AssetListContent
 import { useAssets, useRemoveAssets } from '@services/assets';
 
 export default function AssetList() {
-  const { assets = [], isLoading: loading } = useAssets();
+  const { assets = [], isLoading } = useAssets();
   const { mutate: removeAsset } = useRemoveAssets();
 
   const [options, setOptions] = useState([]);
@@ -43,7 +43,7 @@ export default function AssetList() {
     if (Array.isArray(assets)) {
       setOptions(assets);
     }
-  }, [loading]);
+  }, [isLoading]);
 
   return (
     <Stack flexGrow="1" spacing={2} data-tour="assets-0">
@@ -58,7 +58,7 @@ export default function AssetList() {
         disableDelete={rowSelected.length <= 0}
       />
       <AssetListContent
-        loading={loading}
+        loading={isLoading}
         modalState={modalState}
         setModalState={setModalState}
         gridMode={gridMode}

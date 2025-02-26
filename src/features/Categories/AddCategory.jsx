@@ -126,22 +126,21 @@ export default function AddCategory({
   };
 
   useEffect(() => {
-    if (!loading && selectedCategoryID !== '') {
-      const draftCategory = categories.filter((v) => v.id === selectedCategoryID).find(() => true);
-      setFormFields(
-        produce(formFields, (draft) => {
-          draft.name.value = draftCategory?.name || '';
-          draft.description.value = draftCategory?.description || '';
-        })
-      );
-
-      setLocation(draftCategory.location);
-      setPlanColor(draftCategory.color || '#ffffff');
-      setStatus(draftCategory.status_name || STATUS_OPTIONS[0].label);
-    } else {
-      resetData();
+    if (!loading && selectedCategoryID) {
+      const draftCategory = categories.find((v) => v.id === selectedCategoryID);
+      if (draftCategory) {
+        setFormFields(
+          produce(formFields, (draft) => {
+            draft.name.value = draftCategory?.name || '';
+            draft.description.value = draftCategory?.description || '';
+          })
+        );
+        setLocation(draftCategory.location);
+        setPlanColor(draftCategory.color || '#ffffff');
+        setStatus(draftCategory.status_name || STATUS_OPTIONS[0].label);
+      }
     }
-  }, [selectedCategoryID]);
+  }, [selectedCategoryID, loading]);
 
   return (
     <Stack alignItems={'center'}>

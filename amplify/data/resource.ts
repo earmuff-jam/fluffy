@@ -90,25 +90,25 @@ const schema = a.schema({
   //   })
   //   .authorization((allow) => [allow.authenticated()]),
 
-  // Status: a
-  //   .model({
-  //     id: a.id(),
-  //     name: a.string(),
-  //     description: a.string(),
-  //     statusId: a.id(),
-  //     notes: a.hasMany("Notes", "statusId"),
-  //     categories: a.hasMany("Categories", "statusId"),
-  //     maintenancePlans: a.hasMany("MaintenancePlans", "statusId"),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+  Status: a
+    .model({
+      id: a.id(),
+      name: a.string(),
+      description: a.string(),
+      statusId: a.id(),
+      notes: a.hasMany("Notes", "statusId"),
+      categories: a.hasMany("Categories", "statusId"),
+      maintenancePlans: a.hasMany("MaintenancePlans", "statusId"),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 
   Notes: a
     .model({
       id: a.id(),
       title: a.string(),
       description: a.string(),
-      // statusId: a.id(),
-      // status: a.belongsTo("Status", "statusId"),
+      statusId: a.id(),
+      status: a.belongsTo("Status", "statusId"),
       color: a.string(),
       completionDate: a.string(),
       location: a.customType({
@@ -170,8 +170,8 @@ const schema = a.schema({
       description: a.string(),
       color: a.string(),
       imageURL: a.string(),
-      // statusId: a.id(),
-      // status: a.belongsTo('Status', 'statusId'),
+      statusId: a.id(),
+      status: a.belongsTo('Status', 'statusId'),
       location: a.customType({
         lat: a.float(),
         lon: a.float(),
@@ -212,8 +212,8 @@ const schema = a.schema({
       description: a.string(),
       color: a.string(),
       imageURL: a.string(),
-      // statusId: a.id(),
-      // status: a.belongsTo("Status", "statusId"),
+      statusId: a.id(),
+      status: a.belongsTo("Status", "statusId"),
       // plan_due: a.string(),
       // plan_type: a.string(),
       location: a.customType({
