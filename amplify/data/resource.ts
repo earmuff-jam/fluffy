@@ -72,33 +72,21 @@ const schema = a.schema({
   //   })
   //   .authorization((allow) => [allow.authenticated()]),
 
-  // StorageLocations: a
-  //   .model({
-  //     id: a.id(),
-  //     location: a.string(),
-  //     storageLocationPoint: a.customType({
-  //       lat: a.float(),
-  //       lon: a.float(),
-  //     }),
-  //     created_at: a.string(),
-  //     createdLocationId: a.id(),
-  //     created_by: a.belongsTo("Profiles", "createdLocationId"),
-  //     updated_at: a.string(),
-  //     updatedLocationId: a.id(),
-  //     updated_by: a.belongsTo("Profiles", "updatedLocationId"),
-  //     sharable_groups: a.string().array(),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
-
-  Status: a
+  StorageLocations: a
     .model({
       id: a.id(),
-      name: a.string(),
-      description: a.string(),
-      statusId: a.id(),
-      notes: a.hasMany("Notes", "statusId"),
-      categories: a.hasMany("Categories", "statusId"),
-      maintenancePlans: a.hasMany("MaintenancePlans", "statusId"),
+      location: a.string(),
+      storageLocationPoint: a.customType({
+        lat: a.float(),
+        lon: a.float(),
+      }),
+      createdAt: a.string(),
+      // createdLocationId: a.id(),
+      // created_by: a.belongsTo("Profiles", "createdLocationId"),
+      updatedAt: a.string(),
+      // updatedLocationId: a.id(),
+      // updated_by: a.belongsTo("Profiles", "updatedLocationId"),
+      // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -107,9 +95,8 @@ const schema = a.schema({
       id: a.id(),
       title: a.string(),
       description: a.string(),
-      statusId: a.id(),
-      status: a.belongsTo("Status", "statusId"),
       color: a.string(),
+      status: a.string(),
       completionDate: a.string(),
       location: a.customType({
         lat: a.float(),
@@ -135,7 +122,7 @@ const schema = a.schema({
       barcode: a.string(),
       sku: a.string(),
       color: a.string(),
-      // imageURL: a.string(),
+      imageURL: a.string(),
       quantity: a.integer(),
       boughtAt: a.string(),
       location: a.customType({
@@ -147,19 +134,19 @@ const schema = a.schema({
       returnLocation: a.string(),
       returnDatetime: a.string(),
       returnNotes: a.string(),
-       maxWeight: a.float(),
+      maxWeight: a.float(),
       minWeight: a.float(),
       maxHeight: a.float(),
       minHeight: a.float(),
       createdAt: a.string(),
-  //     createdAssetId: a.id(),
-  //     created_by: a.belongsTo("Profiles", "createdAssetId"),
+      //     createdAssetId: a.id(),
+      //     created_by: a.belongsTo("Profiles", "createdAssetId"),
       updatedAt: a.string(),
-  //     updatedAssetId: a.id(),
-  //     updated_by: a.belongsTo("Profiles", "updatedAssetId"),
-  //     sharable_groups: a.string().array(),
-  //     assetsInCategories: a.hasMany("CategoryItems", "assetId"),
-  //     assetsInMaintenancePlans: a.hasMany("MaintenancePlanItems", "assetId"),
+      //     updatedAssetId: a.id(),
+      //     updated_by: a.belongsTo("Profiles", "updatedAssetId"),
+      //     sharable_groups: a.string().array(),
+      //     assetsInCategories: a.hasMany("CategoryItems", "assetId"),
+      //     assetsInMaintenancePlans: a.hasMany("MaintenancePlanItems", "assetId"),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -169,9 +156,8 @@ const schema = a.schema({
       name: a.string(),
       description: a.string(),
       color: a.string(),
+      status: a.string(),
       imageURL: a.string(),
-      statusId: a.id(),
-      status: a.belongsTo('Status', 'statusId'),
       location: a.customType({
         lat: a.float(),
         lon: a.float(),
@@ -212,8 +198,7 @@ const schema = a.schema({
       description: a.string(),
       color: a.string(),
       imageURL: a.string(),
-      statusId: a.id(),
-      status: a.belongsTo("Status", "statusId"),
+      status: a.string(),
       // plan_due: a.string(),
       // plan_type: a.string(),
       location: a.customType({

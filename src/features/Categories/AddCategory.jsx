@@ -96,7 +96,7 @@ export default function AddCategory({
         ...selectedCategory,
         ...formattedData,
         color: planColor,
-        // status: status,
+        status: status,
         location: location,
         // updated_by: userID,
       };
@@ -105,7 +105,7 @@ export default function AddCategory({
       const draftRequest = {
         ...formattedData,
         color: planColor,
-        // status: status,
+        status: status,
         location: location,
         createdAt: dayjs().toISOString(),
         updatedAt: dayjs().toISOString(),
@@ -137,7 +137,7 @@ export default function AddCategory({
         );
         setLocation(draftCategory.location);
         setPlanColor(draftCategory.color || '#ffffff');
-        setStatus(draftCategory.status_name || STATUS_OPTIONS[0].label);
+        setStatus(draftCategory.status || STATUS_OPTIONS[0].label);
       }
     }
   }, [selectedCategoryID, loading]);

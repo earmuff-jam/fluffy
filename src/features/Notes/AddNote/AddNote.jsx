@@ -82,7 +82,7 @@ const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
     const formattedDraftNotes = {
       ...formattedNotes,
       color: planColor,
-      // status: status,
+      status: status,
       location: location,
       completionDate: completionDate.toISOString(),
       // updated_by: userID,
@@ -123,7 +123,7 @@ const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
       }
 
       setPlanColor(selectedNote?.color || '#ffffff');
-      setStatus(selectedNote.status_name || STATUS_OPTIONS[0].label);
+      setStatus(selectedNote.status || STATUS_OPTIONS[0].label);
       setLocation(selectedNote.location);
       setFormFields(updatedFormFields);
     } else {

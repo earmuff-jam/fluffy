@@ -3,6 +3,7 @@ import { notesApi } from '@services/notesApi';
 import { assetsApi } from '@services/assetsApi';
 import { categoriesApi } from '@services/categoriesApi';
 import { maintenancePlanApi } from '@services/maintenancePlanApi';
+import { storageLocationsApi } from '@services/storageLocationsApi';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     [assetsApi.reducerPath]: assetsApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [maintenancePlanApi.reducerPath]: maintenancePlanApi.reducer,
+    [storageLocationsApi.reducerPath]: storageLocationsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -17,6 +19,7 @@ const store = configureStore({
       assetsApi.middleware,
       categoriesApi.middleware,
       maintenancePlanApi.middleware,
+      storageLocationsApi.middleware,
     ]),
 });
 

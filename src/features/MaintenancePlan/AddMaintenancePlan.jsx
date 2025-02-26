@@ -56,7 +56,7 @@ const AddMaintenancePlan = ({
     setFormData(BLANK_MAINTENANCE_PLAN);
     setPlanColor('#f7f7f7');
     handleClose();
-    // setStatus(STATUS_OPTIONS[0].label);
+    setStatus(STATUS_OPTIONS[0].label);
     // setPlanType(ITEM_TYPE_MAPPER['daily'].value);
   };
 
@@ -101,11 +101,11 @@ const AddMaintenancePlan = ({
         ...currentMaintenancePlan,
         ...formattedData,
         color: planColor,
-        // type: planType,
         location: location,
+        status: status,
+        // type: planType,
         // plan_type: ITEM_TYPE_MAPPER[planType].value,
         // plan_due: ITEM_TYPE_MAPPER[planType].since,
-        // maintenance_status: status,
         // updated_on: dayjs().toISOString(),
       };
       updateMaintenancePlan(draftRequest);
@@ -114,10 +114,10 @@ const AddMaintenancePlan = ({
         ...formattedData,
         color: planColor,
         location: location,
+        status: status,
         // type: planType,
         // plan_type: planType,
         // plan_due: ITEM_TYPE_MAPPER[planType].since,
-        // maintenance_status: status,
         // created_on: dayjs().toISOString(),
       };
       createMaintenancePlan(draftRequest);
@@ -148,7 +148,7 @@ const AddMaintenancePlan = ({
 
       setLocation(draftMaintenancePlan?.location);
       setPlanColor(draftMaintenancePlan?.color || '#ffffff');
-      setStatus(draftMaintenancePlan?.maintenance_status_name || STATUS_OPTIONS[0].label);
+      setStatus(draftMaintenancePlan?.status || STATUS_OPTIONS[0].label);
       // setPlanType(currentPlanType?.value || Object.values(ITEM_TYPE_MAPPER)[0].value);
     } else {
       resetData();
