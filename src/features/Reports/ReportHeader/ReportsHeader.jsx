@@ -1,9 +1,8 @@
 import dayjs from 'dayjs';
-
 import { Stack } from '@mui/material';
 import RowHeader from '@common/RowHeader';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { capitalizeFirstLetter, formatDate } from '@common/utils';
+import { capitalizeFirstLetter, EmptyComponent, formatDate } from '@common/utils';
 import { DownloadRounded, FilterAltRounded } from '@mui/icons-material';
 import ReportCardWrapper from '@features/Reports/ReportCard/ReportCardWrapper';
 import ReportItemDetails from '@features/Reports/ReportItemDetails/ReportItemDetails';
@@ -47,7 +46,7 @@ export default function ReportsHeader({
         <ReportCardWrapper
           title="Valuation"
           chipLabel={`Since ${formatDate(sinceValue)}`}
-          value={`$${reports[0]?.total_valuation.toFixed(2) || 0.0}`}
+          value={`$${reports[0]?.total_valuation?.toFixed(2) || 0.0}`}
           footerText="Total cost of items in"
           footerSuffix="dollar value."
           dataTour={'reports-3'}
@@ -56,30 +55,33 @@ export default function ReportsHeader({
           title="Categorized Assets"
           dataTour={'reports-4'}
           chipLabel={`Since ${formatDate(sinceValue)}`}
-          value={`$${reports[0]?.cost_category_items.toFixed(2) || 0.0}`}
+          value={`$${reports[0]?.cost_category_items?.toFixed(2) || 0.0}`}
         />
       </Stack>
       <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
         <ReportCardWrapper title="Recently Added Asset" dataTour={'reports-5'}>
-          <ReportItemDetails
-            loading={loading}
-            avatarValue={
-              Object.keys(selectedMaintenancePlan) > 0 && capitalizeFirstLetter(selectedAsset?.updater_name?.charAt(0))
-            }
-            label={selectedAsset?.name || ''}
-            caption={selectedAsset?.description || ''}
-          />
+          {Object.keys(selectedAsset).length > 0 ? (
+            <ReportItemDetails
+              loading={loading}
+              avatarValue={capitalizeFirstLetter(selectedAsset?.updator?.charAt(0))}
+              label={selectedAsset?.name || ''}
+              caption={selectedAsset?.description || ''}
+            />
+          ) : (
+            <EmptyComponent padding="1rem 0rem" />
+          )}
         </ReportCardWrapper>
         <ReportCardWrapper title="Maintenance due" dataTour={'reports-6'}>
-          <ReportItemDetails
-            loading={loading}
-            avatarValue={
-              Object.keys(selectedMaintenancePlan) > 0 &&
-              capitalizeFirstLetter(selectedMaintenancePlan?.updator?.charAt(0))
-            }
-            label={selectedMaintenancePlan?.name || ''}
-            caption={selectedMaintenancePlan?.description || ''}
-          />
+          {Object.keys(selectedMaintenancePlan).length > 0 ? (
+            <ReportItemDetails
+              loading={loading}
+              avatarValue={capitalizeFirstLetter(selectedMaintenancePlan?.updator?.charAt(0))}
+              label={selectedMaintenancePlan?.name || ''}
+              caption={selectedMaintenancePlan?.description || ''}
+            />
+          ) : (
+            <EmptyComponent padding="1rem 0rem" />
+          )}
         </ReportCardWrapper>
       </Stack>
     </Stack>

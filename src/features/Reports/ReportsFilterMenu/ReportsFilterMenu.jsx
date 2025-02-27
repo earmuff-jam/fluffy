@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-
 import { FILTER_OPTIONS } from '@features/Reports/constants';
 import { reportActions } from '@features/Reports/reportSlice';
 import { inventoryActions } from '@features/Assets/inventorySlice';
@@ -12,15 +11,15 @@ export default function ReportsFilterMenu({
   includeOverdue,
   setIncludeOverdue,
 }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleSinceValue = (e) => {
     setSinceValue(e.target.value);
   };
 
   const submit = () => {
-    dispatch(reportActions.getReports({ since: sinceValue, includeOverdue: includeOverdue }));
-    dispatch(inventoryActions.getAllInventoriesForUser({ since: sinceValue }));
+    // dispatch(reportActions.getReports({ since: sinceValue, includeOverdue: includeOverdue }));
+    // dispatch(inventoryActions.getAllInventoriesForUser({ since: sinceValue }));
     handleClose();
   };
 

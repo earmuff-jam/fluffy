@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@features/Layout/Layout'; // can't lazy load this
 
 // const Overview = lazy(() => import('@features/Home/Overview'));
-// const Reports = lazy(() => import('@features/Reports/Reports'));
+const Reports = lazy(() => import('@features/Reports/Reports'));
 const NotesList = lazy(() => import('@features/Notes/NotesList'));
 
 const ProfilePage = lazy(() => import('@features/Profile/ProfilePage'));
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/reports',
-        // element: <Reports />,
+        element: <Reports />,
       },
       {
         path: '/profile',

@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useMaterialReactTable } from 'material-react-table';
-
 import RowHeader from '@common/RowHeader';
 import { EmptyComponent } from '@common/utils';
 import DataTable from '@common/DataTable/DataTable';
@@ -12,6 +11,7 @@ import { Stack } from '@mui/material';
 dayjs.extend(relativeTime);
 
 export default function ReportContent({ sinceValue, assets }) {
+
   const columns = useMemo(() => ASSETS_IN_REPORTS_HEADER, []);
 
   const table = useMaterialReactTable({

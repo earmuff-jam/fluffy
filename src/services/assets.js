@@ -7,7 +7,9 @@ export const useAssets = () => {
   return useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
-      const response = await client.models.Assets.list();
+      const response = await client.models.Assets.list({
+        include: ['storageLocation'],
+      });
       return response.data || [];
     },
   });

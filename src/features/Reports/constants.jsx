@@ -16,7 +16,7 @@ export const ASSETS_IN_REPORTS_HEADER = [
     accessorKey: 'description',
     size: 200,
     Cell: ({ cell }) => {
-      return <>{cell.getValue().length > 0 ? cell.getValue() : '-'}</>;
+      return <>{cell.getValue()?.length > 0 ? cell.getValue() : '-'}</>;
     },
   },
   {
@@ -24,6 +24,9 @@ export const ASSETS_IN_REPORTS_HEADER = [
     header: 'Price',
     accessorKey: 'price',
     size: 150,
+    Cell: ({ cell }) => {
+      return <>{cell.getValue()?.length > 0 ? cell.getValue() : '-'}</>;
+    },
   },
   {
     name: 'quantity',
@@ -32,12 +35,12 @@ export const ASSETS_IN_REPORTS_HEADER = [
     size: 150,
   },
   {
-    name: 'location',
+    name: 'storageLocation',
     header: 'Storage Location',
-    accessorKey: 'location',
+    accessorKey: 'storageLocation',
     size: 150,
     Cell: ({ cell }) => {
-      return <>{cell.getValue().length > 0 ? cell.getValue() : '-'}</>;
+      return <>{cell.getValue()?.length > 0 ? cell.getValue() : '-'}</>;
     },
   },
   {

@@ -136,10 +136,10 @@ export const categorizeNotes = (notes) => {
 
 /**
  * Function used to capitalize the first letter of passed in string
- * @param {word} string - the word to capitalize
+ * @param {word} string - the word to capitalize, default empty string
  * @returns string - with captial first letter
  */
-export const capitalizeFirstLetter = (string) => {
+export const capitalizeFirstLetter = (string = '') => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
