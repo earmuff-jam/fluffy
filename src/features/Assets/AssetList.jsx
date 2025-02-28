@@ -4,7 +4,7 @@ import { ConfirmationBoxModal } from '@common/utils';
 import { MODAL_STATE } from '@features/Assets/constants';
 import AssetListHeader from '@features/Assets/AssetListHeader/AssetListHeader';
 import AssetListContent from '@features/Assets/AssetListContent/AssetListContent';
-import { useAssets, useRemoveAssets } from '@services/assets';
+import { useAssets, useRemoveAssets } from '@services/assetsApi';
 
 export default function AssetList() {
   const { data: assets = [], isLoading, isFetching } = useAssets();

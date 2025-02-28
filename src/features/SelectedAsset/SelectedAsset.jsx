@@ -14,7 +14,7 @@ import SelectedAssetFormFields from '@features/SelectedAsset/SelectedAssetFormFi
 import SelectedAssetWeightDimension from '@features/SelectedAsset/SelectedAssetWeightDimension';
 import SelectedAssetMoreInformation from '@features/SelectedAsset/SelectedAssetMoreInformation';
 import { useStorageLocations } from '@services/storageLocationApi';
-import { useAssetById, useUpdateAsset } from '@services/assets';
+import { useAssetById, useUpdateAsset } from '@services/assetsApi';
 
 dayjs.extend(relativeTime);
 
@@ -180,7 +180,7 @@ export default function SelectedAsset() {
         setColor(asset.color);
       }
 
-      setStorageLocation({ location: asset?.storageLocation?.location || '' });
+      setStorageLocation({ location: asset?.storageLocationId?.location || '' });
       setFormData(selectedAsset);
     }
   }, [loading, asset]);

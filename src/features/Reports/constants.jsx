@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from '@common/utils';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -37,10 +38,10 @@ export const ASSETS_IN_REPORTS_HEADER = [
   {
     name: 'storageLocation',
     header: 'Storage Location',
-    accessorKey: 'storageLocation',
+    accessorKey: 'storageLocationId.location',
     size: 150,
     Cell: ({ cell }) => {
-      return <>{cell.getValue()?.length > 0 ? cell.getValue() : '-'}</>;
+      return <>{cell.getValue()?.length > 0 ? capitalizeFirstLetter(cell.getValue()) : '-'}</>;
     },
   },
   {

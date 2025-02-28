@@ -6,12 +6,14 @@ import { FILTER_OPTIONS } from '@features/Reports/constants';
 import ReportsHeader from '@features/Reports/ReportHeader/ReportsHeader';
 import ReportContent from '@features/Reports/ReportContent/ReportContent';
 import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu/ReportsFilterMenu';
-import { useAssets } from '@services/assets';
+import { useAssets } from '@services/assetsApi';
 import { useMaintenancePlans } from '@services/maintenancePlanApi';
 
 export default function Reports() {
   const { data: inventories = [], isLoading: loading } = useAssets();
-  const { data: reports = [], isLoading: reportLoading } = useAssets();
+  const reports = [];
+  const reportLoading = false;
+  // const { data: reports = [], isLoading: reportLoading } = useAssets();
   const { data: maintenancePlanList = [], isLoading: maintenancePlanListLoading } = useMaintenancePlans();
 
   // const dispatch = useDispatch();
@@ -22,7 +24,6 @@ export default function Reports() {
   // (state) => state.maintenance
   // );
 
-  const [selectedAsset, setSelectedAsset] = useState({});
   const [displayModal, setDisplayModal] = useState(false);
   const [includeOverdue, setIncludeOverdue] = useState(true);
 
@@ -34,12 +35,6 @@ export default function Reports() {
   };
 
   const closeFilter = () => setDisplayModal(false);
-
-  useEffect(() => {
-    if (!loading && inventories.length > 0) {
-      setSelectedAsset(inventories[0] || {});
-    }
-  }, [loading, inventories.length]);
 
   // useEffect(() => {
   //   if (!maintenancePlanListLoading && maintenancePlanList.length > 0) {
@@ -64,7 +59,7 @@ export default function Reports() {
         sinceValue={sinceValue}
         reports={reports}
         loading={loading}
-        selectedAsset={selectedAsset}
+        selectedAsset={inventories[0] || {}}
         setDisplayModal={setDisplayModal}
         downloadReports={downloadReports}
         selectedMaintenancePlan={maintenancePlanList?.length > 0 ? maintenancePlanList[0] : {}}

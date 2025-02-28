@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient();
-const assetWithStorageLocationDetails = [
+const assetWithStorageLocationCols = [
   'id',
   'name',
   'description',
@@ -33,7 +33,7 @@ export const useAssets = () => {
     queryKey: ['assets'],
     queryFn: async () => {
       const response = await client.models.Assets.list({
-        assetWithStorageLocationDetails,
+        selectionSet: assetWithStorageLocationCols,
       });
       return response.data || [];
     },
@@ -44,7 +44,7 @@ export const useAssetById = (id) => {
   return useQuery({
     queryKey: ['asset', id],
     queryFn: async () => {
-      const response = await client.models.Assets.get({ id: id }, { selectionSet: assetWithStorageLocationDetails });
+      const response = await client.models.Assets.get({ id: id }, { selectionSet: assetWithStorageLocationCols });
       return response.data || [];
     },
     enabled: !!id,

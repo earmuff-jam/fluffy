@@ -7,7 +7,7 @@ import { ADD_ASSET_FORM } from '@features/Assets/AddAssetFormDetails/constants';
 import AddAssetFormSelection from '@features/Assets/AddAssetFormDetails/AddAssetFormSelection';
 import AddAssetActionButtons from '@features/Assets/AddAssetFormDetails/AddAssetActionButtons';
 import AddAssetFormInstructions from '@features/Assets/AddAssetFormDetails/AddAssetFormInstructions';
-import { useCreateAsset } from '@services/assets';
+import { useCreateAsset } from '@services/assetsApi';
 import { useStorageLocations } from '@services/storageLocationApi';
 
 export default function AddAssetDetails({ handleClose }) {
