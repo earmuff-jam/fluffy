@@ -13,13 +13,12 @@ export default function ReportsHeader({
   sinceValue,
   reports,
   loading,
+  totalAssetValuation,
   selectedAsset,
   selectedMaintenancePlan,
   setDisplayModal,
   downloadReports,
 }) {
-  const handleFilter = () => setDisplayModal(true);
-
   const renderCaption = () => {
     if (sinceValue) {
       return `Viewing reports since ${dayjs(sinceValue).fromNow()}`;
@@ -35,7 +34,7 @@ export default function ReportsHeader({
         caption={renderCaption()}
         primaryStartIcon={<FilterAltRounded />}
         primaryButtonTextLabel={'Filter results'}
-        handleClickPrimaryButton={handleFilter}
+        handleClickPrimaryButton={() => setDisplayModal(true)}
         secondaryStartIcon={<DownloadRounded />}
         secondaryButtonTextLabel={'Export'}
         primaryBtnDataTour={'reports-1'}
@@ -45,8 +44,9 @@ export default function ReportsHeader({
       <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
         <ReportCardWrapper
           title="Valuation"
+          loading={loading}
           chipLabel={`Since ${formatDate(sinceValue)}`}
-          value={`$${reports[0]?.total_valuation?.toFixed(2) || 0.0}`}
+          value={`$${totalAssetValuation?.toFixed(2) || 0.0}`}
           footerText="Total cost of items in"
           footerSuffix="dollar value."
           dataTour={'reports-3'}
@@ -54,6 +54,7 @@ export default function ReportsHeader({
         <ReportCardWrapper
           title="Categorized Assets"
           dataTour={'reports-4'}
+          loading={loading}
           chipLabel={`Since ${formatDate(sinceValue)}`}
           value={`$${reports[0]?.cost_category_items?.toFixed(2) || 0.0}`}
         />

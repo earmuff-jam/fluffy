@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import dayjs from 'dayjs';
 import { Stack } from '@mui/material';
 import SimpleModal from '@common/SimpleModal';
@@ -10,7 +10,7 @@ import { useAssets } from '@services/assetsApi';
 import { useMaintenancePlans } from '@services/maintenancePlanApi';
 
 export default function Reports() {
-  const { data: inventories = [], isLoading: loading } = useAssets();
+  const { data: assets = [], isLoading: isAssetsLoading } = useAssets();
   const reports = [];
   const reportLoading = false;
   // const { data: reports = [], isLoading: reportLoading } = useAssets();
@@ -31,7 +31,7 @@ export default function Reports() {
   const [sinceValue, setSinceValue] = useState(FILTER_OPTIONS.find((item) => item.label === 'ytd').value);
 
   const downloadReports = () => {
-    // dispatch(reportActions.downloadReports({ since: sinceValue, includeOverdue: includeOverdue, inventories }));
+    // dispatch(reportActions.downloadReports({ since: sinceValue, includeOverdue: includeOverdue, assets }));
   };
 
   const closeFilter = () => setDisplayModal(false);
@@ -44,7 +44,7 @@ export default function Reports() {
 
   // useEffect(() => {
   //   dispatch(maintenancePlanActions.getPlans());
-  //   dispatch(inventoryActions.getAllInventoriesForUser({ since: sinceValue }));
+  //   dispatch(inventoryActions.getAllassetsForUser({ since: sinceValue }));
   // }, []);
 
   // useEffect(() => {
@@ -53,18 +53,24 @@ export default function Reports() {
   //   }
   // }, [reportLoading]);
 
+  const totalAssetValuation = assets.reduce((acc, el) => {
+    acc = +parseFloat(el.price);
+    return acc;
+  }, 0);
+
   return (
     <Stack spacing={1} data-tour="reports-0">
       <ReportsHeader
         sinceValue={sinceValue}
         reports={reports}
-        loading={loading}
-        selectedAsset={inventories[0] || {}}
+        loading={isAssetsLoading}
+        totalAssetValuation={totalAssetValuation}
+        selectedAsset={assets[0] || {}}
         setDisplayModal={setDisplayModal}
         downloadReports={downloadReports}
         selectedMaintenancePlan={maintenancePlanList?.length > 0 ? maintenancePlanList[0] : {}}
       />
-      <ReportContent sinceValue={sinceValue} assets={inventories} />
+      <ReportContent sinceValue={sinceValue} assets={assets} />
       {displayModal && (
         <SimpleModal
           title="Filter results"

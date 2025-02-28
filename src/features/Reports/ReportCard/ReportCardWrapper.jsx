@@ -1,6 +1,15 @@
-import { Card, CardContent, Chip, Stack, Typography } from '@mui/material';
+import { Card, CardContent, Chip, Skeleton, Stack, Typography } from '@mui/material';
 
-export default function ReportCardWrapper({ title, chipLabel, value, footerText, footerSuffix, dataTour, children }) {
+export default function ReportCardWrapper({
+  title,
+  chipLabel,
+  value,
+  footerText,
+  footerSuffix,
+  dataTour,
+  children,
+  loading = false,
+}) {
   return (
     <Card
       data-tour={dataTour}
@@ -12,24 +21,28 @@ export default function ReportCardWrapper({ title, chipLabel, value, footerText,
       }}
     >
       <CardContent>
-        <Stack direction="row">
-          <Stack flexGrow={1} sx={{ minWidth: '12rem', minHeight: '6rem' }}>
-            <Stack direction="row" justifyContent="space-between">
-              <Typography variant="h6" component="h3">
-                {title}
-              </Typography>
-              {chipLabel && <Chip label={chipLabel} variant="outlined" sx={{ borderRadius: '0.3rem' }} />}
-            </Stack>
-            <Stack direction="row" alignItems="center" justifyContent="space-between">
-              {value && (
-                <Typography variant="h1" flexWrap={1} color="text.secondary">
-                  {value}
+        {loading ? (
+          <Skeleton height="6rem" />
+        ) : (
+          <Stack direction="row">
+            <Stack flexGrow={1} sx={{ minWidth: '12rem', minHeight: '6rem' }}>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography variant="h6" component="h3">
+                  {title}
                 </Typography>
-              )}
+                {chipLabel && <Chip label={chipLabel} variant="outlined" sx={{ borderRadius: '0.3rem' }} />}
+              </Stack>
+              <Stack direction="row" alignItems="center" justifyContent="space-between">
+                {value && (
+                  <Typography variant="h1" flexWrap={1} color="text.secondary">
+                    {value}
+                  </Typography>
+                )}
+              </Stack>
+              {children}
             </Stack>
-            {children}
           </Stack>
-        </Stack>
+        )}
       </CardContent>
 
       {footerText && (
