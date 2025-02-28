@@ -4,10 +4,10 @@ import SimpleModal from '@common/SimpleModal';
 import AddCategory from '@features/Categories/AddCategory';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
 import SectionCardContent from '@common/SectionCard/SectionCardContent';
-import { useCategories, useDownloadCategories, useRemoveCategory } from '@services/categoriesApi';
+import { useFetchAllCategories, useDownloadCategories, useRemoveCategory } from '@services/categoriesApi';
 
 const CategoryList = ({ displayConcise = false }) => {
-  const { data: categories, isLoading } = useCategories();
+  const { data: categories, isLoading } = useFetchAllCategories();
   const { mutate: removeCategory } = useRemoveCategory();
   const { mutate: downloadCategories } = useDownloadCategories();
 

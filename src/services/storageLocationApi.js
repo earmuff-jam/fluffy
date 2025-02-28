@@ -3,7 +3,7 @@ import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient();
 
-export const useStorageLocations = () => {
+export const useFetchStorageLocations = () => {
   return useQuery({
     queryKey: ['storageLocations'],
     queryFn: async () => {

@@ -3,7 +3,7 @@ import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient();
 
-export const useNotes = () => {
+export const useFetchNotes = () => {
   return useQuery({
     queryKey: ['notes'],
     queryFn: async () => {

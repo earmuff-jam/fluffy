@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 
 const client = generateClient();
 
-export const useMaintenancePlans = () => {
+export const useFetchMaintenancePlans = () => {
   return useQuery({
     queryKey: ['maintenancePlans'],
     queryFn: async () => {

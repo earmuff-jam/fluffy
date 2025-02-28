@@ -28,7 +28,7 @@ const assetWithStorageLocationCols = [
   'storageLocationId.*',
 ];
 
-export const useAssets = () => {
+export const useFetchAssets = () => {
   return useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
@@ -40,7 +40,7 @@ export const useAssets = () => {
   });
 };
 
-export const useAssetById = (id) => {
+export const useFetchAssetById = (id) => {
   return useQuery({
     queryKey: ['asset', id],
     queryFn: async () => {
@@ -48,6 +48,26 @@ export const useAssetById = (id) => {
       return response.data || [];
     },
     enabled: !!id,
+  });
+};
+
+// retrieves asset details if they are >= the dateStr passed in.
+// used for retrieving data for reports page
+export const useFetchAssetReportByDate = (dateStr) => {
+  return useQuery({
+    queryKey: ['asset', dateStr],
+    queryFn: async () => {
+      const response = await client.models.Assets.list({
+        selectionSet: assetWithStorageLocationCols,
+        filter: {
+          updatedAt: {
+            ge: dateStr,
+          },
+        },
+      });
+      return response.data || [];
+    },
+    enabled: !!dateStr,
   });
 };
 

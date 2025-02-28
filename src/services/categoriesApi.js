@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 
 const client = generateClient();
 
-export const useCategories = () => {
+export const useFetchAllCategories = () => {
   return useQuery({
     queryKey: ['categories'],
     queryFn: async () => {

@@ -6,12 +6,12 @@ import SectionCardContent from '@common/SectionCard/SectionCardContent';
 import AddMaintenancePlan from '@features/MaintenancePlan/AddMaintenancePlan';
 import {
   useDownloadMaintenancePlans,
-  useMaintenancePlans,
+  useFetchMaintenancePlans,
   useRemoveMaintenancePlan,
 } from '@services/maintenancePlanApi';
 
 const MaintenancePlanList = () => {
-  const { data: maintenancePlans, isLoading } = useMaintenancePlans();
+  const { data: maintenancePlans, isLoading } = useFetchMaintenancePlans();
   const { mutate: removeMaintenancePlan } = useRemoveMaintenancePlan();
   const { mutate: downloadMaintenancePlans } = useDownloadMaintenancePlans();
 

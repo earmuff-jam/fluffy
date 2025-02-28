@@ -13,8 +13,8 @@ import { AddPhotoAlternateRounded, CheckRounded } from '@mui/icons-material';
 import SelectedAssetFormFields from '@features/SelectedAsset/SelectedAssetFormFields';
 import SelectedAssetWeightDimension from '@features/SelectedAsset/SelectedAssetWeightDimension';
 import SelectedAssetMoreInformation from '@features/SelectedAsset/SelectedAssetMoreInformation';
-import { useStorageLocations } from '@services/storageLocationApi';
-import { useAssetById, useUpdateAsset } from '@services/assetsApi';
+import { useFetchStorageLocations } from '@services/storageLocationApi';
+import { useFetchAssetById, useUpdateAsset } from '@services/assetsApi';
 
 dayjs.extend(relativeTime);
 
@@ -22,8 +22,8 @@ export default function SelectedAsset() {
   const { id } = useParams();
 
   const selectedImage = '';
-  const { data: asset, isLoading: loading } = useAssetById(id);
-  const { data: storageLocations, isLoading: storageLocationsLoading } = useStorageLocations();
+  const { data: asset, isLoading: loading } = useFetchAssetById(id);
+  const { data: storageLocations, isLoading: storageLocationsLoading } = useFetchStorageLocations();
 
   const { mutate: updateAsset } = useUpdateAsset();
 

@@ -8,11 +8,11 @@ import AddAssetFormSelection from '@features/Assets/AddAssetFormDetails/AddAsset
 import AddAssetActionButtons from '@features/Assets/AddAssetFormDetails/AddAssetActionButtons';
 import AddAssetFormInstructions from '@features/Assets/AddAssetFormDetails/AddAssetFormInstructions';
 import { useCreateAsset } from '@services/assetsApi';
-import { useStorageLocations } from '@services/storageLocationApi';
+import { useFetchStorageLocations } from '@services/storageLocationApi';
 
 export default function AddAssetDetails({ handleClose }) {
   const { mutate: createAsset } = useCreateAsset();
-  const { data: options = [], isLoading } = useStorageLocations();
+  const { data: options = [], isLoading } = useFetchStorageLocations();
 
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
