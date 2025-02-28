@@ -13,7 +13,7 @@ import { AddPhotoAlternateRounded, CheckRounded } from '@mui/icons-material';
 import SelectedAssetFormFields from '@features/SelectedAsset/SelectedAssetFormFields';
 import SelectedAssetWeightDimension from '@features/SelectedAsset/SelectedAssetWeightDimension';
 import SelectedAssetMoreInformation from '@features/SelectedAsset/SelectedAssetMoreInformation';
-import { useStorageLocationById, useStorageLocations } from '@services/storageLocationApi';
+import { useStorageLocations } from '@services/storageLocationApi';
 import { useAssetById, useUpdateAsset } from '@services/assets';
 
 dayjs.extend(relativeTime);
@@ -23,9 +23,6 @@ export default function SelectedAsset() {
 
   const selectedImage = '';
   const { data: asset, isLoading: loading } = useAssetById(id);
-  const { data: assetStorageLocation, isLoading: isSelectedStorageLocationLoading } = useStorageLocationById(
-    asset?.storageLocationIdRef
-  );
   const { data: storageLocations, isLoading: storageLocationsLoading } = useStorageLocations();
 
   const { mutate: updateAsset } = useUpdateAsset();
@@ -146,12 +143,6 @@ export default function SelectedAsset() {
   };
 
   useEffect(() => {
-    if (assetStorageLocation) {
-      setStorageLocation({ location: assetStorageLocation?.location });
-    }
-  }, [loading, isSelectedStorageLocationLoading]);
-
-  useEffect(() => {
     if (!loading || !storageLocationsLoading) {
       const selectedAsset = { ...BLANK_INVENTORY_FORM };
       selectedAsset.name.value = asset?.name || '';
@@ -188,6 +179,8 @@ export default function SelectedAsset() {
       if (asset?.color) {
         setColor(asset.color);
       }
+
+      setStorageLocation({ location: asset?.storageLocation?.location || '' });
       setFormData(selectedAsset);
     }
   }, [loading, asset]);

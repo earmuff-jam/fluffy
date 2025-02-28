@@ -2,13 +2,38 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient();
+const assetWithStorageLocationDetails = [
+  'id',
+  'name',
+  'description',
+  'price',
+  'status',
+  'barcode',
+  'sku',
+  'color',
+  'imageURL',
+  'quantity',
+  'boughtAt',
+  'isBookmarked',
+  'isReturnable',
+  'returnLocation',
+  'returnDatetime',
+  'returnNotes',
+  'maxWeight',
+  'minWeight',
+  'maxHeight',
+  'minHeight',
+  'createdAt',
+  'updatedAt',
+  'storageLocationId.*',
+];
 
 export const useAssets = () => {
   return useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
       const response = await client.models.Assets.list({
-        include: ['storageLocation'],
+        assetWithStorageLocationDetails,
       });
       return response.data || [];
     },
@@ -19,7 +44,7 @@ export const useAssetById = (id) => {
   return useQuery({
     queryKey: ['asset', id],
     queryFn: async () => {
-      const response = await client.models.Assets.get({ id });
+      const response = await client.models.Assets.get({ id: id }, { selectionSet: assetWithStorageLocationDetails });
       return response.data || [];
     },
     enabled: !!id,
