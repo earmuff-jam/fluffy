@@ -87,7 +87,7 @@ const schema = a.schema({
       // updatedLocationId: a.id(),
       // updated_by: a.belongsTo("Profiles", "updatedLocationId"),
       // sharable_groups: a.string().array(),
-      storageLocationAssociatedAsset: a.hasOne('Assets', 'storageLocationIdRef'),
+      associatedAsset: a.hasOne('Assets', 'storageLocationIdRef'),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -144,8 +144,8 @@ const schema = a.schema({
       //     updatedAssetId: a.id(),
       //     updated_by: a.belongsTo("Profiles", "updatedAssetId"),
       //     sharable_groups: a.string().array(),
-      //     assetsInCategories: a.hasMany("CategoryItems", "assetId"),
-      //     assetsInMaintenancePlans: a.hasMany("MaintenancePlanItems", "assetId"),
+      associatedCategoryItems: a.hasMany('CategoryItems', 'assetIdRef'),
+      associatedMaintenancePlanItems: a.hasMany('MaintenancePlanItems', 'assetIdRef'),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -168,27 +168,27 @@ const schema = a.schema({
       // updatedCategoryId: a.id(),
       // updated_by: a.belongsTo("Profiles", "updatedCategoryId"),
       // sharable_groups: a.string().array(),
-      // associatedCategories: a.hasMany("CategoryItems", "categoryId"),
-      // associatedFavouriteCategories: a.hasMany("FavouriteItems", "categoryId"),
+      associatedCategoryItems: a.hasMany('CategoryItems', 'categoryIdRef'),
+      associatedFavouriteItems: a.hasMany('FavouriteItems', 'categoryIdRef'),
     })
     .authorization((allow) => [allow.authenticated()]),
 
-  // CategoryItems: a
-  //   .model({
-  //     id: a.id(),
-  //     categoryId: a.id(),
-  //     category_id: a.belongsTo("Categories", "categoryId"),
-  //     assetId: a.id(),
-  //     item_id: a.belongsTo("Assets", "assetId"),
-  //     created_at: a.string(),
-  //     createdCategoryItemsId: a.id(),
-  //     created_by: a.belongsTo("Profiles", "createdCategoryItemsId"),
-  //     updated_at: a.string(),
-  //     updatedCategoryItemsId: a.id(),
-  //     updated_by: a.belongsTo("Profiles", "updatedCategoryItemsId"),
-  //     sharable_groups: a.string().array(),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+  CategoryItems: a
+    .model({
+      id: a.id(),
+      categoryIdRef: a.id(),
+      categoryId: a.belongsTo('Categories', 'categoryIdRef'),
+      assetIdRef: a.id(),
+      assetId: a.belongsTo('Assets', 'assetIdRef'),
+      createdAt: a.string(),
+      // createdCategoryItemsId: a.id(),
+      // created_by: a.belongsTo("Profiles", "createdCategoryItemsId"),
+      updatedAt: a.string(),
+      // updatedCategoryItemsId: a.id(),
+      // updated_by: a.belongsTo("Profiles", "updatedCategoryItemsId"),
+      // sharable_groups: a.string().array(),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 
   MaintenancePlans: a
     .model({
@@ -211,56 +211,47 @@ const schema = a.schema({
       // updatedMaintenancePlanId: a.id(),
       // updated_by: a.belongsTo("Profiles", "updatedMaintenancePlanId"),
       // sharable_groups: a.string().array(),
-      // associatedMaintenancePlans: a.hasMany(
-      //   "MaintenancePlanItems",
-      //   "maintenancePlanId"
-      // ),
-      // associatedMaintenancePlanAlerts: a.hasMany(
-      //   "MaintenanceAlert",
-      //   "maintenancePlanId"
-      // ),
-      // associatedFavouriteMaintenancePlans: a.hasMany(
-      //   "FavouriteItems",
-      //   "maintenancePlanId"
-      // ),
+      associatedMaintenancePlanItems: a.hasMany('MaintenancePlanItems', 'maintenancePlanIdRef'),
+      associatedMaintenanceAlert: a.hasMany('MaintenanceAlert', 'maintenancePlanIdRef'),
+      associatedFavouriteItems: a.hasMany('FavouriteItems', 'maintenancePlanIdRef'),
     })
     .authorization((allow) => [allow.authenticated()]),
 
-  // MaintenancePlanItems: a
-  //   .model({
-  //     id: a.id(),
-  //     maintenancePlanId: a.id(),
-  //     maintenance_plan_id: a.belongsTo("MaintenancePlans", "maintenancePlanId"),
-  //     assetId: a.id(),
-  //     item_id: a.belongsTo("Assets", "assetId"),
-  //     created_at: a.string(),
-  //     createdProfileId: a.id(),
-  //     created_by: a.belongsTo("Profiles", "createdProfileId"),
-  //     updated_at: a.string(),
-  //     updatedProfileId: a.id(),
-  //     updated_by: a.belongsTo("Profiles", "updatedProfileId"),
-  //     sharable_groups: a.string().array(),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+  MaintenancePlanItems: a
+    .model({
+      id: a.id(),
+      maintenancePlanIdRef: a.id(),
+      maintenance_plan_id: a.belongsTo('MaintenancePlans', 'maintenancePlanIdRef'),
+      assetIdRef: a.id(),
+      assetId: a.belongsTo('Assets', 'assetIdRef'),
+      createdAt: a.string(),
+      // createdProfileId: a.id(),
+      // created_by: a.belongsTo('Profiles', 'createdProfileId'),
+      updatedAt: a.string(),
+      // updatedProfileId: a.id(),
+      // updated_by: a.belongsTo('Profiles', 'updatedProfileId'),
+      // sharable_groups: a.string().array(),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 
-  // MaintenanceAlert: a
-  //   .model({
-  //     id: a.id(),
-  //     maintenancePlanId: a.id(),
-  //     maintenance_plan_id: a.belongsTo("MaintenancePlans", "maintenancePlanId"),
-  //     name: a.string(),
-  //     type: a.string(),
-  //     plan_due: a.string(),
-  //     is_read: a.boolean(),
-  //     created_at: a.string(),
-  //     createdProfileId: a.id(),
-  //     created_by: a.belongsTo("Profiles", "createdProfileId"),
-  //     updated_at: a.string(),
-  //     updatedProfileId: a.id(),
-  //     updated_by: a.belongsTo("Profiles", "updatedProfileId"),
-  //     sharable_groups: a.string().array(),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+  MaintenanceAlert: a
+    .model({
+      id: a.id(),
+      maintenancePlanIdRef: a.id(),
+      maintenancePlanId: a.belongsTo('MaintenancePlans', 'maintenancePlanIdRef'),
+      name: a.string(),
+      type: a.string(),
+      planDue: a.string(),
+      isRead: a.boolean(),
+      createdAt: a.string(),
+      // createdProfileId: a.id(),
+      // created_by: a.belongsTo("Profiles", "createdProfileId"),
+      updatedAt: a.string(),
+      // updatedProfileId: a.id(),
+      // updated_by: a.belongsTo("Profiles", "updatedProfileId"),
+      // sharable_groups: a.string().array(),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 
   // RecentActivities: a
   //   .model({
@@ -279,22 +270,22 @@ const schema = a.schema({
   //   })
   //   .authorization((allow) => [allow.authenticated()]),
 
-  // FavouriteItems: a
-  //   .model({
-  //     id: a.id(),
-  //     categoryId: a.id(),
-  //     category_id: a.belongsTo("Categories", "categoryId"),
-  //     maintenancePlanId: a.id(),
-  //     maintenance_plan_id: a.belongsTo("MaintenancePlans", "maintenancePlanId"),
-  //     created_at: a.string(),
-  //     createdProfileId: a.id(),
-  //     created_by: a.belongsTo("Profiles", "createdProfileId"),
-  //     updated_at: a.string(),
-  //     updatedProfileId: a.id(),
-  //     updated_by: a.belongsTo("Profiles", "updatedProfileId"),
-  //     sharable_groups: a.string().array(),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+  FavouriteItems: a
+    .model({
+      id: a.id(),
+      categoryIdRef: a.id(),
+      categoryId: a.belongsTo('Categories', 'categoryIdRef'),
+      maintenancePlanIdRef: a.id(),
+      maintenancePlanId: a.belongsTo('MaintenancePlans', 'maintenancePlanIdRef'),
+      createdAt: a.string(),
+      // createdProfileId: a.id(),
+      // created_by: a.belongsTo("Profiles", "createdProfileId"),
+      updatedAt: a.string(),
+      // updatedProfileId: a.id(),
+      // updated_by: a.belongsTo("Profiles", "updatedProfileId"),
+      // sharable_groups: a.string().array(),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -303,7 +294,6 @@ export const data = defineData({
   schema,
   authorizationModes: {
     defaultAuthorizationMode: 'userPool',
-    // API Key is used for a.allow.public() rules
     apiKeyAuthorizationMode: {
       expiresInDays: 30,
     },
