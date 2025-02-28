@@ -126,6 +126,7 @@ export default function SelectedAsset() {
       isBookmarked: formattedData.isBookmarked,
       isReturnable: formattedData.isReturnable,
       returnDatetime: returnDateTime?.toISOString(),
+      returnNotes: formattedData?.returnNotes,
       storageLocationIdRef: storageLocationID,
       color,
     };
