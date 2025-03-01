@@ -1,8 +1,5 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
-
 import {
   Box,
   Card,
@@ -15,19 +12,17 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-
 import { useNavigate } from 'react-router-dom';
-
 import SimpleModal from '@common/SimpleModal';
 import ImagePicker from '@common/ImagePicker/ImagePicker';
-import { inventoryActions } from '@features/Assets/inventorySlice';
 import { capitalizeFirstLetter, EmptyComponent } from '@common/utils';
+import { useFetchAssets } from '@services/assetsApi';
 
-const GridComponent = ({ isLoading, data, rowSelected, handleRowSelection }) => {
+const GridComponent = ({ isLoading, data, rowSelected, handleRowSelection, emptyComponentSubtext = '' }) => {
   const navigate = useNavigate();
 
-  const loading = false;
   const inventories = [];
+  const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssets();
 
   const [displayModal, setDisplayModal] = useState(false);
   const [selectedItemID, setSelectedItemID] = useState(-1);
@@ -43,7 +38,7 @@ const GridComponent = ({ isLoading, data, rowSelected, handleRowSelection }) => 
   };
 
   if (isLoading) return <Skeleton height="10vh" />;
-  if (data?.length <= 0) return <EmptyComponent />;
+  if (data?.length <= 0) return <EmptyComponent subtitle={emptyComponentSubtext} />;
 
   return (
     <Box sx={{ overflow: 'auto' }}>
@@ -80,10 +75,10 @@ const GridComponent = ({ isLoading, data, rowSelected, handleRowSelection }) => 
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Stack sx={{ width: '12rem', flexGrow: 1, cursor: 'pointer' }} onClick={() => handleNavigate(row.id)}>
                     <Typography variant="h6" color="text.secondary">
-                      {capitalizeFirstLetter(row.name)}
+                      {capitalizeFirstLetter(row?.name || '')}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      {capitalizeFirstLetter(row.description)}
+                      {capitalizeFirstLetter(row?.description || '')}
                     </Typography>
                   </Stack>
                 </CardContent>

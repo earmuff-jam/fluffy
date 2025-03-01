@@ -65,7 +65,7 @@ const Layout = () => {
             smScreenSizeAndHigher={smScreenSizeAndHigher}
             lgScreenSizeAndHigher={lgScreenSizeAndHigher}
           />
-          <Container maxWidth="md">
+          <Container maxWidth="lg">
             <Banner
               isVerified={isVerified}
               revalidateEmail={() => dispatch(authActions.revalidateEmail({ email: profileDetails?.email_address }))}

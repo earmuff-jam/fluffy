@@ -39,7 +39,7 @@ export default function ItemCard({ data, handleEdit, handleDelete, prefixURI }) 
               <ItemCardActions
                 updator={item.updator}
                 updatedAtTimestamp={item.updatedAt}
-                statusName={prefixURI === 'plan' ? item.maintenance_status_name : item.status_name}
+                statusName={item.status}
               />
             </Card>
           </Stack>

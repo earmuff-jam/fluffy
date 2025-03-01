@@ -132,6 +132,7 @@ export default function AssetListContent({
             data={options}
             rowSelected={rowSelected}
             handleRowSelection={handleRowSelection}
+            emptyComponentSubtext="Add new asset."
           />
         ) : (
           <TableComponent
@@ -145,6 +146,7 @@ export default function AssetListContent({
             handleRowSelection={handleRowSelection}
             handleEdit={handleEdit}
             maxHeight={'100%'}
+            emptyComponentSubtext="Add new asset."
           />
         )}
       </Stack>

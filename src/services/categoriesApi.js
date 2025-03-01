@@ -5,6 +5,11 @@ import * as XLSX from 'xlsx';
 
 const client = generateClient();
 
+/**
+ * useFetchAllCategories ...
+ *
+ * returns a list of all categories
+ */
 export const useFetchAllCategories = () => {
   return useQuery({
     queryKey: ['categories'],
@@ -15,6 +20,55 @@ export const useFetchAllCategories = () => {
   });
 };
 
+/**
+ * useFetchCategoryById ...
+ *
+ * retrieves a selected asset by the id
+ * @param {string} id - the id of the selected asset
+ */
+export const useFetchCategoryById = (id) => {
+  return useQuery({
+    queryKey: ['category', id],
+    queryFn: async () => {
+      const response = await client.models.Categories.get({ id: id });
+      return response.data || {};
+    },
+    enabled: !!id,
+  });
+};
+
+/**
+ * useFetchAssetsAssociatedWithCategoryById ...
+ *
+ * retrieves selected assets that belongs to a specific category
+ * @param {string} id - the id of the selected category
+ */
+export const useFetchAssetsAssociatedWithCategoryById = (id) => {
+  return useQuery({
+    queryKey: ['assetsAssociatedWithCategory', id],
+    queryFn: async () => {
+      if (!id) return [];
+
+      const response = await client.models.CategoryItems.list({
+        filter: {
+          categoryIdRef: {
+            eq: id,
+          },
+        },
+        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'categoryId.*'],
+      });
+
+      return response.data || [];
+    },
+    enabled: !!id,
+  });
+};
+
+/**
+ * useCreateCategory ...
+ *
+ * create a new category
+ */
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();
 
@@ -31,6 +85,71 @@ export const useCreateCategory = () => {
   });
 };
 
+/**
+ * useCreateAssociationForItemsWithCategory ...
+ *
+ * creates association for items with a selected category.
+ */
+export const useCreateAssociationForItemsWithCategory = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ categoryId, assetIds }) => {
+      if (!categoryId || !assetIds || assetIds.length === 0) {
+        throw new Error('Both categoryId and assetIds are required.');
+      }
+
+      const createPromises = assetIds.map(async (assetId) => {
+        const { data, errors } = await client.models.CategoryItems.create({
+          categoryIdRef: categoryId,
+          assetIdRef: assetId,
+        });
+
+        if (errors) throw new Error(errors);
+        return data;
+      });
+
+      return await Promise.all(createPromises);
+    },
+    onSuccess: (_, { categoryId }) => {
+      queryClient.invalidateQueries({ queryKey: ['assetsAssociatedWithCategory', categoryId] });
+    },
+  });
+};
+
+/**
+ * useRemoveAssociationForAssetsWithCategory ...
+ *
+ * removes association for items with a selected category
+ */
+export const useRemoveAssociationForAssetsWithCategory = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ categoryId, ids }) => {
+      if (!ids || !Array.isArray(ids) || ids.length === 0) {
+        throw new Error('Category Items IDs is required for deletion.');
+      }
+
+      const deletePromises = ids.map(async (id) => {
+        const { data, errors } = await client.models.CategoryItems.delete({ id });
+        if (errors) throw new Error(errors);
+        return data;
+      });
+
+      return Promise.all(deletePromises);
+    },
+    onSuccess: (_, { categoryId }) => {
+      queryClient.invalidateQueries({ queryKey: ['assetsAssociatedWithCategory', categoryId] });
+    },
+  });
+};
+
+/**
+ * useUpdateCategory ...
+ *
+ * updates a existing category
+ */
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
 
@@ -47,6 +166,11 @@ export const useUpdateCategory = () => {
   });
 };
 
+/**
+ * useRemoveCategory ...
+ *
+ * removes a selected category when an id is passed in
+ */
 export const useRemoveCategory = () => {
   const queryClient = useQueryClient();
 
@@ -63,6 +187,11 @@ export const useRemoveCategory = () => {
   });
 };
 
+/**
+ * useDownloadCategories ...
+ *
+ * download the list of the categories
+ */
 export const useDownloadCategories = () => {
   return useMutation({
     mutationFn: async () => {

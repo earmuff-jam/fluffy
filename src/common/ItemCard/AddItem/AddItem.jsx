@@ -1,19 +1,18 @@
 import dayjs from 'dayjs';
-import { useSelector } from 'react-redux';
-
 import { Stack } from '@mui/material';
+import { useFetchAssets } from '@services/assetsApi';
 import { VIEW_INVENTORY_LIST_HEADERS } from '@features/Assets/constants';
 import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
 
 export default function AddItem({ selectedIDList, setSelectedIDList, associatedItems }) {
-  const { inventories, loading: inventoriesLoading } = useSelector((state) => state.inventory);
+  const { data: assets = [], isLoading } = useFetchAssets();
 
   const handleRowSelection = (_, id) => {
     if (id === 'all') {
       if (selectedIDList.length !== 0) {
         setSelectedIDList([]);
       } else {
-        setSelectedIDList(inventories.map((v) => v.id));
+        setSelectedIDList(assets.map((v) => v.id));
       }
     } else {
       const selectedIndex = selectedIDList.indexOf(id);
@@ -35,11 +34,14 @@ export default function AddItem({ selectedIDList, setSelectedIDList, associatedI
   };
 
   const rowFormatter = (row, column) => {
-    if (['created_at', 'updated_at'].includes(column)) {
+    if (['createdAt', 'updatedAt'].includes(column)) {
       return dayjs(row[column]).fromNow();
     }
-    if (['updater_name', 'creator_name'].includes(column)) {
+    if (['updator', 'creator'].includes(column)) {
       return row[column] ?? '-';
+    }
+    if (column === 'storageLocation') {
+      return row['storageLocationId']?.location ?? '-';
     }
     return row[column] ?? '-';
   };
@@ -49,8 +51,8 @@ export default function AddItem({ selectedIDList, setSelectedIDList, associatedI
       <TableComponent
         paper
         showActions={false}
-        isLoading={inventoriesLoading}
-        data={inventories.filter((inventory) => !associatedItems?.some((item) => item.item_id === inventory.id))}
+        isLoading={isLoading}
+        data={assets.filter((asset) => !associatedItems?.some((item) => item.item_id === asset.id))}
         columns={Object.values(VIEW_INVENTORY_LIST_HEADERS).filter((v) => v.displayConcise)}
         rowFormatter={rowFormatter}
         selectedIDList={selectedIDList}

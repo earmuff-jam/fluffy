@@ -1,23 +1,20 @@
 import * as XLSX from 'xlsx';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-
 import { enqueueSnackbar } from 'notistack';
 import { Button, Stack } from '@mui/material';
 import { SaveRounded } from '@mui/icons-material';
-
-import { inventoryActions } from '@features/Assets/inventorySlice';
 import ViewFileContent from '@features/Assets/AddAssetsInBulk/ViewFileContent';
 import AddAssetsInBulkActions from '@features/Assets/AddAssetsInBulk/AddAssetsInBulkActions';
 import { buildXcel } from '@common/utils';
 import { BULK_ASSETS_HEADERS } from '@features/Assets/constants';
+import { useCreateAssetsInBulk } from '@services/assetsApi';
 
 export default function AddAssetsInBulk({ handleClose }) {
-  const dispatch = useDispatch();
+  const { mutate: createBulkAssets } = useCreateAssetsInBulk();
   const [uploadedFileInJson, setUploadedFileInJson] = useState([]);
   const [fileDetails, setFileDetails] = useState({ name: '', lastModifiedDate: '', size: '' });
 
-  const handleDownload = () => {
+  const downloadTemplate = () => {
     const headers = BULK_ASSETS_HEADERS.map((v) => v.label);
     const templatedData = BULK_ASSETS_HEADERS.map((v) => v.value || '');
     buildXcel(headers, templatedData, 'asset-template.xlsx', 'assets');
@@ -36,7 +33,13 @@ export default function AddAssetsInBulk({ handleClose }) {
         const formattedArr = XLSX.utils.sheet_to_json(worksheet, {
           rawNumbers: true,
         });
-        setUploadedFileInJson(formattedArr);
+
+        // format the column values to have a widely accepted values
+        const renameColValues = formattedArr.map(({ ['Storage Location']: _, ...rest }) => ({
+          storageLocation: _,
+          ...rest,
+        }));
+        setUploadedFileInJson(renameColValues);
       };
       reader.readAsArrayBuffer(file);
     }
@@ -56,7 +59,9 @@ export default function AddAssetsInBulk({ handleClose }) {
 
   const submit = () => {
     if (Array.isArray(uploadedFileInJson) && uploadedFileInJson.length > 0) {
-      dispatch(inventoryActions.addBulkInventory(uploadedFileInJson));
+      console.log(uploadedFileInJson[0]);
+      createBulkAssets(uploadedFileInJson);
+      // dispatch(inventoryActions.addBulkInventory(uploadedFileInJson));
     }
     enqueueSnackbar('Uploaded inventories in bulk.', {
       variant: 'success',
@@ -69,7 +74,7 @@ export default function AddAssetsInBulk({ handleClose }) {
       <AddAssetsInBulkActions
         handleFileChange={handleFileChange}
         fileDetails={fileDetails}
-        handleClick={handleDownload}
+        handleClick={downloadTemplate}
       />
       <ViewFileContent
         handleRemove={handleRemove}

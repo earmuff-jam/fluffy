@@ -29,7 +29,7 @@ export default function DetailsCard({
   shareBtnDataTour,
   categoryMode = false,
 }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const userID = localStorage.getItem('userID');
 
@@ -41,9 +41,9 @@ export default function DetailsCard({
 
   const handleUpload = (id, selectedImage) => {
     if (categoryMode) {
-      dispatch(categoryItemDetailsActions.uploadImage({ id: id, selectedImage: selectedImage }));
+      // dispatch(categoryItemDetailsActions.uploadImage({ id: id, selectedImage: selectedImage }));
     } else {
-      dispatch(maintenancePlanItemActions.uploadImage({ id: id, selectedImage: selectedImage }));
+      // dispatch(maintenancePlanItemActions.uploadImage({ id: id, selectedImage: selectedImage }));
     }
     enqueueSnackbar('New image upload successful.', {
       variant: 'success',
@@ -63,7 +63,7 @@ export default function DetailsCard({
       }
     });
     if (categoryMode) {
-      dispatch(categoryItemDetailsActions.updateCollaborators(draftSelectionDetails));
+      // dispatch(categoryItemDetailsActions.updateCollaborators(draftSelectionDetails));
       enqueueSnackbar('Updated collaborators for selected category.', {
         variant: 'success',
       });
@@ -71,7 +71,7 @@ export default function DetailsCard({
         navigate('/');
       }
     } else {
-      dispatch(maintenancePlanItemActions.updateCollaborators(draftSelectionDetails));
+      // dispatch(maintenancePlanItemActions.updateCollaborators(draftSelectionDetails));
       enqueueSnackbar('Updated collaborators for selected maintenance plan.', {
         variant: 'success',
       });

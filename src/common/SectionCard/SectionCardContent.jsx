@@ -16,6 +16,7 @@ const SectionCardContent = ({
   setSelectedID,
   removeItem,
   prefixURI,
+  emptyComponentSubtext = '',
 }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [idToDelete, setIdToDelete] = useState(-1);
@@ -45,7 +46,7 @@ const SectionCardContent = ({
   if (loading && !displayModal) {
     return <Skeleton height="10rem" />;
   }
-  if (content?.length <= 0 || content == null) return <EmptyComponent />;
+  if (content?.length <= 0 || content == null) return <EmptyComponent subtitle={emptyComponentSubtext} />;
 
   return (
     <>

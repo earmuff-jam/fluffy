@@ -1,41 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Skeleton, Stack } from '@mui/material';
 import { AddRounded } from '@mui/icons-material';
-
 import SimpleModal from '@common/SimpleModal';
 import { ConfirmationBoxModal } from '@common/utils';
 import AddItem from '@common/ItemCard/AddItem/AddItem';
 import ItemHeader from '@common/ItemCard/ItemHeader/ItemHeader';
-
 import ItemContent from '@common/ItemCard/ItemContent/ItemContent';
-import { inventoryActions } from '@features/Assets/inventorySlice';
 import ItemGraphWrapper from '@common/ItemCard/ItemGraph/ItemGraphWrapper';
-import { categoryItemDetailsActions } from '@features/CategoryItemDetails/categoryItemDetailsSlice';
+import {
+  useCreateAssociationForItemsWithCategory,
+  useFetchAssetsAssociatedWithCategoryById,
+  useFetchCategoryById,
+  useRemoveAssociationForAssetsWithCategory,
+} from '@services/categoriesApi';
 
 export default function CategoryItemDetails() {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const { data: selectedCategory = {}, isLoading: loading } = useFetchCategoryById(id);
+  const { data: itemsInCategory = [] } = useFetchAssetsAssociatedWithCategoryById(id);
+  const createAssociationForAssetsWithCategory = useCreateAssociationForItemsWithCategory();
+  const removeAssociationForAssetsFromCategory = useRemoveAssociationForAssetsWithCategory();
 
-  const {
-    selectedCategory,
-    selectedCategoryImage,
-    itemsInCategory = [],
-    loading = false,
-  } = useSelector((state) => state.categoryItemDetails);
-
-  const [selectedIDList, setSelectedIDList] = useState([]);
+  const selectedCategoryImage = '';
   const [displayModal, setDisplayModal] = useState(false);
+  const [selectedIDList, setSelectedIDList] = useState([]);
   const [openConfirmationBoxModal, setOpenConfirmationBoxModal] = useState(false);
 
-  const handleOpenModal = () => {
-    setDisplayModal(true);
-    dispatch(inventoryActions.getAllInventoriesForUser());
-  };
-
+  const handleOpenModal = () => setDisplayModal(true);
+  const resetConfirmationBoxModal = () => setOpenConfirmationBoxModal(false);
   const handleOpenConfirmationBoxModal = () => setOpenConfirmationBoxModal(!openConfirmationBoxModal);
 
   const resetSelection = () => {
@@ -43,10 +37,12 @@ export default function CategoryItemDetails() {
     setSelectedIDList([]);
   };
 
-  const resetConfirmationBoxModal = () => setOpenConfirmationBoxModal(false);
-
-  const confirmDelete = () => {
-    dispatch(categoryItemDetailsActions.removeItemsFromCategory({ id: selectedCategory?.id, selectedIDList }));
+  const confirmDelete = async () => {
+    const idList = itemsInCategory.filter((item) => selectedIDList.includes(item.assetId.id)).map((item) => item.id);
+    await removeAssociationForAssetsFromCategory.mutateAsync({
+      categoryId: selectedCategory?.id,
+      ids: idList,
+    });
     enqueueSnackbar(`Removed association of assets for ${selectedCategory.name}.`, {
       variant: 'default',
     });
@@ -54,11 +50,11 @@ export default function CategoryItemDetails() {
     resetConfirmationBoxModal();
   };
 
-  const addItems = () => {
-    const collaborators = selectedCategory.sharable_groups;
-    dispatch(
-      categoryItemDetailsActions.addItemsInCategory({ id: selectedCategory?.id, selectedIDList, collaborators })
-    );
+  const addItems = async () => {
+    await createAssociationForAssetsWithCategory.mutateAsync({
+      categoryId: selectedCategory?.id,
+      assetIds: selectedIDList,
+    });
     enqueueSnackbar(`Added association of assets for ${selectedCategory.name}.`, {
       variant: 'success',
     });
@@ -68,19 +64,6 @@ export default function CategoryItemDetails() {
   const handleRemoveAssociation = () => {
     handleOpenConfirmationBoxModal();
   };
-
-  useEffect(() => {
-    if (!loading) {
-      dispatch(categoryItemDetailsActions.getSelectedImage({ id }));
-    }
-  }, [loading]);
-
-  useEffect(() => {
-    if (id) {
-      dispatch(categoryItemDetailsActions.getCategory(id));
-      dispatch(categoryItemDetailsActions.getItemsForCategory(id));
-    }
-  }, [id]);
 
   if (loading) {
     return <Skeleton height="20rem" />;
@@ -101,14 +84,14 @@ export default function CategoryItemDetails() {
       <ItemContent
         selectedIDList={selectedIDList}
         setSelectedIDList={setSelectedIDList}
-        items={itemsInCategory}
+        items={itemsInCategory.map((v) => v.assetId)}
         handleOpenModal={handleOpenModal}
         handleRemoveAssociation={handleRemoveAssociation}
         tableDataTour="selected-category-6"
         primaryBtnDataTour="selected-category-4"
         secondaryBtnDataTour="selected-category-5"
       />
-      <ItemGraphWrapper associatedAssets={itemsInCategory} graphDataTour="selected-category-7" />
+      <ItemGraphWrapper associatedAssets={itemsInCategory.map((v) => v.assetId)} graphDataTour="selected-category-7" />
       {displayModal && (
         <SimpleModal
           title={`Add items to ${selectedCategory?.name}`}
@@ -123,7 +106,7 @@ export default function CategoryItemDetails() {
             selectedIDList={selectedIDList}
             setSelectedIDList={setSelectedIDList}
             resetSelection={resetSelection}
-            associatedItems={itemsInCategory}
+            associatedItems={itemsInCategory.map((v) => v.assetId)}
           />
         </SimpleModal>
       )}

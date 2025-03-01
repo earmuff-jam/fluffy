@@ -5,8 +5,9 @@ import { CardContent, IconButton, Stack, Typography } from '@mui/material';
 import { profileActions } from '@features/Profile/profileSlice';
 
 export default function DetailsCardItemContent({ selectedItem, categoryMode, favBtnDataTour }) {
-  const dispatch = useDispatch();
-  const { favItems = [] } = useSelector((state) => state.profile);
+  // const dispatch = useDispatch();
+  const favItems = [];
+  // const { favItems = [] } = useSelector((state) => state.profile);
 
   const isFavourite = favItems.some(
     (v) => v.category_id === selectedItem.id || v.maintenance_plan_id === selectedItem.id
@@ -26,9 +27,9 @@ export default function DetailsCardItemContent({ selectedItem, categoryMode, fav
         (v) => v.category_id === selectedID || v.maintenance_plan_id === selectedID
       );
       const currentItem = currentItems.find(() => true);
-      dispatch(profileActions.removeFavItem(currentItem?.id));
+      // dispatch(profileActions.removeFavItem(currentItem?.id));
     } else {
-      dispatch(profileActions.saveFavItem(draftFavItem));
+      // dispatch(profileActions.saveFavItem(draftFavItem));
     }
   };
 

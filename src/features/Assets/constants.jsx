@@ -156,8 +156,8 @@ export const VIEW_INVENTORY_LIST_HEADERS = {
   },
   location: {
     id: 9,
-    colName: 'location',
-    label: 'Location',
+    colName: 'storageLocation',
+    label: 'Storage Location',
     displayConcise: true,
     modifier: (value) => `${value || '-'}`,
   },

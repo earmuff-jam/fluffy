@@ -27,15 +27,19 @@ const CategoryList = ({ displayConcise = false }) => {
     if (displayConcise) {
       return categories?.slice(0, 4);
     } else if (selectedFilter.length > 0) {
-      return categories.filter((element) => element.status_name === selectedFilter);
+      return categories.filter((element) => element.status === selectedFilter);
     } else {
       return sortedData;
     }
   };
 
   useEffect(() => {
-    if (sortingOrder && categories?.length > 0) {
-      const draft = [...categories].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+    if (categories?.length > 0) {
+      const draft = [...categories].sort((a, b) => {
+        return sortingOrder
+          ? new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime() // Descending
+          : new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime(); // Ascending
+      });
       setSortedData(draft);
     } else {
       setSortedData(categories);
@@ -68,6 +72,7 @@ const CategoryList = ({ displayConcise = false }) => {
         removeItem={(id) => removeCategory(id)}
         prefixURI={'category'}
         content={filterAndBuildCategories(displayConcise, categories, selectedFilter)}
+        emptyComponentSubtext="Add categories"
       />
       {displayModal && (
         <SimpleModal

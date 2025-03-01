@@ -29,7 +29,7 @@ const MaintenancePlanList = () => {
 
   const filterAndBuildMaintenancePlans = (plans, selectedFilter) => {
     if (selectedFilter.length > 0) {
-      return plans.filter((element) => element.maintenance_status_name === selectedFilter);
+      return plans.filter((element) => element.status === selectedFilter);
     } else {
       return sortedData;
     }
@@ -74,6 +74,7 @@ const MaintenancePlanList = () => {
         setSelectedID={setSelectedMaintenancePlanID}
         removeItem={(id) => removeMaintenancePlan(id)}
         content={filterAndBuildMaintenancePlans(maintenancePlans, selectedFilter)}
+        emptyComponentSubtext='Add maintenance plans'
       />
       {displayModal && (
         <SimpleModal

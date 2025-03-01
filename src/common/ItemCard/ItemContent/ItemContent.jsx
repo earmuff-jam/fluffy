@@ -42,7 +42,9 @@ export default function ItemContent({
   };
 
   const rowFormatter = (row, columnName, columnData) => {
-    if (columnData.modifier) {
+    if (columnName === 'storageLocation') {
+      return row['storageLocationId']?.location ?? '-';
+    } else if (columnData.modifier) {
       return columnData.modifier(row[columnName] || '-');
     } else {
       return row[columnName] || '-';
