@@ -28,7 +28,7 @@ export const BULK_ASSETS_HEADERS = [
   { label: 'Description', colValue: 'description' },
   { label: 'Price', colValue: 'price' },
   { label: 'Quantity', colValue: 'quantity' },
-  { label: 'Storage Location', colValue: 'storage_location' },
+  { label: 'Storage Location', colValue: 'storageLocation' },
   { label: 'Color', colValue: 'color' },
   { label: 'SKU', colValue: 'sku' },
   { label: 'Barcode', colValue: 'barcode' },
@@ -112,7 +112,7 @@ export const VIEW_INVENTORY_LIST_HEADERS = {
     colName: 'name',
     label: 'Name',
     displayConcise: true,
-    modifier: (value) => `${value || '-'}`,
+    modifier: (value) => `${value.toUpperCase() || '-'}`,
   },
   description: {
     id: 2,

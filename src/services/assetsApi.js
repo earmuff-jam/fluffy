@@ -166,32 +166,32 @@ export const useCreateAssetsInBulk = () => {
         }
       }
 
-      try {
-        const createPromises = assets.map(async (asset) => {
-          const storageLocationIdRef = existingLocationMap.get(asset.storageLocation);
-          if (!storageLocationIdRef) {
-            throw new Error(`Storage location ID not found for: ${asset.storageLocation}`);
-          }
+      // try {
+      //   const createPromises = assets.map(async (asset) => {
+      //     const storageLocationIdRef = existingLocationMap.get(asset.storageLocation);
+      //     if (!storageLocationIdRef) {
+      //       throw new Error(`Storage location ID not found for: ${asset.storageLocation}`);
+      //     }
 
-          const assetData = {
-            ...asset,
-            storageLocationIdRef,
-          };
-          delete assetData.storageLocation;
+      //     const assetData = {
+      //       ...asset,
+      //       storageLocationIdRef,
+      //     };
+      //     delete assetData.storageLocation;
 
-          const { data, errors } = await client.models.Assets.create(assetData);
+      //     const { data, errors } = await client.models.Assets.create(assetData);
 
-          if (errors) {
-            console.error('Asset creation error:', errors);
-            throw new Error(JSON.stringify(errors, null, 2));
-          }
-          return data;
-        });
+      //     if (errors) {
+      //       console.error('Asset creation error:', errors);
+      //       throw new Error(JSON.stringify(errors, null, 2));
+      //     }
+      //     return data;
+      //   });
 
-        return await Promise.all(createPromises);
-      } catch (error) {
-        throw new Error('Failed to create assets.');
-      }
+      //   return await Promise.all(createPromises);
+      // } catch (error) {
+      //   throw new Error('Failed to create assets.');
+      // }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['assets'] });

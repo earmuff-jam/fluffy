@@ -55,9 +55,7 @@ export default function AddAssetsInBulk({ handleClose }) {
 
   const submit = () => {
     if (Array.isArray(uploadedFileInJson) && uploadedFileInJson.length > 0) {
-      console.log(uploadedFileInJson[0]);
       createBulkAssets(uploadedFileInJson);
-      // dispatch(inventoryActions.addBulkInventory(uploadedFileInJson));
     }
     enqueueSnackbar('Uploaded inventories in bulk.', {
       variant: 'success',

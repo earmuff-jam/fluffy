@@ -1,11 +1,10 @@
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
 import CryptoJS from 'crypto-js';
-
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Button, Stack, Typography } from '@mui/material';
-
 import SimpleModal from '@common/SimpleModal';
+import { BULK_ASSETS_HEADERS } from '@features/Assets/constants';
 
 dayjs.extend(relativeTime);
 

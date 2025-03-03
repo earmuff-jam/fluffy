@@ -103,7 +103,10 @@ export default function AssetListContent({
       }
     };
 
-    if (['price', 'quantity'].includes(columnName)) {
+    if (columnName === 'storageLocation') {
+      const storageLocation = row['storageLocationId']?.location ?? '-';
+      return storageLocation?.toUpperCase();
+    } else if (['price', 'quantity'].includes(columnName)) {
       return (
         <Stack direction="row" alignItems="center">
           {editLineItem.editItem && editLineItem.rowID === row.id && editLineItem.column === columnName ? (
