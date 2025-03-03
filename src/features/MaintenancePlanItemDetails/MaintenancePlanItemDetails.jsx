@@ -1,53 +1,50 @@
-import { useEffect, useState } from 'react';
-
+import { useState } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
 import SimpleModal from '@common/SimpleModal';
 import { Skeleton, Stack } from '@mui/material';
 import { AddRounded } from '@mui/icons-material';
-
 import { ConfirmationBoxModal } from '@common/utils';
 import ItemHeader from '@common/ItemCard/ItemHeader/ItemHeader';
-import { inventoryActions } from '@features/Assets/inventorySlice';
-import { maintenancePlanItemActions } from '@features/MaintenancePlanItemDetails/maintenancePlanItemSlice';
-
 import AddItem from '@common/ItemCard/AddItem/AddItem';
 import ItemContent from '@common/ItemCard/ItemContent/ItemContent';
 import ItemGraphWrapper from '@common/ItemCard/ItemGraph/ItemGraphWrapper';
+import {
+  useCreateAssociationForItemsWithMaintenancePlan,
+  useFetchAssetsAssociatedWithMaintenancePlanById,
+  useFetchMaintenancePlanById,
+  useRemoveAssociationForAssetsWithMaintenancePlan,
+} from '@services/maintenancePlanApi';
 
 export default function MaintenancePlanItemDetails() {
   const { id } = useParams();
-  const dispatch = useDispatch();
 
-  const {
-    selectedMaintenancePlan,
-    itemsInMaintenancePlan = [],
-    selectedMaintenancePlanImage,
-    loading = false,
-  } = useSelector((state) => state.maintenancePlanItem);
+  const { data: selectedMaintenancePlan = {}, isLoading: loading } = useFetchMaintenancePlanById(id);
+  const { data: itemsInMaintenancePlan = [] } = useFetchAssetsAssociatedWithMaintenancePlanById(id);
+  const createAssociationForAssetsWithMaintenancePlan = useCreateAssociationForItemsWithMaintenancePlan();
+  const removeAssociationForAssetsFromMaintenancePlan = useRemoveAssociationForAssetsWithMaintenancePlan();
 
-  const [selectedIDList, setSelectedIDList] = useState([]);
+  const selectedMaintenancePlanImage = '';
   const [displayModal, setDisplayModal] = useState(false);
+  const [selectedIDList, setSelectedIDList] = useState([]);
   const [openConfirmationBoxModal, setOpenConfirmationBoxModal] = useState(false);
 
-  const handleOpenModal = () => {
-    setDisplayModal(true);
-    dispatch(inventoryActions.getAllInventoriesForUser());
-  };
-
-  const handleOpenConfirmationBoxModal = () => setOpenConfirmationBoxModal(!openConfirmationBoxModal);
-
+  const handleOpenModal = () => setDisplayModal(true);
   const resetConfirmationBoxModal = () => setOpenConfirmationBoxModal(false);
 
-  const confirmDelete = () => {
-    dispatch(
-      maintenancePlanItemActions.removeItemsFromMaintenancePlan({
-        id: selectedMaintenancePlan?.id,
-        selectedIDList,
-      })
-    );
+  const resetSelection = () => {
+    setDisplayModal(false);
+    setSelectedIDList([]);
+  };
+
+  const confirmDelete = async () => {
+    const idList = itemsInMaintenancePlan
+      .filter((item) => selectedIDList.includes(item.assetId.id))
+      .map((item) => item.id);
+    await removeAssociationForAssetsFromMaintenancePlan.mutateAsync({
+      maintenancePlanId: selectedMaintenancePlan?.id,
+      ids: idList,
+    });
     enqueueSnackbar(`Removed association of assets for ${selectedMaintenancePlan.name}.`, {
       variant: 'default',
     });
@@ -55,42 +52,16 @@ export default function MaintenancePlanItemDetails() {
     resetConfirmationBoxModal();
   };
 
-  const addItems = () => {
-    const collaborators = selectedMaintenancePlan.sharable_groups;
-    dispatch(
-      maintenancePlanItemActions.addItemsInPlan({
-        id: selectedMaintenancePlan?.id,
-        selectedIDList,
-        collaborators,
-      })
-    );
+  const addItems = async () => {
+    await createAssociationForAssetsWithMaintenancePlan.mutateAsync({
+      maintenancePlanId: selectedMaintenancePlan?.id,
+      assetIds: selectedIDList,
+    });
     enqueueSnackbar(`Added association of assets for ${selectedMaintenancePlan.name}.`, {
       variant: 'success',
     });
     resetSelection();
   };
-
-  const handleRemoveAssociation = () => {
-    handleOpenConfirmationBoxModal();
-  };
-
-  const resetSelection = () => {
-    setDisplayModal(false);
-    setSelectedIDList([]);
-  };
-
-  useEffect(() => {
-    if (!loading) {
-      dispatch(maintenancePlanItemActions.getSelectedImage({ id }));
-    }
-  }, [id, loading]);
-
-  useEffect(() => {
-    if (id) {
-      dispatch(maintenancePlanItemActions.getItemsInMaintenancePlan(id));
-      dispatch(maintenancePlanItemActions.getSelectedMaintenancePlan(id));
-    }
-  }, [id]);
 
   if (loading) {
     return <Skeleton height="20rem" />;
@@ -112,7 +83,7 @@ export default function MaintenancePlanItemDetails() {
         setSelectedIDList={setSelectedIDList}
         items={itemsInMaintenancePlan}
         handleOpenModal={handleOpenModal}
-        handleRemoveAssociation={handleRemoveAssociation}
+        handleRemoveAssociation={() => setOpenConfirmationBoxModal(!openConfirmationBoxModal)}
         tableDataTour="selected-plan-6"
         primaryBtnDataTour="selected-plan-4"
         secondaryBtnDataTour="selected-plan-5"

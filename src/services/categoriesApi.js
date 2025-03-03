@@ -23,8 +23,8 @@ export const useFetchAllCategories = () => {
 /**
  * useFetchCategoryById ...
  *
- * retrieves a selected asset by the id
- * @param {string} id - the id of the selected asset
+ * retrieves a selected category by the id
+ * @param {string} id - the id of the selected category
  */
 export const useFetchCategoryById = (id) => {
   return useQuery({
@@ -148,7 +148,7 @@ export const useRemoveAssociationForAssetsWithCategory = () => {
 /**
  * useUpdateCategory ...
  *
- * updates a existing category
+ * updates an existing category
  */
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
@@ -190,7 +190,7 @@ export const useRemoveCategory = () => {
 /**
  * useDownloadCategories ...
  *
- * download the list of the categories
+ * download the list of categories
  */
 export const useDownloadCategories = () => {
   return useMutation({

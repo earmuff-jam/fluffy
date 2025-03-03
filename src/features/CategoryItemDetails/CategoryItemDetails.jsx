@@ -30,7 +30,6 @@ export default function CategoryItemDetails() {
 
   const handleOpenModal = () => setDisplayModal(true);
   const resetConfirmationBoxModal = () => setOpenConfirmationBoxModal(false);
-  const handleOpenConfirmationBoxModal = () => setOpenConfirmationBoxModal(!openConfirmationBoxModal);
 
   const resetSelection = () => {
     setDisplayModal(false);
@@ -61,10 +60,6 @@ export default function CategoryItemDetails() {
     resetSelection();
   };
 
-  const handleRemoveAssociation = () => {
-    handleOpenConfirmationBoxModal();
-  };
-
   if (loading) {
     return <Skeleton height="20rem" />;
   }
@@ -86,7 +81,7 @@ export default function CategoryItemDetails() {
         setSelectedIDList={setSelectedIDList}
         items={itemsInCategory.map((v) => v.assetId)}
         handleOpenModal={handleOpenModal}
-        handleRemoveAssociation={handleRemoveAssociation}
+        handleRemoveAssociation={() => setOpenConfirmationBoxModal(!openConfirmationBoxModal)}
         tableDataTour="selected-category-6"
         primaryBtnDataTour="selected-category-4"
         secondaryBtnDataTour="selected-category-5"

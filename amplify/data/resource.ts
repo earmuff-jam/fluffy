@@ -221,7 +221,7 @@ const schema = a.schema({
     .model({
       id: a.id(),
       maintenancePlanIdRef: a.id(),
-      maintenance_plan_id: a.belongsTo('MaintenancePlans', 'maintenancePlanIdRef'),
+      maintenancePlanId: a.belongsTo('MaintenancePlans', 'maintenancePlanIdRef'),
       assetIdRef: a.id(),
       assetId: a.belongsTo('Assets', 'assetIdRef'),
       createdAt: a.string(),
@@ -253,22 +253,22 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.authenticated()]),
 
-  // RecentActivities: a
-  //   .model({
-  //     id: a.id(),
-  //     activity_id: a.string(),
-  //     type: a.string(),
-  //     title: a.string(),
-  //     custom_action: a.string(),
-  //     created_at: a.string(),
-  //     createdProfileId: a.id(),
-  //     created_by: a.belongsTo("Profiles", "createdProfileId"),
-  //     updated_at: a.string(),
-  //     updatedProfileId: a.id(),
-  //     updated_by: a.belongsTo("Profiles", "updatedProfileId"),
-  //     sharable_groups: a.string().array(),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+  RecentActivities: a
+    .model({
+      id: a.id(),
+      activityId: a.string(),
+      type: a.enum(['asset', 'category', 'plan']),
+      title: a.string(),
+      customAction: a.enum(['created', 'updated', 'deleted']),
+      createdAt: a.string(),
+      // createdProfileId: a.id(),
+      // created_by: a.belongsTo("Profiles", "createdProfileId"),
+      updatedAt: a.string(),
+      // updatedProfileId: a.id(),
+      // updated_by: a.belongsTo("Profiles", "updatedProfileId"),
+      // sharable_groups: a.string().array(),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 
   FavouriteItems: a
     .model({

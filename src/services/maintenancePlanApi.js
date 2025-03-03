@@ -5,6 +5,11 @@ import * as XLSX from 'xlsx';
 
 const client = generateClient();
 
+/**
+ * useFetchMaintenancePlans ...
+ *
+ * returns a list of all the maintenance plans
+ */
 export const useFetchMaintenancePlans = () => {
   return useQuery({
     queryKey: ['maintenancePlans'],
@@ -15,6 +20,55 @@ export const useFetchMaintenancePlans = () => {
   });
 };
 
+/**
+ * useFetchMaintenancePlanById ...
+ *
+ * retrieves a selected maintenancePlan by the id
+ * @param {string} id - the id of the selected maintenancePlan
+ */
+export const useFetchMaintenancePlanById = (id) => {
+  return useQuery({
+    queryKey: ['maintenancePlan', id],
+    queryFn: async () => {
+      const response = await client.models.MaintenancePlans.get({ id: id });
+      return response.data || {};
+    },
+    enabled: !!id,
+  });
+};
+
+/**
+ * useFetchAssetsAssociatedWithMaintenancePlanById ...
+ *
+ * retrieves selected assets that belongs to a specific maintenance plan
+ * @param {string} id - the id of the selected maintenance plan
+ */
+export const useFetchAssetsAssociatedWithMaintenancePlanById = (id) => {
+  return useQuery({
+    queryKey: ['assetsAssociatedWithMaintenancePlan', id],
+    queryFn: async () => {
+      if (!id) return [];
+
+      const response = await client.models.MaintenancePlanItems.list({
+        filter: {
+          maintenancePlanIdRef: {
+            eq: id,
+          },
+        },
+        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'maintenancePlanId.*'],
+      });
+
+      return response.data || [];
+    },
+    enabled: !!id,
+  });
+};
+
+/**
+ * useCreateMaintenancePlan ...
+ *
+ * creates a new maintenance plan
+ */
 export const useCreateMaintenancePlan = () => {
   const queryClient = useQueryClient();
 
@@ -31,6 +85,71 @@ export const useCreateMaintenancePlan = () => {
   });
 };
 
+/**
+ * useCreateAssociationForItemsWithMaintenancePlan ...
+ *
+ * creates association for items with a selected maintenance plan.
+ */
+export const useCreateAssociationForItemsWithMaintenancePlan = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ maintenancePlanId, assetIds }) => {
+      if (!maintenancePlanId || !assetIds || assetIds.length === 0) {
+        throw new Error('Both maintenancePlanId and assetIds are required.');
+      }
+
+      const createPromises = assetIds.map(async (assetId) => {
+        const { data, errors } = await client.models.MaintenancePlanItems.create({
+          maintenancePlanIdRef: maintenancePlanId,
+          assetIdRef: assetId,
+        });
+
+        if (errors) throw new Error(errors);
+        return data;
+      });
+
+      return await Promise.all(createPromises);
+    },
+    onSuccess: (_, { maintenancePlanId }) => {
+      queryClient.invalidateQueries({ queryKey: ['assetsAssociatedWithMaintenancePlan', maintenancePlanId] });
+    },
+  });
+};
+
+/**
+ * useRemoveAssociationForAssetsWithMaintenancePlan ...
+ *
+ * removes association for items with a selected maintenance plan
+ */
+export const useRemoveAssociationForAssetsWithMaintenancePlan = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ maintenancePlanId, ids }) => {
+      if (!ids || !Array.isArray(ids) || ids.length === 0) {
+        throw new Error('Maintenance Plan Items IDs is required for deletion.');
+      }
+
+      const deletePromises = ids.map(async (id) => {
+        const { data, errors } = await client.models.MaintenancePlanItems.delete({ id });
+        if (errors) throw new Error(errors);
+        return data;
+      });
+
+      return Promise.all(deletePromises);
+    },
+    onSuccess: (_, { maintenancePlanId }) => {
+      queryClient.invalidateQueries({ queryKey: ['assetsAssociatedWithMaintenancePlan', maintenancePlanId] });
+    },
+  });
+};
+
+/**
+ * useUpdateMaintenancePlan ...
+ *
+ * updates an existing maintenance plan
+ */
 export const useUpdateMaintenancePlan = () => {
   const queryClient = useQueryClient();
 
@@ -47,6 +166,11 @@ export const useUpdateMaintenancePlan = () => {
   });
 };
 
+/**
+ * useRemoveMaintenancePlan ...
+ *
+ * removes a selected maintenance plan when an id is passed in
+ */
 export const useRemoveMaintenancePlan = () => {
   const queryClient = useQueryClient();
 
@@ -63,6 +187,11 @@ export const useRemoveMaintenancePlan = () => {
   });
 };
 
+/**
+ * useDownloadMaintenancePlans ...
+ *
+ * download the list of maintenance plans
+ */
 export const useDownloadMaintenancePlans = () => {
   return useMutation({
     mutationFn: async () => {

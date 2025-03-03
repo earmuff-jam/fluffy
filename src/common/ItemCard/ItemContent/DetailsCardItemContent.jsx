@@ -1,48 +1,50 @@
-import { useDispatch, useSelector } from 'react-redux';
-
 import { FavoriteRounded } from '@mui/icons-material';
-import { CardContent, IconButton, Stack, Typography } from '@mui/material';
-import { profileActions } from '@features/Profile/profileSlice';
+import { CardContent, IconButton, Skeleton, Stack, Typography } from '@mui/material';
+import { useCreateFavouriteItem, useFetchFavouriteItems, useRemoveFavouriteItem } from '@services/favouriteItemsApi';
 
 export default function DetailsCardItemContent({ selectedItem, categoryMode, favBtnDataTour }) {
-  // const dispatch = useDispatch();
-  const favItems = [];
-  // const { favItems = [] } = useSelector((state) => state.profile);
+  const { data: favItems = [], isLoading } = useFetchFavouriteItems();
+  const createFavouriteItem = useCreateFavouriteItem();
+  const removeFavouriteItem = useRemoveFavouriteItem();
 
   const isFavourite = favItems.some(
-    (v) => v.category_id === selectedItem.id || v.maintenance_plan_id === selectedItem.id
+    (v) => v.categoryIdRef === selectedItem.id || v.maintenancePlanIdRef === selectedItem.id
   );
 
-  const handleFavItem = (_, selectedID, isFavourite) => {
-    let draftFavItem = {};
-    if (categoryMode) {
-      draftFavItem = { category_id: selectedID };
-    } else {
-      draftFavItem = { maintenance_plan_id: selectedID };
-    }
-
+  const handleFavItem = async (_, selectedID, isFavourite) => {
     if (isFavourite) {
-      // toggle fav off if exists
       const currentItems = favItems?.filter(
-        (v) => v.category_id === selectedID || v.maintenance_plan_id === selectedID
+        (v) => v.categoryIdRef === selectedID || v.maintenancePlanIdRef === selectedID
       );
-      const currentItem = currentItems.find(() => true);
-      // dispatch(profileActions.removeFavItem(currentItem?.id));
+      removeFavouriteItem.mutateAsync(currentItems.find(() => true).id);
     } else {
-      // dispatch(profileActions.saveFavItem(draftFavItem));
+      let draftFavItem = {};
+      if (categoryMode) {
+        draftFavItem = { categoryId: selectedID };
+      } else {
+        draftFavItem = { maintenancePlanId: selectedID };
+      }
+      createFavouriteItem.mutateAsync({
+        categoryIdRef: draftFavItem.categoryId,
+        maintenancePlanIdRef: draftFavItem.maintenancePlanId,
+      });
     }
   };
 
   return (
     <CardContent>
       <Stack direction="row" alignItems="flex-start">
-        <IconButton
-          size="small"
-          onClick={(ev) => handleFavItem(ev, selectedItem.id, isFavourite)}
-          data-tour={favBtnDataTour}
-        >
-          <FavoriteRounded fontSize="small" sx={{ color: isFavourite ? selectedItem.color : 'secondary.main' }} />
-        </IconButton>
+        {isLoading ? (
+          <Skeleton width="2rem" />
+        ) : (
+          <IconButton
+            size="small"
+            onClick={(ev) => handleFavItem(ev, selectedItem.id, isFavourite)}
+            data-tour={favBtnDataTour}
+          >
+            <FavoriteRounded fontSize="small" sx={{ color: isFavourite ? selectedItem.color : 'secondary.main' }} />
+          </IconButton>
+        )}
         <Typography gutterBottom variant="h5">
           {selectedItem.name}
         </Typography>

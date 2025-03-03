@@ -1,23 +1,16 @@
 import { useState } from 'react';
 import { enqueueSnackbar } from 'notistack';
-
 import dayjs from 'dayjs';
 import { produce } from 'immer';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Card, CardMedia, Paper, Stack } from '@mui/material';
-
 import SimpleModal from '@common/SimpleModal';
 import SharableGroups from '@common/SharableGroups';
 import ImagePicker from '@common/ImagePicker/ImagePicker';
 import LocationPicker from '@common/Location/LocationPicker';
-
 import DetailsCardItemContent from '@common/ItemCard/ItemContent/DetailsCardItemContent';
 import DetailsCardItemActions from '@common/ItemCard/ItemContent/DetailsCardItemActions';
-import { categoryItemDetailsActions } from '@features/CategoryItemDetails/categoryItemDetailsSlice';
-import { maintenancePlanItemActions } from '@features/MaintenancePlanItemDetails/maintenancePlanItemSlice';
 
 dayjs.extend(relativeTime);
 
@@ -29,7 +22,6 @@ export default function DetailsCard({
   shareBtnDataTour,
   categoryMode = false,
 }) {
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const userID = localStorage.getItem('userID');
 

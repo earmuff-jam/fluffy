@@ -14,10 +14,9 @@ const RecentActivityList = lazy(() => import('@features/RecentActivities/RecentA
 const SelectedAsset = lazy(() => import('@features/SelectedAsset/SelectedAsset'));
 const MaintenancePlanList = lazy(() => import('@features/MaintenancePlan/MaintenancePlanList'));
 const CategoryItemDetails = lazy(() => import('@features/CategoryItemDetails/CategoryItemDetails'));
-
-// const MaintenancePlanItemDetails = lazy(() =>
-//   import('@features/MaintenancePlanItemDetails/MaintenancePlanItemDetails')
-// );
+const MaintenancePlanItemDetails = lazy(() =>
+  import('@features/MaintenancePlanItemDetails/MaintenancePlanItemDetails')
+);
 
 export const router = createBrowserRouter([
   {
@@ -50,7 +49,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/plan/:id',
-        // element: <MaintenancePlanItemDetails />,
+        element: <MaintenancePlanItemDetails />,
       },
       {
         path: '/reports',
