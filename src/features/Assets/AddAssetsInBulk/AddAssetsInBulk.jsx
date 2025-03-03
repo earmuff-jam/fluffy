@@ -5,7 +5,7 @@ import { Button, Stack } from '@mui/material';
 import { SaveRounded } from '@mui/icons-material';
 import ViewFileContent from '@features/Assets/AddAssetsInBulk/ViewFileContent';
 import AddAssetsInBulkActions from '@features/Assets/AddAssetsInBulk/AddAssetsInBulkActions';
-import { buildXcel } from '@common/utils';
+import { buildXcel, renameXcelColValues } from '@common/utils';
 import { BULK_ASSETS_HEADERS } from '@features/Assets/constants';
 import { useCreateAssetsInBulk } from '@services/assetsApi';
 
@@ -34,12 +34,8 @@ export default function AddAssetsInBulk({ handleClose }) {
           rawNumbers: true,
         });
 
-        // format the column values to have a widely accepted values
-        const renameColValues = formattedArr.map(({ ['Storage Location']: _, ...rest }) => ({
-          storageLocation: _,
-          ...rest,
-        }));
-        setUploadedFileInJson(renameColValues);
+        const transformedArray = renameXcelColValues(formattedArr);
+        setUploadedFileInJson(transformedArray);
       };
       reader.readAsArrayBuffer(file);
     }

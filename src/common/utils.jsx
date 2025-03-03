@@ -228,3 +228,24 @@ export const buildXcel = (headers = [], data = [], fileName, sheetName) => {
 
   XLSX.writeFile(wb, fileName);
 };
+
+/**
+ * Function that is used to format the provided excel column headers
+ * into meaningful column values for the backend system
+ *
+ * @param {Array<string>} xcelHeaderCols - the array of string of column values
+ * @returns
+ */
+export const renameXcelColValues = (xcelHeaderCols) => {
+  return xcelHeaderCols.map((row) => {
+    const transformedRow = {};
+
+    BULK_ASSETS_HEADERS.forEach(({ label, colValue }) => {
+      if (row[label] !== undefined) {
+        transformedRow[colValue] = row[label];
+      }
+    });
+
+    return transformedRow;
+  });
+};

@@ -24,19 +24,19 @@ export const MODAL_STATE = {
  * Bulk Asset Headers for template download.
  */
 export const BULK_ASSETS_HEADERS = [
-  { label: 'Name' },
-  { label: 'Description' },
-  { label: 'Price' },
-  { label: 'Quantity' },
-  { label: 'Storage Location' },
-  { label: 'Color' },
-  { label: 'SKU' },
-  { label: 'Barcode' },
-  { label: 'Purchase Location' },
-  { label: 'Minimum Height' },
-  { label: 'Maximum Height' },
-  { label: 'Minimum Weight' },
-  { label: 'Maximum Weight' },
+  { label: 'Name', colValue: 'name' },
+  { label: 'Description', colValue: 'description' },
+  { label: 'Price', colValue: 'price' },
+  { label: 'Quantity', colValue: 'quantity' },
+  { label: 'Storage Location', colValue: 'storage_location' },
+  { label: 'Color', colValue: 'color' },
+  { label: 'SKU', colValue: 'sku' },
+  { label: 'Barcode', colValue: 'barcode' },
+  { label: 'Purchase Location', colValue: 'boughtAt' },
+  { label: 'Minimum Height', colValue: 'minHeight' },
+  { label: 'Maximum Height', colValue: 'maxHeight' },
+  { label: 'Minimum Weight', colValue: 'minWeight' },
+  { label: 'Maximum Weight', colValue: 'maxWeight' },
 ];
 
 /**
