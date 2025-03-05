@@ -1,14 +1,13 @@
-import { Box, Button, Checkbox, Divider, FormControlLabel, Skeleton, Stack, Typography } from '@mui/material';
-import { DarkModeRounded, GridViewRounded } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+
+import { Box, Button, Checkbox, Divider, FormControlLabel, Skeleton, Stack, Typography } from '@mui/material';
+
+import { DarkModeRounded, GridViewRounded } from '@mui/icons-material';
+
 import dayjs from 'dayjs';
-import { profileActions } from '@features/Profile/profileSlice';
 import { enqueueSnackbar } from 'notistack';
 
 const AppearanceSettings = ({ loading, profileDetails = {} }) => {
-  const dispatch = useDispatch();
-
   const [displayMode, setDisplayMode] = useState(false);
   const [inventoryLayout, setInventoryLayout] = useState(false); // false is list view
 
@@ -19,7 +18,7 @@ const AppearanceSettings = ({ loading, profileDetails = {} }) => {
       grid_view: inventoryLayout,
       updated_at: dayjs().toISOString(),
     };
-    dispatch(profileActions.updateProfileDetails({ draftData }));
+    // dispatch(profileActions.updateProfileDetails({ draftData }));
     enqueueSnackbar('Successfully updated profile details.', {
       variant: 'success',
     });

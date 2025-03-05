@@ -1,14 +1,10 @@
 import { useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
-
 import { Divider, Stack, Typography } from '@mui/material';
 
 import UserStats from '@features/Profile/UserStats/UserStats';
-import { profileActions } from '@features/Profile/profileSlice';
 
 export default function UserStatus({ profileStats = {}, onlySmallScreen }) {
-  const dispatch = useDispatch();
 
   const DRAFT_PROFILE_STATS = [
     {
@@ -37,7 +33,7 @@ export default function UserStatus({ profileStats = {}, onlySmallScreen }) {
   const total = DRAFT_PROFILE_STATS.map(({ value }) => value).reduce((acc, el) => acc + el, 0);
 
   useEffect(() => {
-    dispatch(profileActions.getProfileStats());
+    // dispatch(profileActions.getProfileStats());
   }, []);
 
   return (

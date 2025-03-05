@@ -1,9 +1,10 @@
 import { useState } from 'react';
+
 import { useTheme } from '@emotion/react';
-import { useSelector } from 'react-redux';
-import SimpleModal from '@common/SimpleModal';
+
 import { Paper, Stack, useMediaQuery } from '@mui/material';
 
+import SimpleModal from '@common/SimpleModal';
 import UserStatus from '@features/Profile/UserStatus/UserStatus';
 import ProfileForm from '@features/Profile/ProfileForm/ProfileForm';
 
@@ -14,7 +15,12 @@ import AppearanceSettings from '@features/Profile/AppearanceSettings/AppearanceS
 const ProfilePage = () => {
   const theme = useTheme();
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { profileDetails: data = {}, profileStats = {}, loading } = useSelector((state) => state.profile);
+
+  const data = {};
+  const profileStats = {};
+  const loading = false;
+
+  // const { profileDetails: data = {}, profileStats = {}, loading } = useSelector((state) => state.profile);
 
   const [editMode, setEditMode] = useState(false);
 

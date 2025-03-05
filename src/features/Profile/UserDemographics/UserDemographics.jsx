@@ -7,17 +7,20 @@ import ImagePicker from '@common/ImagePicker/ImagePicker';
 import UserDemographicsRow from '@features/Profile/UserDemographics/UserDemographicsRow';
 
 export default function UserDemographics({ data = {}, handleEditMode }) {
-  const dispatch = useDispatch();
-  const { avatar = {}, loading: isAvatarLoading } = useSelector((state) => state.profile);
+  // const dispatch = useDispatch();
+
+  const avatar = {};
+  const isAvatarLoading = false;
+
   const [editMode, setEditMode] = useState(false);
 
   const handleUpload = (id, selectedImage) => {
-    dispatch(profileActions.updateProfileImage({ id: id, selectedImage: selectedImage }));
+    // dispatch(profileActions.updateProfileImage({ id: id, selectedImage: selectedImage }));
     setEditMode(false);
   };
 
   useEffect(() => {
-    dispatch(profileActions.fetchAvatar());
+    // dispatch(profileActions.fetchAvatar());
   }, [isAvatarLoading]);
 
   return (

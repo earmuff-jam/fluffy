@@ -57,7 +57,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/profile',
-        // element: <ProfilePage />,
+        element: <ProfilePage />,
       },
       {
         path: '/profile/notes',

@@ -1,7 +1,6 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import { Outlet } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Box,
@@ -16,22 +15,23 @@ import {
 
 import { useTheme } from '@emotion/react';
 import { darkTheme, lightTheme } from '@utils/Theme';
+
 import AppToolbar from '@features/Layout/AppToolbar/AppToolbar';
-import { profileActions } from '@features/Profile/profileSlice';
 import MenuActionBar from '@features/Layout/MenuActionBar/MenuActionBar';
-import Banner from '@features/Layout/Banner';
-import { authActions } from '@features/LandingPage/authSlice';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const Layout = () => {
   const theme = useTheme();
-  // const dispatch = useDispatch();
-  const isVerified = localStorage.getItem('isVerified');
-  const smScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('sm'));
-  const lgScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('lg'));
 
   const profileDetails = {};
   const loading = false;
-  // const { profileDetails, loading } = useSelector((state) => state.profile);
+
+  const { user } = useAuthenticator();
+
+  console.log(user);
+
+  const smScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('sm'));
+  const lgScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('lg'));
 
   const [openDrawer, setOpenDrawer] = useState(lgScreenSizeAndHigher ? true : false);
 
@@ -66,10 +66,6 @@ const Layout = () => {
             lgScreenSizeAndHigher={lgScreenSizeAndHigher}
           />
           <Container maxWidth="lg">
-            <Banner
-              isVerified={isVerified}
-              revalidateEmail={() => dispatch(authActions.revalidateEmail({ email: profileDetails?.email_address }))}
-            />
             <Outlet />
           </Container>
         </Stack>

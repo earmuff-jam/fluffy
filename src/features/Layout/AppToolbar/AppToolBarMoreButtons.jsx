@@ -12,6 +12,8 @@ import {
   Popper,
 } from '@mui/material';
 
+import { useAuthenticator } from '@aws-amplify/ui-react';
+
 import { useRef, useState } from 'react';
 import { useTour } from '@reactour/tour';
 import { useLocation, useParams } from 'react-router-dom';
@@ -20,6 +22,9 @@ import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/tour/steps';
 export default function AppToolBarMoreButtons({ profileDetails }) {
   const { id } = useParams();
   const location = useLocation();
+
+  const { signOut } = useAuthenticator();
+
   // const dispatch = useDispatch();
 
   const { setIsOpen, setCurrentStep, setSteps } = useTour();
@@ -44,7 +49,7 @@ export default function AppToolBarMoreButtons({ profileDetails }) {
   };
 
   const handleLogout = () => {
-    // dispatch(authActions.getLogout());
+    signOut();
     localStorage.clear();
     window.location.href = '/';
   };
