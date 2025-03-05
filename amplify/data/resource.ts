@@ -1,77 +1,77 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 
 const schema = a.schema({
-  // Profiles: a
-  //   .model({
-  //     id: a.id(),
-  //     username: a.string(),
-  //     firstName: a.string(),
-  //     lastName: a.string(),
-  //     avatar_url: a.string(),
-  //     emailAddress: a.string(),
-  //     phoneNumber: a.string(),
-  //     aboutMe: a.string(),
-  //     imageURL: a.string(),
-  //     appearance: a.boolean(),
-  //     isGridView: a.boolean(),
-  //     onlineStatus: a.boolean(),
-  //     lastOnlineLocationPoint: a.customType({
-  //       lat: a.float(),
-  //       lon: a.float(),
-  //     }),
-  //     updatedAt: a.string(),
-  //     createdLocations: a.hasMany("StorageLocations", "createdLocationId"),
-  //     updatedLocations: a.hasMany("StorageLocations", "updatedLocationId"),
-  //     createdNotes: a.hasMany("Notes", "createdNoteId"),
-  //     updatedNotes: a.hasMany("Notes", "updatedNoteId"),
-  //     createdAssets: a.hasMany("Assets", "createdAssetId"),
-  //     updatedAssets: a.hasMany("Assets", "updatedAssetId"),
-  //     createdCategories: a.hasMany("Categories", "createdCategoryId"),
-  //     updatedCategories: a.hasMany("Categories", "updatedCategoryId"),
-  //     createdCategoryItems: a.hasMany(
-  //       "CategoryItems",
-  //       "createdCategoryItemsId"
-  //     ),
-  //     updatedCategoryItems: a.hasMany(
-  //       "CategoryItems",
-  //       "updatedCategoryItemsId"
-  //     ),
-  //     createdMaintenancePlans: a.hasMany(
-  //       "MaintenancePlans",
-  //       "createdMaintenancePlanId"
-  //     ),
-  //     updatedMaintenancePlans: a.hasMany(
-  //       "MaintenancePlans",
-  //       "updatedMaintenancePlanId"
-  //     ),
-  //     createdMaintenancePlanItems: a.hasMany(
-  //       "MaintenancePlanItems",
-  //       "createdProfileId"
-  //     ),
-  //     updatedMaintenancePlanItems: a.hasMany(
-  //       "MaintenancePlanItems",
-  //       "updatedProfileId"
-  //     ),
-  //     createdMaintenanceAlert: a.hasMany(
-  //       "MaintenanceAlert",
-  //       "createdProfileId"
-  //     ),
-  //     updatedMaintenanceAlert: a.hasMany(
-  //       "MaintenanceAlert",
-  //       "updatedProfileId"
-  //     ),
-  //     createdRecentActivities: a.hasMany(
-  //       "RecentActivities",
-  //       "createdProfileId"
-  //     ),
-  //     updatedRecentActivities: a.hasMany(
-  //       "RecentActivities",
-  //       "updatedProfileId"
-  //     ),
-  //     createdFavouriteItems: a.hasMany("FavouriteItems", "createdProfileId"),
-  //     updatedFavouriteItems: a.hasMany("FavouriteItems", "updatedProfileId"),
-  //   })
-  //   .authorization((allow) => [allow.authenticated()]),
+  Profiles: a
+    .model({
+      id: a.id(),
+      username: a.string(),
+      firstName: a.string(),
+      lastName: a.string(),
+      avatar_url: a.string(),
+      emailAddress: a.string(),
+      phoneNumber: a.string(),
+      aboutMe: a.string(),
+      imageURL: a.string(),
+      appearance: a.boolean(),
+      isGridView: a.boolean(),
+      onlineStatus: a.boolean(),
+      lastOnlineLocationPoint: a.customType({
+        lat: a.float(),
+        lon: a.float(),
+      }),
+      updatedAt: a.string(),
+      createdLocations: a.hasMany("StorageLocations", "createdLocationId"),
+      updatedLocations: a.hasMany("StorageLocations", "updatedLocationId"),
+      createdNotes: a.hasMany("Notes", "createdNoteId"),
+      updatedNotes: a.hasMany("Notes", "updatedNoteId"),
+      createdAssets: a.hasMany("Assets", "createdAssetId"),
+      updatedAssets: a.hasMany("Assets", "updatedAssetId"),
+      createdCategories: a.hasMany("Categories", "createdCategoryId"),
+      updatedCategories: a.hasMany("Categories", "updatedCategoryId"),
+      createdCategoryItems: a.hasMany(
+        "CategoryItems",
+        "createdCategoryItemsId"
+      ),
+      updatedCategoryItems: a.hasMany(
+        "CategoryItems",
+        "updatedCategoryItemsId"
+      ),
+      createdMaintenancePlans: a.hasMany(
+        "MaintenancePlans",
+        "createdMaintenancePlanId"
+      ),
+      updatedMaintenancePlans: a.hasMany(
+        "MaintenancePlans",
+        "updatedMaintenancePlanId"
+      ),
+      createdMaintenancePlanItems: a.hasMany(
+        "MaintenancePlanItems",
+        "createdProfileId"
+      ),
+      updatedMaintenancePlanItems: a.hasMany(
+        "MaintenancePlanItems",
+        "updatedProfileId"
+      ),
+      createdMaintenanceAlert: a.hasMany(
+        "MaintenanceAlert",
+        "createdProfileId"
+      ),
+      updatedMaintenanceAlert: a.hasMany(
+        "MaintenanceAlert",
+        "updatedProfileId"
+      ),
+      createdRecentActivities: a.hasMany(
+        "RecentActivities",
+        "createdProfileId"
+      ),
+      updatedRecentActivities: a.hasMany(
+        "RecentActivities",
+        "updatedProfileId"
+      ),
+      createdFavouriteItems: a.hasMany("FavouriteItems", "createdProfileId"),
+      updatedFavouriteItems: a.hasMany("FavouriteItems", "updatedProfileId"),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 
   StorageLocations: a
     .model({
