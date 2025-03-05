@@ -9,13 +9,13 @@ export const ASSETS_IN_REPORTS_HEADER = [
     name: 'name',
     header: 'Asset Name',
     accessorKey: 'name',
-    size: 150,
+    size: 200,
   },
   {
     name: 'description',
     header: 'Description',
     accessorKey: 'description',
-    size: 200,
+    size: 300,
     Cell: ({ cell }) => {
       return <>{cell.getValue()?.length > 0 ? cell.getValue() : '-'}</>;
     },

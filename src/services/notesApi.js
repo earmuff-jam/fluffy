@@ -3,6 +3,11 @@ import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient();
 
+/**
+ * useFetchNotes ...
+ *
+ * retrieves a list of notes
+ */
 export const useFetchNotes = () => {
   return useQuery({
     queryKey: ['notes'],
@@ -13,6 +18,11 @@ export const useFetchNotes = () => {
   });
 };
 
+/**
+ * useCreateNote ...
+ *
+ * creates a new note
+ */
 export const useCreateNote = () => {
   const queryClient = useQueryClient();
 
@@ -29,6 +39,11 @@ export const useCreateNote = () => {
   });
 };
 
+/**
+ * useUpdateNote ...
+ *
+ * updates an existing note
+ */
 export const useUpdateNote = () => {
   const queryClient = useQueryClient();
 
@@ -47,6 +62,11 @@ export const useUpdateNote = () => {
   });
 };
 
+/**
+ * useRemoveNote ...
+ *
+ * removes an existing note
+ */
 export const useRemoveNote = () => {
   const queryClient = useQueryClient();
 

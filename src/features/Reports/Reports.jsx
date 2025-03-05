@@ -25,7 +25,7 @@ export default function Reports() {
   const closeFilter = () => setDisplayModal(false);
 
   const totalAssetValuation = assets.reduce((acc, el) => {
-    acc = +parseFloat(+el.price);
+    acc += +el.price;
     return acc;
   }, 0);
 

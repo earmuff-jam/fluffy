@@ -3,6 +3,11 @@ import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient();
 
+/**
+ * useFetchStorageLocations ...
+ *
+ * retrieves a list of storage locations
+ */
 export const useFetchStorageLocations = () => {
   return useQuery({
     queryKey: ['storageLocations'],
@@ -13,6 +18,11 @@ export const useFetchStorageLocations = () => {
   });
 };
 
+/**
+ * useCreateStorageLocation ...
+ *
+ * creates a new storage location
+ */
 export const useCreateStorageLocation = () => {
   const queryClient = useQueryClient();
 
@@ -29,6 +39,11 @@ export const useCreateStorageLocation = () => {
   });
 };
 
+/**
+ * useUpdateStorageLocation ...
+ *
+ * updates an existing storage location
+ */
 export const useUpdateStorageLocation = () => {
   const queryClient = useQueryClient();
 
@@ -45,6 +60,12 @@ export const useUpdateStorageLocation = () => {
   });
 };
 
+/**
+ * useRemoveStorageLocation ...
+ *
+ * removes an existing storage location
+ *
+ */
 export const useRemoveStorageLocation = () => {
   const queryClient = useQueryClient();
 
