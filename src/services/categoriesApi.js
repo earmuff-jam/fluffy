@@ -10,13 +10,20 @@ const client = generateClient();
  *
  * returns a list of all categories
  */
-export const useFetchAllCategories = () => {
+export const useFetchAllCategories = (userId) => {
   return useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const response = await client.models.Categories.list();
+      const response = await client.models.Categories.list({
+        filter: {
+          createdCategoryIdRef: {
+            eq: userId,
+          },
+        },
+      });
       return response.data || [];
     },
+    enabled: !!userId,
   });
 };
 

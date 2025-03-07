@@ -10,6 +10,7 @@ import AddFormHeader from '@features/FormComponents/AddFormHeader';
 import { ADD_CATEGORY_FORM_FIELDS } from '@features/Categories/constants';
 import { useCreateCategory, useUpdateCategory } from '@services/categoriesApi';
 import dayjs from 'dayjs';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 export default function AddCategory({
   categories,
@@ -18,6 +19,7 @@ export default function AddCategory({
   selectedCategoryID,
   setSelectedCategoryID,
 }) {
+  const { user } = useAuthenticator();
   const { mutate: createCategory } = useCreateCategory();
   const { mutate: updateCategory } = useUpdateCategory();
 
@@ -98,7 +100,7 @@ export default function AddCategory({
         color: planColor,
         status: status,
         location: location,
-        // updated_by: userID,
+        updatedCategoryIdRef: user.userId,
       };
       updateCategory(draftRequest);
     } else {
@@ -109,8 +111,8 @@ export default function AddCategory({
         location: location,
         createdAt: dayjs().toISOString(),
         updatedAt: dayjs().toISOString(),
-        // created_by: userID,
-        // updated_by: userID,
+        createdCategoryIdRef: user.userId,
+        updatedCategoryIdRef: user.userId,
         // sharable_groups: [userID],
       };
       createCategory(draftRequest);
