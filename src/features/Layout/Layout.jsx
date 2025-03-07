@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import { Outlet } from 'react-router-dom';
 
@@ -15,20 +15,17 @@ import {
 
 import { useTheme } from '@emotion/react';
 import { darkTheme, lightTheme } from '@utils/Theme';
-
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import AppToolbar from '@features/Layout/AppToolbar/AppToolbar';
 import MenuActionBar from '@features/Layout/MenuActionBar/MenuActionBar';
-import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useCreateProfile, useFetchUserProfileDetails } from '@services/profileApi';
 
 const Layout = () => {
   const theme = useTheme();
-
-  const profileDetails = {};
-  const loading = false;
-
   const { user } = useAuthenticator();
 
-  console.log(user);
+  const { mutate: createProfile } = useCreateProfile();
+  const { data: profileDetails = {}, isLoading } = useFetchUserProfileDetails(user.userId);
 
   const smScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('sm'));
   const lgScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('lg'));
@@ -38,12 +35,15 @@ const Layout = () => {
   const handleDrawerOpen = () => setOpenDrawer(true);
   const handleDrawerClose = () => setOpenDrawer(false);
 
-  // useEffect(() => {
-  //   dispatch(profileActions.getProfileDetails());
-  //   dispatch(profileActions.getFavItems({ limit: 10 }));
-  // }, []);
+  useEffect(() => {
+    if (user) {
+      // create user profile if the user profile does not exist
+      // uses data from default authenticator to build profile details
+      createProfile(user);
+    }
+  }, [user.userId]);
 
-  if (loading) {
+  if (isLoading) {
     return <Skeleton height="100vh" />;
   }
 
@@ -61,6 +61,7 @@ const Layout = () => {
         <Stack sx={{ marginTop: '5rem', marginBottom: '1rem' }}>
           <MenuActionBar
             openDrawer={openDrawer}
+            createdByUserId={user.userId}
             handleDrawerClose={handleDrawerClose}
             smScreenSizeAndHigher={smScreenSizeAndHigher}
             lgScreenSizeAndHigher={lgScreenSizeAndHigher}

@@ -1,24 +1,30 @@
 import { useState } from 'react';
 
 import { useTheme } from '@emotion/react';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { AllInboxRounded, BookmarkRounded, ExpandLess, ExpandMore } from '@mui/icons-material';
-
 import { Collapse, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Stack } from '@mui/material';
+
+import { useFetchFavouriteItems } from '@services/favouriteItemsApi';
 
 import MenuActionBarTitle from '@features/Layout/MenuActionBar/MenuActionBarTitle';
 import MenuActionBarListItem from '@features/Layout/MenuActionBar/MenuActionBarListItem';
 import { MENU_ACTION_BAR_DEFAULT_LIST, PINNED_DEFAULT_INSET_MENU_LIST } from '@features/Layout/constants';
 
-export default function MenuActionBar({ openDrawer, handleDrawerClose, smScreenSizeAndHigher, lgScreenSizeAndHigher }) {
+export default function MenuActionBar({
+  createdByUserId,
+  openDrawer,
+  handleDrawerClose,
+  smScreenSizeAndHigher,
+  lgScreenSizeAndHigher,
+}) {
   const theme = useTheme();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  
-  const favItems = [];
-  // const { favItems = [] } = useSelector((state) => state.profile);
+
+  const { data: favItems = [], isLoading } = useFetchFavouriteItems(createdByUserId);
+
   const [openPinnedResources, setOpenPinnedResources] = useState(true);
 
   // the timeout allows to close the drawer first before navigation occurs.
@@ -34,8 +40,8 @@ export default function MenuActionBar({ openDrawer, handleDrawerClose, smScreenS
 
   const formattedPinnedMenuItemList = favItems.map((v) => ({
     id: v.id,
-    label: v.category_name || v.maintenance_plan_name,
-    to: v.category_name ? `/category/${v.category_id}` : `/plan/${v.maintenance_plan_id}`,
+    label: v?.categoryId?.name || v?.maintenancePlanId?.name,
+    to: v?.categoryId ? `/category/${v.categoryId?.id}` : `/plan/${v.maintenancePlanId?.id}`,
     icon: <BookmarkRounded fontSize="small" color="warning" />,
   }));
 

@@ -3,16 +3,48 @@ import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient();
 
-export const useFetchFavouriteItems = () => {
+/**
+ * useFetchFavouriteItems ...
+ *
+ * retrieves a list of favourite items based on the creator
+ * @param {id} string - the userId of the logged in user
+ */
+export const useFetchFavouriteItems = (userId) => {
   return useQuery({
-    queryKey: ['favouriteItems'],
+    queryKey: ['favouriteItems', userId],
     queryFn: async () => {
-      const response = await client.models.FavouriteItems.list();
+      if (!userId) return [];
+
+      const response = await client.models.FavouriteItems.list({
+        filter: {
+          createdProfileIdRef: {
+            eq: userId,
+          },
+        },
+        selectionSet: [
+          'id',
+          'categoryIdRef',
+          'categoryId.*',
+          'maintenancePlanIdRef',
+          'maintenancePlanId.*',
+          'createdAt',
+          'createdBy.*',
+          'updatedAt',
+          'updatedBy.*',
+        ],
+      });
+
       return response.data || [];
     },
+    enabled: !!userId,
   });
 };
 
+/**
+ * useCreateFavouriteItem ...
+ *
+ * creates a favourite item for a selected user
+ */
 export const useCreateFavouriteItem = () => {
   const queryClient = useQueryClient();
 
@@ -29,6 +61,11 @@ export const useCreateFavouriteItem = () => {
   });
 };
 
+/**
+ * useUpdateFavouriteItem ...
+ *
+ * updates a favourite item
+ */
 export const useUpdateFavouriteItem = () => {
   const queryClient = useQueryClient();
 
@@ -45,6 +82,11 @@ export const useUpdateFavouriteItem = () => {
   });
 };
 
+/**
+ * useRemoveFavouriteItem ...
+ *
+ * removes a favourite item
+ */
 export const useRemoveFavouriteItem = () => {
   const queryClient = useQueryClient();
 

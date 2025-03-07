@@ -20,56 +20,56 @@ const schema = a.schema({
         lon: a.float(),
       }),
       updatedAt: a.string(),
-      createdLocations: a.hasMany("StorageLocations", "createdLocationId"),
-      updatedLocations: a.hasMany("StorageLocations", "updatedLocationId"),
-      createdNotes: a.hasMany("Notes", "createdNoteId"),
-      updatedNotes: a.hasMany("Notes", "updatedNoteId"),
-      createdAssets: a.hasMany("Assets", "createdAssetId"),
-      updatedAssets: a.hasMany("Assets", "updatedAssetId"),
-      createdCategories: a.hasMany("Categories", "createdCategoryId"),
-      updatedCategories: a.hasMany("Categories", "updatedCategoryId"),
+      createdLocations: a.hasMany("StorageLocations", "createdLocationIdRef"),
+      updatedLocations: a.hasMany("StorageLocations", "updatedLocationIdRef"),
+      createdNotes: a.hasMany("Notes", "createdNoteIdRef"),
+      updatedNotes: a.hasMany("Notes", "updatedNoteIdRef"),
+      createdAssets: a.hasMany("Assets", "createdAssetIdRef"),
+      updatedAssets: a.hasMany("Assets", "updatedAssetIdRef"),
+      createdCategories: a.hasMany("Categories", "createdCategoryIdRef"),
+      updatedCategories: a.hasMany("Categories", "updatedCategoryIdRef"),
       createdCategoryItems: a.hasMany(
         "CategoryItems",
-        "createdCategoryItemsId"
+        "createdCategoryItemsIdRef"
       ),
       updatedCategoryItems: a.hasMany(
         "CategoryItems",
-        "updatedCategoryItemsId"
+        "updatedCategoryItemsIdRef"
       ),
       createdMaintenancePlans: a.hasMany(
         "MaintenancePlans",
-        "createdMaintenancePlanId"
+        "createdMaintenancePlanIdRef"
       ),
       updatedMaintenancePlans: a.hasMany(
         "MaintenancePlans",
-        "updatedMaintenancePlanId"
+        "updatedMaintenancePlanIdRef"
       ),
       createdMaintenancePlanItems: a.hasMany(
         "MaintenancePlanItems",
-        "createdProfileId"
+        "createdProfileIdRef"
       ),
       updatedMaintenancePlanItems: a.hasMany(
         "MaintenancePlanItems",
-        "updatedProfileId"
+        "updatedProfileIdRef"
       ),
       createdMaintenanceAlert: a.hasMany(
         "MaintenanceAlert",
-        "createdProfileId"
+        "createdProfileIdRef"
       ),
       updatedMaintenanceAlert: a.hasMany(
         "MaintenanceAlert",
-        "updatedProfileId"
+        "updatedProfileIdRef"
       ),
       createdRecentActivities: a.hasMany(
         "RecentActivities",
-        "createdProfileId"
+        "createdProfileIdRef"
       ),
       updatedRecentActivities: a.hasMany(
         "RecentActivities",
-        "updatedProfileId"
+        "updatedProfileIdRef"
       ),
-      createdFavouriteItems: a.hasMany("FavouriteItems", "createdProfileId"),
-      updatedFavouriteItems: a.hasMany("FavouriteItems", "updatedProfileId"),
+      createdFavouriteItems: a.hasMany("FavouriteItems", "createdProfileIdRef"),
+      updatedFavouriteItems: a.hasMany("FavouriteItems", "updatedProfileIdRef"),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -82,11 +82,11 @@ const schema = a.schema({
         lon: a.float(),
       }),
       createdAt: a.string(),
-      // createdLocationId: a.id(),
-      // created_by: a.belongsTo("Profiles", "createdLocationId"),
+      createdLocationIdRef: a.id(),
+      createdBy: a.belongsTo("Profiles", "createdLocationIdRef"),
       updatedAt: a.string(),
-      // updatedLocationId: a.id(),
-      // updated_by: a.belongsTo("Profiles", "updatedLocationId"),
+      updatedLocationIdRef: a.id(),
+      updatedBy: a.belongsTo("Profiles", "updatedLocationIdRef"),
       // sharable_groups: a.string().array(),
       associatedAsset: a.hasOne('Assets', 'storageLocationIdRef'),
     })
@@ -105,11 +105,11 @@ const schema = a.schema({
         lon: a.float(),
       }),
       createdAt: a.string(),
-      // createdNoteId: a.id(),
-      // created_by: a.belongsTo("Profiles", "createdNoteId"),
+      createdNoteIdRef: a.id(),
+      createdBy: a.belongsTo("Profiles", "createdNoteIdRef"),
       updatedAt: a.string(),
-      // updatedNoteId: a.id(),
-      // updated_by: a.belongsTo("Profiles", "updatedNoteId"),
+      updatedNoteIdRef: a.id(),
+      updatedBy: a.belongsTo("Profiles", "updatedNoteIdRef"),
       // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
@@ -139,11 +139,11 @@ const schema = a.schema({
       maxHeight: a.string(),
       minHeight: a.string(),
       createdAt: a.string(),
-      //     createdAssetId: a.id(),
-      //     created_by: a.belongsTo("Profiles", "createdAssetId"),
+          createdAssetIdRef: a.id(),
+          createdBy: a.belongsTo("Profiles", "createdAssetIdRef"),
       updatedAt: a.string(),
-      //     updatedAssetId: a.id(),
-      //     updated_by: a.belongsTo("Profiles", "updatedAssetId"),
+          updatedAssetIdRef: a.id(),
+          updatedBy: a.belongsTo("Profiles", "updatedAssetIdRef"),
       //     sharable_groups: a.string().array(),
       associatedCategoryItems: a.hasMany('CategoryItems', 'assetIdRef'),
       associatedMaintenancePlanItems: a.hasMany('MaintenancePlanItems', 'assetIdRef'),
@@ -163,11 +163,11 @@ const schema = a.schema({
         lon: a.float(),
       }),
       createdAt: a.string(),
-      // createdCategoryId: a.id(),
-      // created_by: a.belongsTo("Profiles", "createdCategoryId"),
+      createdCategoryIdRef: a.id(),
+      createdBy: a.belongsTo("Profiles", "createdCategoryIdRef"),
       updatedAt: a.string(),
-      // updatedCategoryId: a.id(),
-      // updated_by: a.belongsTo("Profiles", "updatedCategoryId"),
+      updatedCategoryIdRef: a.id(),
+      updatedBy: a.belongsTo("Profiles", "updatedCategoryIdRef"),
       // sharable_groups: a.string().array(),
       associatedCategoryItems: a.hasMany('CategoryItems', 'categoryIdRef'),
       associatedFavouriteItems: a.hasMany('FavouriteItems', 'categoryIdRef'),
@@ -182,11 +182,11 @@ const schema = a.schema({
       assetIdRef: a.id(),
       assetId: a.belongsTo('Assets', 'assetIdRef'),
       createdAt: a.string(),
-      // createdCategoryItemsId: a.id(),
-      // created_by: a.belongsTo("Profiles", "createdCategoryItemsId"),
+      createdCategoryItemsIdRef: a.id(),
+      createdBy: a.belongsTo("Profiles", "createdCategoryItemsIdRef"),
       updatedAt: a.string(),
-      // updatedCategoryItemsId: a.id(),
-      // updated_by: a.belongsTo("Profiles", "updatedCategoryItemsId"),
+      updatedCategoryItemsIdRef: a.id(),
+      updatedBy: a.belongsTo("Profiles", "updatedCategoryItemsIdRef"),
       // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
@@ -206,11 +206,11 @@ const schema = a.schema({
         lon: a.float(),
       }),
       createdAt: a.string(),
-      // createdMaintenancePlanId: a.id(),
-      // created_by: a.belongsTo("Profiles", "createdMaintenancePlanId"),
+      createdMaintenancePlanIdRef: a.id(),
+      createdBy: a.belongsTo("Profiles", "createdMaintenancePlanIdRef"),
       updatedAt: a.string(),
-      // updatedMaintenancePlanId: a.id(),
-      // updated_by: a.belongsTo("Profiles", "updatedMaintenancePlanId"),
+      updatedMaintenancePlanIdRef: a.id(),
+      updatedBy: a.belongsTo("Profiles", "updatedMaintenancePlanIdRef"),
       // sharable_groups: a.string().array(),
       associatedMaintenancePlanItems: a.hasMany('MaintenancePlanItems', 'maintenancePlanIdRef'),
       associatedMaintenanceAlert: a.hasMany('MaintenanceAlert', 'maintenancePlanIdRef'),
@@ -226,11 +226,11 @@ const schema = a.schema({
       assetIdRef: a.id(),
       assetId: a.belongsTo('Assets', 'assetIdRef'),
       createdAt: a.string(),
-      // createdProfileId: a.id(),
-      // created_by: a.belongsTo('Profiles', 'createdProfileId'),
+      createdProfileIdRef: a.id(),
+      createdBy: a.belongsTo('Profiles', 'createdProfileIdRef'),
       updatedAt: a.string(),
-      // updatedProfileId: a.id(),
-      // updated_by: a.belongsTo('Profiles', 'updatedProfileId'),
+      updatedProfileIdRef: a.id(),
+      updatedBy: a.belongsTo('Profiles', 'updatedProfileIdRef'),
       // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
@@ -245,11 +245,11 @@ const schema = a.schema({
       planDue: a.string(),
       isRead: a.boolean(),
       createdAt: a.string(),
-      // createdProfileId: a.id(),
-      // created_by: a.belongsTo("Profiles", "createdProfileId"),
+      createdProfileIdRef: a.id(),
+      createdBy: a.belongsTo("Profiles", "createdProfileIdRef"),
       updatedAt: a.string(),
-      // updatedProfileId: a.id(),
-      // updated_by: a.belongsTo("Profiles", "updatedProfileId"),
+      updatedProfileIdRef: a.id(),
+      updatedBy: a.belongsTo("Profiles", "updatedProfileIdRef"),
       // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
@@ -262,11 +262,11 @@ const schema = a.schema({
       title: a.string(),
       customAction: a.enum(['created', 'updated', 'deleted']),
       createdAt: a.string(),
-      // createdProfileId: a.id(),
-      // created_by: a.belongsTo("Profiles", "createdProfileId"),
+      createdProfileIdRef: a.id(),
+      createdBy: a.belongsTo("Profiles", "createdProfileIdRef"),
       updatedAt: a.string(),
-      // updatedProfileId: a.id(),
-      // updated_by: a.belongsTo("Profiles", "updatedProfileId"),
+      updatedProfileIdRef: a.id(),
+      updatedBy: a.belongsTo("Profiles", "updatedProfileIdRef"),
       // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
@@ -279,11 +279,11 @@ const schema = a.schema({
       maintenancePlanIdRef: a.id(),
       maintenancePlanId: a.belongsTo('MaintenancePlans', 'maintenancePlanIdRef'),
       createdAt: a.string(),
-      // createdProfileId: a.id(),
-      // created_by: a.belongsTo("Profiles", "createdProfileId"),
+      createdProfileIdRef: a.id(),
+      createdBy: a.belongsTo("Profiles", "createdProfileIdRef"),
       updatedAt: a.string(),
-      // updatedProfileId: a.id(),
-      // updated_by: a.belongsTo("Profiles", "updatedProfileId"),
+      updatedProfileIdRef: a.id(),
+      updatedBy: a.belongsTo("Profiles", "updatedProfileIdRef"),
       // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),

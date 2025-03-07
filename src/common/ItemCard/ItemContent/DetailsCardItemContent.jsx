@@ -1,9 +1,13 @@
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import { FavoriteRounded } from '@mui/icons-material';
 import { CardContent, IconButton, Skeleton, Stack, Typography } from '@mui/material';
 import { useCreateFavouriteItem, useFetchFavouriteItems, useRemoveFavouriteItem } from '@services/favouriteItemsApi';
 
 export default function DetailsCardItemContent({ selectedItem, categoryMode, favBtnDataTour }) {
-  const { data: favItems = [], isLoading } = useFetchFavouriteItems();
+  const { user } = useAuthenticator();
+
+  const { data: favItems = [], isLoading } = useFetchFavouriteItems(user.userId);
+
   const createFavouriteItem = useCreateFavouriteItem();
   const removeFavouriteItem = useRemoveFavouriteItem();
 
@@ -27,6 +31,7 @@ export default function DetailsCardItemContent({ selectedItem, categoryMode, fav
       createFavouriteItem.mutateAsync({
         categoryIdRef: draftFavItem.categoryId,
         maintenancePlanIdRef: draftFavItem.maintenancePlanId,
+        createdProfileIdRef: user.userId,
       });
     }
   };
