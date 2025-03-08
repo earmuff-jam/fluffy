@@ -42,7 +42,7 @@ const Note = ({ notes, loading, setEditMode, setSelectedNoteID }) => {
   }, [loading, notes]);
 
   if (loading) {
-    return <Skeleton height="2rem" />;
+    return <Skeleton height="5rem" />;
   }
 
   if (!notes || notes.length === 0) {

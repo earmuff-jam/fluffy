@@ -95,7 +95,7 @@ export const ConfirmationBoxModal = ({ openDialog, title, handleClose, maxSize, 
 export const categorizeNotes = (notes) => {
   const currentTime = new Date();
   const categorizedNotes = notes.reduce((acc, item) => {
-    const updatedTime = new Date(item.updated_at);
+    const updatedTime = new Date(item.updatedAt);
     const differenceInDays = Math.floor((currentTime - updatedTime) / (1000 * 3600 * 24));
 
     let category;

@@ -33,9 +33,9 @@ export default function NoteAccordionDetails({
           >
             <Stack direction="row" justifyContent="space-between">
               <Stack direction="row" spacing={1} alignItems="center">
-                <Tooltip title={STATUS_OPTIONS.find((v) => v.label.toLowerCase() === note.status_name)?.display}>
+                <Tooltip title={STATUS_OPTIONS.find((v) => v.label.toLowerCase() === note.status)?.display}>
                   <Stack direction="row" spacing="0.2rem">
-                    {STATUS_OPTIONS.find((v) => v.label.toLowerCase() === note.status_name)?.icon}
+                    {STATUS_OPTIONS.find((v) => v.label.toLowerCase() === note.status)?.icon}
                   </Stack>
                 </Tooltip>
                 <Typography variant="h6">{note.title}</Typography>
@@ -66,12 +66,12 @@ export default function NoteAccordionDetails({
               </Stack>
             </Stack>
             <Stack direction="row" spacing={2} sx={{ margin: '1rem 0rem' }}>
-              {note?.location?.lat && higherThanSmallScreen ? <LocationPicker location={note?.location} /> : null}
+              {note?.location?.lat && higherThanSmallScreen ? <LocationPicker location={note?.location} height="10vh" width='10vw'/> : null}
               <Typography variant="subtitle2">{note.description}</Typography>
             </Stack>
             <Box>
               <Typography variant="caption">
-                By {note.updator || 'Anonymous'} {dayjs(note.updatedAt).fromNow()}
+                By {note.updatedBy.emailAddress || 'Anonymous'} {dayjs(note.updatedAt).fromNow()}
               </Typography>
             </Box>
           </Stack>

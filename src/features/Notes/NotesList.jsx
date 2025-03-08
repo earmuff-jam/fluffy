@@ -1,13 +1,18 @@
 import { useState } from 'react';
+
 import { Stack } from '@mui/material';
+
 import Note from '@features/Notes/Note/Note';
 import SimpleModal from '@common/SimpleModal';
 import AddNote from '@features/Notes/AddNote/AddNote';
 import NoteHeader from '@features/Notes/Header/NoteHeader';
+
 import { useFetchNotes } from '@services/notesApi';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const NotesList = () => {
-  const { data: notes, isLoading } = useFetchNotes();
+  const { user } = useAuthenticator();
+  const { data: notes, isLoading } = useFetchNotes(user.userId);
 
   const [editMode, setEditMode] = useState(false);
   const [selecteNoteID, setSelectedNoteID] = useState(null);

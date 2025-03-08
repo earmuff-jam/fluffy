@@ -18,16 +18,15 @@ import { useRef, useState } from 'react';
 import { useTour } from '@reactour/tour';
 import { useLocation, useParams } from 'react-router-dom';
 import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/tour/steps';
+import { useUpdateProfile } from '@services/profileApi';
 
 export default function AppToolBarMoreButtons({ profileDetails }) {
   const { id } = useParams();
   const location = useLocation();
 
   const { signOut } = useAuthenticator();
-
-  // const dispatch = useDispatch();
-
   const { setIsOpen, setCurrentStep, setSteps } = useTour();
+  const { mutate: updateProfile } = useUpdateProfile();
 
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -56,7 +55,7 @@ export default function AppToolBarMoreButtons({ profileDetails }) {
 
   const handleAppearance = () => {
     const draftData = { ...profileDetails, appearance: !profileDetails.appearance || false };
-    // dispatch(profileActions.updateProfileDetails({ draftData }));
+    updateProfile(draftData);
   };
 
   const DEFAULT_MENU_OPTIONS = [

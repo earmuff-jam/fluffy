@@ -8,13 +8,35 @@ const client = generateClient();
  *
  * retrieves a list of notes
  */
-export const useFetchNotes = () => {
+export const useFetchNotes = (userId) => {
   return useQuery({
     queryKey: ['notes'],
     queryFn: async () => {
-      const response = await client.models.Notes.list();
+      const response = await client.models.Notes.list({
+        filter: {
+          createdNoteIdRef: {
+            eq: userId,
+          },
+        },
+        selectionSet: [
+          'id',
+          'title',
+          'description',
+          'color',
+          'status',
+          'completionDate',
+          'location.*',
+          'createdAt',
+          'createdNoteIdRef',
+          'createdBy.*',
+          'updatedAt',
+          'updatedNoteIdRef',
+          'updatedBy.*',
+        ],
+      });
       return response.data || [];
     },
+    enabled: !!userId,
   });
 };
 

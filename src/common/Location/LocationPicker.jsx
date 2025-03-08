@@ -17,6 +17,7 @@ const LocationPicker = ({
   onLocationChange,
   subtitle,
   height = '15vh',
+  width = '100%',
   disabled = false,
   editMode = false,
 }) => {
@@ -82,7 +83,7 @@ const LocationPicker = ({
     <Stack
       sx={{
         height: { xs: '100%', sm: height },
-        width: { xs: '100%', sm: '100%' },
+        width: { xs: '100%', sm: width },
       }}
     >
       <Typography variant="caption">{subtitle}</Typography>

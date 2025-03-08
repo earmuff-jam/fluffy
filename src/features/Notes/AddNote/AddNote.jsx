@@ -1,18 +1,25 @@
-import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
-import { Button, Stack } from '@mui/material';
+
 import { AddRounded, CheckCircleRounded } from '@mui/icons-material';
+import { Button, Stack } from '@mui/material';
+
 import dayjs from 'dayjs';
-import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
+import { enqueueSnackbar } from 'notistack';
 import ColorPicker from '@common/ColorPicker';
-import CustomDatePicker from '@common/DatePicker/CustomDatePicker';
+
+import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
 import { ADD_NOTES_FORM_FIELDS } from '@features/Notes/constants';
-import AddNoteHeader from '@features/Notes/AddNote/AddNoteHeader';
-import AddNoteStatusOptions from '@features/Notes/AddNote/AddNoteStatusOptions';
+
 import LocationPicker from '@common/Location/LocationPicker';
+import AddNoteHeader from '@features/Notes/AddNote/AddNoteHeader';
+import CustomDatePicker from '@common/DatePicker/CustomDatePicker';
+import AddNoteStatusOptions from '@features/Notes/AddNote/AddNoteStatusOptions';
+
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useCreateNote, useUpdateNote } from '@services/notesApi';
 
 const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
+  const { user } = useAuthenticator();
   const { mutate: createNote } = useCreateNote();
   const { mutate: updateNote } = useUpdateNote();
 
@@ -79,19 +86,25 @@ const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
       return acc;
     }, {});
 
-    const formattedDraftNotes = {
-      ...formattedNotes,
-      color: planColor,
-      status: status,
-      location: location,
-      completionDate: completionDate.toISOString(),
-      // updated_by: userID,
-    };
-
     if (noteID) {
-      updateNote(formattedDraftNotes);
+      updateNote({
+        ...formattedNotes,
+        color: planColor,
+        status: status,
+        location: location,
+        completionDate: completionDate.toISOString(),
+        updatedNoteIdRef: user.userId,
+      });
     } else {
-      createNote(formattedDraftNotes);
+      createNote({
+        ...formattedNotes,
+        color: planColor,
+        status: status,
+        location: location,
+        completionDate: completionDate.toISOString(),
+        createdNoteIdRef: user.userId,
+        updatedNoteIdRef: user.userId,
+      });
     }
 
     setEditMode(false);
