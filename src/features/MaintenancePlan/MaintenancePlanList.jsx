@@ -9,9 +9,11 @@ import {
   useFetchMaintenancePlans,
   useRemoveMaintenancePlan,
 } from '@services/maintenancePlanApi';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const MaintenancePlanList = () => {
-  const { data: maintenancePlans, isLoading } = useFetchMaintenancePlans();
+  const { user } = useAuthenticator();
+  const { data: maintenancePlans, isLoading } = useFetchMaintenancePlans(user.userId);
   const { mutate: removeMaintenancePlan } = useRemoveMaintenancePlan();
   const { mutate: downloadMaintenancePlans } = useDownloadMaintenancePlans();
 
@@ -74,7 +76,7 @@ const MaintenancePlanList = () => {
         setSelectedID={setSelectedMaintenancePlanID}
         removeItem={(id) => removeMaintenancePlan(id)}
         content={filterAndBuildMaintenancePlans(maintenancePlans, selectedFilter)}
-        emptyComponentSubtext='Add maintenance plans'
+        emptyComponentSubtext="Add maintenance plans"
       />
       {displayModal && (
         <SimpleModal

@@ -37,7 +37,7 @@ export default function ItemCard({ data, handleEdit, handleDelete, prefixURI }) 
                 </Stack>
               </CardContent>
               <ItemCardActions
-                updator={item.updator}
+                updator={item?.updatedBy?.emailAddress}
                 updatedAtTimestamp={item.updatedAt}
                 statusName={item.status}
               />

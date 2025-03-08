@@ -40,6 +40,7 @@ export const useCreateProfile = () => {
       }
 
       const draftProfileData = {
+        id: profile.userId,
         username: profile.userId,
         emailAddress: profile.signInDetails.loginId,
         firstName: '',

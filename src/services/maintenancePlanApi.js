@@ -10,13 +10,35 @@ const client = generateClient();
  *
  * returns a list of all the maintenance plans
  */
-export const useFetchMaintenancePlans = () => {
+export const useFetchMaintenancePlans = (userId) => {
   return useQuery({
     queryKey: ['maintenancePlans'],
     queryFn: async () => {
-      const response = await client.models.MaintenancePlans.list();
+      const response = await client.models.MaintenancePlans.list({
+        filter: {
+          createdMaintenancePlanIdRef: {
+            eq: userId,
+          },
+        },
+        selectionSet: [
+          'id',
+          'name',
+          'description',
+          'color',
+          'status',
+          'imageURL',
+          'location.*',
+          'createdAt',
+          'createdMaintenancePlanIdRef',
+          'createdBy.*',
+          'updatedAt',
+          'updatedMaintenancePlanIdRef',
+          'updatedBy.*',
+        ],
+      });
       return response.data || [];
     },
+    enabled: !!userId,
   });
 };
 

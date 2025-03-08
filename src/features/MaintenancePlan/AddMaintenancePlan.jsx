@@ -9,6 +9,7 @@ import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
 import AddFormHeader from '@features/FormComponents/AddFormHeader';
 import { BLANK_MAINTENANCE_PLAN } from '@features/MaintenancePlan/constants';
 import { useCreateMaintenancePlan, useUpdateMaintenancePlan } from '@services/maintenancePlanApi';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const AddMaintenancePlan = ({
   handleClose,
@@ -16,6 +17,7 @@ const AddMaintenancePlan = ({
   selectedMaintenancePlanID,
   setSelectedMaintenancePlanID,
 }) => {
+  const { user } = useAuthenticator();
   const { mutate: createMaintenancePlan } = useCreateMaintenancePlan();
   const { mutate: updateMaintenancePlan } = useUpdateMaintenancePlan();
 
@@ -103,10 +105,10 @@ const AddMaintenancePlan = ({
         color: planColor,
         location: location,
         status: status,
+        updatedMaintenancePlanIdRef: user.userId,
         // type: planType,
         // plan_type: ITEM_TYPE_MAPPER[planType].value,
         // plan_due: ITEM_TYPE_MAPPER[planType].since,
-        // updated_on: dayjs().toISOString(),
       };
       updateMaintenancePlan(draftRequest);
     } else {
@@ -115,10 +117,11 @@ const AddMaintenancePlan = ({
         color: planColor,
         location: location,
         status: status,
+        createdMaintenancePlanIdRef: user.userId,
+        updatedMaintenancePlanIdRef: user.userId,
         // type: planType,
         // plan_type: planType,
         // plan_due: ITEM_TYPE_MAPPER[planType].since,
-        // created_on: dayjs().toISOString(),
       };
       createMaintenancePlan(draftRequest);
     }

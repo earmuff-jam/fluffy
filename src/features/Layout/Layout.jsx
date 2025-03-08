@@ -48,7 +48,7 @@ const Layout = () => {
   }
 
   return (
-    <ThemeProvider theme={profileDetails.appearance ? darkTheme : lightTheme}>
+    <ThemeProvider theme={profileDetails?.appearance ? darkTheme : lightTheme}>
       <CssBaseline />
       <Suspense
         fallback={

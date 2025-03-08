@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { useParams } from 'react-router-dom';
+
 import SimpleModal from '@common/SimpleModal';
 import { Skeleton, Stack } from '@mui/material';
 import { AddRounded } from '@mui/icons-material';
+
 import { ConfirmationBoxModal } from '@common/utils';
-import ItemHeader from '@common/ItemCard/ItemHeader/ItemHeader';
 import AddItem from '@common/ItemCard/AddItem/AddItem';
+import ItemHeader from '@common/ItemCard/ItemHeader/ItemHeader';
 import ItemContent from '@common/ItemCard/ItemContent/ItemContent';
 import ItemGraphWrapper from '@common/ItemCard/ItemGraph/ItemGraphWrapper';
+
 import {
   useCreateAssociationForItemsWithMaintenancePlan,
   useFetchAssetsAssociatedWithMaintenancePlanById,
@@ -81,14 +84,17 @@ export default function MaintenancePlanItemDetails() {
       <ItemContent
         selectedIDList={selectedIDList}
         setSelectedIDList={setSelectedIDList}
-        items={itemsInMaintenancePlan}
+        items={itemsInMaintenancePlan.map((v) => v.assetId)}
         handleOpenModal={handleOpenModal}
         handleRemoveAssociation={() => setOpenConfirmationBoxModal(!openConfirmationBoxModal)}
         tableDataTour="selected-plan-6"
         primaryBtnDataTour="selected-plan-4"
         secondaryBtnDataTour="selected-plan-5"
       />
-      <ItemGraphWrapper associatedAssets={itemsInMaintenancePlan} graphDataTour="selected-plan-7" />
+      <ItemGraphWrapper
+        associatedAssets={itemsInMaintenancePlan.map((v) => v.assetId)}
+        graphDataTour="selected-plan-7"
+      />
       {displayModal && (
         <SimpleModal
           title={`Add items to ${selectedMaintenancePlan?.name}`}
@@ -103,7 +109,7 @@ export default function MaintenancePlanItemDetails() {
             selectedIDList={selectedIDList}
             setSelectedIDList={setSelectedIDList}
             resetSelection={resetSelection}
-            associatedItems={itemsInMaintenancePlan}
+            associatedItems={itemsInMaintenancePlan.map((v) => v.assetId)}
           />
         </SimpleModal>
       )}
