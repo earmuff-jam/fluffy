@@ -70,6 +70,112 @@ export const useFetchUserProfileStats = (userId) => {
 };
 
 /**
+ * useFetchUserRecentActivities ...
+ *
+ * retrieves the activities of the selected user. limited to 10 items
+ * but can be configured to not have any limit
+ */
+export const useFetchUserRecentActivities = (userId, limitData = false) => {
+  return useQuery({
+    queryKey: ['recentActivity'],
+    queryFn: async () => {
+      if (!userId) return null;
+
+      let recentActivityList = {
+        categories: [],
+        maintenancePlans: [],
+        assets: [],
+      };
+
+      const { data: categories } = await client.models.Categories.list({
+        filter: {
+          createdCategoryIdRef: {
+            eq: userId,
+          },
+        },
+        selectionSet: [
+          'id',
+          'name',
+          'description',
+          'color',
+          'status',
+          'imageURL',
+          'location.*',
+          'createdAt',
+          'createdCategoryIdRef',
+          'createdBy.*',
+          'updatedAt',
+          'updatedCategoryIdRef',
+          'updatedBy.*',
+        ],
+        limit: limitData ? 10 : null,
+      });
+
+      recentActivityList.categories = categories || [];
+
+      const { data: maintenancePlans } = await client.models.MaintenancePlans.list({
+        filter: { createdMaintenancePlanIdRef: { eq: userId } },
+        selectionSet: [
+          'id',
+          'name',
+          'description',
+          'color',
+          'status',
+          'imageURL',
+          'location.*',
+          'createdAt',
+          'createdMaintenancePlanIdRef',
+          'createdBy.*',
+          'updatedAt',
+          'updatedMaintenancePlanIdRef',
+          'updatedBy.*',
+        ],
+        limit: limitData ? 10 : null,
+      });
+
+      recentActivityList.maintenancePlans = maintenancePlans || [];
+
+      const { data: assets } = await client.models.Assets.list({
+        filter: { createdAssetIdRef: { eq: userId } },
+        selectionSet: [
+          'id',
+          'name',
+          'description',
+          'price',
+          'status',
+          'barcode',
+          'sku',
+          'color',
+          'imageURL',
+          'quantity',
+          'boughtAt',
+          'isBookmarked',
+          'isReturnable',
+          'returnLocation',
+          'returnDatetime',
+          'returnNotes',
+          'maxWeight',
+          'minWeight',
+          'maxHeight',
+          'minHeight',
+          'createdAt',
+          'createdBy.*',
+          'updatedAt',
+          'updatedBy.*',
+          'storageLocationId.*',
+        ],
+        limit: limitData ? 10 : null,
+      });
+
+      recentActivityList.assets = assets || [];
+
+      return recentActivityList;
+    },
+    enabled: !!userId,
+  });
+};
+
+/**
  * useCreateProfile ...
  *
  * creates a new user profile, if it does not exist.

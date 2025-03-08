@@ -1,41 +1,56 @@
-import { useEffect } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
+import { Accordion, Skeleton } from '@mui/material';
 
 import { EmptyComponent } from '@common/utils';
-import { Accordion, Skeleton } from '@mui/material';
-import { profileActions } from '@features/Profile/profileSlice';
-import { RECENT_ACTIVITY_TYPE_MAPPER } from '@features/RecentActivities/constants';
+
 import RecentActivityAccordionSummary from '@features/RecentActivities/RecentActivityAccordion/RecentActivityAccordionSummary';
 import RecentActivityAccordionDetails from '@features/RecentActivities/RecentActivityAccordion/RecentActivityAccordionDetails';
 
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useFetchUserRecentActivities } from '@services/profileApi';
+
 const RecentActivityAccordion = () => {
-  const dispatch = useDispatch();
-  const { recentActivities = [], loading } = useSelector((state) => state.profile);
+  const { user } = useAuthenticator();
+  const { data: recentActivities = {}, isLoading } = useFetchUserRecentActivities(user.userId, true);
 
-  useEffect(() => {
-    if (!loading && recentActivities?.length === 0) {
-      dispatch(profileActions.getRecentActivities());
-    }
-  }, [loading, recentActivities?.length]);
+  console.log(recentActivities);
 
-  if (loading) {
+  if (isLoading) {
     return <Skeleton height="20rem" />;
   }
-  if (recentActivities == null || recentActivities?.length <= 0) {
+  if (recentActivities == null) {
     return <EmptyComponent subtitle="Add assets to view details about them" />;
   }
 
   return (
     <>
-      {recentActivities.map((activity, index) => (
+      {recentActivities.categories.map((activity, index) => (
         <Accordion key={index} elevation={0} disableGutters>
           <RecentActivityAccordionSummary
-            title={activity.title}
-            label={activity.custom_action}
-            prefix={RECENT_ACTIVITY_TYPE_MAPPER[activity.type].display}
+            title={activity.name}
+            label={activity.status}
+            prefix={'Category Item'}
           />
-          <RecentActivityAccordionDetails index={index} activity={activity} />
+          <RecentActivityAccordionDetails index={index} activity={activity} prefix={'Category Item'}/>
+        </Accordion>
+      ))}
+      {recentActivities.maintenancePlans.map((activity, index) => (
+        <Accordion key={index} elevation={0} disableGutters>
+          <RecentActivityAccordionSummary
+            title={activity.name}
+            label={activity.status}
+            prefix={'Maintenance Plan Item'}
+          />
+          <RecentActivityAccordionDetails index={index} activity={activity} prefix={'Maintenance Plan Item'}/>
+        </Accordion>
+      ))}
+      {recentActivities.assets.map((activity, index) => (
+        <Accordion key={index} elevation={0} disableGutters>
+          <RecentActivityAccordionSummary
+            title={activity?.name || ''}
+            label={activity?.status || ''}
+            prefix={'Asset'}
+          />
+          <RecentActivityAccordionDetails index={index} activity={activity} prefix={'Asset'}/>
         </Accordion>
       ))}
     </>

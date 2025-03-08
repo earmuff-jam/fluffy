@@ -65,7 +65,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'recent/activities',
-        // element: <RecentActivityList />,
+        element: <RecentActivityList />,
       },
     ],
   },
