@@ -1,3 +1,4 @@
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { generateClient } from 'aws-amplify/data';
 import dayjs from 'dayjs';
@@ -117,6 +118,7 @@ export const useCreateAsset = () => {
  *
  */
 export const useCreateAssetsInBulk = () => {
+  const { user } = useAuthenticator();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -156,7 +158,9 @@ export const useCreateAssetsInBulk = () => {
                 location,
                 storageLocationPoint: { lat: 0, lon: 0 },
                 createdAt: dayjs().toISOString(),
+                createdAssetIdRef: user.userId,
                 updatedAt: dayjs().toISOString(),
+                updatedAssetIdRef: user.userId,
               });
 
               if (errors) {
@@ -182,6 +186,10 @@ export const useCreateAssetsInBulk = () => {
           const assetData = {
             ...asset,
             storageLocationIdRef,
+            createdAt: dayjs().toISOString(),
+            createdAssetIdRef: user.userId,
+            updatedAt: dayjs().toISOString(),
+            updatedAssetIdRef: user.userId,
           };
           delete assetData.storageLocation;
 

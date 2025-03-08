@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
-
-import { Divider, Stack, Typography } from '@mui/material';
+import { Divider, Skeleton, Stack, Typography } from '@mui/material';
 
 import UserStats from '@features/Profile/UserStats/UserStats';
 
-export default function UserStatus({ profileStats = {}, onlySmallScreen }) {
-
+export default function UserStatus({ profileStats = {}, onlySmallScreen, isProfileStatsLoading = true }) {
   const DRAFT_PROFILE_STATS = [
     {
       id: 1,
@@ -32,10 +29,6 @@ export default function UserStatus({ profileStats = {}, onlySmallScreen }) {
 
   const total = DRAFT_PROFILE_STATS.map(({ value }) => value).reduce((acc, el) => acc + el, 0);
 
-  useEffect(() => {
-    // dispatch(profileActions.getProfileStats());
-  }, []);
-
   return (
     <>
       <Typography variant="h5" color="text.secondary">
@@ -57,7 +50,11 @@ export default function UserStatus({ profileStats = {}, onlySmallScreen }) {
             <Typography variant="h5" color="text.secondary">
               {v.value}
             </Typography>
-            <UserStats label={v.label} value={v.value} color={v.color} total={total} />
+            {isProfileStatsLoading ? (
+              <Skeleton width="2rem" height="2rem" />
+            ) : (
+              <UserStats label={v.label} value={v.value} color={v.color} total={total} />
+            )}
           </Stack>
         ))}
       </Stack>

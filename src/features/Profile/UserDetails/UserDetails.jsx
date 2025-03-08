@@ -24,7 +24,7 @@ export default function UserDetails({ data = {} }) {
       </Typography>
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }} />
       <Typography variant="caption" color="text.secondary">
-        {data.about_me || BIO_PLACEHOLDER}
+        {data?.aboutMe || BIO_PLACEHOLDER}
       </Typography>
       <Box sx={{ flexGrow: 1 }} />
       <Stack spacing={1} data-tour="profile-4">
@@ -35,15 +35,15 @@ export default function UserDetails({ data = {} }) {
           </Typography>
         </Stack>
         <Stack direction={'row'} alignItems={'center'} spacing={1}>
-          {data?.grid_view ? <GridViewRounded color="primary" /> : <ViewListRounded color="primary" />}
+          {data?.isGridView ? <GridViewRounded color="primary" /> : <ViewListRounded color="primary" />}
           <Typography variant="subtitle2" color="text.secondary">
-            {data?.grid_view ? 'Viewing Assets as Grid' : 'Viewing Assets as List'}
+            {data?.isGridView ? 'Viewing Assets as Grid' : 'Viewing Assets as List'}
           </Typography>
         </Stack>
         <Stack direction={'row'} alignItems={'center'} spacing={1}>
           <UpdateRounded color="primary" />
           <Typography variant="subtitle2" color="text.secondary">
-            Last updated at : {dayjs(data.updated_at).fromNow()}
+            Last updated at : {dayjs(data?.updatedAt).fromNow()}
           </Typography>
         </Stack>
       </Stack>

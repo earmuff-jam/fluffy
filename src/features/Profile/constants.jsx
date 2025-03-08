@@ -21,27 +21,42 @@ export const BLANK_PROFILE_DETAILS = {
     validators: [
       {
         validate: (value) => value.trim().length <= 3,
-        message: 'Username is required and must be more than characters',
+        message: 'Username is required and must be more than three characters',
       },
     ],
   },
-  full_name: {
-    id: 'full_name',
+  firstName: {
+    id: 'firstName',
     value: '',
     errorMsg: '',
     validators: [
       {
         validate: (value) => value.trim().length <= 0,
-        message: 'Full Name is required',
+        message: 'First Name is required',
       },
       {
         validate: (value) => value.trim().length >= 150,
-        message: 'Full name should be less than 150 characters',
+        message: 'First name should be less than 150 characters',
       },
     ],
   },
-  email_address: {
-    id: 'email_address',
+  lastName: {
+    id: 'lastName',
+    value: '',
+    errorMsg: '',
+    validators: [
+      {
+        validate: (value) => value.trim().length <= 0,
+        message: 'Last Name is required',
+      },
+      {
+        validate: (value) => value.trim().length >= 150,
+        message: 'Last name should be less than 150 characters',
+      },
+    ],
+  },
+  emailAddress: {
+    id: 'emailAddress',
     value: '',
     errorMsg: '',
     validators: [
@@ -55,8 +70,8 @@ export const BLANK_PROFILE_DETAILS = {
       },
     ],
   },
-  phone_number: {
-    id: 'phone_number',
+  phoneNumber: {
+    id: 'phoneNumber',
     value: '',
     errorMsg: '',
     validators: [
@@ -70,8 +85,8 @@ export const BLANK_PROFILE_DETAILS = {
       },
     ],
   },
-  about_me: {
-    id: 'about_me',
+  aboutMe: {
+    id: 'aboutMe',
     value: '',
     errorMsg: '',
     validators: [

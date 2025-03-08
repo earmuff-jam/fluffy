@@ -9,8 +9,10 @@ import AddAssetActionButtons from '@features/Assets/AddAssetFormDetails/AddAsset
 import AddAssetFormInstructions from '@features/Assets/AddAssetFormDetails/AddAssetFormInstructions';
 import { useCreateAsset } from '@services/assetsApi';
 import { useFetchStorageLocations } from '@services/storageLocationApi';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 export default function AddAssetDetails({ handleClose }) {
+  const { user } = useAuthenticator();
   const { mutate: createAsset } = useCreateAsset();
   const { data: options = [], isLoading } = useFetchStorageLocations();
 
@@ -95,12 +97,19 @@ export default function AddAssetDetails({ handleClose }) {
       storageLocationIdRef: storageLocationID,
       returnDatetime: returnDateTime !== null ? returnDateTime.toISOString() : null,
       createdAt: dayjs().toISOString(),
+      createdAssetIdRef: user.id,
+      updatedAt: dayjs().toISOString(),
+      updatedAssetIdRef: user.id,
     };
+
     createAsset(draftRequest);
+
     setFormData({ ...ADD_ASSET_FORM });
+
     enqueueSnackbar('Added new asset.', {
       variant: 'success',
     });
+
     handleClose();
   };
 

@@ -1,19 +1,69 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { generateClient } from 'aws-amplify/data';
+import dayjs from 'dayjs';
 
 const client = generateClient();
 
+/**
+ * useFetchUserProfileDetails ...
+ *
+ * retrieves the profile details with the valid userId
+ */
 export const useFetchUserProfileDetails = (userId) => {
   return useQuery({
-    queryKey: ['profile', userId],
+    queryKey: ['profile'],
     queryFn: async () => {
       if (!userId) return null;
 
       const { data } = await client.models.Profiles.list({
-        filter: { username: { eq: userId } },
+        filter: { id: { eq: userId } },
       });
 
       return data?.length > 0 ? data[0] : null;
+    },
+    enabled: !!userId,
+  });
+};
+
+/**
+ * useFetchUserProfileStats ...
+ *
+ * retrieves the profile details with the valid userId
+ */
+export const useFetchUserProfileStats = (userId) => {
+  return useQuery({
+    queryKey: ['profileStats'],
+    queryFn: async () => {
+      if (!userId) return null;
+
+      let totalStats = {
+        totalCategories: 0,
+        totalMaintenancePlans: 0,
+        totalAssets: 0,
+      };
+
+      const { data: categories } = await client.models.Categories.list({
+        filter: { createdCategoryIdRef: { eq: userId } },
+        selectionSet: ['id'],
+      });
+
+      totalStats.totalCategories = categories.length || 0;
+
+      const { data: maintenancePlans } = await client.models.MaintenancePlans.list({
+        filter: { createdMaintenancePlanIdRef: { eq: userId } },
+        selectionSet: ['id'],
+      });
+
+      totalStats.totalMaintenancePlans = maintenancePlans.length || 0;
+
+      const { data: assets } = await client.models.Assets.list({
+        filter: { createdAssetIdRef: { eq: userId } },
+        selectionSet: ['id'],
+      });
+
+      totalStats.totalAssets = assets.length || 0;
+
+      return totalStats;
     },
     enabled: !!userId,
   });
@@ -32,7 +82,7 @@ export const useCreateProfile = () => {
       if (!profile) throw new Error('Profile details are required for creation.');
 
       const { data } = await client.models.Profiles.list({
-        filter: { username: { eq: profile.userId } },
+        filter: { id: { eq: profile.userId } },
       });
 
       if (data?.length > 0) {
@@ -45,7 +95,6 @@ export const useCreateProfile = () => {
         emailAddress: profile.signInDetails.loginId,
         firstName: '',
         lastName: '',
-        avatar_url: '',
         phoneNumber: '',
         aboutMe: '',
         imageURL: '',
@@ -53,6 +102,8 @@ export const useCreateProfile = () => {
         isGridView: false, // true to view assets in grid view mode
         onlineStatus: true, // always true
         lastOnlineLocationPoint: { lat: 0, lon: 0 },
+        createdAt: dayjs().toISOString(),
+        updatedAt: dayjs().toISOString(),
       };
 
       const { data: profileData, errors } = await client.models.Profiles.create(draftProfileData);
@@ -63,8 +114,31 @@ export const useCreateProfile = () => {
 
       return profileData;
     },
-    onSuccess: (createdProfile) => {
-      queryClient.invalidateQueries({ queryKey: ['profile', createdProfile.id] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    },
+  });
+};
+
+/**
+ * useUpdateProfile ...
+ *
+ * updates the profile with passed in params
+ */
+export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (profile) => {
+      if (!profile) throw new Error('Profile details are required for update');
+      const { data, errors } = await client.models.Profiles.update(profile);
+
+      if (errors) throw new Error(errors);
+
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
     },
   });
 };

@@ -8,19 +8,19 @@ import SimpleModal from '@common/SimpleModal';
 import UserStatus from '@features/Profile/UserStatus/UserStatus';
 import ProfileForm from '@features/Profile/ProfileForm/ProfileForm';
 
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import UserDetails from '@features/Profile/UserDetails/UserDetails';
 import UserDemographics from '@features/Profile/UserDemographics/UserDemographics';
 import AppearanceSettings from '@features/Profile/AppearanceSettings/AppearanceSettings';
+import { useFetchUserProfileDetails, useFetchUserProfileStats } from '@services/profileApi';
 
 const ProfilePage = () => {
   const theme = useTheme();
+  const { user } = useAuthenticator();
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const data = {};
-  const profileStats = {};
-  const loading = false;
-
-  // const { profileDetails: data = {}, profileStats = {}, loading } = useSelector((state) => state.profile);
+  const { data, isLoading } = useFetchUserProfileDetails(user.userId);
+  const { data: profileStats, isLoading: isProfileStatsLoading } = useFetchUserProfileStats(user.userId);
 
   const [editMode, setEditMode] = useState(false);
 
@@ -31,10 +31,10 @@ const ProfilePage = () => {
         <UserDetails data={data} />
       </Stack>
       <Paper sx={{ padding: '1rem' }} data-tour="profile-5">
-        <UserStatus profileStats={profileStats} onlySmallScreen={onlySmallScreen} />
+        <UserStatus profileStats={profileStats} onlySmallScreen={onlySmallScreen} isProfileStatsLoading={isProfileStatsLoading}/>
       </Paper>
       <Paper sx={{ padding: '1rem' }} data-tour="profile-6">
-        <AppearanceSettings loading={loading} profileDetails={data} />
+        <AppearanceSettings loading={isLoading} profileDetails={data} />
       </Paper>
       {editMode && (
         <SimpleModal
@@ -44,7 +44,7 @@ const ProfilePage = () => {
           title="Edit profile details"
           subtitle="Edit general details about yourself so others can notice you."
         >
-          <ProfileForm />
+          <ProfileForm handleClose={() => setEditMode(false)} />
         </SimpleModal>
       )}
     </Stack>

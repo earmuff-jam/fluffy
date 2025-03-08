@@ -1,14 +1,14 @@
-import { Avatar, Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material';
-import { EditRounded } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { profileActions } from '@features/Profile/profileSlice';
+
+import { EditRounded } from '@mui/icons-material';
+import { Avatar, Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material';
+
+import { validate } from 'uuid';
+
 import ImagePicker from '@common/ImagePicker/ImagePicker';
 import UserDemographicsRow from '@features/Profile/UserDemographics/UserDemographicsRow';
 
 export default function UserDemographics({ data = {}, handleEditMode }) {
-  // const dispatch = useDispatch();
-
   const avatar = {};
   const isAvatarLoading = false;
 
@@ -46,11 +46,12 @@ export default function UserDemographics({ data = {}, handleEditMode }) {
             <EditRounded fontSize="small" color="primary" />
           </IconButton>
           <Typography variant="h5" color="text.secondary">
-            {data.full_name}
+            {data?.firstName}
+            {data?.lastName}
           </Typography>
         </Stack>
         <Typography variant="subtitle2" color="text.secondary">
-          {data.email_address}
+          {data?.emailAddress}
         </Typography>
       </Stack>
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }} />
@@ -61,7 +62,8 @@ export default function UserDemographics({ data = {}, handleEditMode }) {
           </Typography>
           <Box flexGrow={1} />
           <Typography variant="subtitle2" color="text.secondary">
-            {data.username}
+            {/* don't display valid uuid */}
+            {validate(data.username) ? '' : data.username}
           </Typography>
         </UserDemographicsRow>
         <UserDemographicsRow>
@@ -70,7 +72,7 @@ export default function UserDemographics({ data = {}, handleEditMode }) {
           </Typography>
           <Box flexGrow={1} />
           <Typography variant="subtitle2" color="text.secondary">
-            {data.email_address}
+            {data.emailAddress}
           </Typography>
         </UserDemographicsRow>
         <UserDemographicsRow>
@@ -79,7 +81,7 @@ export default function UserDemographics({ data = {}, handleEditMode }) {
           </Typography>
           <Box flexGrow={1} />
           <Typography variant="subtitle2" color="text.secondary">
-            {data.phone_number}
+            {data.phoneNumber}
           </Typography>
         </UserDemographicsRow>
       </Stack>

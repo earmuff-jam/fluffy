@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Button, Checkbox, Divider, FormControlLabel, Skeleton, Stack, Typography } from '@mui/material';
-
 import { DarkModeRounded, GridViewRounded } from '@mui/icons-material';
+import { Box, Button, Checkbox, Divider, FormControlLabel, Skeleton, Stack, Typography } from '@mui/material';
 
 import dayjs from 'dayjs';
 import { enqueueSnackbar } from 'notistack';
+import { useUpdateProfile } from '@services/profileApi';
 
 const AppearanceSettings = ({ loading, profileDetails = {} }) => {
+  const { mutate: updateProfile } = useUpdateProfile();
   const [displayMode, setDisplayMode] = useState(false);
   const [inventoryLayout, setInventoryLayout] = useState(false); // false is list view
 
@@ -15,10 +16,10 @@ const AppearanceSettings = ({ loading, profileDetails = {} }) => {
     const draftData = {
       ...profileDetails,
       appearance: displayMode,
-      grid_view: inventoryLayout,
-      updated_at: dayjs().toISOString(),
+      isGridView: inventoryLayout,
+      updatedAt: dayjs().toISOString(),
     };
-    // dispatch(profileActions.updateProfileDetails({ draftData }));
+    updateProfile(draftData);
     enqueueSnackbar('Successfully updated profile details.', {
       variant: 'success',
     });
@@ -27,13 +28,10 @@ const AppearanceSettings = ({ loading, profileDetails = {} }) => {
   useEffect(() => {
     if (!loading) {
       setDisplayMode(profileDetails.appearance ?? false);
-      setInventoryLayout(profileDetails.grid_view ?? false);
+      setInventoryLayout(profileDetails.isGridView ?? false);
     }
   }, [loading]);
 
-  if (loading) {
-    return <Skeleton height="10rem" />;
-  }
   return (
     <>
       <Box sx={{ pb: 2 }}>
@@ -45,38 +43,46 @@ const AppearanceSettings = ({ loading, profileDetails = {} }) => {
         </Typography>
         <Divider />
       </Box>
-      <Stack spacing={2}>
-        <FormControlLabel
-          control={<Checkbox checked={displayMode} onChange={() => setDisplayMode(!displayMode)} color="primary" />}
-          label={
-            <Stack>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <DarkModeRounded color={displayMode ? 'primary' : 'secondary'} />
-                <Typography variant="caption">Enable dark mode</Typography>
+      {loading ? (
+        <Skeleton height="5rem" />
+      ) : (
+        <Stack spacing={2}>
+          <FormControlLabel
+            control={<Checkbox checked={displayMode} onChange={() => setDisplayMode(!displayMode)} color="primary" />}
+            label={
+              <Stack>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <DarkModeRounded color={displayMode ? 'primary' : 'secondary'} />
+                  <Typography variant="caption">Enable dark mode</Typography>
+                </Stack>
+                <Typography variant="caption" gutterBottom>
+                  Switch to dark mode.
+                </Typography>
               </Stack>
-              <Typography variant="caption" gutterBottom>
-                Switch to dark mode.
-              </Typography>
-            </Stack>
-          }
-        />
-        <FormControlLabel
-          control={
-            <Checkbox checked={inventoryLayout} onChange={() => setInventoryLayout(!inventoryLayout)} color="primary" />
-          }
-          label={
-            <Stack>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <GridViewRounded color="primary" />
-                <Typography variant="caption">Enable grid mode for assets</Typography>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={inventoryLayout}
+                onChange={() => setInventoryLayout(!inventoryLayout)}
+                color="primary"
+              />
+            }
+            label={
+              <Stack>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <GridViewRounded color="primary" />
+                  <Typography variant="caption">Enable grid mode for assets</Typography>
+                </Stack>
+                <Typography variant="caption" gutterBottom>
+                  Switch between list view and grid view for viewing assets.
+                </Typography>
               </Stack>
-              <Typography variant="caption" gutterBottom>
-                Switch between list view and grid view for viewing assets.
-              </Typography>
-            </Stack>
-          }
-        />
-      </Stack>
+            }
+          />
+        </Stack>
+      )}
 
       <Box sx={{ textAlign: 'center', mt: 3 }}>
         <Button variant="outlined" color="primary" onClick={handleSubmit}>

@@ -1,39 +1,47 @@
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+
 import { Box, Button, Stack, Typography } from '@mui/material';
 
+import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { profileActions } from '@features/Profile/profileSlice';
+import { validate } from 'uuid';
+import { useAuthenticator } from '@aws-amplify/ui-react';
+
 import { BLANK_PROFILE_DETAILS } from '@features/Profile/constants';
 import TextFieldWithLabel from '@common/TextFieldWithLabel/TextFieldWithLabel';
+import { useFetchUserProfileDetails, useUpdateProfile } from '@services/profileApi';
 
 dayjs.extend(relativeTime);
 
-const ProfileForm = () => {
-  const dispatch = useDispatch();
-  const { loading, profileDetails: data = {} } = useSelector((state) => state.profile);
+const ProfileForm = ({ handleClose }) => {
+  const { user } = useAuthenticator();
+  const { data, isLoading } = useFetchUserProfileDetails(user.userId);
+  const { mutate: updateProfile } = useUpdateProfile();
 
   const [formData, setFormData] = useState(BLANK_PROFILE_DETAILS);
 
   const submit = (ev) => {
     ev.preventDefault();
     const draftData = Object.entries(formData).reduce((acc, [key, valueObj]) => {
-      if (['created_on', 'updated_on'].includes(key)) {
+      if (['updatedAt'].includes(key)) {
         acc[key] = valueObj;
       } else {
         acc[key] = valueObj.value;
       }
       return acc;
     }, {});
-    draftData['updated_on'] = dayjs();
-    dispatch(profileActions.updateProfileDetails({ draftData }));
+
+    draftData.id = data.id;
+    console.log(draftData);
+    updateProfile(draftData);
+    handleClose();
   };
 
   const handleChange = (ev) => {
     const { id, value } = ev.target;
     const updatedFormData = { ...formData };
+
     let errorMsg = '';
     for (const validator of updatedFormData[id].validators) {
       if (validator.validate(value)) {
@@ -41,27 +49,35 @@ const ProfileForm = () => {
         break;
       }
     }
+
     updatedFormData[id] = {
       ...updatedFormData[id],
       value,
       errorMsg,
     };
+
     setFormData(updatedFormData);
   };
 
   useEffect(() => {
-    if (!loading) {
+    if (!isLoading) {
       const draftProfileDetails = { ...BLANK_PROFILE_DETAILS };
-      draftProfileDetails.username.value = data.username;
-      draftProfileDetails.full_name.value = data.full_name;
-      draftProfileDetails.email_address.value = data.email_address;
-      draftProfileDetails.phone_number.value = data.phone_number;
-      draftProfileDetails.about_me.value = data.about_me;
-      draftProfileDetails.created_on = data.created_on;
-      draftProfileDetails.updated_on = data.updated_at;
+
+      if (!validate(data.username)) {
+        // don't populate username if uuid
+        draftProfileDetails.username.value = data.username;
+      }
+
+      draftProfileDetails.firstName.value = data.firstName;
+      draftProfileDetails.lastName.value = data.lastName;
+      draftProfileDetails.emailAddress.value = data.emailAddress;
+      draftProfileDetails.phoneNumber.value = data.phoneNumber;
+      draftProfileDetails.aboutMe.value = data.aboutMe;
+      draftProfileDetails.updatedAt = data.updatedAt;
+
       setFormData(draftProfileDetails);
     }
-  }, [loading]);
+  }, [isLoading]);
 
   return (
     <Stack spacing={0.8}>
@@ -80,59 +96,69 @@ const ProfileForm = () => {
       />
       <TextFieldWithLabel
         label={'First name'}
-        id={'full_name'}
-        name={'full_name'}
-        placeholder={'Enter your full name'}
-        value={formData?.full_name?.value || ''}
+        id={'firstName'}
+        name={'firstName'}
+        placeholder={'Enter your first name'}
+        value={formData?.firstName?.value || ''}
         handleChange={handleChange}
         variant={'outlined'}
         size="small"
-        error={Boolean(formData.full_name['errorMsg'].length)}
-        helperText={formData.full_name['errorMsg']}
+        error={Boolean(formData.firstName['errorMsg'].length)}
+        helperText={formData.firstName['errorMsg']}
+      />
+      <TextFieldWithLabel
+        label={'Last name'}
+        id={'lastName'}
+        name={'lastName'}
+        placeholder={'Enter your last name'}
+        value={formData?.lastName?.value || ''}
+        handleChange={handleChange}
+        variant={'outlined'}
+        size="small"
+        error={Boolean(formData.lastName['errorMsg'].length)}
+        helperText={formData.lastName['errorMsg']}
       />
       <TextFieldWithLabel
         label={'Email address'}
-        id="email_address"
-        name="email_address"
+        id="emailAddress"
+        name="emailAddress"
         placeholder="Enter your unique email address"
-        value={formData?.email_address.value || ''}
-        onChange={handleChange}
+        value={formData?.emailAddress.value || ''}
+        handleChange={handleChange}
         variant="outlined"
         size="small"
-        error={Boolean(formData.email_address['errorMsg'].length)}
-        helperText={formData.email_address['errorMsg']}
+        error={Boolean(formData.emailAddress['errorMsg'].length)}
+        helperText={formData.emailAddress['errorMsg']}
       />
       <TextFieldWithLabel
         label={'Phone number'}
-        id="phone_number"
-        name="phone_number"
+        id="phoneNumber"
+        name="phoneNumber"
         placeholder="Enter your phone number"
-        value={formData?.phone_number.value || ''}
-        onChange={handleChange}
+        value={formData?.phoneNumber.value || ''}
+        handleChange={handleChange}
         variant="outlined"
         size="small"
-        error={Boolean(formData.phone_number['errorMsg'].length)}
-        helperText={formData.phone_number['errorMsg']}
+        error={Boolean(formData.phoneNumber['errorMsg'].length)}
+        helperText={formData.phoneNumber['errorMsg']}
       />
       <TextFieldWithLabel
         label={'About me'}
-        id="about_me"
-        name="about_me"
+        id="aboutMe"
+        name="aboutMe"
         placeholder="Allow yourself to express your unique values with a short bio."
-        value={formData?.about_me?.value || ''}
-        onChange={handleChange}
+        value={formData?.aboutMe?.value || ''}
+        handleChange={handleChange}
         variant="outlined"
         multiline={true}
         rows={4}
         size="small"
-        error={Boolean(formData.about_me['errorMsg'].length)}
-        helperText={formData.about_me['errorMsg']}
+        error={Boolean(formData.aboutMe['errorMsg'].length)}
+        helperText={formData.aboutMe['errorMsg']}
       />
 
       <Typography variant="caption" color="text.secondary">
-        {formData?.updated_on === null
-          ? `Created ${dayjs(formData?.created_on).fromNow()}`
-          : `Last updated ${dayjs(formData?.updated_on).fromNow()}`}
+        Last updated {dayjs(formData?.updatedAt).fromNow()}
       </Typography>
       <Box sx={{ textAlign: 'center', mt: 3 }}>
         <Button
