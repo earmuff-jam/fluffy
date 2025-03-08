@@ -1,3 +1,4 @@
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import { BookmarkRounded } from '@mui/icons-material';
 import {
   Autocomplete,
@@ -22,7 +23,7 @@ export default function AddAssetFormDetails({
   handleInputChange,
   handleCheckbox,
 }) {
-
+  const { user } = useAuthenticator();
   const { mutate: createStorageLocation } = useCreateStorageLocation();
 
   const createNewStorageLocation = (value) => {
@@ -30,13 +31,15 @@ export default function AddAssetFormDetails({
       location: value,
       storageLocationPoint: {
         lat: 0,
-        lon: 0
+        lon: 0,
       },
       createdAt: dayjs().toISOString(),
+      createdLocationIdRef: user.userId,
       updatedAt: dayjs().toISOString(),
-    }
+      updatedLocationIdRef: user.userId,
+    };
     createStorageLocation(draftRequest);
-  }
+  };
 
   return (
     <Box component="form" sx={{ maxWidth: 600, width: '100%' }}>

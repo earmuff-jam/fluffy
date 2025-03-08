@@ -62,8 +62,7 @@ export default function UserDemographics({ data = {}, handleEditMode }) {
           </Typography>
           <Box flexGrow={1} />
           <Typography variant="subtitle2" color="text.secondary">
-            {/* don't display valid uuid */}
-            {validate(data.username) ? '' : data.username}
+            {data.username}
           </Typography>
         </UserDemographicsRow>
         <UserDemographicsRow>

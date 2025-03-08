@@ -158,9 +158,9 @@ export const useCreateAssetsInBulk = () => {
                 location,
                 storageLocationPoint: { lat: 0, lon: 0 },
                 createdAt: dayjs().toISOString(),
-                createdAssetIdRef: user.userId,
+                createdLocationIdRef: user.userId,
                 updatedAt: dayjs().toISOString(),
-                updatedAssetIdRef: user.userId,
+                updatedLocationIdRef: user.userId,
               });
 
               if (errors) {

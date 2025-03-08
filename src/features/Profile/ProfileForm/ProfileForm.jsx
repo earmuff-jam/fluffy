@@ -5,7 +5,6 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 
-import { validate } from 'uuid';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 import { BLANK_PROFILE_DETAILS } from '@features/Profile/constants';
@@ -33,7 +32,6 @@ const ProfileForm = ({ handleClose }) => {
     }, {});
 
     draftData.id = data.id;
-    console.log(draftData);
     updateProfile(draftData);
     handleClose();
   };
@@ -63,11 +61,7 @@ const ProfileForm = ({ handleClose }) => {
     if (!isLoading) {
       const draftProfileDetails = { ...BLANK_PROFILE_DETAILS };
 
-      if (!validate(data.username)) {
-        // don't populate username if uuid
-        draftProfileDetails.username.value = data.username;
-      }
-
+      draftProfileDetails.username.value = data.username;
       draftProfileDetails.firstName.value = data.firstName;
       draftProfileDetails.lastName.value = data.lastName;
       draftProfileDetails.emailAddress.value = data.emailAddress;

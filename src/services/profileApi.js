@@ -91,7 +91,7 @@ export const useCreateProfile = () => {
 
       const draftProfileData = {
         id: profile.userId,
-        username: profile.userId,
+        username: '',
         emailAddress: profile.signInDetails.loginId,
         firstName: '',
         lastName: '',
