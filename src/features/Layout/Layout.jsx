@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import { Outlet } from 'react-router-dom';
 
@@ -18,13 +18,12 @@ import { darkTheme, lightTheme } from '@utils/Theme';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import AppToolbar from '@features/Layout/AppToolbar/AppToolbar';
 import MenuActionBar from '@features/Layout/MenuActionBar/MenuActionBar';
-import { useCreateProfile, useFetchUserProfileDetails } from '@services/profileApi';
+import { useFetchUserProfileDetails } from '@services/profileApi';
 
 const Layout = () => {
   const theme = useTheme();
   const { user } = useAuthenticator();
 
-  const { mutate: createProfile } = useCreateProfile();
   const { data: profileDetails = {}, isLoading } = useFetchUserProfileDetails(user.userId);
 
   const smScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('sm'));
@@ -34,14 +33,6 @@ const Layout = () => {
 
   const handleDrawerOpen = () => setOpenDrawer(true);
   const handleDrawerClose = () => setOpenDrawer(false);
-
-  useEffect(() => {
-    if (user) {
-      // create user profile if the user profile does not exist
-      // uses data from default authenticator to build profile details
-      createProfile(user);
-    }
-  }, [user.userId]);
 
   if (isLoading) {
     return <Skeleton height="100vh" />;
@@ -58,7 +49,7 @@ const Layout = () => {
         }
       >
         <AppToolbar profileDetails={profileDetails} handleDrawerOpen={handleDrawerOpen} />
-        <Stack sx={{ marginTop: '5rem', marginBottom: '1rem' }}>
+        <Stack sx={{ marginTop: '5rem', marginBottom: '1rem', py: 10 }}>
           <MenuActionBar
             openDrawer={openDrawer}
             createdByUserId={user.userId}

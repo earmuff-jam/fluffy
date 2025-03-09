@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Button,
   Card,
@@ -29,7 +30,6 @@ import { BarChart } from '@mui/icons-material';
 
 const AuthHeader = () => {
   const theme = useTheme();
-
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
@@ -239,8 +239,6 @@ const AuthHeader = () => {
           </Grid>
         </Container>
       </Box>
-
-      
     </>
   );
 };
