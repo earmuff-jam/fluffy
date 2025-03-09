@@ -221,7 +221,7 @@ const AuthHeader = () => {
                   }}
                 >
                   <Box sx={{ display: 'flex', gap: 3 }}>
-                    <Box sx={{ p: 2, borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.2)' }}>
+                    <Box sx={{ p: 2, borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.2)', alignContent: 'center' }}>
                       {benefit.icon}
                     </Box>
                     <Box>

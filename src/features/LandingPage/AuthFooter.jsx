@@ -7,7 +7,6 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 function AuthFooter() {
   return (
     <>
-      {/* Call To Action */}
       <Box sx={{ py: { xs: 8, md: 12 } }}>
         <Container maxWidth="md">
           <Card sx={{ p: { xs: 4, md: 6 }, textAlign: 'center' }}>
@@ -59,8 +58,8 @@ function AuthFooter() {
                 </Typography>
               </Box>
               <Typography variant="body2" color="text.secondary" paragraph>
-                Intelligent asset management solutions that help businesses optimize their fleet operations, reduce
-                costs, and improve efficiency.
+                Intelligent asset management solutions that help businesses optimize their operations, reduce costs, and
+                improve efficiency.
               </Typography>
             </Grid>
 
@@ -146,9 +145,8 @@ function AuthFooter() {
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
             <Typography variant="body2" color="text.secondary">
-              © {new Date().getFullYear()} FleetWise. All rights reserved.
+              ©2024 FleetWise. All rights reserved.
             </Typography>
-            <Box sx={{ display: 'flex', gap: 2 }}>{/* Social icons would go here */}</Box>
           </Box>
         </Container>
       </Box>
