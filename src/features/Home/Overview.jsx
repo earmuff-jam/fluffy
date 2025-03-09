@@ -1,38 +1,53 @@
 import dayjs from 'dayjs';
 
-import { useEffect } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Skeleton, Stack } from '@mui/material';
 
 import RowHeader from '@common/RowHeader';
-import { assetSummaryActions } from '@features/Home/SummarySlice';
 import OverviewHeader from '@features/Home/OverviewHeader/OverviewHeader';
 import OverviewContent from '@features/Home/OverviewContent/OverviewContent';
 
+import { useAuthenticator } from '@aws-amplify/ui-react';
+
+import { useFetchAssets } from '@services/assetsApi';
+import { useFetchAllCategories, useFetchAssetsAssociatedWithCategoriesByUserId } from '@services/categoriesApi';
+import {
+  useFetchAssetsAssociatedWithMaintenancePlanByUserId,
+  useFetchMaintenancePlans,
+} from '@services/maintenancePlanApi';
+
+
 export default function Overview() {
-  const dispatch = useDispatch();
-  const { assetSummary = [], loading } = useSelector((state) => state.summary);
+  const { user } = useAuthenticator();
 
-  const fetchAssignedAssets = (assets = [], filterParam) => {
-    // assets within filterParam must be present
-    assets?.filter((asset) => asset.type.toUpperCase() === filterParam && asset.items[0] != '');
-  };
+  const { data: assets = [], isLoading: isAssetsListLoading } = useFetchAssets(user.userId);
+  const { data: categories = [], isLoading: isCategoryListLoading } = useFetchAllCategories(user.userId);
+  const { data: maintenancePlans = [], isLoading: isMaintenancePlanListLoading } = useFetchMaintenancePlans(
+    user.userId
+  );
 
-  const assetsPastDue = assetSummary?.AssetList?.reduce((acc, el) => {
-    if (dayjs(el.returntime).isBefore(dayjs())) {
+  const { data: assetsUnderCategories = [], isLoading: assetsUnderCategoriesLoading } =
+    useFetchAssetsAssociatedWithCategoriesByUserId(user.userId);
+
+  const { data: assetsUnderMaintenancePlan = [], isLoading: assetsUnderMaintenancePlanLoading } =
+    useFetchAssetsAssociatedWithMaintenancePlanByUserId(user.userId);
+
+  const assetsPastDue = assets?.reduce((acc, el) => {
+    if (dayjs(el.returnDatetime).isBefore(dayjs())) {
       acc.push(el.name);
     }
     return acc;
   }, []);
 
-  useEffect(() => {
-    dispatch(assetSummaryActions.getAssetSummary());
-  }, []);
-
-  if (loading) {
-    return <Skeleton height="50vh" />;
+  if (
+    [
+      isAssetsListLoading,
+      isCategoryListLoading,
+      isMaintenancePlanListLoading,
+      assetsUnderCategoriesLoading,
+      assetsUnderMaintenancePlanLoading,
+    ].some(Boolean)
+  ) {
+    return <Skeleton height="20vh" />;
   }
 
   return (
@@ -40,15 +55,11 @@ export default function Overview() {
       <RowHeader title="Overview" caption="View a summarized report about your assets." />
       <Stack spacing={2}>
         <OverviewHeader
-          assetsUnderCategories={fetchAssignedAssets(assetSummary?.AssetSummaryList, 'C')}
-          assetsUnderMaintenancePlans={fetchAssignedAssets(assetSummary?.AssetSummaryList, 'M')}
+          assetsUnderCategories={assetsUnderCategories}
+          assetsUnderMaintenancePlans={assetsUnderMaintenancePlan}
           assetsPastDue={assetsPastDue}
         />
-        <OverviewContent
-          assets={assetSummary?.AssetList || []}
-          categories={assetSummary?.AssetSummaryList?.filter((v) => v.type.toUpperCase() === 'C')}
-          maintenancePlans={assetSummary?.AssetSummaryList?.filter((v) => v.type.toUpperCase() === 'M')}
-        />
+        <OverviewContent assets={assets} categories={categories} maintenancePlans={maintenancePlans} />
       </Stack>
     </Stack>
   );

@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@features/Layout/Layout'; // can't lazy load this
 
-// const Overview = lazy(() => import('@features/Home/Overview'));
+const Overview = lazy(() => import('@features/Home/Overview'));
 const Reports = lazy(() => import('@features/Reports/Reports'));
 const NotesList = lazy(() => import('@features/Notes/NotesList'));
 
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        // element: <Overview />,
+        element: <Overview />,
       },
       {
         path: '/inventories/list',

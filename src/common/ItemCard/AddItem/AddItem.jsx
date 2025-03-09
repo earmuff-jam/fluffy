@@ -3,9 +3,11 @@ import { Stack } from '@mui/material';
 import { useFetchAssets } from '@services/assetsApi';
 import { VIEW_INVENTORY_LIST_HEADERS } from '@features/Assets/constants';
 import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 export default function AddItem({ selectedIDList, setSelectedIDList, associatedItems }) {
-  const { data: assets = [], isLoading } = useFetchAssets();
+  const { user } = useAuthenticator();
+  const { data: assets = [], isLoading } = useFetchAssets(user.userId);
 
   const handleRowSelection = (_, id) => {
     if (id === 'all') {

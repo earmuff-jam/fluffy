@@ -1,7 +1,10 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { generateClient } from 'aws-amplify/data';
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
+
+import { generateClient } from 'aws-amplify/data';
+import { useAuthenticator } from '@aws-amplify/ui-react';
+
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const client = generateClient();
 
@@ -87,6 +90,36 @@ export const useFetchAssetsAssociatedWithCategoryById = (id) => {
 };
 
 /**
+ * useFetchAssetsAssociatedWithCategoriesByUserId ...
+ *
+ * retrieves the list of assets that belong to at least one category,
+ * created by the selected user. This is used for the overview page
+ * to display assets that are associated to at least one category.
+ *
+ * @param {string} userId - the userId that references the creator
+ */
+export const useFetchAssetsAssociatedWithCategoriesByUserId = (userId) => {
+  return useQuery({
+    queryKey: ['assetsAssociatedWithCategoryByUserId', userId],
+    queryFn: async () => {
+      if (!userId) return [];
+
+      const response = await client.models.CategoryItems.list({
+        filter: {
+          createdCategoryItemsIdRef: {
+            eq: userId,
+          },
+        },
+        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'categoryId.*'],
+      });
+
+      return response.data || [];
+    },
+    enabled: !!userId,
+  });
+};
+
+/**
  * useCreateCategory ...
  *
  * create a new category
@@ -113,6 +146,7 @@ export const useCreateCategory = () => {
  * creates association for items with a selected category.
  */
 export const useCreateAssociationForItemsWithCategory = () => {
+  const { user } = useAuthenticator();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -125,6 +159,8 @@ export const useCreateAssociationForItemsWithCategory = () => {
         const { data, errors } = await client.models.CategoryItems.create({
           categoryIdRef: categoryId,
           assetIdRef: assetId,
+          createdCategoryItemsIdRef: user.userId,
+          updatedCategoryItemsIdRef: user.userId,
         });
 
         if (errors) throw new Error(errors);

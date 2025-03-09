@@ -33,17 +33,23 @@ const assetWithStorageLocationCols = [
 /**
  * useFetchAssets ...
  *
- * retrieves a list of all the assets
+ * retrieves a list of all the assets for a selected userId
  */
-export const useFetchAssets = () => {
+export const useFetchAssets = (userId) => {
   return useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
       const response = await client.models.Assets.list({
+        filter: {
+          createdAssetIdRef: {
+            eq: userId,
+          },
+        },
         selectionSet: assetWithStorageLocationCols,
       });
       return response.data || [];
     },
+    enabled: !!userId,
   });
 };
 

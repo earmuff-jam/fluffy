@@ -10,7 +10,7 @@ import OverviewCardWrapper from '@features/Home/OverviewCard/OverviewCardWrapper
 export default function OverviewContentSummary({ assets = [] }) {
   const zeroCostItems = assets?.filter((v) => v.price === 0);
   const totalAssetCosts = assets?.reduce((acc, el) => {
-    acc += el?.price || 0;
+    acc += +el?.price || 0;
     return acc;
   }, 0);
 

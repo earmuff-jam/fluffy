@@ -5,9 +5,12 @@ import { MODAL_STATE } from '@features/Assets/constants';
 import AssetListHeader from '@features/Assets/AssetListHeader/AssetListHeader';
 import AssetListContent from '@features/Assets/AssetListContent/AssetListContent';
 import { useFetchAssets, useRemoveAssets } from '@services/assetsApi';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 export default function AssetList() {
-  const { data: assets = [], isLoading, isFetching } = useFetchAssets();
+  const { user } = useAuthenticator();
+
+  const { data: assets = [], isLoading, isFetching } = useFetchAssets(user.userId);
   const { mutate: removeAsset } = useRemoveAssets();
 
   const [options, setOptions] = useState([]);

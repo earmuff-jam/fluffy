@@ -18,8 +18,10 @@ import {
 
 export default function CategoryItemDetails() {
   const { id } = useParams();
+
   const { data: selectedCategory = {}, isLoading: loading } = useFetchCategoryById(id);
   const { data: itemsInCategory = [] } = useFetchAssetsAssociatedWithCategoryById(id);
+
   const createAssociationForAssetsWithCategory = useCreateAssociationForItemsWithCategory();
   const removeAssociationForAssetsFromCategory = useRemoveAssociationForAssetsWithCategory();
 

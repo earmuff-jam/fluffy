@@ -17,12 +17,15 @@ import SimpleModal from '@common/SimpleModal';
 import ImagePicker from '@common/ImagePicker/ImagePicker';
 import { capitalizeFirstLetter, EmptyComponent } from '@common/utils';
 import { useFetchAssets } from '@services/assetsApi';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const GridComponent = ({ isLoading, data, rowSelected, handleRowSelection, emptyComponentSubtext = '' }) => {
   const navigate = useNavigate();
 
   const inventories = [];
-  const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssets();
+
+  const { user } = useAuthenticator();
+  const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssets(user.userId);
 
   const [displayModal, setDisplayModal] = useState(false);
   const [selectedItemID, setSelectedItemID] = useState(-1);

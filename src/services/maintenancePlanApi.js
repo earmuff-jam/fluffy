@@ -87,6 +87,36 @@ export const useFetchAssetsAssociatedWithMaintenancePlanById = (id) => {
 };
 
 /**
+ * useFetchAssetsAssociatedWithMaintenancePlanByUserId ...
+ *
+ * retrieves the list of assets that belong to at least one maintenance plan,
+ * created by the selected user. This is used for the overview page
+ * to display assets that are associated to at least one maintenance plan.
+ *
+ * @param {string} userId - the userId that references the creator
+ */
+export const useFetchAssetsAssociatedWithMaintenancePlanByUserId = (userId) => {
+  return useQuery({
+    queryKey: ['assetsAssociatedWithMaintenancePlanByUserId', userId],
+    queryFn: async () => {
+      if (!userId) return [];
+
+      const response = await client.models.MaintenancePlanItems.list({
+        filter: {
+          createdProfileIdRef: {
+            eq: userId,
+          },
+        },
+        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'maintenancePlanId.*'],
+      });
+
+      return response.data || [];
+    },
+    enabled: !!userId,
+  });
+};
+
+/**
  * useCreateMaintenancePlan ...
  *
  * creates a new maintenance plan

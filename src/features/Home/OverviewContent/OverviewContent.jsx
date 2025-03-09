@@ -3,7 +3,11 @@ import OverviewContentSummary from '@features/Home/OverviewContent/OverviewConte
 import OverviewContentAssetBreakdown from '@features/Home/OverviewContent/OverviewContentAssetBreakdown';
 import OverviewContentAssetGraph from '@features/Home/OverviewContent/OverviewContentAssetGraph';
 
-export default function OverviewContent({ assets = [], categories = [], maintenancePlans = [] }) {
+export default function OverviewContent({
+  assets = [],
+  categories = [],
+  maintenancePlans = [],
+}) {
   return (
     <Stack spacing={2}>
       <OverviewContentSummary assets={assets} />
