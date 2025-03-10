@@ -20,7 +20,6 @@ export default function OverviewHeader({
             label="assigned categories"
             icon={<CategoryRounded />}
             color="info.main"
-            tooltipTitle={assetsUnderCategories.map((v) => v.name).join(', ')}
             dataLabel={assetsUnderCategories.flatMap((v) => v.items).length}
           />
         </OverviewCardWrapper>
@@ -29,7 +28,6 @@ export default function OverviewHeader({
             label="assigned maintenance plan"
             icon={<EngineeringRounded />}
             color="info.main"
-            tooltipTitle={assetsUnderMaintenancePlans.map((v) => v.name).join(', ')}
             dataLabel={assetsUnderMaintenancePlans.flatMap((v) => v.items).length}
           />
         </OverviewCardWrapper>
@@ -38,7 +36,6 @@ export default function OverviewHeader({
             label="past return deadline"
             icon={<WarningRounded />}
             color="error.main"
-            tooltipTitle={assetsPastDue.join(', ')}
             dataLabel={assetsPastDue.length}
           />
         </OverviewCardWrapper>

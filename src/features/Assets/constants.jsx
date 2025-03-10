@@ -87,9 +87,8 @@ export const BUILD_TABLE_CONSTANTS = (columnLabels) => (selectedRow) => {
       } else {
         value = modifier(value, { colName, label });
       }
-    } else {
-      value = value || 'N/A';
     }
+
     return {
       id,
       colName,
@@ -102,22 +101,24 @@ export const BUILD_TABLE_CONSTANTS = (columnLabels) => (selectedRow) => {
 };
 
 /**
- * INVENTORY LIST HEADERS STATIC COMPONENT
- * displayConcise lets users view the column name in bookmarked inventories
- * modifier fn lets the value be modified, for eg date will be modified with this property
+ * VIEW_INVENTORY_LIST_HEADERS
+ *
+ * Asset list headers used for table columns and to build details for drawer
+ * component. modifier fn can take value, { column, label } to display variations.
+ *
  */
 export const VIEW_INVENTORY_LIST_HEADERS = {
   name: {
     id: 1,
     colName: 'name',
-    label: 'Name',
+    label: 'NAME',
     displayConcise: true,
-    modifier: (value) => `${value.toUpperCase() || '-'}`,
+    modifier: (value) => `${value || '-'}`,
   },
   description: {
     id: 2,
     colName: 'description',
-    label: 'Description',
+    label: 'DESCRIPTION',
     displayName: 'Description',
     displayConcise: false,
     modifier: (value) => `${value || '-'}`,
@@ -125,14 +126,14 @@ export const VIEW_INVENTORY_LIST_HEADERS = {
   price: {
     id: 3,
     colName: 'price',
-    label: 'Cost',
+    label: 'COST',
     displayConcise: true,
     modifier: (value) => `${+value || '-'}`,
   },
   barcode: {
     id: 5,
     colName: 'barcode',
-    label: 'Barcode',
+    label: 'BARCODE',
     modifier: (value) => `${value || '-'}`,
   },
   sku: {
@@ -144,89 +145,93 @@ export const VIEW_INVENTORY_LIST_HEADERS = {
   color: {
     id: 7,
     colName: 'color',
-    label: 'Asset Color',
+    label: 'ASSET COLOR',
     modifier: (value) => `${value || '-'}`,
   },
   quantity: {
     id: 8,
     colName: 'quantity',
-    label: 'Qty',
+    label: 'QUANTITY',
     displayConcise: true,
     modifier: (value) => `${+value || '-'}`,
   },
   location: {
     id: 9,
-    colName: 'storageLocation',
-    label: 'Storage Location',
+    colName: 'storageLocationId',
+    label: 'STORAGE LOCATION',
     displayConcise: true,
-    modifier: (value) => `${value || '-'}`,
+    modifier: (value) => `${value?.location || '-'}`,
   },
   isReturnable: {
     id: 10,
     colName: 'isReturnable',
-    label: 'Returnable',
+    label: 'RETURNABLE',
     modifier: (value) => (value ? <CheckRounded color="primary" /> : <CloseRounded color="warning" />),
   },
   returnLocation: {
     id: 11,
     colName: 'returnLocation',
-    label: 'Return Location',
+    label: 'RETURN LOCATION',
     modifier: (value) => `${value || '-'}`,
   },
   maxWeight: {
     id: 12,
     colName: 'maxWeight',
-    label: 'Max Weight',
+    label: 'MAXIMUM WEIGHT',
     modifier: (value) => `${value || '-'}`,
   },
   minWeight: {
     id: 13,
     colName: 'minWeight',
-    label: 'Min Weight',
+    label: 'MINIMUM WEIGHT',
     modifier: (value) => `${value || '-'}`,
   },
   maxHeight: {
     id: 14,
     colName: 'maxHeight',
-    label: 'Max Height',
+    label: 'MAXIMUM HEIGHT',
     modifier: (value) => `${value || '-'}`,
   },
   minHeight: {
     id: 15,
     colName: 'minHeight',
-    label: 'Min Height',
+    label: 'MINIMUM HEIGHT',
     modifier: (value) => `${value || '-'}`,
   },
   boughtAt: {
     id: 16,
     colName: 'boughtAt',
-    label: 'Purchase Location',
+    label: 'PURCHASE LOCATION',
     modifier: (value) => `${value || '-'}`,
   },
   qrCode: {
     id: 17,
     colName: 'qrCode',
-    label: 'QR Code',
+    label: 'QR CODE',
     modifier: (value) => <QrCodeGen value={value} />,
   },
   updatedAt: {
     id: 18,
     colName: 'updatedAt',
-    label: 'Updated',
+    label: 'UPDATED AT',
     displayConcise: true,
     modifier: (value) => `${dayjs(value).fromNow()}`,
   },
   updator: {
     id: 19,
-    colName: 'updator',
-    label: 'Updated By',
+    colName: 'updatedBy',
+    label: 'UPDATED BY',
     displayConcise: true,
-    modifier: (value) => `${value || '-'}`,
+    modifier: (value) => `${value?.emailAddress || '-'}`,
   },
 };
 
-// blank form to add inventory details
-export const BLANK_INVENTORY_FORM = {
+/**
+ * BLANK_ASSET_DETAILS_FORM ...
+ * 
+ * Blank Asset details form
+ */
+export const BLANK_ASSET_DETAILS_FORM = {
   name: {
     id: 'name',
     label: 'Asset name',

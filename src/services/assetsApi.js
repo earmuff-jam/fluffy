@@ -26,7 +26,11 @@ const assetWithStorageLocationCols = [
   'maxHeight',
   'minHeight',
   'createdAt',
+  'createdAssetIdRef',
+  'createdBy.*',
   'updatedAt',
+  'updatedAssetIdRef',
+  'updatedBy.*',
   'storageLocationId.*',
 ];
 

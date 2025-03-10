@@ -9,6 +9,7 @@ import AddAssetDetails from '@features/Assets/AddAssetFormDetails/AddAssetDetail
 import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
 import { MODAL_STATE, VIEW_INVENTORY_LIST_HEADERS } from '@features/Assets/constants';
 import AssetDetailsDrawer from '@features/Assets/AssetDetailsDrawer/AssetDetailsDrawer';
+import { useUpdateAsset } from '@services/assetsApi';
 
 export default function AssetListContent({
   loading,
@@ -23,6 +24,8 @@ export default function AssetListContent({
 }) {
   const navigate = useNavigate();
 
+  const { mutate: updateSelectedAsset } = useUpdateAsset();
+
   const [inputColumn, setInputColumn] = useState('');
   const [selectedRow, setSelectedRow] = useState([]); // to display more details
   const [editLineItem, setEditLineItem] = useState({ editItem: false, rowID: -1, column: '' });
@@ -36,8 +39,9 @@ export default function AssetListContent({
     navigate(`/inventories/${itemID}/update`);
   };
 
-  const updateSelectedCol = (rowID, columnName, inputColumn) => {
-    // dispatch(inventoryActions.updateAssetCol({ assetID: rowID, columnName, inputColumn }));
+  const updateSelectedCol = (row, columnName, inputColumn) => {
+    const updatedRow = { ...row, [columnName]: inputColumn };
+    updateSelectedAsset(updatedRow);
   };
 
   // checkbox actions
@@ -71,7 +75,7 @@ export default function AssetListContent({
           sx={{ height: '1rem', width: '1rem', marginLeft: '0.5rem', cursor: 'pointer' }}
           color="primary"
           onClick={() => {
-            updateSelectedCol(row.id, editLineItem.column, inputColumn);
+            updateSelectedCol(row, editLineItem.column, inputColumn);
             setInputColumn('');
             setEditLineItem({ editItem: false, rowID: -1, column: '' });
           }}
@@ -103,10 +107,7 @@ export default function AssetListContent({
       }
     };
 
-    if (columnName === 'storageLocation') {
-      const storageLocation = row['storageLocationId']?.location ?? '-';
-      return storageLocation?.toUpperCase();
-    } else if (['price', 'quantity'].includes(columnName)) {
+    if (['price', 'quantity'].includes(columnName)) {
       return (
         <Stack direction="row" alignItems="center">
           {editLineItem.editItem && editLineItem.rowID === row.id && editLineItem.column === columnName ? (
@@ -119,10 +120,8 @@ export default function AssetListContent({
           {populateIcon(editLineItem, row, columnName, inputColumn, setInputColumn)}
         </Stack>
       );
-    } else if (columnData.modifier) {
-      return columnData.modifier(row[columnName] || '-');
     } else {
-      return row[columnName] || '-';
+      return columnData.modifier(row[columnName] || '-');
     }
   };
 

@@ -7,7 +7,7 @@ import SimpleModal from '@common/SimpleModal';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ImagePicker from '@common/ImagePicker/ImagePicker';
 import { Button, Divider, Stack, Typography } from '@mui/material';
-import { BLANK_INVENTORY_FORM } from '@features/Assets/constants';
+import { BLANK_ASSET_DETAILS_FORM } from '@features/Assets/constants';
 import { inventoryActions } from '@features/Assets/inventorySlice';
 import { AddPhotoAlternateRounded, CheckRounded } from '@mui/icons-material';
 import SelectedAssetFormFields from '@features/SelectedAsset/SelectedAssetFormFields';
@@ -34,7 +34,7 @@ export default function SelectedAsset() {
   const [color, setColor] = useState('#f7f7f7');
   const [returnDateTime, setReturnDateTime] = useState(null);
   const [storageLocation, setStorageLocation] = useState({});
-  const [formData, setFormData] = useState({ ...BLANK_INVENTORY_FORM });
+  const [formData, setFormData] = useState({ ...BLANK_ASSET_DETAILS_FORM });
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -145,7 +145,7 @@ export default function SelectedAsset() {
 
   useEffect(() => {
     if (!loading || !storageLocationsLoading) {
-      const selectedAsset = { ...BLANK_INVENTORY_FORM };
+      const selectedAsset = { ...BLANK_ASSET_DETAILS_FORM };
       selectedAsset.name.value = asset?.name || '';
       selectedAsset.description.value = asset?.description || '';
       selectedAsset.barcode.value = asset?.barcode || '';
