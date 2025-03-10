@@ -57,7 +57,7 @@ const Layout = () => {
             smScreenSizeAndHigher={smScreenSizeAndHigher}
             lgScreenSizeAndHigher={lgScreenSizeAndHigher}
           />
-          <Container maxWidth="lg">
+          <Container maxWidth="xl">
             <Outlet />
           </Container>
         </Stack>

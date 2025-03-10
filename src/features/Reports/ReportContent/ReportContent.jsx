@@ -17,20 +17,20 @@ export default function ReportContent({ sinceValue, assets }) {
   const table = useMaterialReactTable({
     columns,
     data: assets,
-    enableSorting: false,
+    enableSorting: true,
     enableFilters: false,
     enableFullScreenToggle: false,
     enableHiding: false,
     enableTopToolbar: false,
+    enableColumnResizing: false,
+    enableDensityToggle: false,
+    initialState: { density: 'comfortable' },
     muiTableHeadRowProps: {
       sx: { padding: '1rem' },
     },
     muiTableBodyRowProps: {
       sx: { padding: '0.2rem' },
     },
-    enableColumnResizing: true,
-    enableDensityToggle: false,
-    initialState: { density: 'compact' },
     renderEmptyRowsFallback: () => <EmptyComponent padding="1rem 1rem" />,
   });
 

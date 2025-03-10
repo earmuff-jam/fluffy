@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from '@common/utils';
+import { capitalizeFirstLetter, pluralizeWord } from '@common/utils';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -10,14 +10,19 @@ export const ASSETS_IN_REPORTS_HEADER = [
     header: 'Asset Name',
     accessorKey: 'name',
     size: 200,
+    Cell: ({ cell }) => {
+      const assetName = cell.getValue();
+      return capitalizeFirstLetter(assetName);
+    },
   },
   {
     name: 'description',
     header: 'Description',
     accessorKey: 'description',
-    size: 300,
+    size: 500,
     Cell: ({ cell }) => {
-      return <>{cell.getValue()?.length > 0 ? cell.getValue() : '-'}</>;
+      const assetDescription = cell.getValue();
+      return assetDescription?.length > 0 ? capitalizeFirstLetter(assetDescription) : '-';
     },
   },
   {
@@ -39,16 +44,21 @@ export const ASSETS_IN_REPORTS_HEADER = [
     name: 'storageLocation',
     header: 'Storage Location',
     accessorKey: 'storageLocationId.location',
-    size: 150,
+    size: 200,
     Cell: ({ cell }) => {
-      return <>{cell.getValue()?.length > 0 ? capitalizeFirstLetter(cell.getValue()) : '-'}</>;
+      const storageLocation = cell.getValue();
+      return storageLocation?.length > 0 ? capitalizeFirstLetter(storageLocation) : '-';
     },
   },
   {
     name: 'updator',
     header: 'Last updated by',
-    accessorKey: 'updator',
+    accessorKey: 'updatedBy',
     size: 150,
+    Cell: ({ cell }) => {
+      const updatedBy = cell.getValue();
+      return updatedBy?.emailAddress.length > 0 ? updatedBy?.emailAddress : '-';
+    },
   },
 ];
 

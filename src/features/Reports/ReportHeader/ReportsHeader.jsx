@@ -65,7 +65,7 @@ export default function ReportsHeader({
             <ReportItemDetails
               loading={loading}
               avatarValue={capitalizeFirstLetter(selectedAsset?.updator?.charAt(0))}
-              label={selectedAsset?.name || ''}
+              label={capitalizeFirstLetter(selectedAsset?.name) || ''}
               caption={selectedAsset?.description || ''}
             />
           ) : (
