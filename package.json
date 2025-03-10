@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "chart.js": "^4.4.0",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.10",
+    "eslint-plugin-storybook": "^0.11.4",
     "immer": "^10.0.3",
     "material-react-table": "^3.0.3",
     "mui-color-input": "^5.0.1",

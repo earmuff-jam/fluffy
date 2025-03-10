@@ -178,7 +178,7 @@ export const useRemoveAssociationForAssetsWithMaintenancePlan = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ maintenancePlanId, ids }) => {
+    mutationFn: async ({ ids }) => {
       if (!ids || !Array.isArray(ids) || ids.length === 0) {
         throw new Error('Maintenance Plan Items IDs is required for deletion.');
       }

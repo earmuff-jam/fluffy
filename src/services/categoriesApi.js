@@ -184,7 +184,7 @@ export const useRemoveAssociationForAssetsWithCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ categoryId, ids }) => {
+    mutationFn: async ({ ids }) => {
       if (!ids || !Array.isArray(ids) || ids.length === 0) {
         throw new Error('Category Items IDs is required for deletion.');
       }
