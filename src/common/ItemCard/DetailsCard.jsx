@@ -1,16 +1,24 @@
 import { useState } from 'react';
-import { enqueueSnackbar } from 'notistack';
+
 import dayjs from 'dayjs';
-import { produce } from 'immer';
-import { useNavigate } from 'react-router-dom';
 import relativeTime from 'dayjs/plugin/relativeTime';
+
 import { Card, CardMedia, Paper, Stack } from '@mui/material';
+
+import { produce } from 'immer';
+import { enqueueSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
+
 import SimpleModal from '@common/SimpleModal';
 import SharableGroups from '@common/SharableGroups';
 import ImagePicker from '@common/ImagePicker/ImagePicker';
 import LocationPicker from '@common/Location/LocationPicker';
 import DetailsCardItemContent from '@common/ItemCard/ItemContent/DetailsCardItemContent';
 import DetailsCardItemActions from '@common/ItemCard/ItemContent/DetailsCardItemActions';
+
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useUpdateCategory } from '@services/categoriesApi';
+import { useUpdateMaintenancePlan } from '@services/maintenancePlanApi';
 
 dayjs.extend(relativeTime);
 
@@ -23,7 +31,11 @@ export default function DetailsCard({
   categoryMode = false,
 }) {
   const navigate = useNavigate();
-  const userID = localStorage.getItem('userID');
+
+  const { user } = useAuthenticator();
+
+  const { mutate: updateCategory } = useUpdateCategory();
+  const { mutate: updateMaintenancePlan } = useUpdateMaintenancePlan();
 
   const [editImgMode, setEditImgMode] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -46,30 +58,22 @@ export default function DetailsCard({
   const updateCollaborators = (sharableGroups) => {
     const newMembers = sharableGroups.map((v) => v.value);
     const draftSelectionDetails = produce(selectedItem, (draft) => {
-      draft.updated_by = userID;
-      draft.sharable_groups = newMembers;
-      if (categoryMode) {
-        draft.status = draft.status_name;
-      } else {
-        draft.maintenance_status = draft.maintenance_status_name;
-      }
+      draft.updatedCategoryIdRef = user.userId;
+      draft.collaborators = newMembers;
     });
     if (categoryMode) {
-      // dispatch(categoryItemDetailsActions.updateCollaborators(draftSelectionDetails));
+      updateCategory(draftSelectionDetails);
       enqueueSnackbar('Updated collaborators for selected category.', {
         variant: 'success',
       });
-      if (!newMembers.includes(userID)) {
-        navigate('/');
-      }
     } else {
-      // dispatch(maintenancePlanItemActions.updateCollaborators(draftSelectionDetails));
+      updateMaintenancePlan(draftSelectionDetails);
       enqueueSnackbar('Updated collaborators for selected maintenance plan.', {
         variant: 'success',
       });
-      if (!newMembers.includes(userID)) {
-        navigate('/');
-      }
+    }
+    if (!newMembers.includes(user.userId)) {
+      navigate('/');
     }
     handleCloseModal();
   };
@@ -107,8 +111,8 @@ export default function DetailsCard({
         >
           <SharableGroups
             handleSubmit={updateCollaborators}
-            existingGroups={selectedItem?.sharable_groups || []}
-            creator={selectedItem?.created_by}
+            existingGroups={selectedItem?.collaborators || []}
+            creator={selectedItem?.createdBy}
           />
         </SimpleModal>
       )}

@@ -110,9 +110,9 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedNoteIdRef: a.id(),
       updatedBy: a.belongsTo("Profiles", "updatedNoteIdRef"),
-      // sharable_groups: a.string().array(),
+      collaborators: a.string().array(),
     })
-    .authorization((allow) => [allow.authenticated()]),
+    .authorization(allow => [allow.ownersDefinedIn('collaborators')]),
 
   Assets: a
     .model({
@@ -168,11 +168,11 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedCategoryIdRef: a.id(),
       updatedBy: a.belongsTo("Profiles", "updatedCategoryIdRef"),
-      // sharable_groups: a.string().array(),
+      collaborators: a.string().array(),
       associatedCategoryItems: a.hasMany('CategoryItems', 'categoryIdRef'),
       associatedFavouriteItems: a.hasMany('FavouriteItems', 'categoryIdRef'),
     })
-    .authorization((allow) => [allow.authenticated()]),
+    .authorization(allow => [allow.ownersDefinedIn('collaborators')]),
 
   CategoryItems: a
     .model({

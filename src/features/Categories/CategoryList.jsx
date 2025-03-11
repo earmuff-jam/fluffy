@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { Stack } from '@mui/material';
 
-import { useAuthenticator } from '@aws-amplify/ui-react';
-
 import SimpleModal from '@common/SimpleModal';
 import AddCategory from '@features/Categories/AddCategory';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
@@ -12,9 +10,8 @@ import SectionCardContent from '@common/SectionCard/SectionCardContent';
 import { useFetchAllCategories, useDownloadCategories, useRemoveCategory } from '@services/categoriesApi';
 
 const CategoryList = ({ displayConcise = false }) => {
-  const { user } = useAuthenticator();
+  const { data: categories, isLoading } = useFetchAllCategories();
 
-  const { data: categories, isLoading } = useFetchAllCategories(user.userId);
   const { mutate: removeCategory } = useRemoveCategory();
   const { mutate: downloadCategories } = useDownloadCategories();
 

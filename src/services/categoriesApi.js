@@ -13,16 +13,11 @@ const client = generateClient();
  *
  * returns a list of all categories
  */
-export const useFetchAllCategories = (userId) => {
+export const useFetchAllCategories = () => {
   return useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
       const response = await client.models.Categories.list({
-        filter: {
-          createdCategoryIdRef: {
-            eq: userId,
-          },
-        },
         selectionSet: [
           'id',
           'name',
@@ -41,7 +36,6 @@ export const useFetchAllCategories = (userId) => {
       });
       return response.data || [];
     },
-    enabled: !!userId,
   });
 };
 
@@ -130,7 +124,10 @@ export const useCreateCategory = () => {
   return useMutation({
     mutationFn: async (category) => {
       if (!category) throw new Error('Category details is required for creation.');
-      const { data, errors } = await client.models.Categories.create(category);
+      const { data, errors } = await client.models.Categories.create(category, {
+        authMode: 'userPool',
+      });
+
       if (errors) throw new Error(errors);
       return data;
     },

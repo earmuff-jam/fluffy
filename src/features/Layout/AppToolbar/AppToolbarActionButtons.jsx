@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 
 import { Badge, IconButton, Stack } from '@mui/material';
 import { CircleNotifications } from '@mui/icons-material';
 
-import { profileActions } from '@features/Profile/profileSlice';
 import AppToolbarPopoverContent from '@features/Layout/AppToolbar/AppToolbarPopoverContent';
 import AppToolBarMoreButtons from '@features/Layout/AppToolbar/AppToolBarMoreButtons';
 
 export default function AppToolbarActionButtons({ profileDetails }) {
-  // const dispatch = useDispatch();
   const loading = false;
   const maintenanceNotifications = [];
   // const { maintenanceNotifications = [], loading } = useSelector((state) => state.profile);

@@ -5,6 +5,22 @@ import dayjs from 'dayjs';
 const client = generateClient();
 
 /**
+ * useFetchUserProfiles ...
+ *
+ * retrieves a list of user profiles that are in the system
+ * @returns
+ */
+export const useFetchUserProfiles = () => {
+  return useQuery({
+    queryKey: ['profile'],
+    queryFn: async () => {
+      const { data } = await client.models.Profiles.list();
+      return data || [];
+    },
+  });
+};
+
+/**
  * useFetchUserProfileDetails ...
  *
  * retrieves the profile details with the valid userId
