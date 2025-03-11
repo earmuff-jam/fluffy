@@ -23,7 +23,9 @@ export default function MaintenancePlanItemDetails() {
   const { id } = useParams();
 
   const { data: selectedMaintenancePlan = {}, isLoading: loading } = useFetchMaintenancePlanById(id);
+  
   const { data: itemsInMaintenancePlan = [] } = useFetchAssetsAssociatedWithMaintenancePlanById(id);
+
   const createAssociationForAssetsWithMaintenancePlan = useCreateAssociationForItemsWithMaintenancePlan();
   const removeAssociationForAssetsFromMaintenancePlan = useRemoveAssociationForAssetsWithMaintenancePlan();
 

@@ -1,8 +1,11 @@
 import { Paper, Stack } from '@mui/material';
-import RowHeader from '@common/RowHeader';
-import { pluralizeWord } from '@common/utils';
+
 import { AddRounded, RemoveRounded } from '@mui/icons-material';
+
+import { pluralizeWord } from '@common/utils';
 import { VIEW_INVENTORY_LIST_HEADERS } from '@features/Assets/constants';
+
+import RowHeader from '@common/RowHeader';
 import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
 
 export default function ItemContent({
@@ -15,6 +18,8 @@ export default function ItemContent({
   secondaryBtnDataTour,
   tableDataTour,
 }) {
+  const rowFormatter = (row, columnName, column) => column.modifier(row[columnName] || '-');
+
   const handleRowSelection = (_, id) => {
     if (id === 'all') {
       if (selectedIDList.length !== 0) {
@@ -38,16 +43,6 @@ export default function ItemContent({
         );
       }
       setSelectedIDList(draftSelected);
-    }
-  };
-
-  const rowFormatter = (row, columnName, columnData) => {
-    if (columnName === 'storageLocation') {
-      return row['storageLocationId']?.location ?? '-';
-    } else if (columnData.modifier) {
-      return columnData.modifier(row[columnName] || '-');
-    } else {
-      return row[columnName] || '-';
     }
   };
 

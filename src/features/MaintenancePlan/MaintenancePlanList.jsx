@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react';
+
 import { Box } from '@mui/material';
+
 import SimpleModal from '@common/SimpleModal';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
 import SectionCardContent from '@common/SectionCard/SectionCardContent';
 import AddMaintenancePlan from '@features/MaintenancePlan/AddMaintenancePlan';
+
 import {
   useDownloadMaintenancePlans,
   useFetchMaintenancePlans,
   useRemoveMaintenancePlan,
 } from '@services/maintenancePlanApi';
-import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const MaintenancePlanList = () => {
-  const { user } = useAuthenticator();
-  const { data: maintenancePlans, isLoading } = useFetchMaintenancePlans(user.userId);
+  const { data: maintenancePlans, isLoading } = useFetchMaintenancePlans();
+
   const { mutate: removeMaintenancePlan } = useRemoveMaintenancePlan();
   const { mutate: downloadMaintenancePlans } = useDownloadMaintenancePlans();
 

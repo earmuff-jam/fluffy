@@ -10,16 +10,11 @@ const client = generateClient();
  *
  * returns a list of all the maintenance plans
  */
-export const useFetchMaintenancePlans = (userId) => {
+export const useFetchMaintenancePlans = () => {
   return useQuery({
     queryKey: ['maintenancePlans'],
     queryFn: async () => {
       const response = await client.models.MaintenancePlans.list({
-        filter: {
-          createdMaintenancePlanIdRef: {
-            eq: userId,
-          },
-        },
         selectionSet: [
           'id',
           'name',
@@ -38,7 +33,6 @@ export const useFetchMaintenancePlans = (userId) => {
       });
       return response.data || [];
     },
-    enabled: !!userId,
   });
 };
 
@@ -77,7 +71,14 @@ export const useFetchAssetsAssociatedWithMaintenancePlanById = (id) => {
             eq: id,
           },
         },
-        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'maintenancePlanId.*'],
+        selectionSet: [
+          'id',
+          'assetId.*',
+          'assetId.storageLocationId.*',
+          'assetId.createdBy.*',
+          'assetId.updatedBy.*',
+          'maintenancePlanId.*',
+        ],
       });
 
       return response.data || [];
@@ -127,7 +128,10 @@ export const useCreateMaintenancePlan = () => {
   return useMutation({
     mutationFn: async (plan) => {
       if (!plan) throw new Error('Maintenance plan details is required for creation.');
-      const { data, errors } = await client.models.MaintenancePlans.create(plan);
+      const { data, errors } = await client.models.MaintenancePlans.create(plan, {
+        authMode: 'userPool',
+      });
+
       if (errors) throw new Error(errors);
       return data;
     },
@@ -208,8 +212,11 @@ export const useUpdateMaintenancePlan = () => {
   return useMutation({
     mutationFn: async (plan) => {
       if (!plan) throw new Error('Maintenance plan details is required for update');
+
       const { data, errors } = await client.models.MaintenancePlans.update(plan);
+
       if (errors) throw new Error(errors);
+
       return data;
     },
     onSuccess: () => {

@@ -1,13 +1,18 @@
-import dayjs from 'dayjs';
 import { Stack } from '@mui/material';
-import { useFetchAssets } from '@services/assetsApi';
+
 import { VIEW_INVENTORY_LIST_HEADERS } from '@features/Assets/constants';
+
 import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
+
+import { useFetchAssets } from '@services/assetsApi';
+
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 export default function AddItem({ selectedIDList, setSelectedIDList, associatedItems }) {
   const { user } = useAuthenticator();
   const { data: assets = [], isLoading } = useFetchAssets(user.userId);
+
+  const rowFormatter = (row, columnName, column) => column.modifier(row[columnName] || '-');
 
   const handleRowSelection = (_, id) => {
     if (id === 'all') {
@@ -35,26 +40,13 @@ export default function AddItem({ selectedIDList, setSelectedIDList, associatedI
     }
   };
 
-  const rowFormatter = (row, column) => {
-    if (['createdAt', 'updatedAt'].includes(column)) {
-      return dayjs(row[column]).fromNow();
-    }
-    if (['updator', 'creator'].includes(column)) {
-      return row[column] ?? '-';
-    }
-    if (column === 'storageLocation') {
-      return row['storageLocationId']?.location ?? '-';
-    }
-    return row[column] ?? '-';
-  };
-
   return (
     <Stack spacing={1}>
       <TableComponent
         paper
         showActions={false}
         isLoading={isLoading}
-        data={assets.filter((asset) => !associatedItems?.some((item) => item.item_id === asset.id))}
+        data={assets.filter((asset) => !associatedItems?.some((item) => item.id === asset.id))}
         columns={Object.values(VIEW_INVENTORY_LIST_HEADERS).filter((v) => v.displayConcise)}
         rowFormatter={rowFormatter}
         selectedIDList={selectedIDList}

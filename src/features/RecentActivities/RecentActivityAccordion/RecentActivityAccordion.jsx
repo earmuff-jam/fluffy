@@ -12,8 +12,6 @@ const RecentActivityAccordion = () => {
   const { user } = useAuthenticator();
   const { data: recentActivities = {}, isLoading } = useFetchUserRecentActivities(user.userId, true);
 
-  console.log(recentActivities);
-
   if (isLoading) {
     return <Skeleton height="20rem" />;
   }

@@ -74,7 +74,14 @@ export const useFetchAssetsAssociatedWithCategoryById = (id) => {
             eq: id,
           },
         },
-        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'categoryId.*'],
+        selectionSet: [
+          'id',
+          'assetId.*',
+          'assetId.storageLocationId.*',
+          'assetId.createdBy.*',
+          'assetId.updatedBy.*',
+          'categoryId.*',
+        ],
       });
 
       return response.data || [];
@@ -211,8 +218,11 @@ export const useUpdateCategory = () => {
   return useMutation({
     mutationFn: async (category) => {
       if (!category) throw new Error('Category details is required for update');
+
       const { data, errors } = await client.models.Categories.update(category);
+
       if (errors) throw new Error(errors);
+
       return data;
     },
     onSuccess: () => {

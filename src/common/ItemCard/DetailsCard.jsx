@@ -57,16 +57,21 @@ export default function DetailsCard({
 
   const updateCollaborators = (sharableGroups) => {
     const newMembers = sharableGroups.map((v) => v.value);
-    const draftSelectionDetails = produce(selectedItem, (draft) => {
-      draft.updatedCategoryIdRef = user.userId;
-      draft.collaborators = newMembers;
-    });
+    
     if (categoryMode) {
+      const draftSelectionDetails = produce(selectedItem, (draft) => {
+        draft.updatedCategoryIdRef = user.userId;
+        draft.collaborators = newMembers;
+      });
       updateCategory(draftSelectionDetails);
       enqueueSnackbar('Updated collaborators for selected category.', {
         variant: 'success',
       });
     } else {
+      const draftSelectionDetails = produce(selectedItem, (draft) => {
+        draft.updatedMaintenancePlanIdRef = user.userId;
+        draft.collaborators = newMembers;
+      });
       updateMaintenancePlan(draftSelectionDetails);
       enqueueSnackbar('Updated collaborators for selected maintenance plan.', {
         variant: 'success',

@@ -113,7 +113,6 @@ export default function AddCategory({
         updatedAt: dayjs().toISOString(),
         createdCategoryIdRef: user.userId,
         updatedCategoryIdRef: user.userId,
-        // sharable_groups: [userID],
       };
       createCategory(draftRequest);
     }

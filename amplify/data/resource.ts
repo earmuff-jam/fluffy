@@ -211,12 +211,12 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedMaintenancePlanIdRef: a.id(),
       updatedBy: a.belongsTo("Profiles", "updatedMaintenancePlanIdRef"),
-      // sharable_groups: a.string().array(),
+      collaborators: a.string().array(),
       associatedMaintenancePlanItems: a.hasMany('MaintenancePlanItems', 'maintenancePlanIdRef'),
       associatedMaintenanceAlert: a.hasMany('MaintenanceAlert', 'maintenancePlanIdRef'),
       associatedFavouriteItems: a.hasMany('FavouriteItems', 'maintenancePlanIdRef'),
     })
-    .authorization((allow) => [allow.authenticated()]),
+    .authorization(allow => [allow.ownersDefinedIn('collaborators')]),
 
   MaintenancePlanItems: a
     .model({
