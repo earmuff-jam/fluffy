@@ -157,7 +157,7 @@ const AuthHeader = () => {
                 description: 'Gain actionable insights with comprehensive reporting and analytics tools.',
               },
             ].map((feature, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+              <Grid item xs={12} sm={6} md={6} key={index}>
                 <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <CardContent sx={{ flexGrow: 1, p: 4 }}>
                     <Box sx={{ mb: 2 }}>{feature.icon}</Box>
@@ -221,7 +221,14 @@ const AuthHeader = () => {
                   }}
                 >
                   <Box sx={{ display: 'flex', gap: 3 }}>
-                    <Box sx={{ p: 2, borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.2)', alignContent: 'center' }}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        borderRadius: '50%',
+                        backgroundColor: 'rgba(255,255,255,0.2)',
+                        alignContent: 'center',
+                      }}
+                    >
                       {benefit.icon}
                     </Box>
                     <Box>
