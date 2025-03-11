@@ -5,13 +5,15 @@ import { Dialog } from '@mui/material';
 import { router } from '@common/router';
 import { TourProvider } from '@reactour/tour';
 import { RouterProvider } from 'react-router-dom';
-import DEFAULT_TOUR_STEPS from '@utils/steps';
 
-import AuthHeader from '@features/LandingPage/AuthHeader';
-import AuthFooter from '@features/LandingPage/AuthFooter';
+import DEFAULT_TOUR_STEPS from '@utils/steps';
+import Header from '@features/LandingPage/Header';
+import Footer from '@features/LandingPage/Footer';
 
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import { useCreateProfile } from '@services/profileApi';
+import EmailSection from '@features/LandingPage/EmailSection';
+import Pricing from '@features/LandingPage/Pricing';
 
 const ApplicationValidator = () => {
   const { user } = useAuthenticator();
@@ -26,9 +28,11 @@ const ApplicationValidator = () => {
   if (!user) {
     return (
       <>
-        <AuthHeader />
+        <Header />
         <Authenticator />
-        <AuthFooter />
+        <EmailSection />
+        <Pricing />
+        <Footer />
       </>
     );
   }
