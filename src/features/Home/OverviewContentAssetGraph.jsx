@@ -2,8 +2,9 @@ import { Card, CardContent, Stack } from '@mui/material';
 
 import RowHeader from '@common/RowHeader';
 import PieChart from '@common/Chart/PieChart';
-import { OVERVIEW_GRAPH_LABELS } from '@features/Home/constants';
+
 import { capitalizeFirstLetter } from '@common/utils';
+import { OVERVIEW_GRAPH_LABELS } from '@features/Home/constants';
 
 export default function OverviewContentAssetGraph({ assets = [], categories = [], maintenancePlans = [] }) {
   const formattedData = [categories, maintenancePlans, assets].map((v, index) => ({

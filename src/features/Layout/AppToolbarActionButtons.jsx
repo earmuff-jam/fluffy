@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Badge, IconButton, Stack } from '@mui/material';
 import { CircleNotifications } from '@mui/icons-material';
 
-import AppToolbarPopoverContent from '@features/Layout/AppToolbar/AppToolbarPopoverContent';
-import AppToolBarMoreButtons from '@features/Layout/AppToolbar/AppToolBarMoreButtons';
+import AppToolbarPopoverContent from '@features/Layout/AppToolbarPopoverContent';
+import AppToolBarMoreButtons from '@features/Layout/AppToolBarMoreButtons';
 
 export default function AppToolbarActionButtons({ profileDetails }) {
   const loading = false;

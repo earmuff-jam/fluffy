@@ -1,5 +1,6 @@
-import { pluralizeWord } from '@common/utils';
 import { IconButton, Stack, Tooltip, Typography } from '@mui/material';
+
+import { pluralizeWord } from '@common/utils';
 
 export default function OverviewCardItem({ tooltipTitle, dataLabel, icon, label, color, word = 'asset', handleClick }) {
   return (

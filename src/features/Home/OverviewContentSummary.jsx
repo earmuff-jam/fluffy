@@ -4,8 +4,8 @@ import { prefix } from '@common/utils';
 import { Inventory2Rounded, PaidRounded } from '@mui/icons-material';
 
 import RowHeader from '@common/RowHeader';
-import OverviewCardItem from '@features/Home/OverviewCard/OverviewCardItem';
-import OverviewCardWrapper from '@features/Home/OverviewCard/OverviewCardWrapper';
+import OverviewCardItem from '@features/Home/OverviewCardItem';
+import OverviewCardWrapper from '@features/Home/OverviewCardWrapper';
 
 export default function OverviewContentSummary({ assets = [] }) {
   const zeroCostItems = assets?.filter((v) => +v.price === 0);

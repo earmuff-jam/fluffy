@@ -1,4 +1,4 @@
-import MenuActionBarListItem from '@features/Layout/MenuActionBar/MenuActionBarListItem';
+import MenuActionBarListItem from '@features/Layout/MenuActionBarListItem';
 import { MenuRounded } from '@mui/icons-material';
 
 export default {

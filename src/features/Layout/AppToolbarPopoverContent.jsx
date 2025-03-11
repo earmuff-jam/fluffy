@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 
 import { CircleRounded, DoneRounded } from '@mui/icons-material';
 import { Menu, MenuItem, Skeleton, Stack, Typography } from '@mui/material';
+
 import { EmptyComponent } from '@common/utils';
 
 export default function AppToolbarPopoverContent({ loading, anchorEl, handleClose, toggleReadOption, options = [] }) {

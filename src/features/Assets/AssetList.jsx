@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
+
 import { Stack } from '@mui/material';
+
 import { ConfirmationBoxModal } from '@common/utils';
 import { MODAL_STATE } from '@features/Assets/constants';
-import AssetListHeader from '@features/Assets/AssetListHeader/AssetListHeader';
-import AssetListContent from '@features/Assets/AssetListContent/AssetListContent';
-import { useFetchAssets, useRemoveAssets } from '@services/assetsApi';
+import AssetListHeader from '@features/Assets/AssetListHeader';
+import AssetListContent from '@features/Assets/AssetListContent';
+
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useFetchAssets, useRemoveAssets } from '@services/assetsApi';
 
 export default function AssetList() {
   const { user } = useAuthenticator();

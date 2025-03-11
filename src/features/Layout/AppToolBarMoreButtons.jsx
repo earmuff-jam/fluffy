@@ -1,4 +1,9 @@
-import { ArrowDropDownCircleRounded, DarkModeOutlined, LightModeOutlined, LogoutRounded } from '@mui/icons-material';
+import { useRef, useState } from 'react';
+
+import { useTour } from '@reactour/tour';
+
+import { useLocation, useParams } from 'react-router-dom';
+
 import {
   Button,
   ButtonGroup,
@@ -12,12 +17,12 @@ import {
   Popper,
 } from '@mui/material';
 
+import { ArrowDropDownCircleRounded, DarkModeOutlined, LightModeOutlined, LogoutRounded } from '@mui/icons-material';
+
+import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/tour/steps';
+
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
-import { useRef, useState } from 'react';
-import { useTour } from '@reactour/tour';
-import { useLocation, useParams } from 'react-router-dom';
-import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/tour/steps';
 import { useUpdateProfile } from '@services/profileApi';
 
 export default function AppToolBarMoreButtons({ profileDetails }) {

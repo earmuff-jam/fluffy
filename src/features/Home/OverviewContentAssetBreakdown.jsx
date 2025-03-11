@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { CategoryRounded, EngineeringRounded, WarningRounded } from '@mui/icons-material';
 
 import RowHeader from '@common/RowHeader';
-import OverviewCardItem from '@features/Home/OverviewCard/OverviewCardItem';
-import OverviewCardWrapper from '@features/Home/OverviewCard/OverviewCardWrapper';
+import OverviewCardItem from '@features/Home/OverviewCardItem';
+import OverviewCardWrapper from '@features/Home/OverviewCardWrapper';
 
 export default function OverviewContentAssetBreakdown({ assets = [], categories = [], maintenancePlans = [] }) {
   const navigate = useNavigate();

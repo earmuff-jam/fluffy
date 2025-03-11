@@ -1,14 +1,19 @@
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
-import SimpleModal from '@common/SimpleModal';
+
 import { Stack, TextField } from '@mui/material';
-import GridComponent from '@features/Assets/AssetListContent/GridComponent';
 import { CheckRounded, CloseRounded, EditRounded } from '@mui/icons-material';
+
+import SimpleModal from '@common/SimpleModal';
+import GridComponent from '@features/Assets/GridComponent';
+import AssetDetailsDrawer from '@features/Assets/AssetDetailsDrawer/AssetDetailsDrawer';
+
 import AddAssetsInBulk from '@features/Assets/AddAssetsInBulk/AddAssetsInBulk';
 import AddAssetDetails from '@features/Assets/AddAssetFormDetails/AddAssetDetails';
 import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
 import { MODAL_STATE, VIEW_INVENTORY_LIST_HEADERS } from '@features/Assets/constants';
-import AssetDetailsDrawer from '@features/Assets/AssetDetailsDrawer/AssetDetailsDrawer';
+
 import { useUpdateAsset } from '@services/assetsApi';
 
 export default function AssetListContent({

@@ -3,14 +3,31 @@ import { useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { AllInboxRounded, BookmarkRounded, ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Collapse, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Stack } from '@mui/material';
+import {
+  AllInboxRounded,
+  BookmarkRounded,
+  ChevronLeftRounded,
+  ChevronRightRounded,
+  ExpandLess,
+  ExpandMore,
+} from '@mui/icons-material';
+
+import {
+  Collapse,
+  Drawer,
+  IconButton,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 import { useFetchFavouriteItems } from '@services/favouriteItemsApi';
 
-import MenuActionBarTitle from '@features/Layout/MenuActionBar/MenuActionBarTitle';
-import MenuActionBarListItem from '@features/Layout/MenuActionBar/MenuActionBarListItem';
-import { MENU_ACTION_BAR_DEFAULT_LIST, PINNED_DEFAULT_INSET_MENU_LIST } from '@features/Layout/constants';
+import MenuActionBarListItem from '@features/Layout/MenuActionBarListItem';
+import { NAVIGATION_MENU_LIST, PINNED_DEFAULT_INSET_MENU_LIST } from '@features/Layout/constants';
 
 export default function MenuActionBar({
   createdByUserId,
@@ -23,7 +40,7 @@ export default function MenuActionBar({
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const { data: favItems = [], isLoading } = useFetchFavouriteItems(createdByUserId);
+  const { data: favItems = [] } = useFetchFavouriteItems(createdByUserId);
 
   const [openPinnedResources, setOpenPinnedResources] = useState(true);
 
@@ -38,10 +55,10 @@ export default function MenuActionBar({
 
   const handlePinnedResourceClick = () => setOpenPinnedResources(!openPinnedResources);
 
-  const formattedPinnedMenuItemList = favItems.map((v) => ({
-    id: v.id,
-    label: v?.categoryId?.name || v?.maintenancePlanId?.name,
-    to: v?.categoryId ? `/category/${v.categoryId?.id}` : `/plan/${v.maintenancePlanId?.id}`,
+  const formattedPinnedMenuItemList = favItems.map((item) => ({
+    id: item.id,
+    label: item?.categoryId?.name || item?.maintenancePlanId?.name,
+    to: item?.categoryId ? `/category/${item.categoryId?.id}` : `/plan/${item.maintenancePlanId?.id}`,
     icon: <BookmarkRounded fontSize="small" color="warning" />,
   }));
 
@@ -68,9 +85,22 @@ export default function MenuActionBar({
               }
         }
       >
-        <MenuActionBarTitle theme={theme} handleDrawerClose={handleDrawerClose} />
+        <Stack
+          sx={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '0.75rem',
+            backgroundColor: 'accentColor.default',
+          }}
+        >
+          <Typography variant="h4">Fleetwise</Typography>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRightRounded /> : <ChevronLeftRounded />}
+          </IconButton>
+        </Stack>
         <List sx={{ width: '100%' }} component="nav" aria-labelledby="nested-list-subheader" disablePadding>
-          {MENU_ACTION_BAR_DEFAULT_LIST.map((item) => (
+          {NAVIGATION_MENU_LIST.map((item) => (
             <MenuActionBarListItem
               key={item.id}
               label={item.label}

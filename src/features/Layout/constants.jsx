@@ -8,7 +8,12 @@ import {
   BookmarkRounded,
 } from '@mui/icons-material';
 
-export const MENU_ACTION_BAR_DEFAULT_LIST = [
+/**
+ * Navigation menu list
+ *
+ * used to navigate through various pages
+ */
+export const NAVIGATION_MENU_LIST = [
   {
     id: 1,
     icon: <HomeRounded fontSize="small" />,
@@ -47,6 +52,11 @@ export const MENU_ACTION_BAR_DEFAULT_LIST = [
   },
 ];
 
+/**
+ * Pinned inset menu list
+ *
+ * used to navigate to the default inset menu item
+ */
 export const PINNED_DEFAULT_INSET_MENU_LIST = [
   {
     id: 1,

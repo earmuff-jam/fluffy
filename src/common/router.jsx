@@ -1,5 +1,7 @@
 import { lazy } from 'react';
+
 import { createBrowserRouter } from 'react-router-dom';
+
 import Layout from '@features/Layout/Layout'; // can't lazy load this
 
 const Overview = lazy(() => import('@features/Home/Overview'));
