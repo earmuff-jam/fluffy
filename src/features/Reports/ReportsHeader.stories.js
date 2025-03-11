@@ -1,4 +1,4 @@
-import ReportsHeader from '@features/Reports/ReportHeader/ReportsHeader';
+import ReportsHeader from '@features/Reports/ReportsHeader';
 import dayjs from 'dayjs';
 
 export default {

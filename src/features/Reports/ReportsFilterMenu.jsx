@@ -1,4 +1,5 @@
 import { FILTER_OPTIONS } from '@features/Reports/constants';
+
 import { Button, Checkbox, FormControlLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
 
 export default function ReportsFilterMenu({
@@ -8,7 +9,6 @@ export default function ReportsFilterMenu({
   includeOverdue,
   setIncludeOverdue,
 }) {
-
   const handleSinceValue = (e) => {
     setSinceValue(e.target.value);
   };
