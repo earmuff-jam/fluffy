@@ -3,7 +3,7 @@ import { DeleteRounded, EditRounded } from '@mui/icons-material';
 import { AccordionDetails, Box, IconButton, Stack, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
-import LocationPicker from '@common/Location/LocationPicker';
+import LocationPicker from '@common/LocationPicker';
 import { useTheme } from '@emotion/react';
 
 dayjs.extend(relativeTime);

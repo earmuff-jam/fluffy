@@ -11,8 +11,8 @@ import { useNavigate } from 'react-router-dom';
 
 import SimpleModal from '@common/SimpleModal';
 import SharableGroups from '@common/SharableGroups';
-import ImagePicker from '@common/ImagePicker/ImagePicker';
-import LocationPicker from '@common/Location/LocationPicker';
+import ImagePicker from '@common/ImagePicker';
+import LocationPicker from '@common/LocationPicker';
 import DetailsCardItemContent from '@common/ItemCard/ItemContent/DetailsCardItemContent';
 import DetailsCardItemActions from '@common/ItemCard/ItemContent/DetailsCardItemActions';
 

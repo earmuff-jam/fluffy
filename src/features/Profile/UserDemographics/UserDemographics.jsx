@@ -5,7 +5,7 @@ import { Avatar, Box, Divider, IconButton, Paper, Stack, Typography } from '@mui
 
 import { validate } from 'uuid';
 
-import ImagePicker from '@common/ImagePicker/ImagePicker';
+import ImagePicker from '@common/ImagePicker';
 import UserDemographicsRow from '@features/Profile/UserDemographics/UserDemographicsRow';
 
 export default function UserDemographics({ data = {}, handleEditMode }) {

@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
-import TextFieldWithLabel from '@common/TextFieldWithLabel/TextFieldWithLabel';
+import TextFieldWithLabel from '@common/TextFieldWithLabel';
 
-export default function SelectedAssetWeightDimension({ formFields, handleInputChange }) {
+export default function SelectedAssetWeightDimensionFormFields({ formFields, handleInputChange }) {
   return (
     <Stack spacing={1}>
       <Stack direction="row" spacing={2}>

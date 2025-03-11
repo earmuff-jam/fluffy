@@ -12,13 +12,13 @@ import { enqueueSnackbar } from 'notistack';
 
 import RowHeader from '@common/RowHeader';
 import SimpleModal from '@common/SimpleModal';
-import ImagePicker from '@common/ImagePicker/ImagePicker';
+import ImagePicker from '@common/ImagePicker';
 
 import { BLANK_ASSET_DETAILS_FORM } from '@features/Assets/constants';
 
 import SelectedAssetFormFields from '@features/SelectedAsset/SelectedAssetFormFields';
-import SelectedAssetWeightDimension from '@features/SelectedAsset/SelectedAssetWeightDimension';
 import SelectedAssetMoreInformation from '@features/SelectedAsset/SelectedAssetMoreInformation';
+import SelectedAssetWeightDimensionFormFields from '@features/SelectedAsset/SelectedAssetWeightDimensionFormFields';
 
 import { useFetchStorageLocations } from '@services/storageLocationApi';
 import { useFetchAssetById, useUpdateAsset } from '@services/assetsApi';
@@ -228,7 +228,7 @@ export default function SelectedAsset() {
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
         <Typography variant="caption">Weight and Dimension</Typography>
       </Divider>
-      <SelectedAssetWeightDimension formFields={formData} handleInputChange={handleInputChange} />
+      <SelectedAssetWeightDimensionFormFields formFields={formData} handleInputChange={handleInputChange} />
       <Stack sx={{ margin: '1rem 0rem' }}>
         <Button
           startIcon={<CheckRounded fontSize="small" />}

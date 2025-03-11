@@ -1,16 +1,16 @@
-import SelectedAssetWeightDimension from '@features/SelectedAsset/SelectedAssetWeightDimension';
+import SelectedAssetWeightDimensionFormFields from '@features/SelectedAsset/SelectedAssetWeightDimensionFormFields';
 
 export default {
-  title: 'AssetList/SelectedAsset/SelectedAssetWeightDimension',
-  component: SelectedAssetWeightDimension,
+  title: 'AssetList/SelectedAsset/SelectedAssetWeightDimensionFormFields',
+  component: SelectedAssetWeightDimensionFormFields,
   tags: ['autodocs'],
 };
 
-const Template = (args) => <SelectedAssetWeightDimension {...args} />;
+const Template = (args) => <SelectedAssetWeightDimensionFormFields {...args} />;
 
-export const SelectedAssetWeightDimensionDefault = Template.bind({});
+export const SelectedAssetWeightDimensionFormFieldsDefault = Template.bind({});
 
-SelectedAssetWeightDimensionDefault.args = {
+SelectedAssetWeightDimensionFormFieldsDefault.args = {
   formFields: {
     max_weight: {
       id: 'max_weight',

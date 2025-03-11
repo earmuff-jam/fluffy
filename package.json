@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
+    "analyzer": "npx vite-bundle-visualizer",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docugen": "jsdoc src -r -d docs"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.5.5",

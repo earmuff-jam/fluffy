@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import SimpleModal from '@common/SimpleModal';
-import ImagePicker from '@common/ImagePicker/ImagePicker';
+import ImagePicker from '@common/ImagePicker';
 import { capitalizeFirstLetter, EmptyComponent } from '@common/utils';
 import { useFetchAssets } from '@services/assetsApi';
 import { useAuthenticator } from '@aws-amplify/ui-react';

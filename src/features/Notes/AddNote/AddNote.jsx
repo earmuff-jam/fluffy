@@ -10,9 +10,9 @@ import ColorPicker from '@common/ColorPicker';
 import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
 import { ADD_NOTES_FORM_FIELDS } from '@features/Notes/constants';
 
-import LocationPicker from '@common/Location/LocationPicker';
+import LocationPicker from '@common/LocationPicker';
 import AddNoteHeader from '@features/Notes/AddNote/AddNoteHeader';
-import CustomDatePicker from '@common/DatePicker/CustomDatePicker';
+import CustomDatePicker from '@common/CustomDatePicker';
 import AddNoteStatusOptions from '@features/Notes/AddNote/AddNoteStatusOptions';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';

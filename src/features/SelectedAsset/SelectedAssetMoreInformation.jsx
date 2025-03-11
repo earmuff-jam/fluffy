@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { BookmarkAddedRounded, SwapHorizRounded } from '@mui/icons-material';
-import TextFieldWithLabel from '@common/TextFieldWithLabel/TextFieldWithLabel';
-import SelectedAssetMoreInformationCheckbox from '@features/SelectedAsset/SelectedAssetMoreInformationCheckbox';
+
+import TextFieldWithLabel from '@common/TextFieldWithLabel';
 import SelectedAssetReturnInformationContent from '@features/SelectedAsset/SelectedAssetReturnInformationContent';
 
 export default function SelectedAssetMoreInformation({
@@ -18,20 +18,37 @@ export default function SelectedAssetMoreInformation({
 
   return (
     <Stack spacing={2}>
-      <SelectedAssetMoreInformationCheckbox
-        isChecked={isBookmarked}
-        handleCheckbox={handleCheckbox}
-        target="isBookmarked"
-        label="Bookmark"
-        icon={<BookmarkAddedRounded color={isBookmarked ? 'primary' : 'secondary'} />}
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={isBookmarked}
+            onChange={(e) => handleCheckbox('isBookmarked', e.target.checked)}
+            color="primary"
+          />
+        }
+        label={
+          <Stack direction="row" alignItems="center">
+            <BookmarkAddedRounded color={isBookmarked ? 'primary' : 'secondary'} />
+            <Typography variant="caption">Bookmark</Typography>
+          </Stack>
+        }
       />
+
       <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
-        <SelectedAssetMoreInformationCheckbox
-          isChecked={isReturnable}
-          handleCheckbox={handleCheckbox}
-          target="isReturnable"
-          label="Returnable"
-          icon={<SwapHorizRounded color={isReturnable ? 'primary' : 'secondary'} />}
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isReturnable}
+              onChange={(e) => handleCheckbox('isReturnable', e.target.checked)}
+              color="primary"
+            />
+          }
+          label={
+            <Stack direction="row" alignItems="center">
+              <SwapHorizRounded color={isReturnable ? 'primary' : 'secondary'} />
+              <Typography variant="caption">Returnable</Typography>
+            </Stack>
+          }
         />
         {isReturnable && (
           <SelectedAssetReturnInformationContent
