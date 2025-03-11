@@ -1,4 +1,4 @@
-import UserDetails from '@features/Profile/UserDetails/UserDetails';
+import UserDetails from '@features/Profile/UserDetails';
 
 export default {
   title: 'Profile/UserDetails',

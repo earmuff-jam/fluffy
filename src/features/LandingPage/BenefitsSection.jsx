@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container, Grid, Typography, Box, Paper } from '@mui/material';
 
-import { AccountBalanceWalletRounded, DevicesRounded, SecurityRounded, SpeedRounded } from '@mui/icons-material';
+import { BenefitsFields } from '@features/LandingPage/constants';
 
 export default function BenefitsSection() {
   return (
@@ -18,28 +18,7 @@ export default function BenefitsSection() {
         </Box>
 
         <Grid container spacing={4}>
-          {[
-            {
-              icon: <DevicesRounded sx={{ fontSize: 40 }} />,
-              title: 'All-in-One Platform',
-              description: 'Manage equipment and assets in a single unified interface.',
-            },
-            {
-              icon: <SpeedRounded sx={{ fontSize: 40 }} />,
-              title: 'Increased Efficiency',
-              description: 'Optimize operations to reduce idle time and improve productivity by up to 30%.',
-            },
-            {
-              icon: <AccountBalanceWalletRounded sx={{ fontSize: 40 }} />,
-              title: 'Cost Reduction',
-              description: 'Lower maintenance costs through proactive management of assets.',
-            },
-            {
-              icon: <SecurityRounded sx={{ fontSize: 40 }} />,
-              title: 'Enhanced Security',
-              description: 'Prevent unauthorized use and recover lost / hidden assets with location based tracking.',
-            },
-          ].map((benefit, index) => (
+          {BenefitsFields.map((benefit, index) => (
             <Grid item xs={12} sm={6} key={index}>
               <Paper
                 sx={{

@@ -1,5 +1,5 @@
 import ReportCardWrapper from '@features/Reports/ReportCardWrapper';
-import ReportItemDetails from '@features/Reports/ReportItemDetails/ReportItemDetails';
+import ReportItemDetails from '@features/Reports/ReportItemDetails';
 
 export default {
   title: 'Reports/ReportCardWrapper',

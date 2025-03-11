@@ -1,4 +1,4 @@
-import ProfileForm from '@features/Profile/ProfileForm/ProfileForm';
+import ProfileForm from '@features/Profile/ProfileForm';
 
 export default {
   title: 'Profile/ProfileForm',

@@ -6,8 +6,8 @@ import SimpleModal from '@common/SimpleModal';
 import { FILTER_OPTIONS } from '@features/Reports/constants';
 
 import ReportsHeader from '@features/Reports/ReportsHeader';
-import ReportContent from '@features/Reports/ReportContent/ReportContent';
-import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu/ReportsFilterMenu';
+import ReportContent from '@features/Reports/ReportContent';
+import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
 
 import { useFetchAssetReportByDate } from '@services/assetsApi';
 import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';

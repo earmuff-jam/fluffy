@@ -1,6 +1,6 @@
 import { Divider, Skeleton, Stack, Typography } from '@mui/material';
 
-import UserStats from '@features/Profile/UserStats/UserStats';
+import UserStats from '@features/Profile/UserStats';
 
 export default function UserStatus({ profileStats = {}, onlySmallScreen, isProfileStatsLoading = true }) {
   const DRAFT_PROFILE_STATS = [

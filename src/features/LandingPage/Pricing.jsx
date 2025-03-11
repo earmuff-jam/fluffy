@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Box, Card, CardContent, Typography, Button, Grid, Divider, Stack, Chip } from '@mui/material';
 
 import CheckIcon from '@mui/icons-material/Check';
+import { PricingPlans } from '@features/LandingPage/constants';
 
 const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState('monthly');
@@ -10,28 +11,6 @@ const Pricing = () => {
   const handleBillingChange = (event) => {
     setBillingCycle(event.target.value);
   };
-
-  const plans = [
-    {
-      title: 'Basic',
-      monthly: 12.99,
-      sixMonth: 10.99,
-      yearly: 8.99,
-      features: ['Basic feature 1', 'Basic feature 2', 'Email support'],
-      buttonText: 'Get Started',
-      color: 'primary.light',
-    },
-    {
-      title: 'Pro',
-      monthly: 19.99,
-      sixMonth: 17.99,
-      yearly: 15.99,
-      features: ['All Basic features', 'Pro feature 1', 'Pro feature 2', 'Priority support'],
-      buttonText: 'Get Pro',
-      color: 'primary.main',
-      popular: true,
-    },
-  ];
 
   const getPrice = (plan) => {
     switch (billingCycle) {
@@ -112,7 +91,7 @@ const Pricing = () => {
 
       {/* Pricing Cards */}
       <Grid container spacing={3} justifyContent="center">
-        {plans.map((plan, index) => (
+        {PricingPlans.map((plan, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Card
               elevation={plan.popular ? 8 : 2}

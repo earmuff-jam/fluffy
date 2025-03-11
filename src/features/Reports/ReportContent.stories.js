@@ -1,4 +1,4 @@
-import ReportContent from '@features/Reports/ReportContent/ReportContent';
+import ReportContent from '@features/Reports/ReportContent';
 import dayjs from 'dayjs';
 
 export default {

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu/ReportsFilterMenu';
+import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
 
 export default {
   title: 'Reports/ReportsFilterMenu',

@@ -1,5 +1,5 @@
 import { Card } from '@mui/material';
-import ReportItemDetails from '@features/Reports/ReportItemDetails/ReportItemDetails';
+import ReportItemDetails from '@features/Reports/ReportItemDetails';
 
 export default {
   title: 'Reports/ReportItemDetails',

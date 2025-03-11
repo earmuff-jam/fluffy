@@ -1,7 +1,5 @@
 import { Suspense, useEffect } from 'react';
 
-import { Dialog } from '@mui/material';
-
 import { router } from '@common/router';
 import { TourProvider } from '@reactour/tour';
 import { RouterProvider } from 'react-router-dom';
@@ -14,6 +12,7 @@ import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import { useCreateProfile } from '@services/profileApi';
 import EmailSection from '@features/LandingPage/EmailSection';
 import Pricing from '@features/LandingPage/Pricing';
+import Loading from '@common/Loading';
 
 const ApplicationValidator = () => {
   const { user } = useAuthenticator();
@@ -39,7 +38,7 @@ const ApplicationValidator = () => {
 
   return (
     <TourProvider steps={DEFAULT_TOUR_STEPS}>
-      <Suspense fallback={<Dialog title="Loading..." />}>
+      <Suspense fallback={<Loading />}>
         <RouterProvider router={router} />
       </Suspense>
     </TourProvider>

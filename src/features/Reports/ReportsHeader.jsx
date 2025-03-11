@@ -7,7 +7,7 @@ import RowHeader from '@common/RowHeader';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import ReportCardWrapper from '@features/Reports/ReportCardWrapper';
-import ReportItemDetails from '@features/Reports/ReportItemDetails/ReportItemDetails';
+import ReportItemDetails from '@features/Reports/ReportItemDetails';
 
 import { capitalizeFirstLetter, EmptyComponent, formatDate } from '@common/utils';
 
