@@ -4,8 +4,8 @@ import { enqueueSnackbar } from 'notistack';
 import { Accordion, Skeleton } from '@mui/material';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { categorizeNotes, ConfirmationBoxModal, EmptyComponent } from '@common/utils';
-import NoteAccordionSummary from '@features/Notes/NoteAccordion/NoteAccordionSummary';
-import NoteAccordionDetails from '@features/Notes/NoteAccordion/NoteAccordionDetails';
+import NoteAccordionSummary from '@features/Notes/NoteAccordionSummary';
+import NoteAccordionDetails from '@features/Notes/NoteAccordionDetails';
 import { useRemoveNote } from '@services/notesApi';
 
 dayjs.extend(relativeTime);

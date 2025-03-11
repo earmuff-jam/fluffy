@@ -5,7 +5,7 @@ import { Divider, Stack } from '@mui/material';
 import { DownloadRounded } from '@mui/icons-material';
 
 import RowHeader from '@common/RowHeader';
-import RecentActivityAccordion from '@features/RecentActivities/RecentActivityAccordion/RecentActivityAccordion';
+import RecentActivityAccordion from '@features/RecentActivities/RecentActivityAccordion';
 
 dayjs.extend(relativeTime);
 

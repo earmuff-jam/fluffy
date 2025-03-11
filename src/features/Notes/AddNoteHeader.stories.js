@@ -1,4 +1,4 @@
-import AddNoteHeader from '@features/Notes/AddNote/AddNoteHeader';
+import AddNoteHeader from '@features/Notes/AddNoteHeader';
 import { Stack } from '@mui/material';
 
 export default {

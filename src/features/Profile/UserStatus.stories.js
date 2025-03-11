@@ -1,4 +1,4 @@
-import UserStatus from '@features/Profile/UserStatus/UserStatus';
+import UserStatus from '@features/Profile/UserStatus';
 
 export default {
   title: 'Profile/UserStatus',

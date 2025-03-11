@@ -3,10 +3,8 @@ import { useEffect, useState } from 'react';
 import { EditRounded } from '@mui/icons-material';
 import { Avatar, Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material';
 
-import { validate } from 'uuid';
-
 import ImagePicker from '@common/ImagePicker';
-import UserDemographicsRow from '@features/Profile/UserDemographics/UserDemographicsRow';
+import UserDemographicsRow from '@features/Profile/UserDemographicsRow';
 
 export default function UserDemographics({ data = {}, handleEditMode }) {
   const avatar = {};

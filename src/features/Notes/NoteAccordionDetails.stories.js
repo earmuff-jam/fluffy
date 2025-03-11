@@ -1,4 +1,4 @@
-import NoteAccordionDetails from '@features/Notes/NoteAccordion/NoteAccordionDetails';
+import NoteAccordionDetails from '@features/Notes/NoteAccordionDetails';
 
 export default {
   title: 'Notes/NoteAccordionDetails',

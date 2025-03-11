@@ -1,4 +1,4 @@
-import UserDemographics from '@features/Profile/UserDemographics/UserDemographics';
+import UserDemographics from '@features/Profile/UserDemographics';
 
 export default {
   title: 'Profile/UserDemographics',

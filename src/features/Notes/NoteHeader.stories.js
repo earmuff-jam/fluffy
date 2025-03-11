@@ -1,4 +1,4 @@
-import NoteHeader from '@features/Notes/Header/NoteHeader';
+import NoteHeader from '@features/Notes/NoteHeader';
 
 export default {
   title: 'Notes/NoteHeader',

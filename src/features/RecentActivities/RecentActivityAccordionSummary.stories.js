@@ -1,5 +1,5 @@
 import { RECENT_ACTIVITY_TYPE_MAPPER } from '@features/RecentActivities/constants';
-import RecentActivityAccordionSummary from '@features/RecentActivities/RecentActivityAccordion/RecentActivityAccordionSummary';
+import RecentActivityAccordionSummary from '@features/RecentActivities/RecentActivityAccordionSummary';
 
 export default {
   title: 'RecentActivities/RecentActivityAccordionSummary',

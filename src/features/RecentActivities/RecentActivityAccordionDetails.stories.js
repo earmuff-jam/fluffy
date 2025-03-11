@@ -1,4 +1,4 @@
-import RecentActivityAccordionDetails from '@features/RecentActivities/RecentActivityAccordion/RecentActivityAccordionDetails';
+import RecentActivityAccordionDetails from '@features/RecentActivities/RecentActivityAccordionDetails';
 
 export default {
   title: 'RecentActivities/RecentActivityAccordionDetails',

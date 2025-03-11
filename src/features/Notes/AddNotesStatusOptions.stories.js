@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import AddNoteStatusOptions from '@features/Notes/AddNote/AddNoteStatusOptions';
+import AddNoteStatusOptions from '@features/Notes/AddNoteStatusOptions';
 
 export default {
   title: 'Notes/AddNoteStatusOptions',

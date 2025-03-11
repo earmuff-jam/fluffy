@@ -2,8 +2,8 @@ import { Accordion, Skeleton } from '@mui/material';
 
 import { EmptyComponent } from '@common/utils';
 
-import RecentActivityAccordionSummary from '@features/RecentActivities/RecentActivityAccordion/RecentActivityAccordionSummary';
-import RecentActivityAccordionDetails from '@features/RecentActivities/RecentActivityAccordion/RecentActivityAccordionDetails';
+import RecentActivityAccordionSummary from '@features/RecentActivities/RecentActivityAccordionSummary';
+import RecentActivityAccordionDetails from '@features/RecentActivities/RecentActivityAccordionDetails';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useFetchUserRecentActivities } from '@services/profileApi';
