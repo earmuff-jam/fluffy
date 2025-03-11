@@ -5,7 +5,7 @@ import { Dialog } from '@mui/material';
 import { router } from '@common/router';
 import { TourProvider } from '@reactour/tour';
 import { RouterProvider } from 'react-router-dom';
-import DEFAULT_TOUR_STEPS from '@utils/tour/steps';
+import DEFAULT_TOUR_STEPS from '@utils/steps';
 
 import AuthHeader from '@features/LandingPage/AuthHeader';
 import AuthFooter from '@features/LandingPage/AuthFooter';

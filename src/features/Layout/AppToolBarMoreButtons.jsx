@@ -19,7 +19,7 @@ import {
 
 import { ArrowDropDownCircleRounded, DarkModeOutlined, LightModeOutlined, LogoutRounded } from '@mui/icons-material';
 
-import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/tour/steps';
+import DEFAULT_TOUR_STEPS, { DEFAULT_STEP_MAPPER } from '@utils/steps';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
