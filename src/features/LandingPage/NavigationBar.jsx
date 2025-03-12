@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button, Box } from '@mui/material';
 
 export default function NavigationBar() {
@@ -12,16 +10,16 @@ export default function NavigationBar() {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-      <Button color="inherit" onClick={() => handleScroll('features-section')}>
+      <Button onClick={() => handleScroll('features-section')}>
         Features
       </Button>
-      <Button color="inherit" onClick={() => handleScroll('pricing-details')}>
+      <Button onClick={() => handleScroll('pricing-details')}>
         Pricing
       </Button>
-      <Button color="inherit" onClick={() => handleScroll('benefits-section')}>
+      <Button onClick={() => handleScroll('benefits-section')}>
         Resources
       </Button>
-      <Button color="inherit" onClick={() => handleScroll('contacts-section')}>
+      <Button onClick={() => handleScroll('contacts-section')}>
         Contact
       </Button>
     </Box>

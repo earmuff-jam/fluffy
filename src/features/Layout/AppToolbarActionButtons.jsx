@@ -17,6 +17,7 @@ export default function AppToolbarActionButtons({ profileDetails }) {
   const handleClose = () => setAnchorEl(null);
 
   const toggleReadOption = (id, selection) => {
+    console.debug(id, selection);
     // dispatch(profileActions.toggleMaintenanceNotificationReadOption({ maintenance_plan_id: id, is_read: !selection }));
   };
 

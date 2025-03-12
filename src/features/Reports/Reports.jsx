@@ -18,8 +18,8 @@ export default function Reports() {
   const [includeOverdue, setIncludeOverdue] = useState(true);
   const [sinceValue, setSinceValue] = useState(FILTER_OPTIONS.find((item) => item.label === 'ytd').value);
 
+  const { data: maintenancePlanList = [] } = useFetchMaintenancePlans();
   const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssetReportByDate(sinceValue);
-  const { data: maintenancePlanList = [], isLoading: maintenancePlanListLoading } = useFetchMaintenancePlans();
 
   const downloadReports = () => {
     // dispatch(reportActions.downloadReports({ since: sinceValue, includeOverdue: includeOverdue, assets }));

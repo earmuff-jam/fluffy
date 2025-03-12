@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Card, CardContent, Stack } from '@mui/material';
 
 import ItemCardActions from '@common/ItemCard/ItemCardActions';

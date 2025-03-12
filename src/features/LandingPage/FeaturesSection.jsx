@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Card, CardContent, Container, Grid, Typography, Box } from '@mui/material';
 
 import { FeatureFields } from '@features/LandingPage/constants';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Container, Grid, Typography, Box, Paper } from '@mui/material';
 
 import { BenefitsFields } from '@features/LandingPage/constants';

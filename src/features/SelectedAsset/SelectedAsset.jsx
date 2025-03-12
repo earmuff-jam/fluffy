@@ -146,7 +146,8 @@ export default function SelectedAsset() {
   };
 
   const handleUpload = (id, imgFormData) => {
-    dispatch(inventoryActions.uploadAndRefreshData({ id: id, selectedImage: imgFormData }));
+    console.debug(id, imgFormData);
+    // dispatch(inventoryActions.uploadAndRefreshData({ id: id, selectedImage: imgFormData }));
     setEditImgMode(false);
   };
 

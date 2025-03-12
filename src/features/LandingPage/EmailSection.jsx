@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button, Container, Card, CardContent, TextField, Grid, Typography, Box } from '@mui/material';
 
 export default function EmailSection() {

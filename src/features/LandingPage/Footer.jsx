@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button, Container, Grid, Typography, Box, Divider, Stack } from '@mui/material';
 
 import { BarChartRounded } from '@mui/icons-material';

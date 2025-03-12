@@ -12,7 +12,8 @@ dayjs.extend(relativeTime);
 const RecentActivityList = () => {
 
   const downloadRecentActivities = () => {
-    const last30Days = dayjs().subtract(30, 'days').format('YYYY-MM-DDTHH:mm:ssZ');
+    // const last30Days = dayjs().subtract(30, 'days').format('YYYY-MM-DDTHH:mm:ssZ');
+    
     // dispatch(profileActions.downloadRecentActivities({ last30Days }));
   };
 

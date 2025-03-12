@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { BarChart, MenuRounded } from '@mui/icons-material';
 
 import { Typography, Box, Toolbar, IconButton, useMediaQuery, CssBaseline, useTheme } from '@mui/material';

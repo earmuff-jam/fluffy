@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { Box, Card, CardContent, Typography, Button, Grid, Divider, Stack, Chip } from '@mui/material';
 
@@ -120,7 +120,7 @@ const Pricing = () => {
                   }}
                 />
               )}
-              <CardContent sx={{ flexGrow: 1, p: 3 }}>
+              <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h5" component="div" gutterBottom align="center" fontWeight="bold">
                   {plan.title}
                 </Typography>
@@ -142,7 +142,7 @@ const Pricing = () => {
 
                 <Divider sx={{ my: 2 }} />
 
-                <Stack spacing={2} sx={{ mb: 3 }}>
+                <Stack spacing={2}>
                   {plan.features.map((feature, featureIndex) => (
                     <Box key={featureIndex} sx={{ display: 'flex', alignItems: 'center' }}>
                       <CheckIcon sx={{ mr: 1, color: plan.color }} />
@@ -152,7 +152,7 @@ const Pricing = () => {
                 </Stack>
               </CardContent>
 
-              <Box sx={{ p: 2, pt: 0 }}>
+              <Box sx={{ p: 2 }}>
                 <Button
                   variant="contained"
                   fullWidth

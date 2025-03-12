@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button, Container, Grid, Typography, Box } from '@mui/material';
 
 import { ArrowForwardIosRounded } from '@mui/icons-material';

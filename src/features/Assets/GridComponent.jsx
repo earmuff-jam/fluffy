@@ -1,5 +1,7 @@
-import dayjs from 'dayjs';
 import { useState } from 'react';
+
+import dayjs from 'dayjs';
+
 import {
   Box,
   Card,
@@ -12,30 +14,32 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+
 import SimpleModal from '@common/SimpleModal';
 import ImagePicker from '@common/ImagePicker';
+
+import { useNavigate } from 'react-router-dom';
 import { capitalizeFirstLetter, EmptyComponent } from '@common/utils';
+
 import { useFetchAssets } from '@services/assetsApi';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const GridComponent = ({ isLoading, data, rowSelected, handleRowSelection, emptyComponentSubtext = '' }) => {
   const navigate = useNavigate();
 
-  const inventories = [];
-
   const { user } = useAuthenticator();
-  const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssets(user.userId);
+  const { data: assets = [] } = useFetchAssets(user.userId);
 
   const [displayModal, setDisplayModal] = useState(false);
   const [selectedItemID, setSelectedItemID] = useState(-1);
   const handleCloseModal = () => setDisplayModal(false);
 
-  const selectedAsset = inventories.filter((v) => v.id === selectedItemID).find(() => true);
+  const selectedAsset = assets.filter((v) => v.id === selectedItemID).find(() => true);
 
   const handleNavigate = (id) => navigate(`/inventories/${id}/update`);
 
   const handleUpload = (id, imgFormData) => {
+    console.debug(id, imgFormData);
     // dispatch(inventoryActions.uploadAndRefreshData({ id: id, selectedImage: imgFormData }));
     handleCloseModal();
   };

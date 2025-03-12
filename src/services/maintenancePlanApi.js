@@ -330,6 +330,7 @@ export const useDownloadMaintenancePlans = () => {
         return;
       }
 
+      /* eslint-disable no-unused-vars */
       const formattedData = rawData.map(
         ({ id, activity_id, created_by, updated_by, sharable_groups, status, ...rest }) => rest
       );
