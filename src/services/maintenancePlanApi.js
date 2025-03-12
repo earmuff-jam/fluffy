@@ -1,7 +1,10 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { generateClient } from 'aws-amplify/data';
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
+
+import { generateClient } from 'aws-amplify/data';
+import { getUrl, uploadData } from 'aws-amplify/storage';
+
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const client = generateClient();
 
@@ -197,6 +200,69 @@ export const useRemoveAssociationForAssetsWithMaintenancePlan = () => {
     },
     onSuccess: (_, { maintenancePlanId }) => {
       queryClient.invalidateQueries({ queryKey: ['assetsAssociatedWithMaintenancePlan', maintenancePlanId] });
+    },
+  });
+};
+
+/**
+ * useFetchMaintenancePlanPhoto ...
+ *
+ * retrieves the maintenance plan photo if it exists from s3 bucket
+ *
+ * @param {string} id - the uuid representation of the file
+ */
+export const useFetchMaintenancePlanPhoto = (imagePathWithId) => {
+  return useQuery({
+    queryKey: ['maintenancePlanPhoto'],
+    queryFn: async () => {
+      if (!imagePathWithId) {
+        return null;
+      }
+
+      const file = await getUrl({
+        path: imagePathWithId,
+      });
+
+      return file || null;
+    },
+    enabled: !!imagePathWithId,
+  });
+};
+
+/**
+ * useUploadMaintenancePlanPhoto ...
+ *
+ * uploads the maintenance plan photo for the selected plan. also
+ * updates the database with proper reference for plan img
+ *
+ */
+export const useUploadMaintenancePlanPhoto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, selectedImage }) => {
+      if (!id || !selectedImage) {
+        throw new Error('Required fields are missing for upload.');
+      }
+
+      const uploadResponse = uploadData({
+        path: `photos/${id}`,
+        data: selectedImage,
+      });
+
+      const result = await uploadResponse.result;
+
+      const response = await client.models.MaintenancePlans.get({ id: id });
+
+      await client.models.MaintenancePlans.update({
+        ...response.data,
+        imageURL: result?.path,
+      });
+    },
+    onSuccess: ({ id }) => {
+      queryClient.invalidateQueries(['maintenancePlans']);
+      queryClient.invalidateQueries(['maintenancePlan', id]);
+      queryClient.invalidateQueries(['maintenancePlanPhoto']);
     },
   });
 };

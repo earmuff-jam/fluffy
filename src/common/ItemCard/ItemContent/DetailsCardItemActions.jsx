@@ -10,7 +10,7 @@ export default function DetailsCardItemActions({
   imageBtnDataTour,
   shareBtnDataTour,
 }) {
-  const isShared = selectedItem?.sharable_groups?.length > 1 || false;
+  const isShared = selectedItem?.collaborators?.length > 1 || false;
 
   return (
     <CardActions
@@ -19,7 +19,7 @@ export default function DetailsCardItemActions({
       <Typography variant="caption">Last updated {dayjs(selectedItem?.updated_at).fromNow()}</Typography>
       <Stack direction="row" alignItems="center">
         <Badge
-          badgeContent={isShared ? selectedItem?.sharable_groups.length - 1 : 0} // account for creator in sharable_groups
+          badgeContent={isShared ? selectedItem?.collaborators.length - 1 : 0} // account for creator in collaborators
           color="secondary"
           max={10}
           anchorOrigin={{

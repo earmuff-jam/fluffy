@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { EditRounded } from '@mui/icons-material';
 import { Avatar, Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material';
@@ -6,20 +6,18 @@ import { Avatar, Box, Divider, IconButton, Paper, Stack, Typography } from '@mui
 import ImagePicker from '@common/ImagePicker';
 import UserDemographicsRow from '@features/Profile/UserDemographicsRow';
 
+import { useFetchProfilePhoto, useUploadProfilePhoto } from '@services/profileApi';
+
 export default function UserDemographics({ data = {}, handleEditMode }) {
-  const avatar = {};
-  const isAvatarLoading = false;
+  const { data: image } = useFetchProfilePhoto(data?.imageURL);
+  const { mutate: uploadProfilePhoto } = useUploadProfilePhoto();
 
   const [editMode, setEditMode] = useState(false);
 
-  const handleUpload = (id, selectedImage) => {
-    // dispatch(profileActions.updateProfileImage({ id: id, selectedImage: selectedImage }));
+  const handleUpload = async (id, selectedImage) => {
+    uploadProfilePhoto({ id, selectedImage });
     setEditMode(false);
   };
-
-  useEffect(() => {
-    // dispatch(profileActions.fetchAvatar());
-  }, [isAvatarLoading]);
 
   return (
     <Paper sx={{ padding: '1rem' }}>
@@ -35,7 +33,7 @@ export default function UserDemographics({ data = {}, handleEditMode }) {
           <Avatar
             sx={{ width: 100, height: 100, marginBottom: '1rem', cursor: 'pointer' }}
             onClick={() => setEditMode(true)}
-            src={avatar}
+            src={image?.url}
           />
         )}
 

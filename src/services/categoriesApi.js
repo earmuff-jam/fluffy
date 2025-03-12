@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
 
 import { generateClient } from 'aws-amplify/data';
+import { getUrl, uploadData } from 'aws-amplify/storage';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -117,6 +118,69 @@ export const useFetchAssetsAssociatedWithCategoriesByUserId = (userId) => {
       return response.data || [];
     },
     enabled: !!userId,
+  });
+};
+
+/**
+ * useFetchCategoryPhoto ...
+ *
+ * retrieves the category photo if it exists from s3 bucket
+ *
+ * @param {string} id - the uuid representation of the file
+ */
+export const useFetchCategoryPhoto = (imagePathWithId) => {
+  return useQuery({
+    queryKey: ['categoryPhoto'],
+    queryFn: async () => {
+      if (!imagePathWithId) {
+        return null;
+      }
+
+      const file = await getUrl({
+        path: imagePathWithId,
+      });
+
+      return file || null;
+    },
+    enabled: !!imagePathWithId,
+  });
+};
+
+/**
+ * useUploadCategoryPhoto ...
+ *
+ * uploads the category photo for the selected category. also
+ * updates the database with proper reference for category img
+ *
+ */
+export const useUploadCategoryPhoto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, selectedImage }) => {
+      if (!id || !selectedImage) {
+        throw new Error('Required fields are missing for upload.');
+      }
+
+      const uploadResponse = uploadData({
+        path: `photos/${id}`,
+        data: selectedImage,
+      });
+
+      const result = await uploadResponse.result;
+
+      const response = await client.models.Categories.get({ id: id });
+
+      await client.models.Categories.update({
+        ...response.data,
+        imageURL: result?.path,
+      });
+    },
+    onSuccess: ({ id }) => {
+      queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries(['category', id]);
+      queryClient.invalidateQueries(['categoryPhoto']);
+    },
   });
 };
 

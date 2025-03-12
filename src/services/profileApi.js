@@ -1,6 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { generateClient } from 'aws-amplify/data';
 import dayjs from 'dayjs';
+
+import { generateClient } from 'aws-amplify/data';
+
+import { getUrl, uploadData } from 'aws-amplify/storage';
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const client = generateClient();
 
@@ -188,6 +192,73 @@ export const useFetchUserRecentActivities = (userId, limitData = false) => {
       return recentActivityList;
     },
     enabled: !!userId,
+  });
+};
+
+/**
+ * useFetchProfilePhoto ...
+ *
+ * retrieves user photo if it exists from s3 bucket
+ *
+ * @param {string} id - the uuid representation of the file
+ */
+export const useFetchProfilePhoto = (imagePathWithId) => {
+  return useQuery({
+    queryKey: ['profilePhoto'],
+    queryFn: async () => {
+      if (!imagePathWithId) {
+        return null;
+      }
+
+      const file = await getUrl({
+        path: imagePathWithId,
+      });
+
+      return file || null;
+    },
+    enabled: !!imagePathWithId,
+  });
+};
+
+/**
+ * useUploadProfilePhoto ...
+ *
+ * uploads the profile photo for the selected user. this fn
+ * also updates the database with the imageURL property with the path
+ * of the user image url
+ *
+ */
+export const useUploadProfilePhoto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, selectedImage }) => {
+      if (!id || !selectedImage) {
+        throw new Error('Required fields are missing for upload.');
+      }
+
+      const uploadResponse = uploadData({
+        path: `photos/${id}`,
+        data: selectedImage,
+      });
+
+      const result = await uploadResponse.result;
+
+      const { data: userProfileList = [] } = await client.models.Profiles.list({
+        filter: { id: { eq: id } },
+      });
+
+      if (userProfileList.length > 0) {
+        const draftProfileData = userProfileList[0];
+        await client.models.Profiles.update({
+          ...draftProfileData,
+          imageURL: result?.path,
+        });
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profile', 'profilePhoto'] });
+    },
   });
 };
 

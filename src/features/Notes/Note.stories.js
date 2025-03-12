@@ -1,4 +1,4 @@
-import Note from '@features/Notes/Note/Note';
+import Note from '@features/Notes/Note';
 
 export default {
   title: 'Notes/Note',

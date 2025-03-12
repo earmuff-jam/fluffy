@@ -18,6 +18,7 @@ import {
   useCreateAssociationForItemsWithCategory,
   useFetchAssetsAssociatedWithCategoryById,
   useFetchCategoryById,
+  useFetchCategoryPhoto,
   useRemoveAssociationForAssetsWithCategory,
 } from '@services/categoriesApi';
 
@@ -26,11 +27,12 @@ export default function CategoryItemDetails() {
 
   const { data: selectedCategory = {}, isLoading: loading } = useFetchCategoryById(id);
   const { data: itemsInCategory = [] } = useFetchAssetsAssociatedWithCategoryById(id);
+  
+  const { data: selectedCategoryImage } = useFetchCategoryPhoto(selectedCategory?.imageURL);
 
   const createAssociationForAssetsWithCategory = useCreateAssociationForItemsWithCategory();
   const removeAssociationForAssetsFromCategory = useRemoveAssociationForAssetsWithCategory();
 
-  const selectedCategoryImage = '';
   const [displayModal, setDisplayModal] = useState(false);
   const [selectedIDList, setSelectedIDList] = useState([]);
   const [openConfirmationBoxModal, setOpenConfirmationBoxModal] = useState(false);

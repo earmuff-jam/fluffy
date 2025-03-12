@@ -4,7 +4,7 @@ import { Stack, Typography } from '@mui/material';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { capitalizeFirstLetter } from '@common/utils';
 import { CreateNewFolderRounded } from '@mui/icons-material';
-import StyledTimeline from '@features/RecentActivities/StyledTimeline/StyledTimeline';
+import StyledTimeline from '@features/RecentActivities/StyledTimeline';
 
 const RecentActivity = ({ activity, prefix }) => {
   dayjs.extend(relativeTime);

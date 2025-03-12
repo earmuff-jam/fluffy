@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Stack } from '@mui/material';
 
-import Note from '@features/Notes/Note/Note';
+import Note from '@features/Notes/Note';
 import SimpleModal from '@common/SimpleModal';
 import AddNote from '@features/Notes/AddNote';
 import NoteHeader from '@features/Notes/NoteHeader';

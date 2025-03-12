@@ -1,4 +1,4 @@
-import RecentActivity from '@features/RecentActivities/RecentActivity/RecentActivity';
+import RecentActivity from '@features/RecentActivities/RecentActivity';
 
 export default {
   title: 'RecentActivities/RecentActivity',

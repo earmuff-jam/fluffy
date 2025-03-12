@@ -17,8 +17,8 @@ import DetailsCardItemContent from '@common/ItemCard/ItemContent/DetailsCardItem
 import DetailsCardItemActions from '@common/ItemCard/ItemContent/DetailsCardItemActions';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { useUpdateCategory } from '@services/categoriesApi';
-import { useUpdateMaintenancePlan } from '@services/maintenancePlanApi';
+import { useUpdateCategory, useUploadCategoryPhoto } from '@services/categoriesApi';
+import { useUpdateMaintenancePlan, useUploadMaintenancePlanPhoto } from '@services/maintenancePlanApi';
 
 dayjs.extend(relativeTime);
 
@@ -35,7 +35,9 @@ export default function DetailsCard({
   const { user } = useAuthenticator();
 
   const { mutate: updateCategory } = useUpdateCategory();
+  const { mutate: uploadCategoryPhoto } = useUploadCategoryPhoto();
   const { mutate: updateMaintenancePlan } = useUpdateMaintenancePlan();
+  const { mutate: uploadMaintenancePlanPhoto } = useUploadMaintenancePlanPhoto();
 
   const [editImgMode, setEditImgMode] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -45,19 +47,21 @@ export default function DetailsCard({
 
   const handleUpload = (id, selectedImage) => {
     if (categoryMode) {
-      // dispatch(categoryItemDetailsActions.uploadImage({ id: id, selectedImage: selectedImage }));
+      uploadCategoryPhoto({ id, selectedImage });
     } else {
-      // dispatch(maintenancePlanItemActions.uploadImage({ id: id, selectedImage: selectedImage }));
+      uploadMaintenancePlanPhoto({ id, selectedImage });
     }
+
     enqueueSnackbar('New image upload successful.', {
       variant: 'success',
     });
+
     setEditImgMode(false);
   };
 
   const updateCollaborators = (sharableGroups) => {
     const newMembers = sharableGroups.map((v) => v.value);
-    
+
     if (categoryMode) {
       const draftSelectionDetails = produce(selectedItem, (draft) => {
         draft.updatedCategoryIdRef = user.userId;
@@ -87,7 +91,7 @@ export default function DetailsCard({
     <>
       <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
         <Card sx={{ flexGrow: 1 }}>
-          <CardMedia sx={{ height: '10rem' }} image={selectedImage || '/blank_canvas.png'} />
+          <CardMedia sx={{ height: '10rem' }} image={selectedImage?.url || '/blank_canvas.png'} />
           <DetailsCardItemContent
             selectedItem={selectedItem}
             categoryMode={categoryMode}

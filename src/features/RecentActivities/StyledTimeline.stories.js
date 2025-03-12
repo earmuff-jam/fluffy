@@ -1,4 +1,4 @@
-import StyledTimeline from '@features/RecentActivities/StyledTimeline/StyledTimeline';
+import StyledTimeline from '@features/RecentActivities/StyledTimeline';
 import { CreateNewFolderRounded } from '@mui/icons-material';
 
 export default {
