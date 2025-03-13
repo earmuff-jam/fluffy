@@ -1,6 +1,7 @@
-import { capitalizeFirstLetter, pluralizeWord } from '@common/utils';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+
+import { capitalizeFirstLetter } from '@common/utils';
 
 dayjs.extend(relativeTime);
 

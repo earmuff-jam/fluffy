@@ -1,11 +1,12 @@
-import { profileActions } from '@features/Profile/profileSlice';
-import { Autocomplete, Button, Chip, Stack, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+
+import { Autocomplete, Button, Chip, Stack, TextField } from '@mui/material';
+
+import { useFetchUserProfiles } from '@services/profileApi';
 
 export default function SharableGroups({ handleSubmit, existingGroups, creator }) {
-  const dispatch = useDispatch();
-  const { loading, profiles = [] } = useSelector((state) => state.profile);
+  const { data: profiles = [], isLoading: loading } = useFetchUserProfiles();
+
 
   const [options, setOptions] = useState([]);
   const [sharableGroups, setSharableGroups] = useState([]);
@@ -13,9 +14,9 @@ export default function SharableGroups({ handleSubmit, existingGroups, creator }
   useEffect(() => {
     if (!loading && Array.isArray(profiles)) {
       const draftProfiles = profiles.map((v) => ({
-        display: v.email_address,
+        display: v.emailAddress,
         value: v.id,
-        label: v.email_address,
+        label: v.emailAddress,
       }));
       setOptions(draftProfiles);
     }
@@ -29,18 +30,14 @@ export default function SharableGroups({ handleSubmit, existingGroups, creator }
         .filter((profile) => profile !== undefined);
 
       const draftCollaborators = collaborators.map((profile) => ({
-        display: profile.email_address,
+        display: profile.emailAddress,
         value: profile.id,
-        label: profile.email_address,
+        label: profile.emailAddress,
       }));
 
       setSharableGroups(draftCollaborators);
     }
   }, [existingGroups, profiles]);
-
-  useEffect(() => {
-    dispatch(profileActions.getProfileList());
-  }, []);
 
   return (
     <Stack spacing="0.2rem">
@@ -64,7 +61,7 @@ export default function SharableGroups({ handleSubmit, existingGroups, creator }
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => {
             const { key, ...tagProps } = getTagProps({ index });
-            return <Chip key={key} label={option.display} {...tagProps} disabled={option.value === creator} />;
+            return <Chip key={key} label={option.display} {...tagProps} disabled={option.value === creator.emailAddress} />;
           })
         }
       />

@@ -2,22 +2,16 @@ import { Suspense, useState } from 'react';
 
 import { Outlet } from 'react-router-dom';
 
-import {
-  Box,
-  CircularProgress,
-  Container,
-  CssBaseline,
-  Skeleton,
-  Stack,
-  ThemeProvider,
-  useMediaQuery,
-} from '@mui/material';
+import { Container, CssBaseline, Stack, ThemeProvider, useMediaQuery } from '@mui/material';
 
 import { useTheme } from '@emotion/react';
 import { darkTheme, lightTheme } from '@utils/Theme';
+
+import Loading from '@common/Loading';
+import AppToolbar from '@features/Layout/AppToolbar';
+import MenuActionBar from '@features/Layout/MenuActionBar';
+
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import AppToolbar from '@features/Layout/AppToolbar/AppToolbar';
-import MenuActionBar from '@features/Layout/MenuActionBar/MenuActionBar';
 import { useFetchUserProfileDetails } from '@services/profileApi';
 
 const Layout = () => {
@@ -31,35 +25,20 @@ const Layout = () => {
 
   const [openDrawer, setOpenDrawer] = useState(lgScreenSizeAndHigher ? true : false);
 
-  const handleDrawerOpen = () => setOpenDrawer(true);
-  const handleDrawerClose = () => setOpenDrawer(false);
-
-  if (isLoading) {
-    return <Skeleton height="100vh" />;
-  }
-
   return (
     <ThemeProvider theme={profileDetails?.appearance ? darkTheme : lightTheme}>
       <CssBaseline />
-      <Suspense
-        fallback={
-          <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-            <CircularProgress color="inherit" />
-          </Box>
-        }
-      >
-        <AppToolbar profileDetails={profileDetails} handleDrawerOpen={handleDrawerOpen} />
+      <Suspense fallback={<Loading />}>
+        <AppToolbar profileDetails={profileDetails} handleDrawerOpen={() => setOpenDrawer(true)} />
         <Stack sx={{ marginTop: '5rem', marginBottom: '1rem', py: 10 }}>
           <MenuActionBar
             openDrawer={openDrawer}
             createdByUserId={user.userId}
-            handleDrawerClose={handleDrawerClose}
+            handleDrawerClose={() => setOpenDrawer(false)}
             smScreenSizeAndHigher={smScreenSizeAndHigher}
             lgScreenSizeAndHigher={lgScreenSizeAndHigher}
           />
-          <Container maxWidth="xl">
-            <Outlet />
-          </Container>
+          <Container maxWidth="xl">{isLoading ? <Loading /> : <Outlet />}</Container>
         </Stack>
       </Suspense>
     </ThemeProvider>

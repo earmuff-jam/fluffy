@@ -1,7 +1,10 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { generateClient } from 'aws-amplify/data';
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
+
+import { generateClient } from 'aws-amplify/data';
+import { getUrl, uploadData } from 'aws-amplify/storage';
+
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const client = generateClient();
 
@@ -10,16 +13,11 @@ const client = generateClient();
  *
  * returns a list of all the maintenance plans
  */
-export const useFetchMaintenancePlans = (userId) => {
+export const useFetchMaintenancePlans = () => {
   return useQuery({
     queryKey: ['maintenancePlans'],
     queryFn: async () => {
       const response = await client.models.MaintenancePlans.list({
-        filter: {
-          createdMaintenancePlanIdRef: {
-            eq: userId,
-          },
-        },
         selectionSet: [
           'id',
           'name',
@@ -38,7 +36,6 @@ export const useFetchMaintenancePlans = (userId) => {
       });
       return response.data || [];
     },
-    enabled: !!userId,
   });
 };
 
@@ -77,7 +74,14 @@ export const useFetchAssetsAssociatedWithMaintenancePlanById = (id) => {
             eq: id,
           },
         },
-        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'maintenancePlanId.*'],
+        selectionSet: [
+          'id',
+          'assetId.*',
+          'assetId.storageLocationId.*',
+          'assetId.createdBy.*',
+          'assetId.updatedBy.*',
+          'maintenancePlanId.*',
+        ],
       });
 
       return response.data || [];
@@ -127,7 +131,10 @@ export const useCreateMaintenancePlan = () => {
   return useMutation({
     mutationFn: async (plan) => {
       if (!plan) throw new Error('Maintenance plan details is required for creation.');
-      const { data, errors } = await client.models.MaintenancePlans.create(plan);
+      const { data, errors } = await client.models.MaintenancePlans.create(plan, {
+        authMode: 'userPool',
+      });
+
       if (errors) throw new Error(errors);
       return data;
     },
@@ -178,7 +185,7 @@ export const useRemoveAssociationForAssetsWithMaintenancePlan = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ maintenancePlanId, ids }) => {
+    mutationFn: async ({ ids }) => {
       if (!ids || !Array.isArray(ids) || ids.length === 0) {
         throw new Error('Maintenance Plan Items IDs is required for deletion.');
       }
@@ -198,6 +205,69 @@ export const useRemoveAssociationForAssetsWithMaintenancePlan = () => {
 };
 
 /**
+ * useFetchMaintenancePlanPhoto ...
+ *
+ * retrieves the maintenance plan photo if it exists from s3 bucket
+ *
+ * @param {string} id - the uuid representation of the file
+ */
+export const useFetchMaintenancePlanPhoto = (imagePathWithId) => {
+  return useQuery({
+    queryKey: ['maintenancePlanPhoto'],
+    queryFn: async () => {
+      if (!imagePathWithId) {
+        return null;
+      }
+
+      const file = await getUrl({
+        path: imagePathWithId,
+      });
+
+      return file || null;
+    },
+    enabled: !!imagePathWithId,
+  });
+};
+
+/**
+ * useUploadMaintenancePlanPhoto ...
+ *
+ * uploads the maintenance plan photo for the selected plan. also
+ * updates the database with proper reference for plan img
+ *
+ */
+export const useUploadMaintenancePlanPhoto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, selectedImage }) => {
+      if (!id || !selectedImage) {
+        throw new Error('Required fields are missing for upload.');
+      }
+
+      const uploadResponse = uploadData({
+        path: `photos/${id}`,
+        data: selectedImage,
+      });
+
+      const result = await uploadResponse.result;
+
+      const response = await client.models.MaintenancePlans.get({ id: id });
+
+      await client.models.MaintenancePlans.update({
+        ...response.data,
+        imageURL: result?.path,
+      });
+    },
+    onSuccess: ({ id }) => {
+      queryClient.invalidateQueries(['maintenancePlans']);
+      queryClient.invalidateQueries(['maintenancePlan', id]);
+      queryClient.invalidateQueries(['maintenancePlanPhoto']);
+    },
+  });
+};
+
+/**
  * useUpdateMaintenancePlan ...
  *
  * updates an existing maintenance plan
@@ -208,8 +278,11 @@ export const useUpdateMaintenancePlan = () => {
   return useMutation({
     mutationFn: async (plan) => {
       if (!plan) throw new Error('Maintenance plan details is required for update');
+
       const { data, errors } = await client.models.MaintenancePlans.update(plan);
+
       if (errors) throw new Error(errors);
+
       return data;
     },
     onSuccess: () => {
@@ -257,6 +330,7 @@ export const useDownloadMaintenancePlans = () => {
         return;
       }
 
+      /* eslint-disable no-unused-vars */
       const formattedData = rawData.map(
         ({ id, activity_id, created_by, updated_by, sharable_groups, status, ...rest }) => rest
       );

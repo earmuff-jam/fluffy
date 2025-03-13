@@ -50,7 +50,12 @@ const SectionCardContent = ({
 
   return (
     <>
-      <ItemCard data={content} handleEdit={handleEdit} handleDelete={handleDelete} prefixURI={prefixURI} />
+      <ItemCard
+        data={content}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+        prefixURI={prefixURI}
+      />
       <ConfirmationBoxModal
         openDialog={openDialog}
         title="Confirm deletion"

@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
 
 import { generateClient } from 'aws-amplify/data';
+import { getUrl, uploadData } from 'aws-amplify/storage';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -13,16 +14,11 @@ const client = generateClient();
  *
  * returns a list of all categories
  */
-export const useFetchAllCategories = (userId) => {
+export const useFetchAllCategories = () => {
   return useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
       const response = await client.models.Categories.list({
-        filter: {
-          createdCategoryIdRef: {
-            eq: userId,
-          },
-        },
         selectionSet: [
           'id',
           'name',
@@ -41,7 +37,6 @@ export const useFetchAllCategories = (userId) => {
       });
       return response.data || [];
     },
-    enabled: !!userId,
   });
 };
 
@@ -80,7 +75,14 @@ export const useFetchAssetsAssociatedWithCategoryById = (id) => {
             eq: id,
           },
         },
-        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'categoryId.*'],
+        selectionSet: [
+          'id',
+          'assetId.*',
+          'assetId.storageLocationId.*',
+          'assetId.createdBy.*',
+          'assetId.updatedBy.*',
+          'categoryId.*',
+        ],
       });
 
       return response.data || [];
@@ -120,6 +122,69 @@ export const useFetchAssetsAssociatedWithCategoriesByUserId = (userId) => {
 };
 
 /**
+ * useFetchCategoryPhoto ...
+ *
+ * retrieves the category photo if it exists from s3 bucket
+ *
+ * @param {string} id - the uuid representation of the file
+ */
+export const useFetchCategoryPhoto = (imagePathWithId) => {
+  return useQuery({
+    queryKey: ['categoryPhoto'],
+    queryFn: async () => {
+      if (!imagePathWithId) {
+        return null;
+      }
+
+      const file = await getUrl({
+        path: imagePathWithId,
+      });
+
+      return file || null;
+    },
+    enabled: !!imagePathWithId,
+  });
+};
+
+/**
+ * useUploadCategoryPhoto ...
+ *
+ * uploads the category photo for the selected category. also
+ * updates the database with proper reference for category img
+ *
+ */
+export const useUploadCategoryPhoto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, selectedImage }) => {
+      if (!id || !selectedImage) {
+        throw new Error('Required fields are missing for upload.');
+      }
+
+      const uploadResponse = uploadData({
+        path: `photos/${id}`,
+        data: selectedImage,
+      });
+
+      const result = await uploadResponse.result;
+
+      const response = await client.models.Categories.get({ id: id });
+
+      await client.models.Categories.update({
+        ...response.data,
+        imageURL: result?.path,
+      });
+    },
+    onSuccess: ({ id }) => {
+      queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries(['category', id]);
+      queryClient.invalidateQueries(['categoryPhoto']);
+    },
+  });
+};
+
+/**
  * useCreateCategory ...
  *
  * create a new category
@@ -130,7 +195,10 @@ export const useCreateCategory = () => {
   return useMutation({
     mutationFn: async (category) => {
       if (!category) throw new Error('Category details is required for creation.');
-      const { data, errors } = await client.models.Categories.create(category);
+      const { data, errors } = await client.models.Categories.create(category, {
+        authMode: 'userPool',
+      });
+
       if (errors) throw new Error(errors);
       return data;
     },
@@ -184,7 +252,7 @@ export const useRemoveAssociationForAssetsWithCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ categoryId, ids }) => {
+    mutationFn: async ({ ids }) => {
       if (!ids || !Array.isArray(ids) || ids.length === 0) {
         throw new Error('Category Items IDs is required for deletion.');
       }
@@ -214,8 +282,11 @@ export const useUpdateCategory = () => {
   return useMutation({
     mutationFn: async (category) => {
       if (!category) throw new Error('Category details is required for update');
+
       const { data, errors } = await client.models.Categories.update(category);
+
       if (errors) throw new Error(errors);
+
       return data;
     },
     onSuccess: () => {
@@ -263,6 +334,7 @@ export const useDownloadCategories = () => {
         return;
       }
 
+      /* eslint-disable no-unused-vars */
       const formattedData = rawData.map(
         ({ id, activity_id, created_by, updated_by, sharable_groups, status, ...rest }) => rest
       );

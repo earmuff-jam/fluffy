@@ -1,18 +1,24 @@
 import { useState } from 'react';
-import { enqueueSnackbar } from 'notistack';
-import { useParams } from 'react-router-dom';
+
 import { Skeleton, Stack } from '@mui/material';
 import { AddRounded } from '@mui/icons-material';
+
+import { enqueueSnackbar } from 'notistack';
+import { useParams } from 'react-router-dom';
+
 import SimpleModal from '@common/SimpleModal';
 import { ConfirmationBoxModal } from '@common/utils';
+
 import AddItem from '@common/ItemCard/AddItem/AddItem';
 import ItemHeader from '@common/ItemCard/ItemHeader/ItemHeader';
 import ItemContent from '@common/ItemCard/ItemContent/ItemContent';
 import ItemGraphWrapper from '@common/ItemCard/ItemGraph/ItemGraphWrapper';
+
 import {
   useCreateAssociationForItemsWithCategory,
   useFetchAssetsAssociatedWithCategoryById,
   useFetchCategoryById,
+  useFetchCategoryPhoto,
   useRemoveAssociationForAssetsWithCategory,
 } from '@services/categoriesApi';
 
@@ -21,11 +27,12 @@ export default function CategoryItemDetails() {
 
   const { data: selectedCategory = {}, isLoading: loading } = useFetchCategoryById(id);
   const { data: itemsInCategory = [] } = useFetchAssetsAssociatedWithCategoryById(id);
+  
+  const { data: selectedCategoryImage } = useFetchCategoryPhoto(selectedCategory?.imageURL);
 
   const createAssociationForAssetsWithCategory = useCreateAssociationForItemsWithCategory();
   const removeAssociationForAssetsFromCategory = useRemoveAssociationForAssetsWithCategory();
 
-  const selectedCategoryImage = '';
   const [displayModal, setDisplayModal] = useState(false);
   const [selectedIDList, setSelectedIDList] = useState([]);
   const [openConfirmationBoxModal, setOpenConfirmationBoxModal] = useState(false);

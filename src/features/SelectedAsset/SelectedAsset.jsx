@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
-import { enqueueSnackbar } from 'notistack';
+
 import { useParams } from 'react-router-dom';
+
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+import { Button, Divider, Stack, Typography } from '@mui/material';
+import { AddPhotoAlternateRounded, CheckRounded } from '@mui/icons-material';
+
+import { enqueueSnackbar } from 'notistack';
+
 import RowHeader from '@common/RowHeader';
 import SimpleModal from '@common/SimpleModal';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import ImagePicker from '@common/ImagePicker/ImagePicker';
-import { Button, Divider, Stack, Typography } from '@mui/material';
+import ImagePicker from '@common/ImagePicker';
+
 import { BLANK_ASSET_DETAILS_FORM } from '@features/Assets/constants';
-import { inventoryActions } from '@features/Assets/inventorySlice';
-import { AddPhotoAlternateRounded, CheckRounded } from '@mui/icons-material';
+
 import SelectedAssetFormFields from '@features/SelectedAsset/SelectedAssetFormFields';
-import SelectedAssetWeightDimension from '@features/SelectedAsset/SelectedAssetWeightDimension';
 import SelectedAssetMoreInformation from '@features/SelectedAsset/SelectedAssetMoreInformation';
+import SelectedAssetWeightDimensionFormFields from '@features/SelectedAsset/SelectedAssetWeightDimensionFormFields';
+
 import { useFetchStorageLocations } from '@services/storageLocationApi';
 import { useFetchAssetById, useUpdateAsset } from '@services/assetsApi';
 
@@ -139,7 +146,8 @@ export default function SelectedAsset() {
   };
 
   const handleUpload = (id, imgFormData) => {
-    dispatch(inventoryActions.uploadAndRefreshData({ id: id, selectedImage: imgFormData }));
+    console.debug(id, imgFormData);
+    // dispatch(inventoryActions.uploadAndRefreshData({ id: id, selectedImage: imgFormData }));
     setEditImgMode(false);
   };
 
@@ -221,7 +229,7 @@ export default function SelectedAsset() {
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
         <Typography variant="caption">Weight and Dimension</Typography>
       </Divider>
-      <SelectedAssetWeightDimension formFields={formData} handleInputChange={handleInputChange} />
+      <SelectedAssetWeightDimensionFormFields formFields={formData} handleInputChange={handleInputChange} />
       <Stack sx={{ margin: '1rem 0rem' }}>
         <Button
           startIcon={<CheckRounded fontSize="small" />}

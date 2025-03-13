@@ -1,7 +1,7 @@
 import { Autocomplete, CardMedia, Stack, TextField, createFilterOptions } from '@mui/material';
-import { inventoryActions } from '@features/Assets/inventorySlice';
-import TextFieldWithLabel from '@common/TextFieldWithLabel/TextFieldWithLabel';
+
 import ColorPicker from '@common/ColorPicker';
+import TextFieldWithLabel from '@common/TextFieldWithLabel';
 
 const filter = createFilterOptions();
 

@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
+
 import { Stack } from '@mui/material';
+
 import SimpleModal from '@common/SimpleModal';
 import { FILTER_OPTIONS } from '@features/Reports/constants';
-import ReportsHeader from '@features/Reports/ReportHeader/ReportsHeader';
-import ReportContent from '@features/Reports/ReportContent/ReportContent';
-import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu/ReportsFilterMenu';
+
+import ReportsHeader from '@features/Reports/ReportsHeader';
+import ReportContent from '@features/Reports/ReportContent';
+import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
+
 import { useFetchAssetReportByDate } from '@services/assetsApi';
 import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';
 
@@ -15,8 +18,8 @@ export default function Reports() {
   const [includeOverdue, setIncludeOverdue] = useState(true);
   const [sinceValue, setSinceValue] = useState(FILTER_OPTIONS.find((item) => item.label === 'ytd').value);
 
+  const { data: maintenancePlanList = [] } = useFetchMaintenancePlans();
   const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssetReportByDate(sinceValue);
-  const { data: maintenancePlanList = [], isLoading: maintenancePlanListLoading } = useFetchMaintenancePlans();
 
   const downloadReports = () => {
     // dispatch(reportActions.downloadReports({ since: sinceValue, includeOverdue: includeOverdue, assets }));

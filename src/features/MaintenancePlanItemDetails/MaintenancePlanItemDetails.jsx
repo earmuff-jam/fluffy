@@ -16,6 +16,7 @@ import {
   useCreateAssociationForItemsWithMaintenancePlan,
   useFetchAssetsAssociatedWithMaintenancePlanById,
   useFetchMaintenancePlanById,
+  useFetchMaintenancePlanPhoto,
   useRemoveAssociationForAssetsWithMaintenancePlan,
 } from '@services/maintenancePlanApi';
 
@@ -23,11 +24,14 @@ export default function MaintenancePlanItemDetails() {
   const { id } = useParams();
 
   const { data: selectedMaintenancePlan = {}, isLoading: loading } = useFetchMaintenancePlanById(id);
+  
   const { data: itemsInMaintenancePlan = [] } = useFetchAssetsAssociatedWithMaintenancePlanById(id);
+
+  const { data: selectedMaintenancePlanImage } = useFetchMaintenancePlanPhoto(selectedMaintenancePlan?.imageURL);
+
   const createAssociationForAssetsWithMaintenancePlan = useCreateAssociationForItemsWithMaintenancePlan();
   const removeAssociationForAssetsFromMaintenancePlan = useRemoveAssociationForAssetsWithMaintenancePlan();
 
-  const selectedMaintenancePlanImage = '';
   const [displayModal, setDisplayModal] = useState(false);
   const [selectedIDList, setSelectedIDList] = useState([]);
   const [openConfirmationBoxModal, setOpenConfirmationBoxModal] = useState(false);

@@ -1,17 +1,18 @@
 import { Suspense, useEffect } from 'react';
 
+import { router } from '@common/router';
 import { TourProvider } from '@reactour/tour';
 import { RouterProvider } from 'react-router-dom';
 
-import { Dialog } from '@mui/material';
-import { router } from '@common/router';
-import DEFAULT_TOUR_STEPS from '@utils/tour/steps';
+import DEFAULT_TOUR_STEPS from '@utils/steps';
+import Header from '@features/LandingPage/Header';
+import Footer from '@features/LandingPage/Footer';
 
-import AuthHeader from '@features/LandingPage/AuthHeader';
-import AuthFooter from '@features/LandingPage/AuthFooter';
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
-
 import { useCreateProfile } from '@services/profileApi';
+import EmailSection from '@features/LandingPage/EmailSection';
+import Pricing from '@features/LandingPage/Pricing';
+import Loading from '@common/Loading';
 
 const ApplicationValidator = () => {
   const { user } = useAuthenticator();
@@ -19,25 +20,25 @@ const ApplicationValidator = () => {
 
   useEffect(() => {
     if (user) {
-      // create user profile if the user profile does not exist
-      // uses data from default authenticator to build profile details
-      createProfile(user);
+      createProfile(user); // 1st time create profile
     }
   }, [user]);
 
   if (!user) {
     return (
       <>
-        <AuthHeader />
+        <Header />
         <Authenticator />
-        <AuthFooter />
+        <EmailSection />
+        <Pricing />
+        <Footer />
       </>
     );
   }
 
   return (
     <TourProvider steps={DEFAULT_TOUR_STEPS}>
-      <Suspense fallback={<Dialog title="Loading..." />}>
+      <Suspense fallback={<Loading />}>
         <RouterProvider router={router} />
       </Suspense>
     </TourProvider>

@@ -5,14 +5,15 @@ import { Divider, Stack } from '@mui/material';
 import { DownloadRounded } from '@mui/icons-material';
 
 import RowHeader from '@common/RowHeader';
-import RecentActivityAccordion from '@features/RecentActivities/RecentActivityAccordion/RecentActivityAccordion';
+import RecentActivityAccordion from '@features/RecentActivities/RecentActivityAccordion';
 
 dayjs.extend(relativeTime);
 
 const RecentActivityList = () => {
 
   const downloadRecentActivities = () => {
-    const last30Days = dayjs().subtract(30, 'days').format('YYYY-MM-DDTHH:mm:ssZ');
+    // const last30Days = dayjs().subtract(30, 'days').format('YYYY-MM-DDTHH:mm:ssZ');
+    
     // dispatch(profileActions.downloadRecentActivities({ last30Days }));
   };
 

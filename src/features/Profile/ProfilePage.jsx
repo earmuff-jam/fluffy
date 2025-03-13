@@ -5,13 +5,14 @@ import { useTheme } from '@emotion/react';
 import { Paper, Stack, useMediaQuery } from '@mui/material';
 
 import SimpleModal from '@common/SimpleModal';
-import UserStatus from '@features/Profile/UserStatus/UserStatus';
-import ProfileForm from '@features/Profile/ProfileForm/ProfileForm';
+import UserStatus from '@features/Profile/UserStatus';
+import ProfileForm from '@features/Profile/ProfileForm';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import UserDetails from '@features/Profile/UserDetails/UserDetails';
-import UserDemographics from '@features/Profile/UserDemographics/UserDemographics';
-import AppearanceSettings from '@features/Profile/AppearanceSettings/AppearanceSettings';
+import UserDetails from '@features/Profile/UserDetails';
+import UserDemographics from '@features/Profile/UserDemographics';
+import AppearanceSettings from '@features/Profile/AppearanceSettings';
+
 import { useFetchUserProfileDetails, useFetchUserProfileStats } from '@services/profileApi';
 
 const ProfilePage = () => {

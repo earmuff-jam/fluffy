@@ -1,16 +1,23 @@
-import { produce } from 'immer';
-import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
+
+import { enqueueSnackbar } from 'notistack';
+
 import { Button, Stack } from '@mui/material';
+
+import dayjs from 'dayjs';
+
+import { produce } from 'immer';
+
 import ColorPicker from '@common/ColorPicker';
-import LocationPicker from '@common/Location/LocationPicker';
-import StatusOptions from '@common/StatusOptions/StatusOptions';
+import LocationPicker from '@common/LocationPicker';
+import StatusOptions from '@features/FormComponents/StatusOptions';
+
 import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
 import AddFormHeader from '@features/FormComponents/AddFormHeader';
 import { ADD_CATEGORY_FORM_FIELDS } from '@features/Categories/constants';
-import { useCreateCategory, useUpdateCategory } from '@services/categoriesApi';
-import dayjs from 'dayjs';
+
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useCreateCategory, useUpdateCategory } from '@services/categoriesApi';
 
 export default function AddCategory({
   categories,
@@ -113,7 +120,6 @@ export default function AddCategory({
         updatedAt: dayjs().toISOString(),
         createdCategoryIdRef: user.userId,
         updatedCategoryIdRef: user.userId,
-        // sharable_groups: [userID],
       };
       createCategory(draftRequest);
     }

@@ -237,7 +237,7 @@ export const useUpdateAsset = () => {
       if (errors) throw new Error(errors);
       return data;
     },
-    onSuccess: () => {
+    onSuccess: ({ asset }) => {
       queryClient.invalidateQueries({ queryKey: ['assets'] });
       queryClient.invalidateQueries({ queryKey: ['asset', asset.id] }); // used when updating selected asset
     },
