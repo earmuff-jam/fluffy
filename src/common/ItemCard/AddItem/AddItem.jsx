@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 
-import { VIEW_INVENTORY_LIST_HEADERS } from '@features/Assets/constants';
+import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
 
 import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
 
@@ -47,7 +47,7 @@ export default function AddItem({ selectedIDList, setSelectedIDList, associatedI
         showActions={false}
         isLoading={isLoading}
         data={assets.filter((asset) => !associatedItems?.some((item) => item.id === asset.id))}
-        columns={Object.values(VIEW_INVENTORY_LIST_HEADERS).filter((v) => v.displayConcise)}
+        columns={Object.values(ASSET_LIST_HEADERS).filter((v) => v.displayConcise)}
         rowFormatter={rowFormatter}
         selectedIDList={selectedIDList}
         handleRowSelection={handleRowSelection}

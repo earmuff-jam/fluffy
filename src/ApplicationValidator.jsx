@@ -9,12 +9,11 @@ import Header from '@features/LandingPage/Header';
 import Footer from '@features/LandingPage/Footer';
 
 import Loading from '@common/Loading';
-import Pricing from '@features/LandingPage/Pricing';
+// import Pricing from '@features/LandingPage/Pricing';
 import EmailSection from '@features/LandingPage/EmailSection';
 
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import { useCreateProfile } from '@services/profileApi';
-
 
 const ApplicationValidator = () => {
   const { user } = useAuthenticator();
@@ -32,7 +31,9 @@ const ApplicationValidator = () => {
         <Header />
         <Authenticator />
         <EmailSection />
-        <Pricing />
+        {/* https://github.com/earmuff-jam/fluffy/issues/6 
+        pending until stripe payment is configured
+        <Pricing /> */}
         <Footer />
       </>
     );

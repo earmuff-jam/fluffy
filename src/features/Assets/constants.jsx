@@ -3,6 +3,8 @@ import dayjs from 'dayjs';
 import QrCodeGen from '@common/QrCodeGen';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { CheckRounded, CloseRounded } from '@mui/icons-material';
+import { capitalizeFirstLetter } from '@common/utils';
+import { Box } from '@mui/material';
 
 dayjs.extend(relativeTime);
 
@@ -101,13 +103,110 @@ export const BUILD_TABLE_CONSTANTS = (columnLabels) => (selectedRow) => {
 };
 
 /**
- * VIEW_INVENTORY_LIST_HEADERS
+ * ASSETS_LIST_HEADERS ...
+ * 
+ * List of assets headers for the MRTv2 table.
+ */
+export const ASSETS_LIST_HEADERS = [
+  {
+    name: 'name',
+    header: 'NAME',
+    accessorKey: 'name',
+    size: 200,
+    Cell: ({ cell }) => {
+      const assetName = cell.getValue();
+      return capitalizeFirstLetter(assetName);
+    },
+  },
+  {
+    name: 'description',
+    header: 'DESCRIPTION',
+    accessorKey: 'description',
+    size: 300,
+    Cell: ({ cell }) => {
+      const assetDescription = cell.getValue();
+      return assetDescription?.length > 0 ? capitalizeFirstLetter(assetDescription) : '-';
+    },
+  },
+  {
+    name: 'price',
+    header: 'PRICE',
+    accessorKey: 'price',
+    size: 150,
+    Cell: ({ cell }) => {
+      return (
+        <Box
+          component="span"
+          sx={(theme) => ({
+            backgroundColor:
+              cell.getValue() < 1000
+                ? theme.palette.success.light
+                : cell.getValue() >= 1000 && cell.getValue() < 10000
+                  ? theme.palette.warning.light
+                  : theme.palette.info.light,
+            borderRadius: '0.25rem',
+            color: '#fff',
+            maxWidth: '9ch',
+            p: '0.25rem',
+          })}
+        >
+          {cell.getValue()?.length > 0 ? cell.getValue() : '-'}
+        </Box>
+      );
+    },
+  },
+  {
+    name: 'color',
+    header: 'COLOR',
+    accessorKey: 'color',
+    size: 150,
+  },
+  {
+    name: 'quantity',
+    header: 'QUANTITY',
+    accessorKey: 'quantity',
+    size: 150,
+  },
+  {
+    name: 'storageLocation',
+    header: 'STORAGE LOCATION',
+    accessorKey: 'storageLocationId.location',
+    size: 200,
+    Cell: ({ cell }) => {
+      const storageLocation = cell.getValue();
+      return storageLocation?.length > 0 ? capitalizeFirstLetter(storageLocation) : '-';
+    },
+  },
+  {
+    name: 'updatedAt',
+    header: 'UPDATED AT',
+    accessorKey: 'updatedAt',
+    size: 150,
+    Cell: ({ cell }) => {
+      const updatedAt = cell.getValue();
+      return dayjs(updatedAt).fromNow();
+    },
+  },
+  {
+    name: 'updator',
+    header: 'LAST UPDATED BY',
+    accessorKey: 'updatedBy',
+    size: 150,
+    Cell: ({ cell }) => {
+      const updatedBy = cell.getValue();
+      return updatedBy?.emailAddress.length > 0 ? updatedBy?.emailAddress : '-';
+    },
+  },
+];
+
+/**
+ * ASSET_LIST_HEADERS
  *
  * Asset list headers used for table columns and to build details for drawer
  * component. modifier fn can take value, { column, label } to display variations.
  *
  */
-export const VIEW_INVENTORY_LIST_HEADERS = {
+export const ASSET_LIST_HEADERS = {
   name: {
     id: 1,
     colName: 'name',
@@ -228,7 +327,7 @@ export const VIEW_INVENTORY_LIST_HEADERS = {
 
 /**
  * BLANK_ASSET_DETAILS_FORM ...
- * 
+ *
  * Blank Asset details form
  */
 export const BLANK_ASSET_DETAILS_FORM = {

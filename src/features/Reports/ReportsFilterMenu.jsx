@@ -3,7 +3,7 @@ import { FILTER_OPTIONS } from '@features/Reports/constants';
 import { Button, Checkbox, FormControlLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
 
 export default function ReportsFilterMenu({
-  handleClose,
+  applyFilter,
   sinceValue,
   setSinceValue,
   includeOverdue,
@@ -11,12 +11,6 @@ export default function ReportsFilterMenu({
 }) {
   const handleSinceValue = (e) => {
     setSinceValue(e.target.value);
-  };
-
-  const submit = () => {
-    // dispatch(reportActions.getReports({ since: sinceValue, includeOverdue: includeOverdue }));
-    // dispatch(inventoryActions.getAllInventoriesForUser({ since: sinceValue }));
-    handleClose();
   };
 
   return (
@@ -43,7 +37,7 @@ export default function ReportsFilterMenu({
         }
         label={<Typography variant="caption">Include overdue items</Typography>}
       />
-      <Button disabled={sinceValue.length <= 0} onClick={submit}>
+      <Button disabled={sinceValue.length <= 0} onClick={applyFilter}>
         Submit
       </Button>
     </Stack>

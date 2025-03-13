@@ -29,6 +29,7 @@ ReportsFilterMenuDefault.args = {
     },
   ],
   loading: false,
+  isSecondaryButtonLoading: false,
   selectedAsset: {},
   selectedMaintenancePlan: {},
   setDisplayModal: () => {},

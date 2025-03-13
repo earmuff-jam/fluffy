@@ -99,6 +99,30 @@ export const useFetchAssetReportByDate = (dateStr) => {
 };
 
 /**
+ * useDownloadAssetsList ...
+ *
+ * downloads the list of all assets within a selected time period
+ * @param {string} dateStr - the string representation of the datetime field
+ */
+export const useDownloadAssetsList = (dateStr) => {
+  return useQuery({
+    queryKey: ['downloadAssetList'],
+    queryFn: async () => {
+      const response = await client.models.Assets.list({
+        selectionSet: assetWithStorageLocationCols,
+        filter: {
+          updatedAt: {
+            ge: dateStr,
+          },
+        },
+      });
+      return response.data || [];
+    },
+    enabled: false,
+  });
+};
+
+/**
  * useCreateAsset ...
  *
  * creates a new asset
