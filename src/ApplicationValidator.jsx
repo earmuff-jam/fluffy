@@ -8,11 +8,13 @@ import DEFAULT_TOUR_STEPS from '@utils/steps';
 import Header from '@features/LandingPage/Header';
 import Footer from '@features/LandingPage/Footer';
 
+import Loading from '@common/Loading';
+import Pricing from '@features/LandingPage/Pricing';
+import EmailSection from '@features/LandingPage/EmailSection';
+
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import { useCreateProfile } from '@services/profileApi';
-import EmailSection from '@features/LandingPage/EmailSection';
-import Pricing from '@features/LandingPage/Pricing';
-import Loading from '@common/Loading';
+
 
 const ApplicationValidator = () => {
   const { user } = useAuthenticator();
