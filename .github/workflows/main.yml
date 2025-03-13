@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: '21.1.0'
 
+      - name: Create shell for amplify outputs
+        run: touch amplify_outputs.json # doing this since its required
+
       - name: Install dependencies
         run: |
           npm install
