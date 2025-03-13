@@ -20,12 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn
+          npm install
 
       - name: Build frontend
         run: |
-          CI=true yarn build
+          CI=true npm run build
 
       - name: Run linter
         run: |
-          yarn lint
+          npm run lint
