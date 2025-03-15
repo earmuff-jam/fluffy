@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Box, Divider, Paper, Stack, Typography } from '@mui/material';
-import { GridViewRounded, OnlinePredictionRounded, UpdateRounded, ViewListRounded } from '@mui/icons-material';
+import { OnlinePredictionRounded, SubjectRounded, UpdateRounded } from '@mui/icons-material';
 
 dayjs.extend(relativeTime);
 
@@ -35,9 +35,9 @@ export default function UserDetails({ data = {} }) {
           </Typography>
         </Stack>
         <Stack direction={'row'} alignItems={'center'} spacing={1}>
-          {data?.isGridView ? <GridViewRounded color="primary" /> : <ViewListRounded color="primary" />}
+          <SubjectRounded color="primary" />
           <Typography variant="subtitle2" color="text.secondary">
-            {data?.isGridView ? 'Viewing Assets as Grid' : 'Viewing Assets as List'}
+            Displaying assets in ordered list
           </Typography>
         </Stack>
         <Stack direction={'row'} alignItems={'center'} spacing={1}>

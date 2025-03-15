@@ -13,7 +13,7 @@ const Template = (args) => <ReportsFilterMenu {...args} />;
 export const ReportsFilterMenuDefault = Template.bind({});
 
 ReportsFilterMenuDefault.args = {
-  handleClose: () => {},
+  applyFilter: () => {},
   sinceValue: dayjs().toISOString(),
   setSinceValue: () => {},
   includeOverdue: true,

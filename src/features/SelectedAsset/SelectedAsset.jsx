@@ -20,6 +20,7 @@ import SelectedAssetFormFields from '@features/SelectedAsset/SelectedAssetFormFi
 import SelectedAssetMoreInformation from '@features/SelectedAsset/SelectedAssetMoreInformation';
 import SelectedAssetWeightDimensionFormFields from '@features/SelectedAsset/SelectedAssetWeightDimensionFormFields';
 
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useFetchStorageLocations } from '@services/storageLocationApi';
 import { useFetchAssetById, useUpdateAsset } from '@services/assetsApi';
 
@@ -29,8 +30,9 @@ export default function SelectedAsset() {
   const { id } = useParams();
 
   const selectedImage = '';
+  const { user } = useAuthenticator();
   const { data: asset, isLoading: loading } = useFetchAssetById(id);
-  const { data: storageLocations, isLoading: storageLocationsLoading } = useFetchStorageLocations();
+  const { data: storageLocations, isLoading: storageLocationsLoading } = useFetchStorageLocations(user.userId);
 
   const { mutate: updateAsset } = useUpdateAsset();
 

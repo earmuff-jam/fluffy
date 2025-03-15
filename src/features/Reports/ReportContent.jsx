@@ -10,12 +10,12 @@ import { EmptyComponent } from '@common/utils';
 import DataTable from '@common/DataTable/DataTable';
 
 import { useMaterialReactTable } from 'material-react-table';
-import { ASSETS_IN_REPORTS_HEADER } from '@features/Reports/constants';
+import { ASSETS_LIST_HEADERS } from '@features/Assets/constants';
 
 dayjs.extend(relativeTime);
 
 export default function ReportContent({ sinceValue, assets }) {
-  const columns = useMemo(() => ASSETS_IN_REPORTS_HEADER, []);
+  const columns = useMemo(() => ASSETS_LIST_HEADERS, []);
 
   const table = useMaterialReactTable({
     columns,

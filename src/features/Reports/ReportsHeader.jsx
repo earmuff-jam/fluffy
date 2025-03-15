@@ -20,6 +20,7 @@ export default function ReportsHeader({
   totalAssetValuation,
   selectedAsset,
   selectedMaintenancePlan,
+  isSecondaryButtonLoading,
   setDisplayModal,
   downloadReports,
 }) {
@@ -43,6 +44,7 @@ export default function ReportsHeader({
         secondaryButtonTextLabel={'Export'}
         primaryBtnDataTour={'reports-1'}
         secondaryBtnDataTour={'reports-2'}
+        isSecondaryButtonLoading={isSecondaryButtonLoading}
         handleClickSecondaryButton={() => downloadReports()}
       />
       <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>

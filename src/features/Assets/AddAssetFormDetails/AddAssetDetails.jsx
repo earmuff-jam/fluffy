@@ -1,20 +1,26 @@
 import { useState } from 'react';
+
 import dayjs from 'dayjs';
-import { enqueueSnackbar } from 'notistack';
+
 import { Box, Skeleton, Typography } from '@mui/material';
+
+import { enqueueSnackbar } from 'notistack';
 import AddAssetSteps from '@features/Assets/AddAssetFormDetails/AddAssetSteps';
 import { ADD_ASSET_FORM } from '@features/Assets/AddAssetFormDetails/constants';
+
 import AddAssetFormSelection from '@features/Assets/AddAssetFormDetails/AddAssetFormSelection';
 import AddAssetActionButtons from '@features/Assets/AddAssetFormDetails/AddAssetActionButtons';
 import AddAssetFormInstructions from '@features/Assets/AddAssetFormDetails/AddAssetFormInstructions';
+
 import { useCreateAsset } from '@services/assetsApi';
-import { useFetchStorageLocations } from '@services/storageLocationApi';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useFetchStorageLocations } from '@services/storageLocationApi';
 
 export default function AddAssetDetails({ handleClose }) {
   const { user } = useAuthenticator();
+
   const { mutate: createAsset } = useCreateAsset();
-  const { data: options = [], isLoading } = useFetchStorageLocations();
+  const { data: options = [], isLoading } = useFetchStorageLocations(user.userId);
 
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
@@ -97,9 +103,9 @@ export default function AddAssetDetails({ handleClose }) {
       storageLocationIdRef: storageLocationID,
       returnDatetime: returnDateTime !== null ? returnDateTime.toISOString() : null,
       createdAt: dayjs().toISOString(),
-      createdAssetIdRef: user.id,
+      createdAssetIdRef: user.userId,
       updatedAt: dayjs().toISOString(),
-      updatedAssetIdRef: user.id,
+      updatedAssetIdRef: user.userId,
     };
 
     createAsset(draftRequest);

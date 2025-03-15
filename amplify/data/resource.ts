@@ -12,7 +12,6 @@ const schema = a.schema({
       aboutMe: a.string(),
       imageURL: a.string(),
       appearance: a.boolean(),
-      isGridView: a.boolean(),
       onlineStatus: a.boolean(),
       lastOnlineLocationPoint: a.customType({
         lat: a.float(),
@@ -87,7 +86,6 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedLocationIdRef: a.id(),
       updatedBy: a.belongsTo("Profiles", "updatedLocationIdRef"),
-      // sharable_groups: a.string().array(),
       associatedAsset: a.hasOne('Assets', 'storageLocationIdRef'),
     })
     .authorization((allow) => [allow.authenticated()]),
@@ -144,7 +142,6 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedAssetIdRef: a.id(),
       updatedBy: a.belongsTo("Profiles", "updatedAssetIdRef"),
-      //     sharable_groups: a.string().array(),
       associatedCategoryItems: a.hasMany('CategoryItems', 'assetIdRef'),
       associatedMaintenancePlanItems: a.hasMany('MaintenancePlanItems', 'assetIdRef'),
     })
@@ -187,7 +184,6 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedCategoryItemsIdRef: a.id(),
       updatedBy: a.belongsTo("Profiles", "updatedCategoryItemsIdRef"),
-      // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -231,7 +227,6 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedProfileIdRef: a.id(),
       updatedBy: a.belongsTo('Profiles', 'updatedProfileIdRef'),
-      // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -250,7 +245,6 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedProfileIdRef: a.id(),
       updatedBy: a.belongsTo("Profiles", "updatedProfileIdRef"),
-      // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -267,7 +261,6 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedProfileIdRef: a.id(),
       updatedBy: a.belongsTo("Profiles", "updatedProfileIdRef"),
-      // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -284,7 +277,6 @@ const schema = a.schema({
       updatedAt: a.string(),
       updatedProfileIdRef: a.id(),
       updatedBy: a.belongsTo("Profiles", "updatedProfileIdRef"),
-      // sharable_groups: a.string().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
 });

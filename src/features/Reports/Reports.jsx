@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import dayjs from 'dayjs';
+
 import { Stack } from '@mui/material';
 
 import SimpleModal from '@common/SimpleModal';
@@ -9,28 +11,59 @@ import ReportsHeader from '@features/Reports/ReportsHeader';
 import ReportContent from '@features/Reports/ReportContent';
 import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
 
-import { useFetchAssetReportByDate } from '@services/assetsApi';
+import { buildXcel } from '@common/utils';
+import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
+
 import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';
+import { useDownloadAssetsList, useFetchAssetReportByDate } from '@services/assetsApi';
 
 export default function Reports() {
-
   const [displayModal, setDisplayModal] = useState(false);
   const [includeOverdue, setIncludeOverdue] = useState(true);
-  const [sinceValue, setSinceValue] = useState(FILTER_OPTIONS.find((item) => item.label === 'ytd').value);
+
+  const defaultSinceValue = FILTER_OPTIONS.find((item) => item.label === 'ytd').value;
+  const [sinceValue, setSinceValue] = useState(defaultSinceValue);
+  const [tempSinceValue, setTempSinceValue] = useState(sinceValue);
 
   const { data: maintenancePlanList = [] } = useFetchMaintenancePlans();
   const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssetReportByDate(sinceValue);
-
-  const downloadReports = () => {
-    // dispatch(reportActions.downloadReports({ since: sinceValue, includeOverdue: includeOverdue, assets }));
-  };
+  const { data: downloadedAssets = [], isLoading: isAssetsDownloading, refetch } = useDownloadAssetsList(sinceValue);
 
   const closeFilter = () => setDisplayModal(false);
+
+  const downloadReports = () => {
+    refetch();
+  };
+
+  const applyFilter = () => {
+    setSinceValue(tempSinceValue);
+    closeFilter();
+  };
 
   const totalAssetValuation = assets.reduce((acc, el) => {
     acc += +el.price;
     return acc;
   }, 0);
+
+  if (downloadedAssets.length > 0) {
+    const formattedAssets = downloadedAssets.map((v) =>
+      Object.assign(
+        {},
+        ...Object.values(ASSET_LIST_HEADERS)
+          .sort((a, b) => a.id - b.id) // Ensure order
+          .map((header) => ({
+            [header.label]: header.modifier ? header.modifier(v[header.colName]) : v[header.colName] || '-',
+          }))
+      )
+    );
+
+    buildXcel(
+      Object.values(ASSET_LIST_HEADERS).map((header) => header.label),
+      formattedAssets,
+      'reports.xlsx',
+      `reports-${dayjs().format('DD-MM-YYYY')}`
+    );
+  }
 
   return (
     <Stack spacing={1} data-tour="reports-0">
@@ -42,6 +75,7 @@ export default function Reports() {
         selectedAsset={assets[0] || {}}
         setDisplayModal={setDisplayModal}
         downloadReports={downloadReports}
+        isSecondaryButtonLoading={isAssetsDownloading}
         selectedMaintenancePlan={maintenancePlanList?.length > 0 ? maintenancePlanList[0] : {}}
       />
       <ReportContent sinceValue={sinceValue} assets={assets} />
@@ -53,9 +87,9 @@ export default function Reports() {
           maxSize="xs"
         >
           <ReportsFilterMenu
-            handleClose={closeFilter}
+            applyFilter={applyFilter}
             sinceValue={sinceValue}
-            setSinceValue={setSinceValue}
+            setSinceValue={setTempSinceValue}
             includeOverdue={includeOverdue}
             setIncludeOverdue={setIncludeOverdue}
           />

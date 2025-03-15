@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { Skeleton, Stack } from '@mui/material';
-import { AddRounded } from '@mui/icons-material';
 
 import { enqueueSnackbar } from 'notistack';
 import { useParams } from 'react-router-dom';
@@ -27,7 +26,7 @@ export default function CategoryItemDetails() {
 
   const { data: selectedCategory = {}, isLoading: loading } = useFetchCategoryById(id);
   const { data: itemsInCategory = [] } = useFetchAssetsAssociatedWithCategoryById(id);
-  
+
   const { data: selectedCategoryImage } = useFetchCategoryPhoto(selectedCategory?.imageURL);
 
   const createAssociationForAssetsWithCategory = useCreateAssociationForItemsWithCategory();
@@ -58,7 +57,7 @@ export default function CategoryItemDetails() {
     resetConfirmationBoxModal();
   };
 
-  const addItems = async () => {
+  const addItems = async (selectedIDList) => {
     await createAssociationForAssetsWithCategory.mutateAsync({
       categoryId: selectedCategory?.id,
       assetIds: selectedIDList,
@@ -97,19 +96,10 @@ export default function CategoryItemDetails() {
       />
       <ItemGraphWrapper associatedAssets={itemsInCategory.map((v) => v.assetId)} graphDataTour="selected-category-7" />
       {displayModal && (
-        <SimpleModal
-          title={`Add items to ${selectedCategory?.name}`}
-          handleClose={resetSelection}
-          showSecondaryButton
-          secondaryButtonAction={addItems}
-          disableSecondaryButton={selectedIDList.length <= 0}
-          secondaryButtonIcon={<AddRounded />}
-          maxSize="md"
-        >
+        <SimpleModal title={`Add items to ${selectedCategory?.name}`} handleClose={resetSelection} maxSize="md">
           <AddItem
-            selectedIDList={selectedIDList}
-            setSelectedIDList={setSelectedIDList}
-            resetSelection={resetSelection}
+            addItems={addItems}
+            itemTitle={selectedCategory?.name}
             associatedItems={itemsInCategory.map((v) => v.assetId)}
           />
         </SimpleModal>

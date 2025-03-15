@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 
 import { generateClient } from 'aws-amplify/data';
-
 import { getUrl, uploadData } from 'aws-amplify/storage';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -292,7 +291,6 @@ export const useCreateProfile = () => {
         aboutMe: '',
         imageURL: '',
         appearance: false, // true for dark mode
-        isGridView: false, // true to view assets in grid view mode
         onlineStatus: true, // always true
         lastOnlineLocationPoint: { lat: 0, lon: 0 },
         createdAt: dayjs().toISOString(),

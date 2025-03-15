@@ -48,13 +48,9 @@ const ASSETS_PAGE_TOUR_STEPS = [
     title: 'This is where you can view the list of all your assets.',
   },
   {
-    title: 'Search for any asset with ease from this button.',
+    title: 'Add details about a single asset to the system.',
   },
-  { title: 'Change the view mode of the assets if you are not satisfied with the list layout' },
-  {
-    title:
-      'Add assets at once, or one at a time from here. If you need to remove assets, select the ones you need to remove from the checkbox against each asset.',
-  },
+  { title: 'Add assets in bulk to the system. Reuse the template provided to ensure all values are populated.' },
 ];
 
 const CATEGORIES_PAGE_TOUR_STEPS = [

@@ -24,7 +24,7 @@ export default function MaintenancePlanItemDetails() {
   const { id } = useParams();
 
   const { data: selectedMaintenancePlan = {}, isLoading: loading } = useFetchMaintenancePlanById(id);
-  
+
   const { data: itemsInMaintenancePlan = [] } = useFetchAssetsAssociatedWithMaintenancePlanById(id);
 
   const { data: selectedMaintenancePlanImage } = useFetchMaintenancePlanPhoto(selectedMaintenancePlan?.imageURL);
@@ -59,7 +59,7 @@ export default function MaintenancePlanItemDetails() {
     resetConfirmationBoxModal();
   };
 
-  const addItems = async () => {
+  const addItems = async (selectedIDList) => {
     await createAssociationForAssetsWithMaintenancePlan.mutateAsync({
       maintenancePlanId: selectedMaintenancePlan?.id,
       assetIds: selectedIDList,
@@ -100,19 +100,10 @@ export default function MaintenancePlanItemDetails() {
         graphDataTour="selected-plan-7"
       />
       {displayModal && (
-        <SimpleModal
-          title={`Add items to ${selectedMaintenancePlan?.name}`}
-          handleClose={resetSelection}
-          maxSize="md"
-          showSecondaryButton
-          secondaryButtonAction={addItems}
-          secondaryButtonIcon={<AddRounded />}
-          disableSecondaryButton={selectedIDList.length <= 0}
-        >
+        <SimpleModal title={`Add items to ${selectedMaintenancePlan?.name}`} handleClose={resetSelection}>
           <AddItem
-            selectedIDList={selectedIDList}
-            setSelectedIDList={setSelectedIDList}
-            resetSelection={resetSelection}
+            addItems={addItems}
+            itemTitle={selectedMaintenancePlan?.name}
             associatedItems={itemsInMaintenancePlan.map((v) => v.assetId)}
           />
         </SimpleModal>
