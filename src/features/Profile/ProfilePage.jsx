@@ -32,7 +32,11 @@ const ProfilePage = () => {
         <UserDetails data={data} />
       </Stack>
       <Paper sx={{ padding: '1rem' }} data-tour="profile-5">
-        <UserStatus profileStats={profileStats} onlySmallScreen={onlySmallScreen} isProfileStatsLoading={isProfileStatsLoading}/>
+        <UserStatus
+          profileStats={profileStats}
+          onlySmallScreen={onlySmallScreen}
+          isProfileStatsLoading={isProfileStatsLoading}
+        />
       </Paper>
       <Paper sx={{ padding: '1rem' }} data-tour="profile-6">
         <AppearanceSettings loading={isLoading} profileDetails={data} />

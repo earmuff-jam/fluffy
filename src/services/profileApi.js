@@ -292,7 +292,6 @@ export const useCreateProfile = () => {
         aboutMe: '',
         imageURL: '',
         appearance: false, // true for dark mode
-        isGridView: false, // true to view assets in grid view mode
         onlineStatus: true, // always true
         lastOnlineLocationPoint: { lat: 0, lon: 0 },
         createdAt: dayjs().toISOString(),
