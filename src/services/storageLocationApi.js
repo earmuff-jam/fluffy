@@ -1,5 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { generateClient } from 'aws-amplify/data';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const client = generateClient();
 

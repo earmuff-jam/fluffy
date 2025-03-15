@@ -1,58 +1,81 @@
-import { Stack } from '@mui/material';
-
-import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
-
-import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
+import { useMemo, useState } from 'react';
+import { Button, Stack } from '@mui/material';
 
 import { useFetchAssets } from '@services/assetsApi';
-
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { ASSETS_LIST_HEADERS } from '@features/Assets/constants';
 
-export default function AddItem({ selectedIDList, setSelectedIDList, associatedItems }) {
+import { EmptyComponent } from '@common/utils';
+import DataTable from '@common/DataTable/DataTable';
+import { useMaterialReactTable } from 'material-react-table';
+
+export default function AddItem({ itemTitle, addItems, associatedItems }) {
   const { user } = useAuthenticator();
   const { data: assets = [], isLoading } = useFetchAssets(user.userId);
 
-  const rowFormatter = (row, columnName, column) => column.modifier(row[columnName] || '-');
+  const [rowSelection, setRowSelection] = useState([]);
 
-  const handleRowSelection = (_, id) => {
-    if (id === 'all') {
-      if (selectedIDList.length !== 0) {
-        setSelectedIDList([]);
-      } else {
-        setSelectedIDList(assets.map((v) => v.id));
-      }
-    } else {
-      const selectedIndex = selectedIDList.indexOf(id);
-      let draftSelected = [];
-      if (selectedIndex === -1) {
-        draftSelected = draftSelected.concat(selectedIDList, id);
-      } else if (selectedIndex === 0) {
-        draftSelected = draftSelected.concat(selectedIDList.slice(1));
-      } else if (selectedIndex === selectedIDList.length - 1) {
-        draftSelected = draftSelected.concat(selectedIDList.slice(0, -1));
-      } else if (selectedIndex > 0) {
-        draftSelected = draftSelected.concat(
-          selectedIDList.slice(0, selectedIndex),
-          selectedIDList.slice(selectedIndex + 1)
-        );
-      }
-      setSelectedIDList(draftSelected);
-    }
+  const columns = useMemo(() => ASSETS_LIST_HEADERS, []);
+
+  const itemsWithoutAssociation = useMemo(() => {
+    const associatedItemsId = associatedItems?.map((aItems) => aItems.id);
+    return assets.filter((asset) => !associatedItemsId.includes(asset.id));
+  }, [assets, associatedItems]);
+
+  const handleAddAssets = (table) => {
+    const selectedRows = table.getSelectedRowModel().rows.map((v) => v.original.id);
+    addItems(selectedRows);
   };
+
+  const table = useMaterialReactTable({
+    columns,
+    data: itemsWithoutAssociation,
+    enableSorting: true,
+    enableFilters: true,
+    enableFullScreenToggle: false,
+    enableTopToolbar: true,
+    enableRowSelection: true,
+    enableColumnResizing: false,
+    enableDensityToggle: false,
+    enablePagination: itemsWithoutAssociation.length > 0,
+    initialState: {
+      density: 'comfortable',
+      columnPinning: {
+        right: ['mrt-row-actions'],
+      },
+    },
+    muiSearchTextFieldProps: {
+      size: 'small',
+      variant: 'outlined',
+    },
+    muiTableHeadRowProps: {
+      sx: { padding: '1rem' },
+    },
+    muiTableBodyRowProps: {
+      sx: { padding: '0.2rem' },
+    },
+    renderEmptyRowsFallback: () => (
+      <EmptyComponent padding="1rem 1rem" subtitle={`Add assets to associated them with ${itemTitle}.`} />
+    ),
+    onRowSelectionChange: setRowSelection,
+    state: {
+      isLoading: isLoading,
+      rowSelection: rowSelection,
+    },
+    renderTopToolbarCustomActions: ({ table }) => {
+      const isSomeRowsSelected = table.getIsSomeRowsSelected() || table.getIsAllRowsSelected();
+      console.log(isSomeRowsSelected);
+      return isSomeRowsSelected ? (
+        <Button variant="outlined" onClick={() => handleAddAssets(table)}>
+          Add items
+        </Button>
+      ) : null;
+    },
+  });
 
   return (
     <Stack spacing={1}>
-      <TableComponent
-        paper
-        showActions={false}
-        isLoading={isLoading}
-        data={assets.filter((asset) => !associatedItems?.some((item) => item.id === asset.id))}
-        columns={Object.values(ASSET_LIST_HEADERS).filter((v) => v.displayConcise)}
-        rowFormatter={rowFormatter}
-        selectedIDList={selectedIDList}
-        handleRowSelection={handleRowSelection}
-        emptyComponentSubtext="Add assets to associated them with selected plan."
-      />
+      <DataTable table={table} />
     </Stack>
   );
 }
