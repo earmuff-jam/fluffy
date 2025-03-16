@@ -1,67 +1,7 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-import { capitalizeFirstLetter } from '@common/utils';
-
 dayjs.extend(relativeTime);
-
-export const ASSETS_IN_REPORTS_HEADER = [
-  {
-    name: 'name',
-    header: 'Asset Name',
-    accessorKey: 'name',
-    size: 200,
-    Cell: ({ cell }) => {
-      const assetName = cell.getValue();
-      return capitalizeFirstLetter(assetName);
-    },
-  },
-  {
-    name: 'description',
-    header: 'Description',
-    accessorKey: 'description',
-    size: 500,
-    Cell: ({ cell }) => {
-      const assetDescription = cell.getValue();
-      return assetDescription?.length > 0 ? capitalizeFirstLetter(assetDescription) : '-';
-    },
-  },
-  {
-    name: 'price',
-    header: 'Price',
-    accessorKey: 'price',
-    size: 150,
-    Cell: ({ cell }) => {
-      return <>{cell.getValue()?.length > 0 ? cell.getValue() : '-'}</>;
-    },
-  },
-  {
-    name: 'quantity',
-    header: 'Quantity',
-    accessorKey: 'quantity',
-    size: 150,
-  },
-  {
-    name: 'storageLocation',
-    header: 'Storage Location',
-    accessorKey: 'storageLocationId.location',
-    size: 200,
-    Cell: ({ cell }) => {
-      const storageLocation = cell.getValue();
-      return storageLocation?.length > 0 ? capitalizeFirstLetter(storageLocation) : '-';
-    },
-  },
-  {
-    name: 'updator',
-    header: 'Last updated by',
-    accessorKey: 'updatedBy',
-    size: 150,
-    Cell: ({ cell }) => {
-      const updatedBy = cell.getValue();
-      return updatedBy?.emailAddress.length > 0 ? updatedBy?.emailAddress : '-';
-    },
-  },
-];
 
 /**
  * filter options are the selection menu for the reports page.

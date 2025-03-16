@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { DarkModeRounded, GridViewRounded } from '@mui/icons-material';
+import { DarkModeRounded } from '@mui/icons-material';
 import { Box, Button, Checkbox, Divider, FormControlLabel, Skeleton, Stack, Typography } from '@mui/material';
 
 import dayjs from 'dayjs';
@@ -10,13 +10,11 @@ import { useUpdateProfile } from '@services/profileApi';
 const AppearanceSettings = ({ loading, profileDetails = {} }) => {
   const { mutate: updateProfile } = useUpdateProfile();
   const [displayMode, setDisplayMode] = useState(false);
-  const [inventoryLayout, setInventoryLayout] = useState(false); // false is list view
 
   const handleSubmit = () => {
     const draftData = {
       ...profileDetails,
       appearance: displayMode,
-      isGridView: inventoryLayout,
       updatedAt: dayjs().toISOString(),
     };
     updateProfile(draftData);
@@ -28,7 +26,6 @@ const AppearanceSettings = ({ loading, profileDetails = {} }) => {
   useEffect(() => {
     if (!loading) {
       setDisplayMode(profileDetails.appearance ?? false);
-      setInventoryLayout(profileDetails.isGridView ?? false);
     }
   }, [loading]);
 
@@ -57,26 +54,6 @@ const AppearanceSettings = ({ loading, profileDetails = {} }) => {
                 </Stack>
                 <Typography variant="caption" gutterBottom>
                   Switch to dark mode.
-                </Typography>
-              </Stack>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={inventoryLayout}
-                onChange={() => setInventoryLayout(!inventoryLayout)}
-                color="primary"
-              />
-            }
-            label={
-              <Stack>
-                <Stack direction="row" alignItems="center" spacing={1}>
-                  <GridViewRounded color="primary" />
-                  <Typography variant="caption">Enable grid mode for assets</Typography>
-                </Stack>
-                <Typography variant="caption" gutterBottom>
-                  Switch between list view and grid view for viewing assets.
                 </Typography>
               </Stack>
             }

@@ -1,6 +1,6 @@
 import QrCodeGen from '@common/QrCodeGen';
 import AssetDetailsDrawerContent from '@features/Assets/AssetDetailsDrawer/AssetDetailsDrawerContent';
-import { VIEW_INVENTORY_LIST_HEADERS } from '@features/Assets/constants';
+import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
 
 export default {
   title: 'AssetList/AssetDetailsDrawer/AssetDetailsDrawerContent',
@@ -30,5 +30,5 @@ AssetDetailsDrawerContentDefault.args = {
     bought_at: 'Amazon',
     qr_code: <QrCodeGen value={'test name'} />,
   },
-  columns: Object.values(VIEW_INVENTORY_LIST_HEADERS),
+  columns: Object.values(ASSET_LIST_HEADERS),
 };

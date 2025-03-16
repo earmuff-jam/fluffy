@@ -1,20 +1,27 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { generateClient } from 'aws-amplify/data';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const client = generateClient();
 
 /**
  * useFetchStorageLocations ...
  *
- * retrieves a list of storage locations
+ * retrieves a list of storage locations created by a logged in user.
  */
-export const useFetchStorageLocations = () => {
+export const useFetchStorageLocations = (userId) => {
   return useQuery({
     queryKey: ['storageLocations'],
     queryFn: async () => {
-      const response = await client.models.StorageLocations.list();
+      const response = await client.models.StorageLocations.list({
+        filter: {
+          createdLocationIdRef: {
+            eq: userId,
+          },
+        },
+      });
       return response.data || [];
     },
+    enabled: !!userId,
   });
 };
 

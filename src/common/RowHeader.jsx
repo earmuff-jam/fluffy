@@ -1,3 +1,4 @@
+import { LoadingButton } from '@mui/lab';
 import { Box, Button, Link, Stack, Typography } from '@mui/material';
 
 const RowHeader = ({
@@ -16,6 +17,7 @@ const RowHeader = ({
   handleClickSecondaryButton,
   primaryBtnDataTour,
   secondaryBtnDataTour,
+  isSecondaryButtonLoading = false,
   children,
 }) => {
   return (
@@ -49,17 +51,18 @@ const RowHeader = ({
           </Button>
         ) : null}
         {secondaryButtonTextLabel ? (
-          <Button
+          <LoadingButton
             size="small"
             color="primary"
             variant="outlined"
+            loading={isSecondaryButtonLoading}
             data-tour={secondaryBtnDataTour}
             disabled={secondaryButtonDisabled}
             onClick={handleClickSecondaryButton}
             startIcon={secondaryStartIcon}
           >
             {secondaryButtonTextLabel}
-          </Button>
+          </LoadingButton>
         ) : null}
         {children}
       </Stack>

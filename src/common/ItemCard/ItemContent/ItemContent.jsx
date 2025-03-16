@@ -3,7 +3,7 @@ import { Paper, Stack } from '@mui/material';
 import { AddRounded, RemoveRounded } from '@mui/icons-material';
 
 import { pluralizeWord } from '@common/utils';
-import { VIEW_INVENTORY_LIST_HEADERS } from '@features/Assets/constants';
+import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
 
 import RowHeader from '@common/RowHeader';
 import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
@@ -65,7 +65,7 @@ export default function ItemContent({
         <TableComponent
           showActions={false}
           data={items}
-          columns={Object.values(VIEW_INVENTORY_LIST_HEADERS).filter((v) => v.displayConcise)}
+          columns={Object.values(ASSET_LIST_HEADERS).filter((v) => v.displayConcise)}
           rowFormatter={rowFormatter}
           selectedIDList={selectedIDList}
           handleRowSelection={handleRowSelection}
