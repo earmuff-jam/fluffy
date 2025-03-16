@@ -64,7 +64,6 @@ export default function AddItem({ itemTitle, addItems, associatedItems }) {
     },
     renderTopToolbarCustomActions: ({ table }) => {
       const isSomeRowsSelected = table.getIsSomeRowsSelected() || table.getIsAllRowsSelected();
-      console.log(isSomeRowsSelected);
       return isSomeRowsSelected ? (
         <Button variant="outlined" onClick={() => handleAddAssets(table)}>
           Add items

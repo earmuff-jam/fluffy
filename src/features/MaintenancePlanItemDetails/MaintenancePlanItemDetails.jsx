@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 
 import SimpleModal from '@common/SimpleModal';
 import { Skeleton, Stack } from '@mui/material';
-import { AddRounded } from '@mui/icons-material';
 
 import { ConfirmationBoxModal } from '@common/utils';
 import AddItem from '@common/ItemCard/AddItem/AddItem';
