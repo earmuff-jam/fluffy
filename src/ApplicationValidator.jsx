@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from 'react';
 
-import { router } from '@common/router';
+import { router } from '@utils/router';
 import { TourProvider } from '@reactour/tour';
 import { RouterProvider } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import DEFAULT_TOUR_STEPS from '@utils/steps';
 import Header from '@features/LandingPage/Header';
 import Footer from '@features/LandingPage/Footer';
 
-import Loading from '@common/Loading';
+import Loading from '@utils/Loading';
 // import Pricing from '@features/LandingPage/Pricing';
 import EmailSection from '@features/LandingPage/EmailSection';
 

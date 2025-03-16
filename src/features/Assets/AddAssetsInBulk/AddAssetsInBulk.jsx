@@ -5,7 +5,7 @@ import { Button, Stack } from '@mui/material';
 import { SaveRounded } from '@mui/icons-material';
 import ViewFileContent from '@features/Assets/AddAssetsInBulk/ViewFileContent';
 import AddAssetsInBulkActions from '@features/Assets/AddAssetsInBulk/AddAssetsInBulkActions';
-import { buildXcel, renameXcelColValues } from '@common/utils';
+import { buildXcel, renameXcelColValues } from '@utils/utils';
 import { BULK_ASSETS_HEADERS } from '@features/Assets/constants';
 import { useCreateAssetsInBulk } from '@services/assetsApi';
 

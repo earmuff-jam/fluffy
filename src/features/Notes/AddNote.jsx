@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 
-import { AddRounded, CheckCircleRounded } from '@mui/icons-material';
 import { Button, Stack } from '@mui/material';
+import { AddRounded, CheckCircleRounded } from '@mui/icons-material';
 
 import dayjs from 'dayjs';
 import { enqueueSnackbar } from 'notistack';
-import ColorPicker from '@common/ColorPicker';
+import ColorPicker from '@utils/ColorPicker';
 
-import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
+import { STATUS_OPTIONS } from '@utils/constants';
 import { ADD_NOTES_FORM_FIELDS } from '@features/Notes/constants';
 
-import LocationPicker from '@common/LocationPicker';
+import LocationPicker from '@utils/LocationPicker';
+import CustomDatePicker from '@utils/CustomDatePicker';
 import AddNoteHeader from '@features/Notes/AddNoteHeader';
-import CustomDatePicker from '@common/CustomDatePicker';
-import AddNoteStatusOptions from '@features/Notes/AddNoteStatusOptions';
+import StatusOptions from '@features/FormComponents/StatusOptions';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useCreateNote, useUpdateNote } from '@services/notesApi';
@@ -149,7 +149,7 @@ const AddNote = ({ setEditMode, setSelectedNoteID, noteID, notes }) => {
   return (
     <Stack spacing={1}>
       <AddNoteHeader formFields={formFields} handleInput={handleInput} setLocation={setLocation} />
-      <AddNoteStatusOptions label="Selected status" name="status" value={status} handleStatus={handleStatus} />
+      <StatusOptions title="Selected Status" value={status} onChange={handleStatus} />
       <ColorPicker label="Assign Color" value={planColor} handleChange={handleColorChange} />
       <CustomDatePicker
         label="Assign estimated completion date"

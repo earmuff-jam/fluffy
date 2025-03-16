@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { CircleRounded, DoneRounded } from '@mui/icons-material';
 import { Menu, MenuItem, Skeleton, Stack, Typography } from '@mui/material';
 
-import { EmptyComponent } from '@common/utils';
+import { EmptyComponent } from '@utils/utils';
 
 export default function AppToolbarPopoverContent({ loading, anchorEl, handleClose, toggleReadOption, options = [] }) {
   const open = Boolean(anchorEl);

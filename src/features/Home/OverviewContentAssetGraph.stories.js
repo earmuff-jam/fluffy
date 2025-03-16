@@ -1,7 +1,7 @@
-import OverviewContentAssetGraph from '@features/Home/OverviewContent/OverviewContentAssetGraph';
+import OverviewContentAssetGraph from "./OverviewContentAssetGraph";
 
 export default {
-  title: 'Home/OverviewContent/OverviewContentAssetGraph',
+  title: 'Home/OverviewContentAssetGraph',
   component: OverviewContentAssetGraph,
   tags: ['autodocs'],
 };

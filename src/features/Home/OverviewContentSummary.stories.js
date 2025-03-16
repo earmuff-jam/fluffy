@@ -1,7 +1,7 @@
-import OverviewContentSummary from '@features/Home/OverviewContent/OverviewContentSummary';
+import OverviewContentSummary from "./OverviewContentSummary";
 
 export default {
-  title: 'Home/OverviewContent/OverviewContentSummary',
+  title: 'Home/OverviewContentSummary',
   component: OverviewContentSummary,
   tags: ['autodocs'],
 };

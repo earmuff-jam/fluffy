@@ -5,6 +5,7 @@ import { generateClient } from 'aws-amplify/data';
 import { getUrl, uploadData } from 'aws-amplify/storage';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const client = generateClient();
 
@@ -150,6 +151,7 @@ export const useCreateMaintenancePlan = () => {
  * creates association for items with a selected maintenance plan.
  */
 export const useCreateAssociationForItemsWithMaintenancePlan = () => {
+  const { user } = useAuthenticator();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -162,6 +164,8 @@ export const useCreateAssociationForItemsWithMaintenancePlan = () => {
         const { data, errors } = await client.models.MaintenancePlanItems.create({
           maintenancePlanIdRef: maintenancePlanId,
           assetIdRef: assetId,
+          createdProfileIdRef: user.userId,
+          updatedProfileIdRef: user.userId,
         });
 
         if (errors) throw new Error(errors);

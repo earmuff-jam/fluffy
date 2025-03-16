@@ -8,7 +8,7 @@ dayjs.extend(relativeTime);
 
 const BIO_PLACEHOLDER = 'Add short bio about yourself to let others know details about you.';
 
-export default function UserDetails({ data = {} }) {
+export default function UserDetails({ aboutMe, updatedAt }) {
   return (
     <Paper
       sx={{
@@ -24,7 +24,7 @@ export default function UserDetails({ data = {} }) {
       </Typography>
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }} />
       <Typography variant="caption" color="text.secondary">
-        {data?.aboutMe || BIO_PLACEHOLDER}
+        {aboutMe || BIO_PLACEHOLDER}
       </Typography>
       <Box sx={{ flexGrow: 1 }} />
       <Stack spacing={1} data-tour="profile-4">
@@ -43,7 +43,7 @@ export default function UserDetails({ data = {} }) {
         <Stack direction={'row'} alignItems={'center'} spacing={1}>
           <UpdateRounded color="primary" />
           <Typography variant="subtitle2" color="text.secondary">
-            Last updated at : {dayjs(data?.updatedAt).fromNow()}
+            Last updated at : {dayjs(updatedAt).fromNow()}
           </Typography>
         </Stack>
       </Stack>

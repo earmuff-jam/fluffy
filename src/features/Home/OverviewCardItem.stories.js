@@ -1,8 +1,8 @@
 import { CategoryRounded } from '@mui/icons-material';
-import OverviewCardItem from '@features/Home/OverviewCard/OverviewCardItem';
+import OverviewCardItem from './OverviewCardItem';
 
 export default {
-  title: 'Home/OverviewCard/OverviewCardItem',
+  title: 'Home/OverviewCardItem',
   component: OverviewCardItem,
   tags: ['autodocs'],
 };
@@ -10,11 +10,19 @@ export default {
 const Template = (args) => <OverviewCardItem {...args} />;
 
 export const OverviewCardItemDefault = Template.bind({});
+export const OverviewCardItemTooltipTitle = Template.bind({});
 
 OverviewCardItemDefault.args = {
-  tooltipTitle: ['Test item 1, Test item 2, Test item 3'],
   dataLabel: 12,
   icon: <CategoryRounded />,
   label: 'assigned categories',
   color: 'Test',
+};
+
+OverviewCardItemTooltipTitle.args = {
+  tooltipTitle: 'Assigned categories tooltip title',
+  dataLabel: 2,
+  icon: <CategoryRounded />,
+  label: 'assigned categories',
+  color: 'Red',
 };

@@ -1,5 +1,4 @@
-import { RECENT_ACTIVITY_TYPE_MAPPER } from '@features/RecentActivities/constants';
-import RecentActivityAccordionSummary from '@features/RecentActivities/RecentActivityAccordionSummary';
+import RecentActivityAccordionSummary from './RecentActivityAccordionSummary';
 
 export default {
   title: 'RecentActivities/RecentActivityAccordionSummary',
@@ -16,17 +15,17 @@ export const RecentActivityAccordionSummaryAssetDefault = Template.bind({});
 RecentActivityAccordionSummaryDefault.args = {
   title: 'Warranty Support Plan',
   label: 'Updated',
-  prefix: RECENT_ACTIVITY_TYPE_MAPPER['M'].display,
+  prefix: 'Maintenance Plan Item',
 };
 
 RecentActivityAccordionSummaryCategory.args = {
   title: 'Groceries',
   label: 'Created',
-  prefix: RECENT_ACTIVITY_TYPE_MAPPER['C'].display,
+  prefix: 'Category Item',
 };
 
 RecentActivityAccordionSummaryAssetDefault.args = {
   title: 'Sugar',
   label: 'Created',
-  prefix: RECENT_ACTIVITY_TYPE_MAPPER['A'].display,
+  prefix: 'Asset Item',
 };

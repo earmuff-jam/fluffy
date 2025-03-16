@@ -1,5 +1,5 @@
-import ReportCardWrapper from '@features/Reports/ReportCardWrapper';
-import ReportItemDetails from '@features/Reports/ReportItemDetails';
+import ReportCardWrapper from './ReportCardWrapper';
+import ReportItemDetails from './ReportItemDetails';
 
 export default {
   title: 'Reports/ReportCardWrapper',
@@ -12,6 +12,8 @@ const Template = (args) => <ReportCardWrapper {...args} />;
 export const ReportCardWrapperDefault = Template.bind({});
 export const ReportCardWrapperLongTitle = Template.bind({});
 export const ReportCardWrapperChildren = Template.bind({});
+
+export const ReportCardWrapperCategorizedItems = Template.bind({});
 
 ReportCardWrapperDefault.args = {
   title: 'Total Valuation',
@@ -39,4 +41,10 @@ ReportCardWrapperChildren.args = {
       caption={'Purina dog food for large dog breeds'}
     />
   ),
+};
+
+ReportCardWrapperCategorizedItems.args = {
+  title: 'Categorized Assets',
+  chipLabel: 'Since Jan, 2024',
+  value: '$100',
 };

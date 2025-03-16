@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material';
-import { prefix } from '@common/utils';
+import { prefix } from '@utils/utils';
 
 import { Inventory2Rounded, PaidRounded } from '@mui/icons-material';
 
-import RowHeader from '@common/RowHeader';
+import RowHeader from '@utils/RowHeader';
 import OverviewCardItem from '@features/Home/OverviewCardItem';
 import OverviewCardWrapper from '@features/Home/OverviewCardWrapper';
 

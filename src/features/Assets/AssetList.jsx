@@ -5,18 +5,18 @@ import { AddRounded, EditRounded, FileOpenRounded, PlaylistAddRounded, RemoveCir
 
 import { useNavigate } from 'react-router-dom';
 
-import { ConfirmationBoxModal, EmptyComponent, pluralizeWord } from '@common/utils';
+import { ConfirmationBoxModal, EmptyComponent, pluralizeWord } from '@utils/utils';
 import { ASSETS_LIST_HEADERS, MODAL_STATE, ASSET_LIST_HEADERS } from '@features/Assets/constants';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useFetchAssets, useRemoveAssets } from '@services/assetsApi';
 
-import SimpleModal from '@common/SimpleModal';
+import SimpleModal from '@utils/SimpleModal';
 import AddAssetsInBulk from '@features/Assets/AddAssetsInBulk/AddAssetsInBulk';
 import AddAssetDetails from '@features/Assets/AddAssetFormDetails/AddAssetDetails';
 import AssetDetailsDrawer from '@features/Assets/AssetDetailsDrawer/AssetDetailsDrawer';
 
-import RowHeader from '@common/RowHeader';
+import RowHeader from '@utils/RowHeader';
 import DataTable from '@common/DataTable/DataTable';
 import { useMaterialReactTable } from 'material-react-table';
 

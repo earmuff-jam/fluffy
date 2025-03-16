@@ -1,8 +1,8 @@
-import dayjs from 'dayjs';
-import AddAssetsInBulkActions from '@features/Assets/AddAssetsInBulk/AddAssetsInBulkActions';
+import dayjs from "dayjs";
+import AddAssetsInBulkActions from "./AddAssetsInBulkActions";
 
 export default {
-  title: 'AssetList/AddAssetsInBulk/AddAssetsInBulkActions',
+  title: 'AddAssetsInBulk/AddAssetsInBulkActions',
   component: AddAssetsInBulkActions,
   tags: ['autodocs'],
 };

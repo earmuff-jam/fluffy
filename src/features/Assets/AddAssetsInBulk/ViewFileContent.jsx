@@ -1,7 +1,7 @@
 import { CancelRounded } from '@mui/icons-material';
 import { Avatar, Card, CardContent, Stack, Typography } from '@mui/material';
 
-import { formatDate, formatFileSize } from '@common/utils';
+import { formatDate, formatFileSize } from '@utils/utils';
 
 export default function ViewFileContent({
   showContent = false,

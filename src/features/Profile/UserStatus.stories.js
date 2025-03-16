@@ -1,4 +1,4 @@
-import UserStatus from '@features/Profile/UserStatus';
+import UserStatus from './UserStatus';
 
 export default {
   title: 'Profile/UserStatus',
@@ -9,7 +9,35 @@ export default {
 const Template = (args) => <UserStatus {...args} />;
 
 export const UserStatusDefault = Template.bind({});
+export const UserStatusLoading = Template.bind({});
+export const UserStatusSmallScreen = Template.bind({});
 
 UserStatusDefault.args = {
   onlySmallScreen: false,
+  isProfileStatsLoading: false,
+  profileStats: {
+    totalCategories: 1,
+    totalMaintenancePlans: 2,
+    totalAssets: 27,
+  },
+};
+
+UserStatusLoading.args = {
+  onlySmallScreen: false,
+  isProfileStatsLoading: true,
+  profileStats: {
+    totalCategories: 1,
+    totalMaintenancePlans: 2,
+    totalAssets: 27,
+  },
+};
+
+UserStatusSmallScreen.args = {
+  onlySmallScreen: true,
+  isProfileStatsLoading: false,
+  profileStats: {
+    totalCategories: 1,
+    totalMaintenancePlans: 2,
+    totalAssets: 27,
+  },
 };

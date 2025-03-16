@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import TextFieldWithLabel from '@common/TextFieldWithLabel';
+import TextFieldWithLabel from '@utils/TextFieldWithLabel';
 
 export default function SelectedAssetWeightDimensionFormFields({ formFields, handleInputChange }) {
   return (

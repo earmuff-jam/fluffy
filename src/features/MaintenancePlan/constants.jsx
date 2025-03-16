@@ -38,7 +38,7 @@ export const ITEM_TYPE_MAPPER = {
   },
 };
 
-export const BLANK_MAINTENANCE_PLAN = {
+export const ADD_MAINTENANCE_PLAN_FORM_FIELDS = {
   name: {
     id: 'name',
     name: 'name',

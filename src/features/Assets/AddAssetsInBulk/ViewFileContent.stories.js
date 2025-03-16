@@ -1,8 +1,8 @@
-import dayjs from 'dayjs';
-import ViewFileContent from '@features/Assets/AddAssetsInBulk/ViewFileContent';
+import dayjs from "dayjs";
+import ViewFileContent from "./ViewFileContent";
 
 export default {
-  title: 'AssetList/AddAssetsInBulk/ViewFileContent',
+  title: 'AddAssetsInBulk/ViewFileContent',
   component: ViewFileContent,
   tags: ['autodocs'],
 };

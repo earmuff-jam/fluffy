@@ -1,9 +1,9 @@
 import { Card, CardContent, Stack } from '@mui/material';
 
-import RowHeader from '@common/RowHeader';
+import RowHeader from '@utils/RowHeader';
 import PieChart from '@common/Chart/PieChart';
 
-import { capitalizeFirstLetter } from '@common/utils';
+import { capitalizeFirstLetter } from '@utils/utils';
 import { OVERVIEW_GRAPH_LABELS } from '@features/Home/constants';
 
 export default function OverviewContentAssetGraph({ assets = [], categories = [], maintenancePlans = [] }) {

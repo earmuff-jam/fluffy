@@ -4,7 +4,7 @@ import { Box, IconButton, Menu, MenuItem, Paper, Stack, Tooltip, Typography } fr
 
 import { CloseRounded, FilterAltRounded, SortRounded } from '@mui/icons-material';
 
-import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
+import { STATUS_OPTIONS } from '@utils/constants';
 
 export default function FilterAndSortMenu({
   sortingOrder,

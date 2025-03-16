@@ -1,8 +1,8 @@
-import { Stack } from '@mui/material';
+import { Button, IconButton, Stack } from '@mui/material';
+import { AddRounded, FileDownload } from '@mui/icons-material';
 
-import RowHeader from '@common/RowHeader';
-import FilterAndSortMenu from '@common/StatusOptions/FilterAndSortMenu';
-import SectionCardHeaderButton from '@common/SectionCard/SectionCardHeaderButton';
+import RowHeader from '@utils/RowHeader';
+import FilterAndSortMenu from '@common/SectionCard/FilterAndSortMenu';
 
 export default function SectionCardHeader({
   title,
@@ -24,14 +24,19 @@ export default function SectionCardHeader({
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <RowHeader title={title} caption={caption} />
-        <SectionCardHeaderButton
-          title={primaryBtnTitle}
-          handleButtonClick={toggleModal}
-          handleIconButtonClick={handleDownload}
-          disableDownloadIcon={disableDownloadIcon}
-          addBtnDataTour={addBtnDataTour}
-          downloadBtnDataTour={downloadBtnDataTour}
-        />
+        <Stack direction="row" spacing={1}>
+          <Button onClick={toggleModal} startIcon={<AddRounded />} variant="outlined" data-tour={addBtnDataTour}>
+            {primaryBtnTitle}
+          </Button>
+          <IconButton
+            size="small"
+            onClick={handleDownload}
+            disabled={disableDownloadIcon}
+            data-tour={downloadBtnDataTour}
+          >
+            <FileDownload fontSize="small" />
+          </IconButton>
+        </Stack>
       </Stack>
       <FilterAndSortMenu
         sortingOrder={sortingOrder}

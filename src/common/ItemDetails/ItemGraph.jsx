@@ -1,8 +1,8 @@
 import { Box, Stack } from '@mui/material';
-import RowHeader from '@common/RowHeader';
+import RowHeader from '@utils/RowHeader';
 import { useTheme } from '@emotion/react';
 import BarChart from '@common/Chart/BarChart';
-import { EmptyComponent } from '@common/utils';
+import { EmptyComponent } from '@utils/utils';
 
 export default function ItemGraph({ associatedAssets = [] }) {
   const theme = useTheme();

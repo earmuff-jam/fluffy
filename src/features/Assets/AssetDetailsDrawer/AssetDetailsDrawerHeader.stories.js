@@ -1,7 +1,7 @@
-import AssetDetailsDrawerHeader from '@features/Assets/AssetDetailsDrawer/AssetDetailsDrawerHeader';
+import AssetDetailsDrawerHeader from "./AssetDetailsDrawerHeader";
 
 export default {
-  title: 'AssetList/AssetDetailsDrawer/AssetDetailsDrawerHeader',
+  title: 'AssetDetailsDrawer/AssetDetailsDrawerHeader',
   component: AssetDetailsDrawerHeader,
   tags: ['autodocs'],
 };

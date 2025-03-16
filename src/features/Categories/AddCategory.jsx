@@ -8,11 +8,11 @@ import dayjs from 'dayjs';
 
 import { produce } from 'immer';
 
-import ColorPicker from '@common/ColorPicker';
-import LocationPicker from '@common/LocationPicker';
+import ColorPicker from '@utils/ColorPicker';
+import LocationPicker from '@utils/LocationPicker';
 import StatusOptions from '@features/FormComponents/StatusOptions';
 
-import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
+import { STATUS_OPTIONS } from '@utils/constants';
 import AddFormHeader from '@features/FormComponents/AddFormHeader';
 import { ADD_CATEGORY_FORM_FIELDS } from '@features/Categories/constants';
 
@@ -154,7 +154,13 @@ export default function AddCategory({
     <Stack alignItems={'center'}>
       <Stack spacing={2} sx={{ width: '100%' }}>
         <AddFormHeader formFields={formFields} setLocation={setLocation} handleInputChange={handleInputChange} />
-        <StatusOptions value={status} onChange={handleStatus} />
+        <StatusOptions
+          value={status}
+          onChange={handleStatus}
+          title="Overall status of assets"
+          tooltipTitle="Overall status of assets within container. Individual items may contain different status than selected one for the category."
+          showTooltip
+        />
         <ColorPicker value={planColor} handleChange={handleColorChange} label={'Associate color'} />
       </Stack>
       {location?.lat ? (

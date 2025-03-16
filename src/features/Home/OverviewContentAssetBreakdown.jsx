@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { CategoryRounded, EngineeringRounded, WarningRounded } from '@mui/icons-material';
 
-import RowHeader from '@common/RowHeader';
+import RowHeader from '@utils/RowHeader';
 import OverviewCardItem from '@features/Home/OverviewCardItem';
 import OverviewCardWrapper from '@features/Home/OverviewCardWrapper';
 

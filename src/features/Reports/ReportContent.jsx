@@ -5,8 +5,8 @@ import { Stack } from '@mui/material';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-import RowHeader from '@common/RowHeader';
-import { EmptyComponent } from '@common/utils';
+import RowHeader from '@utils/RowHeader';
+import { EmptyComponent } from '@utils/utils';
 import DataTable from '@common/DataTable/DataTable';
 
 import { useMaterialReactTable } from 'material-react-table';

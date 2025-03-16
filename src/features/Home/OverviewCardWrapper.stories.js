@@ -1,8 +1,8 @@
-import OverviewCardWrapper from '@features/Home/OverviewCard/OverviewCardWrapper';
-import { Typography } from '@mui/material';
+import { Typography } from "@mui/material";
+import OverviewCardWrapper from "./OverviewCardWrapper";
 
 export default {
-  title: 'Home/OverviewCard/OverviewCardWrapper',
+  title: 'Home/OverviewCardWrapper',
   component: OverviewCardWrapper,
   tags: ['autodocs'],
 };

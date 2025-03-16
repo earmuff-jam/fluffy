@@ -1,5 +1,5 @@
 import { Card } from '@mui/material';
-import ReportItemDetails from '@features/Reports/ReportItemDetails';
+import ReportItemDetails from './ReportItemDetails';
 
 export default {
   title: 'Reports/ReportItemDetails',
@@ -14,18 +14,26 @@ const Template = (args) => (
 );
 
 export const ReportItemDetailsDefault = Template.bind({});
+export const ReportItemDetailsMaintenancePlan = Template.bind({});
 export const ReportItemDetailsLoading = Template.bind({});
 
 ReportItemDetailsDefault.args = {
   loading: false,
   avatarValue: 'DF',
-  label: 'Dog food',
-  caption: 'Purina dog food for large dog breeds',
+  label: 'Dog lease',
+  caption: 'Dog lease bought for dog walking',
+};
+
+ReportItemDetailsMaintenancePlan.args = {
+  loading: false,
+  avatarValue: 'WP',
+  label: 'Weekly maintenance plan',
+  caption: 'Weekly maintenance plan',
 };
 
 ReportItemDetailsLoading.args = {
   loading: true,
   avatarValue: 'DF',
-  label: 'Dog food',
-  caption: 'Purina dog food for large dog breeds',
+  label: 'Tick and flea medicine',
+  caption: 'Tick and flea medicine for six months',
 };

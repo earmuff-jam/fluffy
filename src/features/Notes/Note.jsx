@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { enqueueSnackbar } from 'notistack';
 import { Accordion, Skeleton } from '@mui/material';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { categorizeNotes, ConfirmationBoxModal, EmptyComponent } from '@common/utils';
+import { categorizeNotes, ConfirmationBoxModal, EmptyComponent } from '@utils/utils';
 import NoteAccordionSummary from '@features/Notes/NoteAccordionSummary';
 import NoteAccordionDetails from '@features/Notes/NoteAccordionDetails';
 import { useRemoveNote } from '@services/notesApi';

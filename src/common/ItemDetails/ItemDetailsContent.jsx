@@ -2,13 +2,13 @@ import { Paper, Stack } from '@mui/material';
 
 import { AddRounded, RemoveRounded } from '@mui/icons-material';
 
-import { pluralizeWord } from '@common/utils';
+import { pluralizeWord } from '@utils/utils';
 import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
 
-import RowHeader from '@common/RowHeader';
+import RowHeader from '@utils/RowHeader';
 import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
 
-export default function ItemContent({
+export default function ItemDetailsContent({
   selectedIDList,
   setSelectedIDList,
   items,

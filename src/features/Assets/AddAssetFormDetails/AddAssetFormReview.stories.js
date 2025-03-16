@@ -1,8 +1,8 @@
-import AddAssetFormReview from '@features/Assets/AddAssetFormDetails/AddAssetFormReview';
-import { ADD_ASSET_FORM } from '@features/Assets/AddAssetFormDetails/constants';
+import AddAssetFormReview from "./AddAssetFormReview";
+import { ADD_ASSET_FORM } from "./constants";
 
 export default {
-  title: 'AssetList/AddAssetFormDetails/AddAssetFormReview',
+  title: 'AddAssetFormDetails/AddAssetFormReview',
   component: AddAssetFormReview,
   tags: ['autodocs'],
 };

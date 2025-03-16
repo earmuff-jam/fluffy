@@ -1,7 +1,7 @@
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 import { BookmarkAddedRounded, SwapHorizRounded } from '@mui/icons-material';
 
-import TextFieldWithLabel from '@common/TextFieldWithLabel';
+import TextFieldWithLabel from '@utils/TextFieldWithLabel';
 import SelectedAssetReturnInformationContent from '@features/SelectedAsset/SelectedAssetReturnInformationContent';
 
 export default function SelectedAssetMoreInformation({

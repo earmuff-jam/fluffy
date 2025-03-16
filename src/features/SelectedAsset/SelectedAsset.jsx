@@ -10,9 +10,9 @@ import { AddPhotoAlternateRounded, CheckRounded } from '@mui/icons-material';
 
 import { enqueueSnackbar } from 'notistack';
 
-import RowHeader from '@common/RowHeader';
-import SimpleModal from '@common/SimpleModal';
-import ImagePicker from '@common/ImagePicker';
+import RowHeader from '@utils/RowHeader';
+import SimpleModal from '@utils/SimpleModal';
+import ImagePicker from '@utils/ImagePicker';
 
 import { BLANK_ASSET_DETAILS_FORM } from '@features/Assets/constants';
 

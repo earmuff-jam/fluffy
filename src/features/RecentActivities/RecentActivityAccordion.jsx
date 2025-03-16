@@ -1,6 +1,6 @@
 import { Accordion, Skeleton } from '@mui/material';
 
-import { EmptyComponent } from '@common/utils';
+import { EmptyComponent } from '@utils/utils';
 
 import RecentActivityAccordionSummary from '@features/RecentActivities/RecentActivityAccordionSummary';
 import RecentActivityAccordionDetails from '@features/RecentActivities/RecentActivityAccordionDetails';

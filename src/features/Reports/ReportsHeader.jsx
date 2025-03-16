@@ -3,13 +3,13 @@ import dayjs from 'dayjs';
 import { Stack } from '@mui/material';
 import { DownloadRounded, FilterAltRounded } from '@mui/icons-material';
 
-import RowHeader from '@common/RowHeader';
+import RowHeader from '@utils/RowHeader';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import ReportCardWrapper from '@features/Reports/ReportCardWrapper';
 import ReportItemDetails from '@features/Reports/ReportItemDetails';
 
-import { capitalizeFirstLetter, EmptyComponent, formatDate } from '@common/utils';
+import { capitalizeFirstLetter, EmptyComponent, formatDate } from '@utils/utils';
 
 dayjs.extend(relativeTime);
 
@@ -62,7 +62,7 @@ export default function ReportsHeader({
           dataTour={'reports-4'}
           loading={loading}
           chipLabel={`Since ${formatDate(sinceValue)}`}
-          value={`$${reports[0]?.cost_category_items?.toFixed(2) || 0.0}`}
+          value={`$${reports[0]?.costCategoryItems?.toFixed(2) || 0.0}`}
         />
       </Stack>
       <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
