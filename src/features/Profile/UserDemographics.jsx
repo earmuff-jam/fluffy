@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { EditRounded } from '@mui/icons-material';
 import { Avatar, Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material';
 
-import ImagePicker from '@common/ImagePicker';
+import ImagePicker from '@utils/ImagePicker';
 import UserDemographicsRow from '@features/Profile/UserDemographicsRow';
 
 import { useFetchProfilePhoto, useUploadProfilePhoto } from '@services/profileApi';

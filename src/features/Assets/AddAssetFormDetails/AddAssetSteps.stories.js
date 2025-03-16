@@ -1,7 +1,7 @@
-import AddAssetSteps from '@features/Assets/AddAssetFormDetails/AddAssetSteps';
+import AddAssetSteps from './AddAssetSteps';
 
 export default {
-  title: 'AssetList/AddAssetFormDetails/AddAssetSteps',
+  title: 'AddAssetFormDetails/AddAssetSteps',
   component: AddAssetSteps,
   tags: ['autodocs'],
 };

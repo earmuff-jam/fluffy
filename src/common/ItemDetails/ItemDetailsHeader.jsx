@@ -9,12 +9,14 @@ import { produce } from 'immer';
 import { enqueueSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
-import SimpleModal from '@common/SimpleModal';
-import SharableGroups from '@common/SharableGroups';
-import ImagePicker from '@common/ImagePicker';
-import LocationPicker from '@common/LocationPicker';
-import DetailsCardItemContent from '@common/ItemCard/ItemContent/DetailsCardItemContent';
-import DetailsCardItemActions from '@common/ItemCard/ItemContent/DetailsCardItemActions';
+import RowHeader from '@utils/RowHeader';
+import SimpleModal from '@utils/SimpleModal';
+import ImagePicker from '@utils/ImagePicker';
+import SharableGroups from '@utils/SharableGroups';
+import LocationPicker from '@utils/LocationPicker';
+
+import DetailsCardItemContent from '@common/ItemDetails/DetailsCardItemContent';
+import DetailsCardItemActions from '@common/ItemDetails/DetailsCardItemActions';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useUpdateCategory, useUploadCategoryPhoto } from '@services/categoriesApi';
@@ -22,16 +24,17 @@ import { useUpdateMaintenancePlan, useUploadMaintenancePlanPhoto } from '@servic
 
 dayjs.extend(relativeTime);
 
-export default function DetailsCard({
-  selectedItem,
-  selectedImage,
+export default function ItemDetailsHeader({
+  categoryMode = false,
   favBtnDataTour,
   imageBtnDataTour,
   shareBtnDataTour,
-  categoryMode = false,
+  label,
+  caption,
+  item,
+  image,
 }) {
   const navigate = useNavigate();
-
   const { user } = useAuthenticator();
 
   const { mutate: updateCategory } = useUpdateCategory();
@@ -63,7 +66,7 @@ export default function DetailsCard({
     const newMembers = sharableGroups.map((v) => v.value);
 
     if (categoryMode) {
-      const draftSelectionDetails = produce(selectedItem, (draft) => {
+      const draftSelectionDetails = produce(item, (draft) => {
         draft.updatedCategoryIdRef = user.userId;
         draft.collaborators = newMembers;
       });
@@ -72,7 +75,7 @@ export default function DetailsCard({
         variant: 'success',
       });
     } else {
-      const draftSelectionDetails = produce(selectedItem, (draft) => {
+      const draftSelectionDetails = produce(item, (draft) => {
         draft.updatedMaintenancePlanIdRef = user.userId;
         draft.collaborators = newMembers;
       });
@@ -86,28 +89,24 @@ export default function DetailsCard({
     }
     handleCloseModal();
   };
-
   return (
     <>
+      <RowHeader title={label} caption={caption} />
       <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
         <Card sx={{ flexGrow: 1 }}>
-          <CardMedia sx={{ height: '10rem' }} image={selectedImage?.url || '/blank_canvas.png'} />
-          <DetailsCardItemContent
-            selectedItem={selectedItem}
-            categoryMode={categoryMode}
-            favBtnDataTour={favBtnDataTour}
-          />
+          <CardMedia sx={{ height: '10rem' }} image={image?.url || '/blank_canvas.png'} />
+          <DetailsCardItemContent selectedItem={item} categoryMode={categoryMode} favBtnDataTour={favBtnDataTour} />
           <DetailsCardItemActions
-            selectedItem={selectedItem}
+            selectedItem={item}
             handleOpenModal={handleOpenModal}
             setEditImgMode={setEditImgMode}
             imageBtnDataTour={imageBtnDataTour}
             shareBtnDataTour={shareBtnDataTour}
           />
         </Card>
-        {selectedItem?.location?.lat ? (
+        {item?.location?.lat ? (
           <Paper elevation={2} sx={{ width: { xs: '100%', sm: '20rem' }, height: 'inherit', flexGrow: 1 }}>
-            <LocationPicker location={selectedItem?.location} height={'100%'} />
+            <LocationPicker location={item?.location} height={'100%'} />
           </Paper>
         ) : null}
       </Stack>
@@ -120,8 +119,8 @@ export default function DetailsCard({
         >
           <SharableGroups
             handleSubmit={updateCollaborators}
-            existingGroups={selectedItem?.collaborators || []}
-            creator={selectedItem?.createdBy}
+            existingGroups={item?.collaborators || []}
+            creator={item?.createdBy}
           />
         </SimpleModal>
       )}
@@ -132,7 +131,7 @@ export default function DetailsCard({
           handleClose={() => setEditImgMode(false)}
           maxSize="xs"
         >
-          <ImagePicker id={selectedItem.id} name={selectedItem.name} handleUpload={handleUpload} disableCancel />
+          <ImagePicker id={item.id} name={item.name} handleUpload={handleUpload} disableCancel />
         </SimpleModal>
       )}
     </>

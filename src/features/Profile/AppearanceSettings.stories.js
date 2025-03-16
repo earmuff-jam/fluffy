@@ -1,4 +1,5 @@
-import AppearanceSettings from '@features/Profile/AppearanceSettings';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AppearanceSettings from './AppearanceSettings';
 
 export default {
   title: 'Profile/AppearanceSettings',
@@ -6,7 +7,13 @@ export default {
   tags: ['autodocs'],
 };
 
-const Template = (args) => <AppearanceSettings {...args} />;
+const queryClient = new QueryClient();
+
+const Template = (args) => (
+  <QueryClientProvider client={queryClient}>
+    <AppearanceSettings {...args} />
+  </QueryClientProvider>
+);
 
 export const AppearanceSettingsDefault = Template.bind({});
 export const AppearanceSettingsLoading = Template.bind({});

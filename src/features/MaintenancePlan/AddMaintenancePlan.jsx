@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
+
 import { produce } from 'immer';
-import { enqueueSnackbar } from 'notistack';
+
 import { Button, Stack } from '@mui/material';
-import ColorPicker from '@common/ColorPicker';
-import LocationPicker from '@common/LocationPicker';
+
+import { enqueueSnackbar } from 'notistack';
+import ColorPicker from '@utils/ColorPicker';
+import LocationPicker from '@utils/LocationPicker';
+
 import StatusOptions from '@features/FormComponents/StatusOptions';
-import { STATUS_OPTIONS } from '@common/StatusOptions/constants';
+import { STATUS_OPTIONS } from '@utils/constants';
 import AddFormHeader from '@features/FormComponents/AddFormHeader';
-import { BLANK_MAINTENANCE_PLAN } from '@features/MaintenancePlan/constants';
-import { useCreateMaintenancePlan, useUpdateMaintenancePlan } from '@services/maintenancePlanApi';
+import { ADD_MAINTENANCE_PLAN_FORM_FIELDS } from '@features/MaintenancePlan/constants';
+
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useCreateMaintenancePlan, useUpdateMaintenancePlan } from '@services/maintenancePlanApi';
 
 const AddMaintenancePlan = ({
   handleClose,
@@ -24,7 +29,7 @@ const AddMaintenancePlan = ({
   const [location, setLocation] = useState({ lat: 0, lon: 0 });
   const [planColor, setPlanColor] = useState('#f7f7f7');
   const [status, setStatus] = useState(STATUS_OPTIONS[0].label);
-  const [formData, setFormData] = useState(BLANK_MAINTENANCE_PLAN);
+  const [formData, setFormData] = useState(ADD_MAINTENANCE_PLAN_FORM_FIELDS);
 
   // const [planType, setPlanType] = useState(ITEM_TYPE_MAPPER['daily'].value);
 
@@ -55,7 +60,7 @@ const AddMaintenancePlan = ({
 
   const resetData = () => {
     setSelectedMaintenancePlanID('');
-    setFormData(BLANK_MAINTENANCE_PLAN);
+    setFormData(ADD_MAINTENANCE_PLAN_FORM_FIELDS);
     setPlanColor('#f7f7f7');
     handleClose();
     setStatus(STATUS_OPTIONS[0].label);
@@ -163,7 +168,13 @@ const AddMaintenancePlan = ({
       <Stack spacing={2} sx={{ width: '100%' }}>
         <AddFormHeader formFields={formData} setLocation={setLocation} handleInputChange={handleInputChange} />
         {/* <AddTypeOptions value={planType} handleChange={handlePlanChange} /> */}
-        <StatusOptions value={status} onChange={handleStatus} />
+        <StatusOptions
+          value={status}
+          onChange={handleStatus}
+          title="Overall status of assets"
+          tooltipTitle="Overall status of assets within selected plan. Individual items may contain different status than selected one for the maintenance plan."
+          showTooltip
+        />
         <ColorPicker value={planColor} handleChange={handleColorChange} label={'Associate color'} />
       </Stack>
       {location?.lat ? (

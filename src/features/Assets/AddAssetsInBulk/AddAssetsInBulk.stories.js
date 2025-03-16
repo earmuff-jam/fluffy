@@ -1,7 +1,7 @@
-import AddAssetsInBulk from '@features/Assets/AddAssetsInBulk/AddAssetsInBulk';
+import AddAssetsInBulk from "./AddAssetsInBulk";
 
 export default {
-  title: 'AssetList/AddAssetsInBulk/AddAssetsInBulk',
+  title: 'AddAssetsInBulk/AddAssetsInBulk',
   component: AddAssetsInBulk,
   tags: ['autodocs'],
 };

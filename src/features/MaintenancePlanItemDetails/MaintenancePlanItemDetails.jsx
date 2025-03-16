@@ -1,15 +1,17 @@
 import { useState } from 'react';
+
 import { enqueueSnackbar } from 'notistack';
 import { useParams } from 'react-router-dom';
 
-import SimpleModal from '@common/SimpleModal';
-import { Skeleton, Stack } from '@mui/material';
+import SimpleModal from '@utils/SimpleModal';
+import { Paper, Skeleton, Stack } from '@mui/material';
 
-import { ConfirmationBoxModal } from '@common/utils';
-import AddItem from '@common/ItemCard/AddItem/AddItem';
-import ItemHeader from '@common/ItemCard/ItemHeader/ItemHeader';
-import ItemContent from '@common/ItemCard/ItemContent/ItemContent';
-import ItemGraphWrapper from '@common/ItemCard/ItemGraph/ItemGraphWrapper';
+import { ConfirmationBoxModal } from '@utils/utils';
+
+import AddItem from '@common/ItemDetails/AddItem';
+import ItemGraph from '@common/ItemDetails/ItemGraph';
+import ItemDetailsHeader from '@common/ItemDetails/ItemDetailsHeader';
+import ItemDetailsContent from '@common/ItemDetails/ItemDetailsContent';
 
 import {
   useCreateAssociationForItemsWithMaintenancePlan,
@@ -75,7 +77,7 @@ export default function MaintenancePlanItemDetails() {
 
   return (
     <Stack spacing={3} data-tour="selected-plan-0">
-      <ItemHeader
+      <ItemDetailsHeader
         label={selectedMaintenancePlan?.name ? `${selectedMaintenancePlan.name} Overview` : 'Maintenance Plan Overview'}
         caption="View details of selected maintenance plan"
         item={selectedMaintenancePlan}
@@ -84,7 +86,7 @@ export default function MaintenancePlanItemDetails() {
         shareBtnDataTour="selected-plan-2"
         imageBtnDataTour="selected-plan-3"
       />
-      <ItemContent
+      <ItemDetailsContent
         selectedIDList={selectedIDList}
         setSelectedIDList={setSelectedIDList}
         items={itemsInMaintenancePlan.map((v) => v.assetId)}
@@ -94,10 +96,9 @@ export default function MaintenancePlanItemDetails() {
         primaryBtnDataTour="selected-plan-4"
         secondaryBtnDataTour="selected-plan-5"
       />
-      <ItemGraphWrapper
-        associatedAssets={itemsInMaintenancePlan.map((v) => v.assetId)}
-        graphDataTour="selected-plan-7"
-      />
+      <Paper elevation={1} sx={{ padding: '1rem' }} data-tour="selected-plan-7">
+        <ItemGraph associatedAssets={itemsInMaintenancePlan.map((v) => v.assetId)} />
+      </Paper>
       {displayModal && (
         <SimpleModal title={`Add items to ${selectedMaintenancePlan?.name}`} handleClose={resetSelection}>
           <AddItem

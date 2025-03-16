@@ -1,7 +1,7 @@
-import OverviewContentAssetBreakdown from '@features/Home/OverviewContent/OverviewContentAssetBreakdown';
+import OverviewContentAssetBreakdown from "./OverviewContentAssetBreakdown";
 
 export default {
-  title: 'Home/OverviewContent/OverviewContentAssetBreakdown',
+  title: 'Home/OverviewContentAssetBreakdown',
   component: OverviewContentAssetBreakdown,
   tags: ['autodocs'],
 };

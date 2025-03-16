@@ -1,4 +1,5 @@
-import AddTypeOptions from '@features/FormComponents/AddTypeOptions';
+import { ITEM_TYPE_MAPPER } from '@features/MaintenancePlan/constants';
+import AddTypeOptions from './AddTypeOptions';
 
 export default {
   title: 'FormComponents/AddTypeOptions',
@@ -11,6 +12,6 @@ const Template = (args) => <AddTypeOptions {...args} />;
 export const AddTypeOptionsDefault = Template.bind({});
 
 AddTypeOptionsDefault.args = {
-  value: 'Daily',
+  value: ITEM_TYPE_MAPPER.daily.value,
   handleChange: () => {},
 };

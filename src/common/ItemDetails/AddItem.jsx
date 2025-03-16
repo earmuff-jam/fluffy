@@ -5,13 +5,13 @@ import { useFetchAssets } from '@services/assetsApi';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { ASSETS_LIST_HEADERS } from '@features/Assets/constants';
 
-import { EmptyComponent } from '@common/utils';
+import { EmptyComponent } from '@utils/utils';
 import DataTable from '@common/DataTable/DataTable';
 import { useMaterialReactTable } from 'material-react-table';
 
 export default function AddItem({ itemTitle, addItems, associatedItems }) {
   const { user } = useAuthenticator();
-  const { data: assets = [], isLoading } = useFetchAssets(user.userId);
+  const { data: assets = [], isLoading } = useFetchAssets(user?.userId);
 
   const [rowSelection, setRowSelection] = useState([]);
 

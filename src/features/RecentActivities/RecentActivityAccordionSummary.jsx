@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from '@common/utils';
+import { capitalizeFirstLetter } from '@utils/utils';
 import { ExpandMoreRounded } from '@mui/icons-material';
 import { AccordionSummary, Stack, Typography } from '@mui/material';
 

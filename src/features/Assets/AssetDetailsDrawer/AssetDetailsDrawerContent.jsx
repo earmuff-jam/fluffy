@@ -1,4 +1,4 @@
-import { EmptyComponent } from '@common/utils';
+import { EmptyComponent } from '@utils/utils';
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 import { BUILD_TABLE_CONSTANTS } from '@features/Assets/constants';
 

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 import { Stack, Typography } from '@mui/material';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { capitalizeFirstLetter } from '@common/utils';
+import { capitalizeFirstLetter } from '@utils/utils';
 import { CreateNewFolderRounded } from '@mui/icons-material';
 import StyledTimeline from '@features/RecentActivities/StyledTimeline';
 

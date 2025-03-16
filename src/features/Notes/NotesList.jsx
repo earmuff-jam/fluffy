@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { Stack } from '@mui/material';
+import { AddRounded } from '@mui/icons-material';
+import { IconButton, Stack, Typography } from '@mui/material';
 
 import Note from '@features/Notes/Note';
-import SimpleModal from '@common/SimpleModal';
+import SimpleModal from '@utils/SimpleModal';
 import AddNote from '@features/Notes/AddNote';
-import NoteHeader from '@features/Notes/NoteHeader';
 
 import { useFetchNotes } from '@services/notesApi';
 import { useAuthenticator } from '@aws-amplify/ui-react';
@@ -26,7 +26,14 @@ const NotesList = () => {
 
   return (
     <Stack spacing="1rem" data-tour="notes-0">
-      <NoteHeader handleClick={handleEditMode} />
+      <Stack direction="row" justifyContent="space-between">
+        <Typography variant="h5" color="text.secondary" gutterBottom>
+          Notes
+        </Typography>
+        <IconButton onClick={handleEditMode} size="small" data-tour="notes-1">
+          <AddRounded fontSize="small" />
+        </IconButton>
+      </Stack>
       <Note notes={notes} loading={isLoading} setEditMode={setEditMode} setSelectedNoteID={setSelectedNoteID} />
       {editMode && (
         <SimpleModal

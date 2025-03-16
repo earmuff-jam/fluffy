@@ -4,7 +4,7 @@ import { useTheme } from '@emotion/react';
 
 import { Paper, Stack, useMediaQuery } from '@mui/material';
 
-import SimpleModal from '@common/SimpleModal';
+import SimpleModal from '@utils/SimpleModal';
 import UserStatus from '@features/Profile/UserStatus';
 import ProfileForm from '@features/Profile/ProfileForm';
 
@@ -29,7 +29,7 @@ const ProfilePage = () => {
     <Stack spacing={2} data-tour="profile-0">
       <Stack direction={onlySmallScreen ? 'column' : 'row'} spacing={1}>
         <UserDemographics data={data} handleEditMode={() => setEditMode(!editMode)} />
-        <UserDetails data={data} />
+        <UserDetails aboutMe={data?.aboutMe} updatedAt={data?.updatedAt} />
       </Stack>
       <Paper sx={{ padding: '1rem' }} data-tour="profile-5">
         <UserStatus

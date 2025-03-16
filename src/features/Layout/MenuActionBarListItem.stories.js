@@ -1,8 +1,8 @@
-import MenuActionBarListItem from '@features/Layout/MenuActionBarListItem';
-import { MenuRounded } from '@mui/icons-material';
+import { CategoryRounded, MenuRounded } from "@mui/icons-material";
+import MenuActionBarListItem from "./MenuActionBarListItem";
 
 export default {
-  title: 'Layout/MenuActionBar/MenuActionBarListItem',
+  title: 'Layout/MenuActionBarListItem',
   component: MenuActionBarListItem,
   tags: ['autodocs'],
 };
@@ -21,7 +21,7 @@ MenuActionBarListItemDefault.args = {
 
 MenuActionBarListItemSelectedView.args = {
   label: 'Menu Action Bar Item Row',
-  icon: <MenuRounded />,
+  icon: <CategoryRounded />,
   isSelected: true,
   handleClick: () => {},
 };

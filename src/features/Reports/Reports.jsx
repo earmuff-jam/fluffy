@@ -4,14 +4,14 @@ import dayjs from 'dayjs';
 
 import { Stack } from '@mui/material';
 
-import SimpleModal from '@common/SimpleModal';
+import SimpleModal from '@utils/SimpleModal';
 import { FILTER_OPTIONS } from '@features/Reports/constants';
 
 import ReportsHeader from '@features/Reports/ReportsHeader';
 import ReportContent from '@features/Reports/ReportContent';
 import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
 
-import { buildXcel } from '@common/utils';
+import { buildXcel } from '@utils/utils';
 import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
 
 import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';

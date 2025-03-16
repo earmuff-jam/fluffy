@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
-import { Skeleton, Stack } from '@mui/material';
+import { Paper, Skeleton, Stack } from '@mui/material';
 
 import { enqueueSnackbar } from 'notistack';
 import { useParams } from 'react-router-dom';
 
-import SimpleModal from '@common/SimpleModal';
-import { ConfirmationBoxModal } from '@common/utils';
+import SimpleModal from '@utils/SimpleModal';
+import { ConfirmationBoxModal } from '@utils/utils';
 
-import AddItem from '@common/ItemCard/AddItem/AddItem';
-import ItemHeader from '@common/ItemCard/ItemHeader/ItemHeader';
-import ItemContent from '@common/ItemCard/ItemContent/ItemContent';
-import ItemGraphWrapper from '@common/ItemCard/ItemGraph/ItemGraphWrapper';
+import AddItem from '@common/ItemDetails/AddItem';
+import ItemGraph from '@common/ItemDetails/ItemGraph';
+import ItemDetailsHeader from '@common/ItemDetails/ItemDetailsHeader';
+import ItemDetailsContent from '@common/ItemDetails/ItemDetailsContent';
 
 import {
   useCreateAssociationForItemsWithCategory,
@@ -74,7 +74,7 @@ export default function CategoryItemDetails() {
 
   return (
     <Stack spacing={3} data-tour="selected-category-0">
-      <ItemHeader
+      <ItemDetailsHeader
         categoryMode
         label={selectedCategory?.name ? `${selectedCategory.name} Overview` : 'Category Overview'}
         caption="View details of selected category"
@@ -84,7 +84,7 @@ export default function CategoryItemDetails() {
         shareBtnDataTour="selected-category-2"
         imageBtnDataTour="selected-category-3"
       />
-      <ItemContent
+      <ItemDetailsContent
         selectedIDList={selectedIDList}
         setSelectedIDList={setSelectedIDList}
         items={itemsInCategory.map((v) => v.assetId)}
@@ -94,7 +94,9 @@ export default function CategoryItemDetails() {
         primaryBtnDataTour="selected-category-4"
         secondaryBtnDataTour="selected-category-5"
       />
-      <ItemGraphWrapper associatedAssets={itemsInCategory.map((v) => v.assetId)} graphDataTour="selected-category-7" />
+      <Paper elevation={1} sx={{ padding: '1rem' }} data-tour="selected-category-7">
+        <ItemGraph associatedAssets={itemsInCategory.map((v) => v.assetId)} />
+      </Paper>
       {displayModal && (
         <SimpleModal title={`Add items to ${selectedCategory?.name}`} handleClose={resetSelection} maxSize="md">
           <AddItem

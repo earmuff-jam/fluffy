@@ -7,7 +7,7 @@ import { Container, CssBaseline, Stack, ThemeProvider, useMediaQuery } from '@mu
 import { useTheme } from '@emotion/react';
 import { darkTheme, lightTheme } from '@utils/Theme';
 
-import Loading from '@common/Loading';
+import Loading from '@utils/Loading';
 import AppToolbar from '@features/Layout/AppToolbar';
 import MenuActionBar from '@features/Layout/MenuActionBar';
 

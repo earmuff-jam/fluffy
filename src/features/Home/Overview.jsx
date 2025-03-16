@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Skeleton, Stack } from '@mui/material';
 import { CategoryRounded, EngineeringRounded, WarningRounded } from '@mui/icons-material';
 
-import RowHeader from '@common/RowHeader';
+import RowHeader from '@utils/RowHeader';
 import OverviewCardWrapper from '@features/Home/OverviewCardWrapper';
 import OverviewCardItem from '@features/Home/OverviewCardItem';
 import OverviewContentSummary from '@features/Home/OverviewContentSummary';

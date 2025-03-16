@@ -1,8 +1,8 @@
-import AddNoteHeader from '@features/Notes/AddNoteHeader';
-import { Stack } from '@mui/material';
+import { Stack } from "@mui/material";
+import AddNoteHeader from "./AddNoteHeader";
 
 export default {
-  title: 'Notes/AddNoteHeader',
+  title: 'Note/AddNoteHeader',
   component: AddNoteHeader,
   tags: ['autodocs'],
 };

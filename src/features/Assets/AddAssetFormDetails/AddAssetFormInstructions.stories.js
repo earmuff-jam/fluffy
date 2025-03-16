@@ -1,7 +1,7 @@
-import AddAssetFormInstructions from '@features/Assets/AddAssetFormDetails/AddAssetFormInstructions';
+import AddAssetFormInstructions from "./AddAssetFormInstructions";
 
 export default {
-  title: 'AssetList/AddAssetFormDetails/AddAssetFormInstructions',
+  title: 'AddAssetFormDetails/AddAssetFormInstructions',
   component: AddAssetFormInstructions,
   tags: ['autodocs'],
 };

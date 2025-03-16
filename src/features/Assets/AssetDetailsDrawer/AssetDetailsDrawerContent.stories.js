@@ -1,9 +1,9 @@
-import QrCodeGen from '@common/QrCodeGen';
-import AssetDetailsDrawerContent from '@features/Assets/AssetDetailsDrawer/AssetDetailsDrawerContent';
-import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
+import QrCodeGen from "../../../utils/QrCodeGen";
+import AssetDetailsDrawerContent from "./AssetDetailsDrawerContent";
+import { ASSET_LIST_HEADERS } from "../constants";
 
 export default {
-  title: 'AssetList/AssetDetailsDrawer/AssetDetailsDrawerContent',
+  title: 'AssetDetailsDrawer/AssetDetailsDrawerContent',
   component: AssetDetailsDrawerContent,
   tags: ['autodocs'],
 };

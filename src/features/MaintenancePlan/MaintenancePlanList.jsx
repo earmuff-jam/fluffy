@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Box } from '@mui/material';
 
-import SimpleModal from '@common/SimpleModal';
+import SimpleModal from '@utils/SimpleModal';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
 import SectionCardContent from '@common/SectionCard/SectionCardContent';
 import AddMaintenancePlan from '@features/MaintenancePlan/AddMaintenancePlan';

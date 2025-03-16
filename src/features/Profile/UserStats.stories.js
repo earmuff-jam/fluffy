@@ -1,4 +1,4 @@
-import UserStats from '@features/Profile/UserStats';
+import UserStats from "./UserStats";
 
 export default {
   title: 'Profile/UserStats',

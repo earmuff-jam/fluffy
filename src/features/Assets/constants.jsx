@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 
-import QrCodeGen from '@common/QrCodeGen';
+import QrCodeGen from '@utils/QrCodeGen';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { CheckRounded, CloseRounded } from '@mui/icons-material';
-import { capitalizeFirstLetter } from '@common/utils';
+import { capitalizeFirstLetter } from '@utils/utils';
 import { Box } from '@mui/material';
 
 dayjs.extend(relativeTime);

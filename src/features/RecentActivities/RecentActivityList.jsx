@@ -4,7 +4,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { Divider, Stack } from '@mui/material';
 import { DownloadRounded } from '@mui/icons-material';
 
-import RowHeader from '@common/RowHeader';
+import RowHeader from '@utils/RowHeader';
 import RecentActivityAccordion from '@features/RecentActivities/RecentActivityAccordion';
 
 dayjs.extend(relativeTime);

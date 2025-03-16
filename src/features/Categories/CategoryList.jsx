@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Stack } from '@mui/material';
 
-import SimpleModal from '@common/SimpleModal';
+import SimpleModal from '@utils/SimpleModal';
 import AddCategory from '@features/Categories/AddCategory';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
 import SectionCardContent from '@common/SectionCard/SectionCardContent';

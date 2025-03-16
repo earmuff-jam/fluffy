@@ -1,7 +1,7 @@
-import AddAssetActionButtons from '@features/Assets/AddAssetFormDetails/AddAssetActionButtons';
+import AddAssetActionButtons from "./AddAssetActionButtons";
 
 export default {
-  title: 'AssetList/AddAssetFormDetails/AddAssetActionButtons',
+  title: 'AddAssetFormDetails/AddAssetActionButtons',
   component: AddAssetActionButtons,
   tags: ['autodocs'],
 };

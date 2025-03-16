@@ -1,7 +1,9 @@
-import AddFormHeader from '@features/FormComponents/AddFormHeader';
+import { ADD_CATEGORY_FORM_FIELDS } from "@features/Categories/constants";
+import AddFormHeader from "./AddFormHeader";
+import { ADD_MAINTENANCE_PLAN_FORM_FIELDS } from "@features/MaintenancePlan/constants";
 
 export default {
-  title: 'CommonFormComponents/AddFormHeader',
+  title: 'FormComponents/AddFormHeader',
   component: AddFormHeader,
   tags: ['autodocs'],
 };
@@ -9,48 +11,16 @@ export default {
 const Template = (args) => <AddFormHeader {...args} />;
 
 export const AddFormHeaderDefault = Template.bind({});
+export const AddFormHeaderMaintenancePlan = Template.bind({});
 
 AddFormHeaderDefault.args = {
-  formFields: {
-    name: {
-      value: '',
-      name: 'name',
-      label: 'Title',
-      placeholder: 'Add a title to your maintenance plan',
-      size: 'small',
-      required: true,
-      fullWidth: true,
-      errorMsg: '',
-      validators: [
-        {
-          message: 'Title is required',
-        },
-        {
-          message: 'Title should be less than 50 characters',
-        },
-      ],
-    },
-    description: {
-      value: '',
-      name: 'description',
-      label: 'Description',
-      placeholder: 'Add a short descrption to your maintenance plan in less than 100 characters.',
-      required: true,
-      size: 'small',
-      fullWidth: true,
-      rows: 4,
-      multiline: true,
-      errorMsg: '',
-      validators: [
-        {
-          message: 'Plan description is required',
-        },
-        {
-          message: 'Plan description should be less than 500 characters',
-        },
-      ],
-    },
-  },
+  formFields: ADD_CATEGORY_FORM_FIELDS,
+  handleInputChange: () => {},
+  setLocation: () => {},
+};
+
+AddFormHeaderMaintenancePlan.args = {
+  formFields: ADD_MAINTENANCE_PLAN_FORM_FIELDS,
   handleInputChange: () => {},
   setLocation: () => {},
 };

@@ -1,7 +1,7 @@
 import { InputAdornment, Stack, TextField, Typography } from '@mui/material';
 
-import TextFieldWithLabel from '@common/TextFieldWithLabel';
-import RetrieveUserLocation from '@common/RetrieveUserLocation';
+import TextFieldWithLabel from '@utils/TextFieldWithLabel';
+import RetrieveUserLocation from '@utils/RetrieveUserLocation';
 
 export default function AddFormHeader({ formFields, handleInputChange, setLocation }) {
   return (

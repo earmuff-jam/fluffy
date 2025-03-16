@@ -1,5 +1,5 @@
-import UserDemographicsRow from '@features/Profile/UserDemographicsRow';
-import { Typography } from '@mui/material';
+import { Typography } from "@mui/material";
+import UserDemographicsRow from "./UserDemographicsRow";
 
 export default {
   title: 'Profile/UserDemographicsRow',

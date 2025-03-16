@@ -1,10 +1,10 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
-import { ADD_ASSET_FORM } from '@features/Assets/AddAssetFormDetails/constants';
-import AddAssetFormItemDetails from '@features/Assets/AddAssetFormDetails/AddAssetFormItemDetails';
+import { ADD_ASSET_FORM } from "./constants";
+import AddAssetFormItemDetails from "./AddAssetFormItemDetails";
 
 export default {
-  title: 'AssetList/AddAssetFormDetails/AddAssetFormItemDetails',
+  title: 'AddAssetFormDetails/AddAssetFormItemDetails',
   component: AddAssetFormItemDetails,
   tags: ['autodocs'],
 };

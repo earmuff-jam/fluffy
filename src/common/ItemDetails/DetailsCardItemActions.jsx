@@ -16,7 +16,7 @@ export default function DetailsCardItemActions({
     <CardActions
       sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center' }}
     >
-      <Typography variant="caption">Last updated {dayjs(selectedItem?.updated_at).fromNow()}</Typography>
+      <Typography variant="caption">Last updated {dayjs(selectedItem?.updatedAt).fromNow()}</Typography>
       <Stack direction="row" alignItems="center">
         <Badge
           badgeContent={isShared ? selectedItem?.collaborators.length - 1 : 0} // account for creator in collaborators

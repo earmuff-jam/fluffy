@@ -1,5 +1,5 @@
-import StyledTimeline from '@features/RecentActivities/StyledTimeline';
-import { CreateNewFolderRounded } from '@mui/icons-material';
+import { CreateNewFolderRounded } from "@mui/icons-material";
+import StyledTimeline from "./StyledTimeline";
 
 export default {
   title: 'RecentActivities/StyledTimeline',

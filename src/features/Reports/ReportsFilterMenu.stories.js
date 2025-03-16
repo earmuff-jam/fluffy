@@ -1,6 +1,5 @@
-import dayjs from 'dayjs';
-
-import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
+import ReportsFilterMenu from './ReportsFilterMenu';
+import { FILTER_OPTIONS } from '@features/Reports/constants';
 
 export default {
   title: 'Reports/ReportsFilterMenu',
@@ -11,11 +10,20 @@ export default {
 const Template = (args) => <ReportsFilterMenu {...args} />;
 
 export const ReportsFilterMenuDefault = Template.bind({});
+export const ReportsFilterMenuExcludeOverdueAssets = Template.bind({});
 
 ReportsFilterMenuDefault.args = {
   applyFilter: () => {},
-  sinceValue: dayjs().toISOString(),
+  sinceValue: FILTER_OPTIONS.find((item) => item.label === 'ytd').value,
   setSinceValue: () => {},
   includeOverdue: true,
+  setIncludeOverdue: () => {},
+};
+
+ReportsFilterMenuExcludeOverdueAssets.args = {
+  applyFilter: () => {},
+  sinceValue: FILTER_OPTIONS.find((item) => item.label === 'ytd').value,
+  setSinceValue: () => {},
+  includeOverdue: false,
   setIncludeOverdue: () => {},
 };

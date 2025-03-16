@@ -1,4 +1,5 @@
-import UserDemographics from '@features/Profile/UserDemographics';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import UserDemographics from './UserDemographics';
 
 export default {
   title: 'Profile/UserDemographics',
@@ -6,7 +7,13 @@ export default {
   tags: ['autodocs'],
 };
 
-const Template = (args) => <UserDemographics {...args} />;
+const queryClient = new QueryClient();
+
+const Template = (args) => (
+  <QueryClientProvider client={queryClient}>
+    <UserDemographics {...args} />
+  </QueryClientProvider>
+);
 
 export const UserDemographicsDefault = Template.bind({});
 export const UserDemographicsLongName = Template.bind({});
@@ -15,15 +22,15 @@ UserDemographicsDefault.args = {
   data: {
     id: '96cf5b68-fcda-422c-8d61-8f638e2803a5',
     username: 'xxKittenxx',
-    full_name: 'Mary Doe',
-    email_address: 'mary_doe@gmail.com',
-    phone_number: '1234567890',
-    about_me: '',
-    online_status: false,
+    firstName: 'Mary',
+    lastName: 'Cross',
+    emailAddress: 'mary_doe@gmail.com',
+    phoneNumber: '1234567890',
+    aboutMe: '',
+    isOnline: false,
     appearance: false,
-    grid_view: false,
-    created_at: '0001-01-01T00:00:00Z',
-    updated_at: '2024-11-24T01:24:30.874189Z',
+    createdAt: '0001-01-01T00:00:00Z',
+    updatedAt: '2024-11-24T01:24:30.874189Z',
   },
   handleEditMode: () => {},
 };
@@ -31,16 +38,16 @@ UserDemographicsDefault.args = {
 UserDemographicsLongName.args = {
   data: {
     id: '96cf5b68-fcda-422c-8d61-8f638e2803a5',
-    username: 'This is a really long username.',
-    full_name: 'Mary Doe',
-    email_address: 'mary_doe@gmail.com',
-    phone_number: '1234567890',
-    about_me: '',
-    online_status: false,
+    username: 'This is a really long user name screening test. ',
+    firstName: 'Mary',
+    lastName: 'Cross',
+    emailAddress: 'mary_doe@gmail.com',
+    phoneNumber: '1234567890',
+    aboutMe: '',
+    isOnline: false,
     appearance: false,
-    grid_view: false,
-    created_at: '0001-01-01T00:00:00Z',
-    updated_at: '2024-11-24T01:24:30.874189Z',
+    createdAt: '0001-01-01T00:00:00Z',
+    updatedAt: '2024-11-24T01:24:30.874189Z',
   },
   handleEditMode: () => {},
 };

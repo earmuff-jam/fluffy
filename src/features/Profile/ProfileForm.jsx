@@ -7,7 +7,7 @@ import relativeTime from 'dayjs/plugin/relativeTime.js';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
-import TextFieldWithLabel from '@common/TextFieldWithLabel';
+import TextFieldWithLabel from '@utils/TextFieldWithLabel';
 import { BLANK_PROFILE_DETAILS } from '@features/Profile/constants';
 import { useFetchUserProfileDetails, useUpdateProfile } from '@services/profileApi';
 

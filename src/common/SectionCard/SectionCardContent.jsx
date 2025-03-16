@@ -1,10 +1,12 @@
-import dayjs from 'dayjs';
 import { useState } from 'react';
 
-import { Skeleton } from '@mui/material';
-import ItemCard from '@common/ItemCard/ItemCard';
+import { Box, Skeleton, Stack } from '@mui/material';
+
+import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { ConfirmationBoxModal, EmptyComponent } from '@common/utils';
+
+import SectionCardDetails from '@common/SectionCard/SectionCardDetails';
+import { ConfirmationBoxModal, EmptyComponent } from '@utils/utils';
 
 dayjs.extend(relativeTime);
 
@@ -50,12 +52,20 @@ const SectionCardContent = ({
 
   return (
     <>
-      <ItemCard
-        data={content}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-        prefixURI={prefixURI}
-      />
+      <Box sx={{ overflow: 'auto', paddingBottom: '1rem' }}>
+        <Stack spacing={{ xs: 2 }} direction="row" useFlexGap flexWrap="wrap">
+          {content?.map((item, index) => (
+            <SectionCardDetails
+              key={index}
+              item={item}
+              index={index}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+              prefixURI={prefixURI}
+            />
+          ))}
+        </Stack>
+      </Box>
       <ConfirmationBoxModal
         openDialog={openDialog}
         title="Confirm deletion"

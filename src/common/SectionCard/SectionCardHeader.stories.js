@@ -1,4 +1,4 @@
-import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
+import SectionCardHeader from './SectionCardHeader';
 
 export default {
   title: 'Common/SectionCard/SectionCardHeader',
@@ -8,36 +8,76 @@ export default {
 
 const Template = (args) => <SectionCardHeader {...args} />;
 
-export const SectionCardHeaderDefault = Template.bind({});
-export const SectionCardHeaderDraftStatus = Template.bind({});
-export const SectionCardHeaderASCSortingOrder = Template.bind({});
+export const SectionCardHeaderCategoryDefault = Template.bind({});
+export const SectionCardHeaderCategoryDraftStatus = Template.bind({});
+export const SectionCardHeaderCategoryASCSortingOrder = Template.bind({});
 
-SectionCardHeaderDefault.args = {
-  title: 'Test Title',
-  caption: 'Selected filter are displayed here',
+export const SectionCardHeaderMaintenancePlanDefault = Template.bind({});
+export const SectionCardHeaderMaintenancePlanDraftStatus = Template.bind({});
+export const SectionCardHeaderMaintenancePlanASCSortingOrder = Template.bind({});
+
+SectionCardHeaderMaintenancePlanDefault.args = {
+  title: 'Weekly maintenance plan',
+  caption: 'Weekly maintenance plan items',
   toggleModal: () => {},
   selectedFilter: null,
   setSelectedFilter: () => {},
   sortingOrder: true,
   setSortingOrder: () => {},
+  primaryBtnTitle: 'Add Plan',
 };
 
-SectionCardHeaderDraftStatus.args = {
-  title: 'Test Title',
-  caption: 'Selected filter are displayed here',
+SectionCardHeaderMaintenancePlanDraftStatus.args = {
+  title: 'Weekly maintenance plan',
+  caption: 'Weekly maintenance plan items',
   toggleModal: () => {},
   selectedFilter: 'draft',
   setSelectedFilter: () => {},
   sortingOrder: true,
   setSortingOrder: () => {},
+  primaryBtnTitle: 'Add Plan',
 };
 
-SectionCardHeaderASCSortingOrder.args = {
-  title: 'Test Title',
-  caption: 'Selected filter are displayed here',
+SectionCardHeaderMaintenancePlanASCSortingOrder.args = {
+  title: 'Weekly maintenance plan',
+  caption: 'Weekly maintenance plan items',
   toggleModal: () => {},
   selectedFilter: null,
   setSelectedFilter: () => {},
   sortingOrder: false,
   setSortingOrder: () => {},
+  primaryBtnTitle: 'Add Plan',
+};
+
+SectionCardHeaderCategoryDefault.args = {
+  title: 'Dog items',
+  caption: 'Stuff related to pup items',
+  toggleModal: () => {},
+  selectedFilter: null,
+  setSelectedFilter: () => {},
+  sortingOrder: true,
+  setSortingOrder: () => {},
+  primaryBtnTitle: 'Add Category',
+};
+
+SectionCardHeaderCategoryDraftStatus.args = {
+  title: 'Dog items',
+  caption: 'Stuff related to pup items',
+  toggleModal: () => {},
+  selectedFilter: 'draft',
+  setSelectedFilter: () => {},
+  sortingOrder: true,
+  setSortingOrder: () => {},
+  primaryBtnTitle: 'Add Category',
+};
+
+SectionCardHeaderCategoryASCSortingOrder.args = {
+  title: 'Dog items',
+  caption: 'Stuff related to pup items',
+  toggleModal: () => {},
+  selectedFilter: null,
+  setSelectedFilter: () => {},
+  sortingOrder: false,
+  setSortingOrder: () => {},
+  primaryBtnTitle: 'Add Category',
 };
