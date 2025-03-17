@@ -19,7 +19,7 @@ import DetailsCardItemContent from '@common/ItemDetails/DetailsCardItemContent';
 import DetailsCardItemActions from '@common/ItemDetails/DetailsCardItemActions';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { useFetchCategoryPhoto, useUpdateCategory, useUploadCategoryPhoto } from '@services/categoriesApi';
+import { useUpdateCategory, useUploadCategoryPhoto } from '@services/categoriesApi';
 import { useUpdateMaintenancePlan, useUploadMaintenancePlanPhoto } from '@services/maintenancePlanApi';
 
 dayjs.extend(relativeTime);
