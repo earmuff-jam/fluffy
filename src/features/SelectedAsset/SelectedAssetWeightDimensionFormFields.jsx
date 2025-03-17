@@ -1,10 +1,10 @@
 import { Stack } from '@mui/material';
 import TextFieldWithLabel from '@utils/TextFieldWithLabel';
 
-export default function SelectedAssetWeightDimensionFormFields({ formFields, handleInputChange }) {
+export default function SelectedAssetWeightDimensionFormFields({ formFields, handleInputChange, smallFormFactor }) {
   return (
     <Stack spacing={1}>
-      <Stack direction="row" spacing={2}>
+      <Stack direction={smallFormFactor ? 'column' : 'row'} spacing={2}>
         <TextFieldWithLabel
           id={formFields.maxWeight.name}
           name={formFields.maxWeight.name}
@@ -34,7 +34,7 @@ export default function SelectedAssetWeightDimensionFormFields({ formFields, han
           variant={formFields.minWeight.variant}
         />
       </Stack>
-      <Stack direction="row" spacing={2}>
+      <Stack direction={smallFormFactor ? 'column' : 'row'} spacing={2}>
         <TextFieldWithLabel
           id={formFields.maxHeight.name}
           name={formFields.maxHeight.name}

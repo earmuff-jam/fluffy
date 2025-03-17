@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-import { Button, Divider, Stack, Typography } from '@mui/material';
+import { Button, Divider, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { AddPhotoAlternateRounded, CheckRounded } from '@mui/icons-material';
 
 import { enqueueSnackbar } from 'notistack';
@@ -22,19 +22,25 @@ import SelectedAssetWeightDimensionFormFields from '@features/SelectedAsset/Sele
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useFetchStorageLocations } from '@services/storageLocationApi';
-import { useFetchAssetById, useUpdateAsset } from '@services/assetsApi';
+import { useFetchAssetById, useFetchAssetPhoto, useUpdateAsset, useUploadAssetPhoto } from '@services/assetsApi';
 
 dayjs.extend(relativeTime);
 
 export default function SelectedAsset() {
   const { id } = useParams();
-
-  const selectedImage = '';
   const { user } = useAuthenticator();
+
+  const theme = useTheme();
+  const smallFormFactor = useMediaQuery(theme.breakpoints.down('sm'));
+
   const { data: asset, isLoading: loading } = useFetchAssetById(id);
+
+  const { data: selectedAssetImage } = useFetchAssetPhoto(asset?.imageURL);
+
   const { data: storageLocations, isLoading: storageLocationsLoading } = useFetchStorageLocations(user.userId);
 
   const { mutate: updateAsset } = useUpdateAsset();
+  const { mutate: uploadAssetPhoto } = useUploadAssetPhoto();
 
   const [editImgMode, setEditImgMode] = useState(false);
   const [openReturnNote, setOpenReturnNote] = useState(false);
@@ -148,8 +154,7 @@ export default function SelectedAsset() {
   };
 
   const handleUpload = (id, imgFormData) => {
-    console.debug(id, imgFormData);
-    // dispatch(inventoryActions.uploadAndRefreshData({ id: id, selectedImage: imgFormData }));
+    uploadAssetPhoto({ id, selectedImage: imgFormData, data: asset });
     setEditImgMode(false);
   };
 
@@ -175,8 +180,6 @@ export default function SelectedAsset() {
       selectedAsset.updatedBy.value = asset?.updatedBy || '';
       selectedAsset.updatedAt.value = asset?.updatedAt || '';
       selectedAsset.sharable_groups.value = asset?.sharable_groups || [];
-      selectedAsset.creator = asset?.creator || '';
-      selectedAsset.updator = asset?.updator || '';
 
       if (asset?.returnDatetime) {
         setReturnDateTime(dayjs(asset.returnDatetime));
@@ -209,11 +212,12 @@ export default function SelectedAsset() {
         formFields={formData}
         assetColor={color}
         handleColorChange={handleColorChange}
-        selectedImage={selectedImage}
+        selectedImage={selectedAssetImage}
         handleInputChange={handleInputChange}
         options={storageLocations}
         storageLocation={storageLocation}
         setStorageLocation={setStorageLocation}
+        smallFormFactor={smallFormFactor}
       />
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
         <Typography variant="caption">More information</Typography>
@@ -226,12 +230,17 @@ export default function SelectedAsset() {
         setOpenReturnNote={setOpenReturnNote}
         handleCheckbox={handleCheckbox}
         handleInputChange={handleInputChange}
+        smallFormFactor={smallFormFactor}
       />
 
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
         <Typography variant="caption">Weight and Dimension</Typography>
       </Divider>
-      <SelectedAssetWeightDimensionFormFields formFields={formData} handleInputChange={handleInputChange} />
+      <SelectedAssetWeightDimensionFormFields
+        formFields={formData}
+        handleInputChange={handleInputChange}
+        smallFormFactor={smallFormFactor}
+      />
       <Stack sx={{ margin: '1rem 0rem' }}>
         <Button
           startIcon={<CheckRounded fontSize="small" />}

@@ -14,14 +14,15 @@ export default function SelectedAssetFormFields({
   options,
   storageLocation,
   setStorageLocation,
+  smallFormFactor = false,
 }) {
   return (
     <Stack spacing={2} marginTop={'1rem'}>
-      <Stack direction="row" spacing={2} alignItems={'center'}>
+      <Stack direction={smallFormFactor ? 'column' : 'row'} spacing={2}>
         <CardMedia
           component="img"
-          sx={{ width: 300 }}
-          image={selectedImage || '/blank_canvas.png'}
+          sx={{ width: smallFormFactor ? '100%' : 300, height: 250 }}
+          image={selectedImage?.url || '/blank_canvas.png'}
           alt="Default placeholder image for the asset"
         />
         <Stack spacing={2} flexGrow={1}>
@@ -57,7 +58,7 @@ export default function SelectedAssetFormFields({
           />
         </Stack>
       </Stack>
-      <Stack direction="row" spacing={2}>
+      <Stack direction={smallFormFactor ? 'column' : 'row'} spacing={2}>
         <TextFieldWithLabel
           id={formFields.price.name}
           name={formFields.price.name}
@@ -101,7 +102,7 @@ export default function SelectedAssetFormFields({
           variant={formFields.sku.variant}
         />
       </Stack>
-      <Stack direction="row" spacing={1}>
+      <Stack direction={smallFormFactor ? 'column' : 'row'} spacing={1}>
         <TextFieldWithLabel
           id={formFields.quantity.name}
           name={formFields.quantity.name}

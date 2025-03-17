@@ -15,7 +15,7 @@ export default function UserDemographics({ data = {}, handleEditMode }) {
   const [editMode, setEditMode] = useState(false);
 
   const handleUpload = async (id, selectedImage) => {
-    uploadProfilePhoto({ id, selectedImage });
+    uploadProfilePhoto({ id, selectedImage, data });
     setEditMode(false);
   };
 

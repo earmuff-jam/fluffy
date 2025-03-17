@@ -2,7 +2,7 @@ import { Divider, Skeleton, Stack, Typography } from '@mui/material';
 
 import UserStats from '@features/Profile/UserStats';
 
-export default function UserStatus({ profileStats = {}, onlySmallScreen, isProfileStatsLoading = true }) {
+export default function UserStatus({ profileStats = {}, smallFormFactor, isProfileStatsLoading = true }) {
   const DRAFT_PROFILE_STATS = [
     {
       id: 1,
@@ -36,7 +36,7 @@ export default function UserStatus({ profileStats = {}, onlySmallScreen, isProfi
       </Typography>
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }} />
       <Stack
-        direction={onlySmallScreen ? 'column' : 'row'}
+        direction={smallFormFactor ? 'column' : 'row'}
         justifyContent={'space-between'}
         useFlexGap
         flexWrap="wrap"

@@ -20,10 +20,10 @@ const Layout = () => {
 
   const { data: profileDetails = {}, isLoading } = useFetchUserProfileDetails(user.userId);
 
-  const smScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('sm'));
-  const lgScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('lg'));
+  const greaterThanSmallFormFactor = useMediaQuery(theme.breakpoints.up('sm'));
+  const greaterThanLargeFormFactor = useMediaQuery(theme.breakpoints.up('lg'));
 
-  const [openDrawer, setOpenDrawer] = useState(lgScreenSizeAndHigher ? true : false);
+  const [openDrawer, setOpenDrawer] = useState(greaterThanLargeFormFactor ? true : false);
 
   return (
     <ThemeProvider theme={profileDetails?.appearance ? darkTheme : lightTheme}>
@@ -35,8 +35,8 @@ const Layout = () => {
             openDrawer={openDrawer}
             createdByUserId={user.userId}
             handleDrawerClose={() => setOpenDrawer(false)}
-            smScreenSizeAndHigher={smScreenSizeAndHigher}
-            lgScreenSizeAndHigher={lgScreenSizeAndHigher}
+            greaterThanSmallFormFactor={greaterThanSmallFormFactor}
+            greaterThanLargeFormFactor={greaterThanLargeFormFactor}
           />
           <Container maxWidth="xl">{isLoading ? <Loading /> : <Outlet />}</Container>
         </Stack>

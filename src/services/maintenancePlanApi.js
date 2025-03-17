@@ -244,7 +244,7 @@ export const useUploadMaintenancePlanPhoto = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, selectedImage }) => {
+    mutationFn: async ({ id, selectedImage, data }) => {
       if (!id || !selectedImage) {
         throw new Error('Required fields are missing for upload.');
       }
@@ -256,15 +256,12 @@ export const useUploadMaintenancePlanPhoto = () => {
 
       const result = await uploadResponse.result;
 
-      const response = await client.models.MaintenancePlans.get({ id: id });
-
       await client.models.MaintenancePlans.update({
-        ...response.data,
+        ...data,
         imageURL: result?.path,
       });
     },
-    onSuccess: ({ id }) => {
-      queryClient.invalidateQueries(['maintenancePlans']);
+    onSuccess: (_, { id }) => {
       queryClient.invalidateQueries(['maintenancePlan', id]);
       queryClient.invalidateQueries(['maintenancePlanPhoto']);
     },

@@ -24,7 +24,7 @@ const ProfileForm = ({ handleClose }) => {
     ev.preventDefault();
     const draftData = Object.entries(formData).reduce((acc, [key, valueObj]) => {
       if (['updatedAt'].includes(key)) {
-        acc[key] = valueObj;
+        acc[key] = dayjs(); // set current time for update
       } else {
         acc[key] = valueObj.value;
       }
@@ -80,6 +80,7 @@ const ProfileForm = ({ handleClose }) => {
         caption={'Your display name throughout the application.'}
         id={'username'}
         name={'username'}
+        required={formData?.username?.required}
         placeholder={'Enter your username that you would like to go by'}
         value={formData?.username?.value || ''}
         handleChange={handleChange}
@@ -94,6 +95,7 @@ const ProfileForm = ({ handleClose }) => {
         name={'firstName'}
         placeholder={'Enter your first name'}
         value={formData?.firstName?.value || ''}
+        required={formData?.firstName?.required}
         handleChange={handleChange}
         variant={'outlined'}
         size="small"
@@ -106,6 +108,7 @@ const ProfileForm = ({ handleClose }) => {
         name={'lastName'}
         placeholder={'Enter your last name'}
         value={formData?.lastName?.value || ''}
+        required={formData?.lastName?.required}
         handleChange={handleChange}
         variant={'outlined'}
         size="small"
@@ -118,6 +121,7 @@ const ProfileForm = ({ handleClose }) => {
         name="emailAddress"
         placeholder="Enter your unique email address"
         value={formData?.emailAddress.value || ''}
+        required={formData?.emailAddress?.required}
         handleChange={handleChange}
         variant="outlined"
         size="small"
@@ -130,6 +134,7 @@ const ProfileForm = ({ handleClose }) => {
         name="phoneNumber"
         placeholder="Enter your phone number"
         value={formData?.phoneNumber.value || ''}
+        required={formData?.phoneNumber?.required}
         handleChange={handleChange}
         variant="outlined"
         size="small"
@@ -142,6 +147,7 @@ const ProfileForm = ({ handleClose }) => {
         name="aboutMe"
         placeholder="Allow yourself to express your unique values with a short bio."
         value={formData?.aboutMe?.value || ''}
+        required={formData?.aboutMe?.required}
         handleChange={handleChange}
         variant="outlined"
         multiline={true}

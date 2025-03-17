@@ -9,7 +9,7 @@ import BenefitsSection from '@features/LandingPage/BenefitsSection';
 
 const Header = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const mediumFormFactor = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>
@@ -22,7 +22,7 @@ const Header = () => {
           </Typography>
         </Box>
 
-        {isMobile ? (
+        {mediumFormFactor ? (
           <IconButton edge="end" color="inherit" aria-label="menu">
             <MenuRounded />
           </IconButton>

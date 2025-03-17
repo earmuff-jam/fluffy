@@ -33,8 +33,8 @@ export default function MenuActionBar({
   createdByUserId,
   openDrawer,
   handleDrawerClose,
-  smScreenSizeAndHigher,
-  lgScreenSizeAndHigher,
+  greaterThanSmallFormFactor,
+  greaterThanLargeFormFactor,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ export default function MenuActionBar({
   // the timeout allows to close the drawer first before navigation occurs.
   // Without this, the drawer behaves weird.
   const handleMenuItemClick = (to) => {
-    !lgScreenSizeAndHigher && handleDrawerClose();
+    !greaterThanLargeFormFactor && handleDrawerClose();
     setTimeout(() => {
       navigate(to);
     }, 200);
@@ -70,7 +70,7 @@ export default function MenuActionBar({
         onClose={handleDrawerClose}
         aria-modal="true"
         PaperProps={
-          smScreenSizeAndHigher
+          greaterThanSmallFormFactor
             ? {
                 sx: {
                   width: 300,

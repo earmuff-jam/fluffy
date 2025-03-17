@@ -19,7 +19,7 @@ import DetailsCardItemContent from '@common/ItemDetails/DetailsCardItemContent';
 import DetailsCardItemActions from '@common/ItemDetails/DetailsCardItemActions';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { useUpdateCategory, useUploadCategoryPhoto } from '@services/categoriesApi';
+import { useFetchCategoryPhoto, useUpdateCategory, useUploadCategoryPhoto } from '@services/categoriesApi';
 import { useUpdateMaintenancePlan, useUploadMaintenancePlanPhoto } from '@services/maintenancePlanApi';
 
 dayjs.extend(relativeTime);
@@ -50,9 +50,9 @@ export default function ItemDetailsHeader({
 
   const handleUpload = (id, selectedImage) => {
     if (categoryMode) {
-      uploadCategoryPhoto({ id, selectedImage });
+      uploadCategoryPhoto({ id, selectedImage, data: item });
     } else {
-      uploadMaintenancePlanPhoto({ id, selectedImage });
+      uploadMaintenancePlanPhoto({ id, selectedImage, data: item });
     }
 
     enqueueSnackbar('New image upload successful.', {

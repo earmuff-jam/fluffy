@@ -18,7 +18,7 @@ import { useFetchUserProfileDetails, useFetchUserProfileStats } from '@services/
 const ProfilePage = () => {
   const theme = useTheme();
   const { user } = useAuthenticator();
-  const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const smallFormFactor = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { data, isLoading } = useFetchUserProfileDetails(user.userId);
   const { data: profileStats, isLoading: isProfileStatsLoading } = useFetchUserProfileStats(user.userId);
@@ -27,14 +27,14 @@ const ProfilePage = () => {
 
   return (
     <Stack spacing={2} data-tour="profile-0">
-      <Stack direction={onlySmallScreen ? 'column' : 'row'} spacing={1}>
+      <Stack direction={smallFormFactor ? 'column' : 'row'} spacing={1}>
         <UserDemographics data={data} handleEditMode={() => setEditMode(!editMode)} />
         <UserDetails aboutMe={data?.aboutMe} updatedAt={data?.updatedAt} />
       </Stack>
       <Paper sx={{ padding: '1rem' }} data-tour="profile-5">
         <UserStatus
           profileStats={profileStats}
-          onlySmallScreen={onlySmallScreen}
+          smallFormFactor={smallFormFactor}
           isProfileStatsLoading={isProfileStatsLoading}
         />
       </Paper>

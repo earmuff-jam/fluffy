@@ -18,6 +18,7 @@ export const BLANK_PROFILE_DETAILS = {
     id: 'username',
     value: '',
     errorMsg: '',
+    required: true,
     validators: [
       {
         validate: (value) => value.trim().length <= 3,
@@ -29,6 +30,7 @@ export const BLANK_PROFILE_DETAILS = {
     id: 'firstName',
     value: '',
     errorMsg: '',
+    required: true,
     validators: [
       {
         validate: (value) => value.trim().length <= 0,
@@ -44,6 +46,7 @@ export const BLANK_PROFILE_DETAILS = {
     id: 'lastName',
     value: '',
     errorMsg: '',
+    required: true,
     validators: [
       {
         validate: (value) => value.trim().length <= 0,
@@ -59,6 +62,7 @@ export const BLANK_PROFILE_DETAILS = {
     id: 'emailAddress',
     value: '',
     errorMsg: '',
+    required: true,
     validators: [
       {
         validate: (value) => value.trim().length <= 0,
@@ -74,6 +78,7 @@ export const BLANK_PROFILE_DETAILS = {
     id: 'phoneNumber',
     value: '',
     errorMsg: '',
+    required: false,
     validators: [
       {
         validate: (value) => value.trim().length <= 0,
@@ -89,6 +94,7 @@ export const BLANK_PROFILE_DETAILS = {
     id: 'aboutMe',
     value: '',
     errorMsg: '',
+    required: false,
     validators: [
       {
         validate: (value) => value.trim().length >= 500,

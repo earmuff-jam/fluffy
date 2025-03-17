@@ -13,7 +13,7 @@ export const UserStatusLoading = Template.bind({});
 export const UserStatusSmallScreen = Template.bind({});
 
 UserStatusDefault.args = {
-  onlySmallScreen: false,
+  smallFormFactor: false,
   isProfileStatsLoading: false,
   profileStats: {
     totalCategories: 1,
@@ -23,7 +23,7 @@ UserStatusDefault.args = {
 };
 
 UserStatusLoading.args = {
-  onlySmallScreen: false,
+  smallFormFactor: false,
   isProfileStatsLoading: true,
   profileStats: {
     totalCategories: 1,
@@ -33,7 +33,7 @@ UserStatusLoading.args = {
 };
 
 UserStatusSmallScreen.args = {
-  onlySmallScreen: true,
+  smallFormFactor: true,
   isProfileStatsLoading: false,
   profileStats: {
     totalCategories: 1,
