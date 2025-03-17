@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { router } from '@utils/router';
 import { TourProvider } from '@reactour/tour';
@@ -7,8 +7,6 @@ import { RouterProvider } from 'react-router-dom';
 import DEFAULT_TOUR_STEPS from '@utils/steps';
 import Header from '@features/LandingPage/Header';
 import Footer from '@features/LandingPage/Footer';
-
-import Loading from '@utils/Loading';
 // import Pricing from '@features/LandingPage/Pricing';
 import EmailSection from '@features/LandingPage/EmailSection';
 
@@ -41,9 +39,7 @@ const ApplicationValidator = () => {
 
   return (
     <TourProvider steps={DEFAULT_TOUR_STEPS}>
-      <Suspense fallback={<Loading />}>
-        <RouterProvider router={router} />
-      </Suspense>
+      <RouterProvider router={router} />
     </TourProvider>
   );
 };

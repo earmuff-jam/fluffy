@@ -12,6 +12,7 @@ export default function SelectedAssetMoreInformation({
   setOpenReturnNote,
   handleCheckbox,
   handleInputChange,
+  smallFormFactor = false,
 }) {
   const isReturnable = Boolean(formFields.isReturnable.value);
   const isBookmarked = Boolean(formFields.isBookmarked.value);
@@ -34,7 +35,7 @@ export default function SelectedAssetMoreInformation({
         }
       />
 
-      <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+      <Stack direction={smallFormFactor && isReturnable ? 'column' : 'row'} spacing={2}>
         <FormControlLabel
           control={
             <Checkbox

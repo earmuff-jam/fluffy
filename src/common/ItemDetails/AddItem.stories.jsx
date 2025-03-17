@@ -1,6 +1,4 @@
-import { Provider } from 'react-redux';
 import AddItem from './AddItem';
-import store from 'src/rtkStore';
 
 export default {
   title: 'Common/ItemCard/AddItem',
@@ -8,11 +6,7 @@ export default {
   tags: ['autodocs'],
 };
 
-const Template = (args) => (
-  <Provider store={store}>
-    <AddItem {...args} />
-  </Provider>
-);
+const Template = (args) => <AddItem {...args} />;
 
 export const AddItemDefault = Template.bind({});
 

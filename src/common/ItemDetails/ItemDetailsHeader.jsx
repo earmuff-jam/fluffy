@@ -50,9 +50,9 @@ export default function ItemDetailsHeader({
 
   const handleUpload = (id, selectedImage) => {
     if (categoryMode) {
-      uploadCategoryPhoto({ id, selectedImage });
+      uploadCategoryPhoto({ id, selectedImage, data: item });
     } else {
-      uploadMaintenancePlanPhoto({ id, selectedImage });
+      uploadMaintenancePlanPhoto({ id, selectedImage, data: item });
     }
 
     enqueueSnackbar('New image upload successful.', {

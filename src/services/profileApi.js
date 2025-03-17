@@ -231,7 +231,7 @@ export const useUploadProfilePhoto = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, selectedImage }) => {
+    mutationFn: async ({ id, selectedImage, data }) => {
       if (!id || !selectedImage) {
         throw new Error('Required fields are missing for upload.');
       }
@@ -242,18 +242,10 @@ export const useUploadProfilePhoto = () => {
       });
 
       const result = await uploadResponse.result;
-
-      const { data: userProfileList = [] } = await client.models.Profiles.list({
-        filter: { id: { eq: id } },
+      await client.models.Profiles.update({
+        ...data,
+        imageURL: result?.path,
       });
-
-      if (userProfileList.length > 0) {
-        const draftProfileData = userProfileList[0];
-        await client.models.Profiles.update({
-          ...draftProfileData,
-          imageURL: result?.path,
-        });
-      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profile', 'profilePhoto'] });

@@ -157,7 +157,7 @@ export const useUploadCategoryPhoto = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, selectedImage }) => {
+    mutationFn: async ({ id, selectedImage, data }) => {
       if (!id || !selectedImage) {
         throw new Error('Required fields are missing for upload.');
       }
@@ -168,16 +168,14 @@ export const useUploadCategoryPhoto = () => {
       });
 
       const result = await uploadResponse.result;
-
-      const response = await client.models.Categories.get({ id: id });
-
       await client.models.Categories.update({
-        ...response.data,
+        ...data,
         imageURL: result?.path,
       });
+
+      return id;
     },
-    onSuccess: ({ id }) => {
-      queryClient.invalidateQueries(['categories']);
+    onSuccess: (_, { id }) => {
       queryClient.invalidateQueries(['category', id]);
       queryClient.invalidateQueries(['categoryPhoto']);
     },

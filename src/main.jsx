@@ -1,27 +1,30 @@
+import { Suspense } from 'react';
 import * as ReactDOM from 'react-dom/client';
 
 import { lightTheme } from '@utils/Theme';
 
 import { SnackbarProvider } from 'notistack';
-import { CssBaseline, Stack, ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { Amplify } from 'aws-amplify';
 import outputs from '../amplify_outputs.json';
 
+import '@aws-amplify/ui-react/styles.css';
 import { Authenticator } from '@aws-amplify/ui-react';
+
+import Loading from '@utils/Loading';
 import ApplicationValidator from '@src/ApplicationValidator';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import '@aws-amplify/ui-react/styles.css';
 
 Amplify.configure(outputs);
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemeProvider theme={lightTheme}>
-    <Stack spacing={1}>
+    <Suspense fallback={<Loading />}>
       <Authenticator.Provider>
         <QueryClientProvider client={queryClient}>
           <CssBaseline />
@@ -37,6 +40,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </Authenticator.Provider>
-    </Stack>
+    </Suspense>
   </ThemeProvider>
 );

@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 
 import { Outlet } from 'react-router-dom';
 
@@ -20,27 +20,31 @@ const Layout = () => {
 
   const { data: profileDetails = {}, isLoading } = useFetchUserProfileDetails(user.userId);
 
-  const smScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('sm'));
-  const lgScreenSizeAndHigher = useMediaQuery(theme.breakpoints.up('lg'));
+  const greaterThanSmallFormFactor = useMediaQuery(theme.breakpoints.up('sm'));
+  const greaterThanLargeFormFactor = useMediaQuery(theme.breakpoints.up('lg'));
 
-  const [openDrawer, setOpenDrawer] = useState(lgScreenSizeAndHigher ? true : false);
+  const [openDrawer, setOpenDrawer] = useState(greaterThanLargeFormFactor ? true : false);
 
   return (
     <ThemeProvider theme={profileDetails?.appearance ? darkTheme : lightTheme}>
       <CssBaseline />
-      <Suspense fallback={<Loading />}>
-        <AppToolbar profileDetails={profileDetails} handleDrawerOpen={() => setOpenDrawer(true)} />
-        <Stack sx={{ marginTop: '5rem', marginBottom: '1rem', py: 10 }}>
-          <MenuActionBar
-            openDrawer={openDrawer}
-            createdByUserId={user.userId}
-            handleDrawerClose={() => setOpenDrawer(false)}
-            smScreenSizeAndHigher={smScreenSizeAndHigher}
-            lgScreenSizeAndHigher={lgScreenSizeAndHigher}
-          />
-          <Container maxWidth="xl">{isLoading ? <Loading /> : <Outlet />}</Container>
-        </Stack>
-      </Suspense>
+      <AppToolbar profileDetails={profileDetails} handleDrawerOpen={() => setOpenDrawer(true)} />
+      <Stack
+        sx={{
+          marginTop: '5rem',
+          marginBottom: '1rem',
+          py: 2,
+        }}
+      >
+        <MenuActionBar
+          openDrawer={openDrawer}
+          createdByUserId={user.userId}
+          handleDrawerClose={() => setOpenDrawer(false)}
+          greaterThanSmallFormFactor={greaterThanSmallFormFactor}
+          greaterThanLargeFormFactor={greaterThanLargeFormFactor}
+        />
+        <Container maxWidth="xl">{isLoading ? <Loading /> : <Outlet />}</Container>
+      </Stack>
     </ThemeProvider>
   );
 };

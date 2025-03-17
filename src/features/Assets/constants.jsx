@@ -136,7 +136,6 @@ export const ASSETS_LIST_HEADERS = [
     Cell: ({ cell }) => {
       return (
         <Box
-          component="span"
           sx={(theme) => ({
             backgroundColor:
               cell.getValue() < 1000
@@ -146,11 +145,11 @@ export const ASSETS_LIST_HEADERS = [
                   : theme.palette.info.light,
             borderRadius: '0.25rem',
             color: '#fff',
-            maxWidth: '9ch',
-            p: '0.25rem',
+            width: '9ch',
+            p: '0.2rem 0.5rem' ,
           })}
         >
-          {cell.getValue()?.length > 0 ? cell.getValue() : '-'}
+          {cell.getValue()?.length > 0 ? `$${cell.getValue()}` : '-'}
         </Box>
       );
     },

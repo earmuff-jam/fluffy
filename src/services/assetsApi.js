@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { generateClient } from 'aws-amplify/data';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { getUrl, uploadData } from 'aws-amplify/storage';
 
 const client = generateClient();
 const assetWithStorageLocationCols = [
@@ -141,6 +142,67 @@ export const useCreateAsset = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['assets'] });
+    },
+  });
+};
+
+/**
+ * useFetchAssetPhoto ...
+ *
+ * retrieves the asset photo if it exists from s3 bucket
+ *
+ * @param {string} id - the uuid representation of the file
+ */
+export const useFetchAssetPhoto = (imagePathWithId) => {
+  return useQuery({
+    queryKey: ['assetPhoto'],
+    queryFn: async () => {
+      if (!imagePathWithId) {
+        return null;
+      }
+
+      const file = await getUrl({
+        path: imagePathWithId,
+      });
+
+      return file || null;
+    },
+    enabled: !!imagePathWithId,
+  });
+};
+
+/**
+ * useUploadAssetPhoto ...
+ *
+ * uploads the asset photo for the selected asset. also
+ * updates the database with proper reference for asset img
+ *
+ */
+export const useUploadAssetPhoto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, selectedImage, data }) => {
+      if (!id || !selectedImage) {
+        throw new Error('Required fields are missing for upload.');
+      }
+
+      const uploadResponse = uploadData({
+        path: `photos/${id}`,
+        data: selectedImage,
+      });
+
+      const result = await uploadResponse.result;
+      await client.models.Assets.update({
+        ...data,
+        imageURL: result?.path,
+      });
+
+      return id;
+    },
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries(['asset', id]);
+      queryClient.invalidateQueries(['assetPhoto']);
     },
   });
 };
