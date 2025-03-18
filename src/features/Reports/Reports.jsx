@@ -12,7 +12,7 @@ import ReportContent from '@features/Reports/ReportContent';
 import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
 
 import { buildXcel } from '@utils/utils';
-import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
+import { ASSETS_LIST_DRAWER_HEADERS } from '@features/Assets/constants';
 
 import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';
 import { useDownloadAssetsList, useFetchAssetReportByDate } from '@services/assetsApi';
@@ -49,7 +49,7 @@ export default function Reports() {
     const formattedAssets = downloadedAssets.map((v) =>
       Object.assign(
         {},
-        ...Object.values(ASSET_LIST_HEADERS)
+        ...Object.values(ASSETS_LIST_DRAWER_HEADERS)
           .sort((a, b) => a.id - b.id) // Ensure order
           .map((header) => ({
             [header.label]: header.modifier ? header.modifier(v[header.colName]) : v[header.colName] || '-',
@@ -58,7 +58,7 @@ export default function Reports() {
     );
 
     buildXcel(
-      Object.values(ASSET_LIST_HEADERS).map((header) => header.label),
+      Object.values(ASSETS_LIST_DRAWER_HEADERS).map((header) => header.label),
       formattedAssets,
       'reports.xlsx',
       `reports-${dayjs().format('DD-MM-YYYY')}`

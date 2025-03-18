@@ -6,7 +6,7 @@ import { AddRounded, EditRounded, FileOpenRounded, PlaylistAddRounded, RemoveCir
 import { useNavigate } from 'react-router-dom';
 
 import { ConfirmationBoxModal, EmptyComponent, pluralizeWord } from '@utils/utils';
-import { ASSETS_LIST_HEADERS, MODAL_STATE, ASSET_LIST_HEADERS } from '@features/Assets/constants';
+import { ASSETS_LIST_HEADERS, MODAL_STATE, ASSETS_LIST_DRAWER_HEADERS } from '@features/Assets/constants';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useFetchAssets, useRemoveAssets } from '@services/assetsApi';
@@ -169,7 +169,7 @@ export default function AssetList() {
       )}
       {modalState === MODAL_STATE.MORE_DETAILS && (
         <AssetDetailsDrawer
-          columns={Object.values(ASSET_LIST_HEADERS)}
+          columns={Object.values(ASSETS_LIST_DRAWER_HEADERS)}
           resetSelection={handleCloseModal}
           title="View Item Details"
           selectedRow={selectedRow}

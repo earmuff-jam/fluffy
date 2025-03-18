@@ -1,76 +1,82 @@
-import { Paper, Stack } from '@mui/material';
+import { useMemo } from 'react';
 
-import { AddRounded, RemoveRounded } from '@mui/icons-material';
-
-import { pluralizeWord } from '@utils/utils';
-import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
+import { Button, Paper, Stack } from '@mui/material';
+import { AddRounded } from '@mui/icons-material';
 
 import RowHeader from '@utils/RowHeader';
-import TableComponent from '@common/DataTable/CustomTableComponent/TableComponent';
+import { EmptyComponent, pluralizeWord } from '@utils/utils';
+import { ASSETS_LIST_HEADERS } from '@features/Assets/constants';
+
+import DataTable from '@common/DataTable/DataTable';
+import { useMaterialReactTable } from 'material-react-table';
 
 export default function ItemDetailsContent({
-  selectedIDList,
-  setSelectedIDList,
-  items,
+  rowSelection,
+  setRowSelection,
+  associatedItems,
   handleOpenModal,
-  handleRemoveAssociation,
+  removeAssociation,
   primaryBtnDataTour,
-  secondaryBtnDataTour,
   tableDataTour,
 }) {
-  const rowFormatter = (row, columnName, column) => column.modifier(row[columnName] || '-');
+  const columns = useMemo(() => ASSETS_LIST_HEADERS, []);
 
-  const handleRowSelection = (_, id) => {
-    if (id === 'all') {
-      if (selectedIDList.length !== 0) {
-        setSelectedIDList([]);
-      } else {
-        setSelectedIDList(items.map((v) => v.id));
-      }
-    } else {
-      const selectedIndex = selectedIDList.indexOf(id);
-      let draftSelected = [];
-      if (selectedIndex === -1) {
-        draftSelected = draftSelected.concat(selectedIDList, id);
-      } else if (selectedIndex === 0) {
-        draftSelected = draftSelected.concat(selectedIDList.slice(1));
-      } else if (selectedIndex === selectedIDList.length - 1) {
-        draftSelected = draftSelected.concat(selectedIDList.slice(0, -1));
-      } else if (selectedIndex > 0) {
-        draftSelected = draftSelected.concat(
-          selectedIDList.slice(0, selectedIndex),
-          selectedIDList.slice(selectedIndex + 1)
-        );
-      }
-      setSelectedIDList(draftSelected);
-    }
+  const handleRemoveAssociations = (table) => {
+    const selectedRows = table.getSelectedRowModel().rows.map((v) => v.original.id);
+    setRowSelection(selectedRows);
+    removeAssociation();
   };
+
+  const table = useMaterialReactTable({
+    columns,
+    data: associatedItems || [],
+    enableSorting: true,
+    enableFilters: true,
+    enableFullScreenToggle: false,
+    enableRowSelection: true,
+    enableTopToolbar: true,
+    enableColumnResizing: false,
+    enableDensityToggle: false,
+    enablePagination: associatedItems?.length > 0,
+    initialState: {
+      density: 'comfortable',
+      columnPinning: {
+        right: ['mrt-row-actions'],
+      },
+    },
+    muiTableHeadRowProps: {
+      sx: { padding: '1rem' },
+    },
+    muiTableBodyRowProps: {
+      sx: { padding: '0.2rem' },
+    },
+    renderEmptyRowsFallback: () => <EmptyComponent padding="1rem 1rem" subtitle="Associate assets." />,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      rowSelection: rowSelection,
+    },
+    renderTopToolbarCustomActions: ({ table }) => {
+      const isSomeRowsSelected = table?.getIsSomeRowsSelected() || table?.getIsAllRowsSelected();
+      return isSomeRowsSelected ? (
+        <Button variant="outlined" onClick={() => handleRemoveAssociations(table)}>
+          Remove assets
+        </Button>
+      ) : null;
+    },
+  });
 
   return (
     <Paper elevation={1} sx={{ padding: '1rem' }}>
       <Stack spacing={2} data-tour={tableDataTour}>
         <RowHeader
-          title="Items"
-          caption={`Total ${pluralizeWord('item', items?.length || 0)}`}
+          title="Associated Items"
+          caption={`Total ${pluralizeWord('item', associatedItems?.length || 0)}`}
           primaryButtonTextLabel="Add"
           primaryStartIcon={<AddRounded />}
           handleClickPrimaryButton={handleOpenModal}
-          secondaryButtonTextLabel="Remove"
-          secondaryStartIcon={<RemoveRounded color="error" />}
-          handleClickSecondaryButton={handleRemoveAssociation}
-          secondaryButtonDisabled={selectedIDList.length <= 0}
           primaryBtnDataTour={primaryBtnDataTour}
-          secondaryBtnDataTour={secondaryBtnDataTour}
         />
-        <TableComponent
-          showActions={false}
-          data={items}
-          columns={Object.values(ASSET_LIST_HEADERS).filter((v) => v.displayConcise)}
-          rowFormatter={rowFormatter}
-          selectedIDList={selectedIDList}
-          handleRowSelection={handleRowSelection}
-          emptyComponentSubtext="Associate assets."
-        />
+        <DataTable table={table} />
       </Stack>
     </Paper>
   );

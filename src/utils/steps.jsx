@@ -181,9 +181,6 @@ const SELECTED_CATEGORY_PAGE_DATA_TOUR_STEPS = [
       'Click on the add button to add assets to a selected category. Assets can be shared across many other categories.',
   },
   {
-    title: 'Select assets that you would like to remove and press remove button.',
-  },
-  {
     title: 'View list of all assets that are assigned to this specific category.',
   },
   {
@@ -208,9 +205,6 @@ const SELECTED_MAINTENANCE_PLAN_PAGE_DATA_TOUR_STEPS = [
   {
     title:
       'Click on the add button to add assets to a selected maintenance plan. Assets can be shared across many other maintenance plans.',
-  },
-  {
-    title: 'Select assets that you would like to remove and press remove button.',
   },
   {
     title: 'View list of all assets that are assigned to this specific maintenance plan.',

@@ -1,13 +1,14 @@
-import { Box, Stack } from '@mui/material';
-import RowHeader from '@utils/RowHeader';
 import { useTheme } from '@emotion/react';
+import { Box, Stack } from '@mui/material';
+
+import RowHeader from '@utils/RowHeader';
 import BarChart from '@common/Chart/BarChart';
 import { EmptyComponent } from '@utils/utils';
 
 export default function ItemGraph({ associatedAssets = [] }) {
   const theme = useTheme();
 
-  const displayGraph = Boolean(associatedAssets?.length > 0);
+  const displayGraph = Boolean(associatedAssets?.some((item) => item !== null));
 
   return (
     <Stack spacing={2}>

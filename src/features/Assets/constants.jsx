@@ -188,25 +188,26 @@ export const ASSETS_LIST_HEADERS = [
     },
   },
   {
-    name: 'updator',
+    name: 'updatedBy',
     header: 'LAST UPDATED BY',
     accessorKey: 'updatedBy',
     size: 150,
     Cell: ({ cell }) => {
-      const updatedBy = cell.getValue();
+      const updatedBy = cell?.getValue();
+      console.log(updatedBy);
       return updatedBy?.emailAddress.length > 0 ? updatedBy?.emailAddress : '-';
     },
   },
 ];
 
 /**
- * ASSET_LIST_HEADERS
+ * ASSETS_LIST_DRAWER_HEADERS
  *
  * Asset list headers used for table columns and to build details for drawer
  * component. modifier fn can take value, { column, label } to display variations.
  *
  */
-export const ASSET_LIST_HEADERS = {
+export const ASSETS_LIST_DRAWER_HEADERS = {
   name: {
     id: 1,
     colName: 'name',

@@ -33,8 +33,8 @@ export default function MaintenancePlanItemDetails() {
   const createAssociationForAssetsWithMaintenancePlan = useCreateAssociationForItemsWithMaintenancePlan();
   const removeAssociationForAssetsFromMaintenancePlan = useRemoveAssociationForAssetsWithMaintenancePlan();
 
+  const [rowSelection, setRowSelection] = useState([]);
   const [displayModal, setDisplayModal] = useState(false);
-  const [selectedIDList, setSelectedIDList] = useState([]);
   const [openConfirmationBoxModal, setOpenConfirmationBoxModal] = useState(false);
 
   const handleOpenModal = () => setDisplayModal(true);
@@ -42,12 +42,12 @@ export default function MaintenancePlanItemDetails() {
 
   const resetSelection = () => {
     setDisplayModal(false);
-    setSelectedIDList([]);
+    setRowSelection([]);
   };
 
   const confirmDelete = async () => {
     const idList = itemsInMaintenancePlan
-      .filter((item) => selectedIDList.includes(item.assetId.id))
+      .filter((item) => rowSelection.includes(item.assetId.id))
       .map((item) => item.id);
     await removeAssociationForAssetsFromMaintenancePlan.mutateAsync({
       maintenancePlanId: selectedMaintenancePlan?.id,
@@ -56,7 +56,7 @@ export default function MaintenancePlanItemDetails() {
     enqueueSnackbar(`Removed association of assets for ${selectedMaintenancePlan.name}.`, {
       variant: 'default',
     });
-    setSelectedIDList([]);
+    setRowSelection([]);
     resetConfirmationBoxModal();
   };
 
@@ -87,16 +87,15 @@ export default function MaintenancePlanItemDetails() {
         imageBtnDataTour="selected-plan-3"
       />
       <ItemDetailsContent
-        selectedIDList={selectedIDList}
-        setSelectedIDList={setSelectedIDList}
-        items={itemsInMaintenancePlan.map((v) => v.assetId)}
+        rowSelection={rowSelection}
+        setRowSelection={setRowSelection}
+        associatedItems={itemsInMaintenancePlan.map((v) => v.assetId)}
         handleOpenModal={handleOpenModal}
-        handleRemoveAssociation={() => setOpenConfirmationBoxModal(!openConfirmationBoxModal)}
-        tableDataTour="selected-plan-6"
+        removeAssociation={() => setOpenConfirmationBoxModal(!openConfirmationBoxModal)}
+        tableDataTour="selected-plan-5"
         primaryBtnDataTour="selected-plan-4"
-        secondaryBtnDataTour="selected-plan-5"
       />
-      <Paper elevation={1} sx={{ padding: '1rem' }} data-tour="selected-plan-7">
+      <Paper elevation={1} sx={{ padding: '1rem' }} data-tour="selected-plan-6">
         <ItemGraph associatedAssets={itemsInMaintenancePlan.map((v) => v.assetId)} />
       </Paper>
       {displayModal && (

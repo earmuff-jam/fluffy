@@ -32,8 +32,8 @@ export default function CategoryItemDetails() {
   const createAssociationForAssetsWithCategory = useCreateAssociationForItemsWithCategory();
   const removeAssociationForAssetsFromCategory = useRemoveAssociationForAssetsWithCategory();
 
+  const [rowSelection, setRowSelection] = useState([]);
   const [displayModal, setDisplayModal] = useState(false);
-  const [selectedIDList, setSelectedIDList] = useState([]);
   const [openConfirmationBoxModal, setOpenConfirmationBoxModal] = useState(false);
 
   const handleOpenModal = () => setDisplayModal(true);
@@ -41,11 +41,11 @@ export default function CategoryItemDetails() {
 
   const resetSelection = () => {
     setDisplayModal(false);
-    setSelectedIDList([]);
+    setRowSelection([]);
   };
 
   const confirmDelete = async () => {
-    const idList = itemsInCategory.filter((item) => selectedIDList.includes(item.assetId.id)).map((item) => item.id);
+    const idList = itemsInCategory.filter((item) => rowSelection.includes(item.assetId.id)).map((item) => item.id);
     await removeAssociationForAssetsFromCategory.mutateAsync({
       categoryId: selectedCategory?.id,
       ids: idList,
@@ -53,7 +53,7 @@ export default function CategoryItemDetails() {
     enqueueSnackbar(`Removed association of assets for ${selectedCategory.name}.`, {
       variant: 'default',
     });
-    setSelectedIDList([]);
+    setRowSelection([]);
     resetConfirmationBoxModal();
   };
 
@@ -85,16 +85,15 @@ export default function CategoryItemDetails() {
         imageBtnDataTour="selected-category-3"
       />
       <ItemDetailsContent
-        selectedIDList={selectedIDList}
-        setSelectedIDList={setSelectedIDList}
-        items={itemsInCategory.map((v) => v.assetId)}
+        associatedItems={itemsInCategory.map((v) => v.assetId)}
+        removeAssociation={() => setOpenConfirmationBoxModal(!openConfirmationBoxModal)}
+        rowSelection={rowSelection}
+        setRowSelection={setRowSelection}
         handleOpenModal={handleOpenModal}
-        handleRemoveAssociation={() => setOpenConfirmationBoxModal(!openConfirmationBoxModal)}
-        tableDataTour="selected-category-6"
+        tableDataTour="selected-category-5"
         primaryBtnDataTour="selected-category-4"
-        secondaryBtnDataTour="selected-category-5"
       />
-      <Paper elevation={1} sx={{ padding: '1rem' }} data-tour="selected-category-7">
+      <Paper elevation={1} sx={{ padding: '1rem' }} data-tour="selected-category-6">
         <ItemGraph associatedAssets={itemsInCategory.map((v) => v.assetId)} />
       </Paper>
       {displayModal && (
