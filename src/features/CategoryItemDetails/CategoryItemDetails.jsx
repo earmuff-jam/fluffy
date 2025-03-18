@@ -8,8 +8,8 @@ import { useParams } from 'react-router-dom';
 import SimpleModal from '@utils/SimpleModal';
 import { ConfirmationBoxModal } from '@utils/utils';
 
-import AddItem from '@common/ItemDetails/AddItem';
 import ItemGraph from '@common/ItemDetails/ItemGraph';
+import AssociateItem from '@common/ItemDetails/AssociateItem';
 import ItemDetailsHeader from '@common/ItemDetails/ItemDetailsHeader';
 import ItemDetailsContent from '@common/ItemDetails/ItemDetailsContent';
 
@@ -99,7 +99,7 @@ export default function CategoryItemDetails() {
       </Paper>
       {displayModal && (
         <SimpleModal title={`Add items to ${selectedCategory?.name}`} handleClose={resetSelection} maxSize="md">
-          <AddItem
+          <AssociateItem
             addItems={addItems}
             itemTitle={selectedCategory?.name}
             associatedItems={itemsInCategory.map((v) => v.assetId)}

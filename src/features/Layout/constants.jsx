@@ -18,37 +18,37 @@ export const NAVIGATION_MENU_LIST = [
     id: 1,
     icon: <HomeRounded fontSize="small" />,
     label: 'Home',
-    to: '/',
+    to: 'overview',
   },
   {
     id: 2,
     icon: <Inventory2Rounded fontSize="small" />,
     label: 'Assets',
-    to: '/inventories/list',
+    to: 'list',
   },
   {
     id: 3,
     icon: <CategoryRounded fontSize="small" />,
     label: 'Categories',
-    to: '/categories/list',
+    to: 'categories',
   },
   {
     id: 4,
     icon: <SummarizeRounded fontSize="small" />,
     label: 'Maintenance plans',
-    to: '/plans/list',
+    to: 'plans',
   },
   {
     id: 5,
     icon: <ReportSharp fontSize="small" />,
     label: 'Reports',
-    to: '/reports',
+    to: 'reports',
   },
   {
     id: 6,
     icon: <Person2Rounded fontSize="small" />,
     label: 'Profile',
-    to: '/profile',
+    to: 'profile',
   },
 ];
 
@@ -62,12 +62,12 @@ export const PINNED_DEFAULT_INSET_MENU_LIST = [
     id: 1,
     icon: <BookmarkRounded fontSize="small" color="warning" />,
     label: 'Recent Activities',
-    to: '/recent/activities',
+    to: 'recent',
   },
   {
     id: 2,
     icon: <BookmarkRounded fontSize="small" color="warning" />,
     label: 'Notes',
-    to: '/profile/notes',
+    to: 'notes',
   },
 ];

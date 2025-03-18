@@ -1,14 +1,11 @@
+import { useNavigate } from 'react-router-dom';
+
 import { Button, Container, Grid, Typography, Box } from '@mui/material';
 
 import { ArrowForwardIosRounded } from '@mui/icons-material';
 
 export default function HeroSection() {
-  const handleScroll = (id) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -44,7 +41,7 @@ export default function HeroSection() {
                 color="primary"
                 endIcon={<ArrowForwardIosRounded />}
                 sx={{ py: 1.5, px: 4 }}
-                onClick={() => handleScroll('benefits-section')}
+                onClick={() => navigate('/external')}
               >
                 Start Free Trial
               </Button>

@@ -66,7 +66,7 @@ export default function AddItem({ itemTitle, addItems, associatedItems }) {
       const isSomeRowsSelected = table.getIsSomeRowsSelected() || table.getIsAllRowsSelected();
       return isSomeRowsSelected ? (
         <Button variant="outlined" onClick={() => handleAddAssets(table)}>
-          Add items
+          Associate Items
         </Button>
       ) : null;
     },

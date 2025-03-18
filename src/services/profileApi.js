@@ -266,7 +266,7 @@ export const useCreateProfile = () => {
       if (!profile) throw new Error('Profile details are required for creation.');
 
       const { data } = await client.models.Profiles.list({
-        filter: { id: { eq: profile.userId } },
+        filter: { id: { eq: profile.sub } },
       });
 
       if (data?.length > 0) {
@@ -274,9 +274,9 @@ export const useCreateProfile = () => {
       }
 
       const draftProfileData = {
-        id: profile.userId,
+        id: profile?.sub,
         username: '',
-        emailAddress: profile.signInDetails.loginId,
+        emailAddress: profile?.email,
         firstName: '',
         lastName: '',
         phoneNumber: '',
