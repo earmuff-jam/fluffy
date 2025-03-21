@@ -17,7 +17,7 @@ const derieveTourSteps = (staticSteps, prefix) => {
 const OVERVIEW_PAGE_TOUR_STEPS = [
   {
     title:
-      'Welcome to Mashed Application Tutorial. Learn how to navigate the application in thorough detail. Each page is designed with its own help page, and you can go over it again and again as much as you would like.',
+      'Welcome to Help and Tutorial. Learn how to navigate the application in thorough detail. Each page is designed with its own help page, and you can go over it again and again as much as you would like.',
   },
   {
     title:

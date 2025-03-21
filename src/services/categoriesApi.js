@@ -287,8 +287,8 @@ export const useUpdateCategory = () => {
 
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: ['category', id] });
     },
   });
 };

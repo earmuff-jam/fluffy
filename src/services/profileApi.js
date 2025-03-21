@@ -30,7 +30,7 @@ export const useFetchUserProfiles = () => {
  */
 export const useFetchUserProfileDetails = (userId) => {
   return useQuery({
-    queryKey: ['profile'],
+    queryKey: ['profile', userId],
     queryFn: async () => {
       if (!userId) return null;
 
@@ -51,7 +51,7 @@ export const useFetchUserProfileDetails = (userId) => {
  */
 export const useFetchUserProfileStats = (userId) => {
   return useQuery({
-    queryKey: ['profileStats'],
+    queryKey: ['profileStats', userId],
     queryFn: async () => {
       if (!userId) return null;
 
