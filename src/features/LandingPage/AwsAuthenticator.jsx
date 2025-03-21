@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useCreateProfile } from '@services/profileApi';
 
@@ -8,6 +8,7 @@ import { fetchUserAttributes } from 'aws-amplify/auth';
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 
 export default function AwsAuthenticator() {
+  const location = useLocation();
   const navigate = useNavigate();
   const { mutateAsync: createProfile } = useCreateProfile();
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
