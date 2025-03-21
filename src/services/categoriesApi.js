@@ -50,7 +50,24 @@ export const useFetchCategoryById = (id) => {
   return useQuery({
     queryKey: ['category', id],
     queryFn: async () => {
-      const response = await client.models.Categories.get({ id: id });
+      const response = await client.models.Categories.get({
+        id: id,
+        selectionSet: [
+          'id',
+          'name',
+          'description',
+          'color',
+          'status',
+          'imageURL',
+          'location.*',
+          'createdAt',
+          'createdCategoryIdRef',
+          'createdBy.*',
+          'updatedAt',
+          'updatedCategoryIdRef',
+          'updatedBy.*',
+        ],
+      });
       return response.data || {};
     },
     enabled: !!id,

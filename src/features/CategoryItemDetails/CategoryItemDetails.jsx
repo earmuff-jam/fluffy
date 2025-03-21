@@ -44,6 +44,8 @@ export default function CategoryItemDetails() {
     setSelectedIDList([]);
   };
 
+  console.log(selectedCategory);
+
   const confirmDelete = async () => {
     const idList = itemsInCategory.filter((item) => selectedIDList.includes(item.assetId.id)).map((item) => item.id);
     await removeAssociationForAssetsFromCategory.mutateAsync({

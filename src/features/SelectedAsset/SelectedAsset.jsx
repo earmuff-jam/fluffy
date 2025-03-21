@@ -79,7 +79,7 @@ export default function SelectedAsset() {
 
   const handleCheckbox = (name, value) => {
     // close the return note subsection if the parent is disabled
-    if (name === 'is_returnable' && openReturnNote) {
+    if (name === 'isReturnable' && openReturnNote) {
       setOpenReturnNote(false);
     }
 
@@ -131,7 +131,6 @@ export default function SelectedAsset() {
       barcode: formattedData.barcode,
       sku: formattedData.sku,
       boughtAt: formattedData.boughtAt,
-      returnLocation: formattedData.returnLocation,
       maxWeight: formattedData.maxWeight,
       minWeight: formattedData.minWeight,
       maxHeight: formattedData.maxHeight,
@@ -140,8 +139,9 @@ export default function SelectedAsset() {
       quantity: formattedData.quantity,
       isBookmarked: formattedData.isBookmarked,
       isReturnable: formattedData.isReturnable,
-      returnDatetime: returnDateTime?.toISOString(),
-      returnNotes: formattedData?.returnNotes,
+      returnDatetime: formattedData.isReturnable ? returnDateTime?.toISOString() : null,
+      returnLocation: formattedData.isReturnable ? formattedData.returnLocation : null,
+      returnNotes: formattedData.isReturnable ? formattedData?.returnNotes : null,
       storageLocationIdRef: storageLocationID,
       color,
     };

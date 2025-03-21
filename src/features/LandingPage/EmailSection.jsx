@@ -1,6 +1,9 @@
 import { Button, Container, Card, CardContent, TextField, Grid, Typography, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function EmailSection() {
+  const navigate = useNavigate();
+
   return (
     <Box id="contacts-section" sx={{ py: { xs: 8, md: 12 } }}>
       <Container maxWidth="md">
@@ -29,7 +32,14 @@ export default function EmailSection() {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <Button fullWidth variant="contained" color="primary" size="large" sx={{ height: '56px' }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  sx={{ height: '56px' }}
+                  onClick={() => navigate('external')}
+                >
                   Get Started Free
                 </Button>
               </Grid>
