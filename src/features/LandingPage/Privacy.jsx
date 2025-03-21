@@ -1,24 +1,21 @@
-import React from 'react';
 import {
   Typography,
   Paper,
-  Divider,
   Stack,
   Button,
   useTheme,
   useMediaQuery,
-  Link,
   Accordion,
   AccordionSummary,
   AccordionDetails,
 } from '@mui/material';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import Footer from '@features/LandingPage/Footer';
-import { useNavigate } from 'react-router-dom';
 
 const Privacy = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const smallFormFactor = useMediaQuery(theme.breakpoints.down('sm'));
   const lastUpdated = 'March 15, 2025';
 
@@ -52,19 +49,6 @@ const Privacy = () => {
       We use encryption protocols, secure databases, and regular security audits to maintain the safety of your data.`,
     },
     {
-      title: 'Your Privacy Rights',
-      content: `Depending on your location, you may have certain rights regarding your personal information, such as:
-      
-      • Access to your personal information
-      • Correction of inaccurate information
-      • Deletion of your personal information
-      • Restriction of processing
-      • Data portability
-      • Objection to processing
-      
-      To exercise these rights, please contact us at privacy@assetmanagerapp.com.`,
-    },
-    {
       title: 'Cookies and Tracking Technologies',
       content: `We use cookies and similar tracking technologies to track activity on our services and to hold certain information.
       
@@ -88,15 +72,6 @@ const Privacy = () => {
       
       You are advised to review this Privacy Policy periodically for any changes.`,
     },
-    {
-      title: 'Contact Us',
-      content: `If you have any questions about this Privacy Policy, please contact us at:
-      
-      privacy@assetmanagerapp.com
-      Asset Manager Inc.
-      123 Finance Street
-      New York, NY 10001`,
-    },
   ];
 
   return (
@@ -109,7 +84,7 @@ const Privacy = () => {
           </Typography>
 
           <Typography variant="h6" component="p" sx={{ opacity: 0.8 }} textAlign="center">
-            We're committed to protecting your privacy and personal data
+            We are committed to protecting your privacy and personal data
           </Typography>
 
           <Paper
@@ -133,9 +108,9 @@ const Privacy = () => {
       <Stack spacing={3} alignItems="center">
         <Stack spacing={2} sx={{ maxWidth: 'md', width: '100%' }}>
           <Typography variant="body1" paragraph>
-            This Privacy Policy describes how Asset Manager ("we", "our", or "us") collects, uses, and discloses your
-            information when you use our website, mobile application, and other online products and services
-            (collectively, the "Services").
+            This Privacy Policy describes how Asset Manager (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;)
+            collects, uses, and discloses your information when you use our website, mobile application, and other
+            online products and services (collectively, the &quot;Services&quot;).
           </Typography>
           <Typography variant="body1" paragraph>
             By accessing or using our Services, you agree to this Privacy Policy. If you do not agree with our policies

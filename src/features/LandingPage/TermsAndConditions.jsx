@@ -1,18 +1,16 @@
-import React from 'react';
 import {
   Typography,
   Paper,
-  Divider,
   Stack,
-  Button,
   useTheme,
   useMediaQuery,
-  Link,
   Accordion,
   AccordionSummary,
   AccordionDetails,
 } from '@mui/material';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import Footer from '@features/LandingPage/Footer';
 
 const TermsAndConditions = () => {
@@ -23,13 +21,13 @@ const TermsAndConditions = () => {
   const termsSections = [
     {
       title: 'Acceptance of Terms',
-      content: `By accessing or using the Asset Manager application and services, you agree to be bound by these Terms and Conditions and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this service.
+      content: `By accessing or using the application and services, you agree to be bound by these Terms and Conditions and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this service.
       
-      These Terms constitute a legally binding agreement between you and Asset Manager Inc. regarding your use of the application and services.`,
+      These Terms constitute a legally binding agreement between you and Earmuffjam Inc. regarding your use of the application and services.`,
     },
     {
       title: 'Use License',
-      content: `Subject to your compliance with these Terms, Asset Manager grants you a limited, non-exclusive, non-transferable, revocable license to access and use the application and services for your personal, non-commercial use.
+      content: `Subject to your compliance with these Terms, Earmuffjam LLC grants you a limited, non-exclusive, non-transferable, revocable license to access and use the application and services for your personal, non-commercial use.
       
       You may not:
       • Modify or copy the materials
@@ -38,7 +36,7 @@ const TermsAndConditions = () => {
       • Remove any copyright or other proprietary notations from the materials
       • Transfer the materials to another person or "mirror" the materials on any other server
       
-      This license shall automatically terminate if you violate any of these restrictions and may be terminated by Asset Manager at any time.`,
+      This license shall automatically terminate if you violate any of these restrictions and may be terminated by Earmuffjam LLC at any time.`,
     },
     {
       title: 'Account Registration',
@@ -46,13 +44,13 @@ const TermsAndConditions = () => {
       
       You are responsible for safeguarding your password and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account.
       
-      We reserve the right to disable any user account at any time in our sole discretion for any or no reason, including if we believe that you have violated these Terms.`,
+      We reserve the right to disable any user account at any time in our sole discretion for any or no reason, including if we believe that you have violated these Terms and Conditions.`,
     },
     {
       title: 'User Content',
       content: `Our application may allow you to upload, submit, store, send, or receive content. You retain ownership of any intellectual property rights that you hold in that content.
       
-      By uploading content to our application, you grant Asset Manager a worldwide, royalty-free, non-exclusive license to use, host, store, reproduce, modify, create derivative works, communicate, publish, publicly perform, publicly display, and distribute such content.
+      By uploading content to our application, you grant Earmuffjam LLC a worldwide, royalty-free, non-exclusive license to use, host, store, reproduce, modify, create derivative works, communicate, publish, publicly perform, publicly display, and distribute such content.
       
       You are solely responsible for the content you upload and the consequences of sharing it.`,
     },
@@ -63,28 +61,28 @@ const TermsAndConditions = () => {
       • In any way that violates any applicable federal, state, local, or international law or regulation
       • To exploit, harm, or attempt to exploit or harm minors in any way
       • To transmit any material that is defamatory, obscene, offensive, or otherwise objectionable
-      • To impersonate or attempt to impersonate Asset Manager, an employee, another user, or any other person or entity
+      • To impersonate or attempt to impersonate Earmuffjam LLC, an employee, another user, or any other person or entity
       • To engage in any other conduct that restricts or inhibits anyone's use or enjoyment of the service
       • To interfere with the proper working of the service
       • To attempt to gain unauthorized access to any part of the application`,
     },
     {
       title: 'Intellectual Property',
-      content: `The application and its original content, features, and functionality are and will remain the exclusive property of Asset Manager Inc. and its licensors. The application is protected by copyright, trademark, and other laws of both the United States and foreign countries.
+      content: `The application and its original content, features, and functionality are and will remain the exclusive property of Earmuffjam LLC and its licensors. The application is protected by copyright, trademark, and other laws of both the United States and foreign countries.
       
-      Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of Asset Manager Inc.`,
+      Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of Earmuffjam LLC`,
     },
     {
       title: 'Disclaimer of Warranties',
       content: `The application and all information, content, materials, products, and services included on or otherwise made available to you through the application are provided on an "as is" and "as available" basis, without any warranties of any kind, either express or implied.
       
-      Asset Manager Inc. disclaims all warranties, express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement.
+      Earmuffjam LLC disclaims all warranties, express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement.
       
-      Asset Manager Inc. does not warrant that the application will be uninterrupted or error-free, that defects will be corrected, or that the application or the server that makes it available are free of viruses or other harmful components.`,
+      Earmuffjam LLC does not warrant that the application will be uninterrupted or error-free, that defects will be corrected, or that the application or the server that makes it available are free of viruses or other harmful components.`,
     },
     {
       title: 'Limitation of Liability',
-      content: `In no event shall Asset Manager Inc., its officers, directors, employees, or agents, be liable to you for any direct, indirect, incidental, special, punitive, or consequential damages whatsoever resulting from any:
+      content: `In no event shall Earmuffjam LLC, its officers, directors, employees, or agents, be liable to you for any direct, indirect, incidental, special, punitive, or consequential damages whatsoever resulting from any:
       
       • Errors, mistakes, or inaccuracies of content
       • Personal injury or property damage of any nature whatsoever
@@ -97,7 +95,7 @@ const TermsAndConditions = () => {
     },
     {
       title: 'Indemnification',
-      content: `You agree to defend, indemnify, and hold harmless Asset Manager Inc., its officers, directors, employees, and agents, from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms or your use of the application.`,
+      content: `You agree to defend, indemnify, and hold harmless Earmuffjam LLC, its officers, directors, employees, and agents, from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms or your use of the application.`,
     },
     {
       title: 'Governing Law',
@@ -118,15 +116,6 @@ const TermsAndConditions = () => {
       content: `We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will provide notice of any changes by posting the new Terms on this page and updating the "Last Updated" date.
       
       Your continued use of the application after any such changes constitutes your acceptance of the new Terms. Please review these Terms periodically for changes.`,
-    },
-    {
-      title: 'Contact Information',
-      content: `If you have any questions about these Terms, please contact us at:
-      
-      legal@assetmanagerapp.com
-      Asset Manager Inc.
-      123 Finance Street
-      New York, NY 10001`,
     },
   ];
 
@@ -215,7 +204,6 @@ const TermsAndConditions = () => {
           </Typography>
         </Stack>
       </Stack>
-
       <Footer />
     </Stack>
   );
