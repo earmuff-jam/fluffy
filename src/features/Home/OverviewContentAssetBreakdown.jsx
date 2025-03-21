@@ -22,7 +22,7 @@ export default function OverviewContentAssetBreakdown({ assets = [], categories 
             color="info.main"
             dataLabel={categories.length || 0}
             word="item"
-            handleClick={() => handleClick('/categories/list')}
+            handleClick={() => handleClick('/assets/categories')}
           />
         </OverviewCardWrapper>
         <OverviewCardWrapper>
@@ -32,7 +32,7 @@ export default function OverviewContentAssetBreakdown({ assets = [], categories 
             color="info.main"
             dataLabel={maintenancePlans.length || 0}
             word="item"
-            handleClick={() => handleClick('/plans/list')}
+            handleClick={() => handleClick('/assets/plans')}
           />
         </OverviewCardWrapper>
         <OverviewCardWrapper>
@@ -42,7 +42,7 @@ export default function OverviewContentAssetBreakdown({ assets = [], categories 
             color="info.main"
             dataLabel={assets?.length || 0}
             word="asset"
-            handleClick={() => handleClick('/inventories/list')}
+            handleClick={() => handleClick('/assets/list')}
           />
         </OverviewCardWrapper>
       </Stack>

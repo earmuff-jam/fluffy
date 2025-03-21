@@ -17,7 +17,7 @@ const derieveTourSteps = (staticSteps, prefix) => {
 const OVERVIEW_PAGE_TOUR_STEPS = [
   {
     title:
-      'Welcome to Mashed Application Tutorial. Learn how to navigate the application in thorough detail. Each page is designed with its own help page, and you can go over it again and again as much as you would like.',
+      'Welcome to Help and Tutorial. Learn how to navigate the application in thorough detail. Each page is designed with its own help page, and you can go over it again and again as much as you would like.',
   },
   {
     title:
@@ -230,19 +230,19 @@ const SELECTED_MAINTENANCE_PLAN_PAGE_DATA_TOUR_STEPS = [
  * previous and current tour since the end cannot be less than the start
  */
 export const DEFAULT_STEP_MAPPER = {
-  '/': {
+  '/assets/overview': {
     start: 0,
     end: OVERVIEW_PAGE_TOUR_STEPS.length,
   },
-  '/inventories/list': {
+  '/assets/list': {
     start: OVERVIEW_PAGE_TOUR_STEPS.length,
     end: OVERVIEW_PAGE_TOUR_STEPS.length + ASSETS_PAGE_TOUR_STEPS.length,
   },
-  '/categories/list': {
+  '/assets/categories': {
     start: OVERVIEW_PAGE_TOUR_STEPS.length + ASSETS_PAGE_TOUR_STEPS.length,
     end: OVERVIEW_PAGE_TOUR_STEPS.length + ASSETS_PAGE_TOUR_STEPS.length + CATEGORIES_PAGE_TOUR_STEPS.length,
   },
-  '/plans/list': {
+  'assets/plans': {
     start: OVERVIEW_PAGE_TOUR_STEPS.length + ASSETS_PAGE_TOUR_STEPS.length + CATEGORIES_PAGE_TOUR_STEPS.length,
     end:
       OVERVIEW_PAGE_TOUR_STEPS.length +
@@ -250,7 +250,7 @@ export const DEFAULT_STEP_MAPPER = {
       CATEGORIES_PAGE_TOUR_STEPS.length +
       MAINTENANCE_PAGE_TOUR_STEPS.length,
   },
-  '/reports': {
+  'assets/reports': {
     start:
       OVERVIEW_PAGE_TOUR_STEPS.length +
       ASSETS_PAGE_TOUR_STEPS.length +
@@ -263,7 +263,7 @@ export const DEFAULT_STEP_MAPPER = {
       MAINTENANCE_PAGE_TOUR_STEPS.length +
       REPORTS_PAGE_TOUR_STEPS.length,
   },
-  '/profile': {
+  '/assets/profile': {
     start:
       OVERVIEW_PAGE_TOUR_STEPS.length +
       ASSETS_PAGE_TOUR_STEPS.length +
@@ -278,7 +278,7 @@ export const DEFAULT_STEP_MAPPER = {
       REPORTS_PAGE_TOUR_STEPS.length +
       PROFILE_PAGE_TOUR_STEPS.length,
   },
-  '/recent/activities': {
+  '/assets/recent': {
     start:
       OVERVIEW_PAGE_TOUR_STEPS.length +
       ASSETS_PAGE_TOUR_STEPS.length +
@@ -295,7 +295,7 @@ export const DEFAULT_STEP_MAPPER = {
       PROFILE_PAGE_TOUR_STEPS.length +
       RECENT_ACTIVITIES_PAGE_TOUR_STEPS.length,
   },
-  '/profile/notes': {
+  '/assets/notes': {
     start:
       OVERVIEW_PAGE_TOUR_STEPS.length +
       ASSETS_PAGE_TOUR_STEPS.length +
@@ -314,7 +314,7 @@ export const DEFAULT_STEP_MAPPER = {
       RECENT_ACTIVITIES_PAGE_TOUR_STEPS.length +
       PERSONAL_NOTES_PAGE_DATA_TOUR_STEPS.length,
   },
-  '/category/id': {
+  '/assets/category/id': {
     start:
       OVERVIEW_PAGE_TOUR_STEPS.length +
       ASSETS_PAGE_TOUR_STEPS.length +
@@ -335,7 +335,7 @@ export const DEFAULT_STEP_MAPPER = {
       PERSONAL_NOTES_PAGE_DATA_TOUR_STEPS.length +
       SELECTED_CATEGORY_PAGE_DATA_TOUR_STEPS.length,
   },
-  '/plan/id': {
+  '/assets/plan/id': {
     start:
       OVERVIEW_PAGE_TOUR_STEPS.length +
       ASSETS_PAGE_TOUR_STEPS.length +

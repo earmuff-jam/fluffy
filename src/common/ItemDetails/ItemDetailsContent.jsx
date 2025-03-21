@@ -52,10 +52,10 @@ export default function ItemDetailsContent({
         <RowHeader
           title="Items"
           caption={`Total ${pluralizeWord('item', items?.length || 0)}`}
-          primaryButtonTextLabel="Add"
+          primaryButtonTextLabel="Associate Assets"
           primaryStartIcon={<AddRounded />}
           handleClickPrimaryButton={handleOpenModal}
-          secondaryButtonTextLabel="Remove"
+          secondaryButtonTextLabel="Remove Assets"
           secondaryStartIcon={<RemoveRounded color="error" />}
           handleClickSecondaryButton={handleRemoveAssociation}
           secondaryButtonDisabled={selectedIDList.length <= 0}

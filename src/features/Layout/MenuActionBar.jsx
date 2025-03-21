@@ -30,8 +30,8 @@ import MenuActionBarListItem from '@features/Layout/MenuActionBarListItem';
 import { NAVIGATION_MENU_LIST, PINNED_DEFAULT_INSET_MENU_LIST } from '@features/Layout/constants';
 
 export default function MenuActionBar({
-  createdByUserId,
   openDrawer,
+  createdByUserId,
   handleDrawerClose,
   greaterThanSmallFormFactor,
   greaterThanLargeFormFactor,

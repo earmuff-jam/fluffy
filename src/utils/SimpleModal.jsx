@@ -15,7 +15,7 @@ const SimpleModal = (props) => {
   } = props;
 
   return (
-    <Dialog open={true} onClose={handleClose} maxWidth={maxSize ?? 'xl'} fullWidth>
+    <Dialog open={true} maxWidth={maxSize ?? 'xl'} fullWidth>
       <DialogTitle>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Stack>

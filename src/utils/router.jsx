@@ -1,16 +1,12 @@
 import { lazy } from 'react';
 
-import { createBrowserRouter } from 'react-router-dom';
-
-import Layout from '@features/Layout/Layout'; // can't lazy load this
-
 const Overview = lazy(() => import('@features/Home/Overview'));
 const Reports = lazy(() => import('@features/Reports/Reports'));
 const NotesList = lazy(() => import('@features/Notes/NotesList'));
 
+const AssetList = lazy(() => import('@features/Assets/AssetList'));
 const ProfilePage = lazy(() => import('@features/Profile/ProfilePage'));
 const CategoryList = lazy(() => import('@features/Categories/CategoryList'));
-const AssetList = lazy(() => import('@features/Assets/AssetList'));
 const RecentActivityList = lazy(() => import('@features/RecentActivities/RecentActivityList'));
 
 const SelectedAsset = lazy(() => import('@features/SelectedAsset/SelectedAsset'));
@@ -20,59 +16,49 @@ const MaintenancePlanItemDetails = lazy(
   () => import('@features/MaintenancePlanItemDetails/MaintenancePlanItemDetails')
 );
 
-export const router = createBrowserRouter([
+export const AssetRoutes = [
   {
-    path: '/',
-    element: <Layout />,
-    children: [
-      {
-        path: '/',
-        element: <Overview />,
-      },
-      {
-        path: '/inventories/list',
-        element: <AssetList />,
-      },
-      {
-        path: '/inventories/:id/update',
-        element: <SelectedAsset />,
-      },
-      {
-        path: '/categories/list',
-        element: <CategoryList />,
-      },
-      {
-        path: '/category/:id',
-        element: <CategoryItemDetails />,
-      },
-      {
-        path: '/plans/list',
-        element: <MaintenancePlanList />,
-      },
-      {
-        path: '/plan/:id',
-        element: <MaintenancePlanItemDetails />,
-      },
-      {
-        path: '/reports',
-        element: <Reports />,
-      },
-      {
-        path: '/profile',
-        element: <ProfilePage />,
-      },
-      {
-        path: '/profile/notes',
-        element: <NotesList />,
-      },
-      {
-        path: 'recent/activities',
-        element: <RecentActivityList />,
-      },
-    ],
+    path: 'overview',
+    element: <Overview />,
   },
   {
-    path: '/*',
-    element: <Layout />,
+    path: 'list',
+    element: <AssetList />,
   },
-]);
+  {
+    path: ':id/update',
+    element: <SelectedAsset />,
+  },
+  {
+    path: 'categories',
+    element: <CategoryList />,
+  },
+  {
+    path: 'category/:id',
+    element: <CategoryItemDetails />,
+  },
+  {
+    path: 'plans',
+    element: <MaintenancePlanList />,
+  },
+  {
+    path: 'plan/:id',
+    element: <MaintenancePlanItemDetails />,
+  },
+  {
+    path: 'reports',
+    element: <Reports />,
+  },
+  {
+    path: 'profile',
+    element: <ProfilePage />,
+  },
+  {
+    path: 'notes',
+    element: <NotesList />,
+  },
+  {
+    path: 'recent',
+    element: <RecentActivityList />,
+  },
+];

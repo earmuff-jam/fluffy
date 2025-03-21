@@ -105,7 +105,7 @@ export default function AssetList() {
         key={1}
         onClick={() => {
           closeMenu();
-          navigate(`/inventories/${row.original.id}/update`);
+          navigate(`/assets/${row.original.id}/update`);
         }}
         sx={{ m: 0 }}
       >

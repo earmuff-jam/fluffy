@@ -37,7 +37,7 @@ export default function SectionCardDetails({ item, index, handleEdit, handleDele
                   <Typography
                     variant="h6"
                     component="h3"
-                    onClick={() => navigate(encodeURI(`/${prefixURI}/${item?.id}`))}
+                    onClick={() => navigate(encodeURI(`/assets/${prefixURI}/${item?.id}`))}
                     sx={{ cursor: 'pointer' }}
                   >
                     {item?.name}

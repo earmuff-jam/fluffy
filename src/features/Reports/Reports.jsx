@@ -16,8 +16,11 @@ import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
 
 import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';
 import { useDownloadAssetsList, useFetchAssetReportByDate } from '@services/assetsApi';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 export default function Reports() {
+  const { user } = useAuthenticator();
+
   const [displayModal, setDisplayModal] = useState(false);
   const [includeOverdue, setIncludeOverdue] = useState(true);
 
@@ -26,7 +29,7 @@ export default function Reports() {
   const [tempSinceValue, setTempSinceValue] = useState(sinceValue);
 
   const { data: maintenancePlanList = [] } = useFetchMaintenancePlans();
-  const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssetReportByDate(sinceValue);
+  const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssetReportByDate(sinceValue, user.userId);
   const { data: downloadedAssets = [], isLoading: isAssetsDownloading, refetch } = useDownloadAssetsList(sinceValue);
 
   const closeFilter = () => setDisplayModal(false);

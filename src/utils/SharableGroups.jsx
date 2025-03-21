@@ -7,7 +7,6 @@ import { useFetchUserProfiles } from '@services/profileApi';
 export default function SharableGroups({ handleSubmit, existingGroups, creator }) {
   const { data: profiles = [], isLoading: loading } = useFetchUserProfiles();
 
-
   const [options, setOptions] = useState([]);
   const [sharableGroups, setSharableGroups] = useState([]);
 

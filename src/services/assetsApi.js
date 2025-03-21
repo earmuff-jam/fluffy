@@ -83,13 +83,16 @@ export const useFetchAssetById = (id) => {
  * retrieves the list of assets filtered by the date param
  * @param {string} dateStr - the string representation of the datetime field
  */
-export const useFetchAssetReportByDate = (dateStr) => {
+export const useFetchAssetReportByDate = (dateStr, userId) => {
   return useQuery({
     queryKey: ['asset', dateStr],
     queryFn: async () => {
       const response = await client.models.Assets.list({
         selectionSet: assetWithStorageLocationCols,
         filter: {
+          createdAssetIdRef: {
+            eq: userId,
+          },
           updatedAt: {
             ge: dateStr,
           },

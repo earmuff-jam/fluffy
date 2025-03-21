@@ -1,11 +1,28 @@
 import { useState } from 'react';
 
-import { Box, Card, CardContent, Typography, Button, Grid, Divider, Stack, Chip } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Paper,
+  Typography,
+  Button,
+  Divider,
+  Stack,
+  Chip,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
 
 import CheckIcon from '@mui/icons-material/Check';
+
+import Footer from '@features/LandingPage/Footer';
 import { PricingPlans } from '@features/LandingPage/constants';
 
 const Pricing = () => {
+  const theme = useTheme();
+  const smallFormFactor = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [billingCycle, setBillingCycle] = useState('monthly');
 
   const handleBillingChange = (event) => {
@@ -51,21 +68,42 @@ const Pricing = () => {
   };
 
   return (
-    <Box sx={{ margin: '0 auto', p: 3 }} id="pricing-details">
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          mb: 6,
-        }}
-      >
+    <Stack spacing={6} sx={{ p: 3 }} id="pricing-details">
+      {/* Header Section */}
+      <Stack alignItems="center">
+        <Stack spacing={2} alignItems="center" sx={{ maxWidth: 'md' }}>
+          <Typography variant={smallFormFactor ? 'h3' : 'h2'} component="h1" fontWeight="bold" textAlign="center">
+            Choose the Right Plan for Your Needs
+          </Typography>
+
+          <Typography variant="h6" component="p" sx={{ opacity: 0.8 }} textAlign="center">
+            Transparent pricing with no hidden fees. Scale your asset management as your portfolio grows.
+          </Typography>
+
+          <Paper
+            elevation={0}
+            sx={{
+              py: 1.5,
+              px: 3,
+              display: 'inline-flex',
+              alignItems: 'center',
+              borderRadius: 5,
+            }}
+          >
+            <Typography variant="body2">
+              All plans include a <strong>14-day free trial</strong> with no credit card required
+            </Typography>
+          </Paper>
+        </Stack>
+      </Stack>
+
+      {/* Billing Toggle Section */}
+      <Stack direction="row" spacing={2} justifyContent="center">
         <Button
           value="monthly"
           onClick={handleBillingChange}
           variant={billingCycle === 'monthly' ? 'contained' : 'outlined'}
           size="small"
-          sx={{ mx: 1 }}
         >
           Monthly
         </Button>
@@ -74,7 +112,6 @@ const Pricing = () => {
           onClick={handleBillingChange}
           variant={billingCycle === 'sixMonth' ? 'contained' : 'outlined'}
           size="small"
-          sx={{ mx: 1 }}
         >
           6 Months
         </Button>
@@ -83,22 +120,31 @@ const Pricing = () => {
           onClick={handleBillingChange}
           variant={billingCycle === 'yearly' ? 'contained' : 'outlined'}
           size="small"
-          sx={{ mx: 1 }}
         >
           Yearly
         </Button>
-      </Box>
+      </Stack>
 
       {/* Pricing Cards */}
-      <Grid container spacing={3} justifyContent="center">
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        spacing={3}
+        justifyContent="center"
+        alignItems="stretch"
+        sx={{ width: '100%' }}
+      >
         {PricingPlans.map((plan, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
+          <Box
+            key={index}
+            sx={{
+              width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(33.333% - 16px)' },
+              display: 'flex',
+            }}
+          >
             <Card
               elevation={plan.popular ? 8 : 2}
               sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
+                width: '100%',
                 position: 'relative',
                 border: plan.popular ? 2 : 0,
                 borderColor: 'primary.main',
@@ -120,59 +166,65 @@ const Pricing = () => {
                   }}
                 />
               )}
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h5" component="div" gutterBottom align="center" fontWeight="bold">
-                  {plan.title}
-                </Typography>
 
-                <Box sx={{ my: 3, textAlign: 'center' }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
-                    <Typography variant="h3" component="span" fontWeight="bold">
-                      ${getPrice(plan)}
+              {/* Card Content as Stack */}
+              <Stack sx={{ height: '100%' }}>
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Stack spacing={3}>
+                    <Typography variant="h5" component="div" align="center" fontWeight="bold">
+                      {plan.title}
                     </Typography>
-                    <Typography variant="subtitle1" component="span" sx={{ ml: 1 }}>
-                      {getBillingText()}
-                    </Typography>
-                  </Box>
 
-                  {getSavingsText(plan) && (
-                    <Chip label={getSavingsText(plan)} color="success" size="small" sx={{ mt: 1 }} />
-                  )}
-                </Box>
+                    <Stack alignItems="center" spacing={1}>
+                      <Stack direction="row" alignItems="baseline" justifyContent="center">
+                        <Typography variant="h3" component="span" fontWeight="bold">
+                          ${getPrice(plan)}
+                        </Typography>
+                        <Typography variant="subtitle1" component="span" sx={{ ml: 1 }}>
+                          {getBillingText()}
+                        </Typography>
+                      </Stack>
 
-                <Divider sx={{ my: 2 }} />
+                      {getSavingsText(plan) && <Chip label={getSavingsText(plan)} color="success" size="small" />}
+                    </Stack>
 
-                <Stack spacing={2}>
-                  {plan.features.map((feature, featureIndex) => (
-                    <Box key={featureIndex} sx={{ display: 'flex', alignItems: 'center' }}>
-                      <CheckIcon sx={{ mr: 1, color: plan.color }} />
-                      <Typography variant="body2">{feature}</Typography>
-                    </Box>
-                  ))}
-                </Stack>
-              </CardContent>
+                    <Divider />
 
-              <Box sx={{ p: 2 }}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  size="large"
-                  sx={{
-                    bgcolor: plan.color,
-                    '&:hover': {
+                    <Stack spacing={2}>
+                      {plan.features.map((feature, featureIndex) => (
+                        <Stack direction="row" alignItems="center" key={featureIndex}>
+                          <CheckIcon sx={{ mr: 1, color: plan.color }} />
+                          <Typography variant="body2">{feature}</Typography>
+                        </Stack>
+                      ))}
+                    </Stack>
+                  </Stack>
+                </CardContent>
+
+                <Box sx={{ p: 2 }}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    size="large"
+                    disabled
+                    sx={{
                       bgcolor: plan.color,
-                      filter: 'brightness(0.9)',
-                    },
-                  }}
-                >
-                  {plan.buttonText}
-                </Button>
-              </Box>
+                      '&:hover': {
+                        bgcolor: plan.color,
+                        filter: 'brightness(0.9)',
+                      },
+                    }}
+                  >
+                    {plan.buttonText}
+                  </Button>
+                </Box>
+              </Stack>
             </Card>
-          </Grid>
+          </Box>
         ))}
-      </Grid>
-    </Box>
+      </Stack>
+      <Footer />
+    </Stack>
   );
 };
 

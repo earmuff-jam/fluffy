@@ -2,10 +2,7 @@ import { BarChart, MenuRounded } from '@mui/icons-material';
 
 import { Typography, Box, Toolbar, IconButton, useMediaQuery, CssBaseline, useTheme } from '@mui/material';
 
-import HeroSection from '@features/LandingPage/HeroSection';
 import NavigationBar from '@features/LandingPage/NavigationBar';
-import FeaturesSection from '@features/LandingPage/FeaturesSection';
-import BenefitsSection from '@features/LandingPage/BenefitsSection';
 
 const Header = () => {
   const theme = useTheme();
@@ -30,10 +27,6 @@ const Header = () => {
           <NavigationBar />
         )}
       </Toolbar>
-
-      <HeroSection />
-      <FeaturesSection />
-      <BenefitsSection />
     </>
   );
 };

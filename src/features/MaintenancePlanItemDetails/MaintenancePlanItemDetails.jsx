@@ -8,8 +8,8 @@ import { Paper, Skeleton, Stack } from '@mui/material';
 
 import { ConfirmationBoxModal } from '@utils/utils';
 
-import AddItem from '@common/ItemDetails/AddItem';
 import ItemGraph from '@common/ItemDetails/ItemGraph';
+import AssociateItem from '@common/ItemDetails/AssociateItem';
 import ItemDetailsHeader from '@common/ItemDetails/ItemDetailsHeader';
 import ItemDetailsContent from '@common/ItemDetails/ItemDetailsContent';
 
@@ -101,7 +101,7 @@ export default function MaintenancePlanItemDetails() {
       </Paper>
       {displayModal && (
         <SimpleModal title={`Add items to ${selectedMaintenancePlan?.name}`} handleClose={resetSelection}>
-          <AddItem
+          <AssociateItem
             addItems={addItems}
             itemTitle={selectedMaintenancePlan?.name}
             associatedItems={itemsInMaintenancePlan.map((v) => v.assetId)}

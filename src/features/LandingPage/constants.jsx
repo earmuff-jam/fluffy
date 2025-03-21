@@ -8,6 +8,69 @@ import {
   SpeedRounded,
 } from '@mui/icons-material';
 
+export const FAQData = [
+  {
+    id: 1,
+    category: 'General',
+    question: 'What is asset management?',
+    answer:
+      "Asset management is the systematic process of developing, operating, maintaining, and selling assets in a cost-effective manner. Our platform helps you track, manage, and optimize your organization's assets throughout their lifecycle.",
+  },
+  {
+    id: 2,
+    category: 'General',
+    question: 'How do I get started with the platform?',
+    answer:
+      'To get started, log in to your account, navigate to the Dashboard, and use the "Add New Asset" button to begin tracking your first asset. You can also import assets in bulk using our Excel template.',
+  },
+  {
+    id: 3,
+    category: 'Account',
+    question: 'How do I reset my password?',
+    answer:
+      'To reset your password, click on the "Forgot Password" link on the login page. You will receive an email with instructions to create a new password. If you don\'t receive the email, please check your spam folder or contact support.',
+  },
+  // {
+  //   id: 4,
+  //   category: 'Assets',
+  //   question: 'How do I track depreciation for my assets?',
+  //   answer: 'Our platform supports multiple depreciation methods including straight-line, declining balance, and sum-of-the-years-digits. Set up depreciation rules in Settings > Accounting, then apply them to assets individually or in bulk.'
+  // },
+  {
+    id: 4,
+    category: 'Assets',
+    question: 'Can I export asset reports?',
+    answer:
+      'Yes, you can export comprehensive asset reports in Excel, and CSV. Go to Reports > Apply filters and click "Export".',
+  },
+  {
+    id: 5,
+    category: 'Maintenance',
+    question: 'How do I schedule maintenance for my assets?',
+    answer:
+      'You can create maintenance plans and associate assets to it. Set the frequency, assign responsible personnel, and add reminders to ensure timely maintenance.',
+  },
+  {
+    id: 6,
+    category: 'Maintenance',
+    question: 'Can I set up maintenance alerts?',
+    answer:
+      'Yes, you can configure automated alerts for upcoming and overdue maintenance. Navigate to Settings > Notifications to customize your alert preferences for email services.',
+  },
+  // {
+  //   id: 7,
+  //   category: 'Billing',
+  //   question: 'How do I update my billing information?',
+  //   answer: 'To update your billing information, go to Settings > Billing & Subscription. You can update your payment method, view invoices, and manage your subscription plan from this page.'
+  // },
+  // {
+  //   id: 7,
+  //   category: 'Billing',
+  //   question: 'Can I upgrade or downgrade my plan?',
+  //   answer: 'Yes, you can change your subscription plan at any time. Go to Settings > Billing & Subscription and select "Change Plan". Changes will take effect at the start of your next billing cycle.'
+  // }
+];
+
 export const PricingPlans = [
   {
     title: 'Basic',
@@ -95,8 +158,7 @@ export const FooterFields = {
     { label: 'Contact', color: 'inherit' },
   ],
   legal: [
-    { label: 'Privacy', color: 'inherit', link: 'https://github.com/earmuff-jam/fluffy?tab=coc-ov-file' },
-    { label: 'Terms', color: 'inherit', link: 'https://github.com/earmuff-jam/fluffy?tab=coc-ov-file' },
-    { label: 'Security', color: 'inherit', link: 'https://github.com/earmuff-jam/fluffy?tab=coc-ov-file' },
+    { label: 'Privacy policy', color: 'inherit', link: '/privacy' },
+    { label: 'Terms and Conditions', color: 'inherit', link: '/terms' },
   ],
 };
