@@ -1,19 +1,19 @@
+import { useNavigate } from 'react-router-dom';
+
 import { Button, Container, Grid, Typography, Box, Divider, Stack } from '@mui/material';
 
 import { BarChartRounded } from '@mui/icons-material';
 import { FooterFields } from '@features/LandingPage/constants';
 
 function Footer() {
-  const handleNavigate = (url) => {
-    window.location.href = url;
-  };
+  const navigate = useNavigate();
 
   return (
     <Box component="footer" sx={{ py: 6, backgroundColor: 'background.paper', borderTop: 1, borderColor: 'divider' }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, cursor: 'pointer' }} onClick={() => navigate('/')}>
               <BarChartRounded sx={{ color: 'primary.main', mr: 1, fontSize: 28 }} />
               <Typography variant="h6" component="div" sx={{ fontWeight: 700, color: 'primary.main' }}>
                 FleetWise
@@ -74,7 +74,7 @@ function Footer() {
                   key={item.label}
                   color={item.color}
                   sx={{ justifyContent: 'flex-start', px: 1 }}
-                  onClick={() => handleNavigate(item.link)}
+                  onClick={() => navigate(item.link)}
                 >
                   {item.label}
                 </Button>

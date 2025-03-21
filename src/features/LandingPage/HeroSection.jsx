@@ -45,9 +45,6 @@ export default function HeroSection() {
               >
                 Start Free Trial
               </Button>
-              <Button variant="outlined" size="large" color="primary" sx={{ py: 1.5, px: 4 }}>
-                Schedule a Demo
-              </Button>
             </Box>
             <Box sx={{ mt: 4, display: 'flex', gap: 2, alignItems: 'center' }}>
               <Typography variant="body2" color="text.secondary">
