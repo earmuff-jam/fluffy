@@ -115,7 +115,7 @@ export default function AssetList() {
         Edit
       </MenuItem>,
       <MenuItem
-        key={1}
+        key={2}
         onClick={() => {
           closeMenu();
           setSelectedRow(row.original);

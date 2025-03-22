@@ -4,7 +4,7 @@ import { Autocomplete, Button, Chip, Stack, TextField } from '@mui/material';
 
 import { useFetchUserProfiles } from '@services/profileApi';
 
-export default function SharableGroups({ handleSubmit, existingGroups, creator }) {
+export default function SharableGroups({ handleSubmit, existingGroups, creatorId }) {
   const { data: profiles = [], isLoading: loading } = useFetchUserProfiles();
 
   const [options, setOptions] = useState([]);
@@ -12,11 +12,13 @@ export default function SharableGroups({ handleSubmit, existingGroups, creator }
 
   useEffect(() => {
     if (!loading && Array.isArray(profiles)) {
-      const draftProfiles = profiles.map((v) => ({
-        display: v.emailAddress,
-        value: v.id,
-        label: v.emailAddress,
-      }));
+      const draftProfiles = profiles
+        .filter((profile) => profile.id !== creatorId)
+        .map((v) => ({
+          display: v.emailAddress,
+          value: v.id,
+          label: v.emailAddress,
+        }));
       setOptions(draftProfiles);
     }
   }, [loading, profiles]);
@@ -60,12 +62,12 @@ export default function SharableGroups({ handleSubmit, existingGroups, creator }
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => {
             const { key, ...tagProps } = getTagProps({ index });
-            return <Chip key={key} label={option.display} {...tagProps} disabled={option.value === creator.emailAddress} />;
+            return <Chip key={key} label={option.display} {...tagProps} disabled={option.value === creatorId} />;
           })
         }
       />
       <Button variant="text" onClick={() => handleSubmit(sharableGroups)} disabled={sharableGroups.length === 0}>
-        Submit
+        Update Collaborators
       </Button>
     </Stack>
   );

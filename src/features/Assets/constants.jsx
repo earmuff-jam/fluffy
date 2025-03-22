@@ -1,10 +1,12 @@
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+import { Box } from '@mui/material';
+import { capitalizeFirstLetter } from '@utils/utils';
 
 import QrCodeGen from '@utils/QrCodeGen';
-import relativeTime from 'dayjs/plugin/relativeTime';
+
 import { CheckRounded, CloseRounded } from '@mui/icons-material';
-import { capitalizeFirstLetter } from '@utils/utils';
-import { Box } from '@mui/material';
 
 dayjs.extend(relativeTime);
 
@@ -104,7 +106,7 @@ export const BUILD_TABLE_CONSTANTS = (columnLabels) => (selectedRow) => {
 
 /**
  * ASSETS_LIST_HEADERS ...
- * 
+ *
  * List of assets headers for the MRTv2 table.
  */
 export const ASSETS_LIST_HEADERS = [
@@ -146,7 +148,7 @@ export const ASSETS_LIST_HEADERS = [
             borderRadius: '0.25rem',
             color: '#fff',
             width: '9ch',
-            p: '0.2rem 0.5rem' ,
+            p: '0.2rem 0.5rem',
           })}
         >
           {cell.getValue()?.length > 0 ? `$${cell.getValue()}` : '-'}

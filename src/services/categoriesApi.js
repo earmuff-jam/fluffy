@@ -50,7 +50,10 @@ export const useFetchCategoryById = (id) => {
   return useQuery({
     queryKey: ['category', id],
     queryFn: async () => {
-      const response = await client.models.Categories.get({ id: id });
+      const response = await client.models.Categories.get({
+        id: id,
+      });
+
       return response.data || {};
     },
     enabled: !!id,
@@ -304,12 +307,32 @@ export const useRemoveCategory = () => {
   return useMutation({
     mutationFn: async (id) => {
       if (!id) throw new Error('Category ID is required for deletion.');
+
       const { data, errors } = await client.models.Categories.delete({ id });
+
+      const { data: favItem, error: favItemErr } = await client.models.FavouriteItems.list({
+        filter: {
+          categoryIdRef: {
+            eq: id,
+          },
+        },
+      });
+
+      // only one favItem for categoryId can exists.
+      if (!favItemErr && favItem.length === 1) {
+        const currentAssetAssociationId = favItem.at(0);
+        await client.models.FavouriteItems.delete({
+          id: currentAssetAssociationId.id,
+        });
+      }
+
       if (errors) throw new Error(errors);
+
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['favouriteItems', data.createdCategoryIdRef] });
     },
   });
 };

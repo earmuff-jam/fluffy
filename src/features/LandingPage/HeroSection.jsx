@@ -43,7 +43,7 @@ export default function HeroSection() {
                 sx={{ py: 1.5, px: 4 }}
                 onClick={() => navigate('/external')}
               >
-                Start Free Trial
+                Login / Start trial
               </Button>
             </Box>
             <Box sx={{ mt: 4, display: 'flex', gap: 2, alignItems: 'center' }}>

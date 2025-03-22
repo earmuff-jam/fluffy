@@ -248,3 +248,18 @@ export const renameXcelColValues = (xcelHeaderCols) => {
     return transformedRow;
   });
 };
+
+/**
+ * fetchAssetCosts ...
+ *
+ * retrieves the sum of total cost of all assets
+ *
+ * @param {Array} assets - the array representation of all items
+ * @returns Number - the sum of total cost of all assets
+ */
+export const fetchAssetCosts = (assets = []) => {
+  return assets.reduce((acc, el) => {
+    acc += +el.price;
+    return acc;
+  }, 0);
+};

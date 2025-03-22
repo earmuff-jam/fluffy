@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import dayjs from 'dayjs';
 
@@ -10,13 +10,20 @@ import { FILTER_OPTIONS } from '@features/Reports/constants';
 import ReportsHeader from '@features/Reports/ReportsHeader';
 import ReportContent from '@features/Reports/ReportContent';
 import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
+import { produce } from 'immer';
 
-import { buildXcel } from '@utils/utils';
+import { buildXcel, fetchAssetCosts } from '@utils/utils';
 import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
 
-import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';
-import { useDownloadAssetsList, useFetchAssetReportByDate } from '@services/assetsApi';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+
+import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';
+
+import {
+  useDownloadAssetsList,
+  useFetchAssetReportByDate,
+  useFetchAssetsFromCategoryByDate,
+} from '@services/assetsApi';
 
 export default function Reports() {
   const { user } = useAuthenticator();
@@ -29,55 +36,61 @@ export default function Reports() {
   const [tempSinceValue, setTempSinceValue] = useState(sinceValue);
 
   const { data: maintenancePlanList = [] } = useFetchMaintenancePlans();
+  const {
+    mutate: downloadAssets,
+    data: downloadedAssets = [],
+    isLoading: isAssetsDownloading,
+    reset,
+  } = useDownloadAssetsList();
+
   const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssetReportByDate(sinceValue, user.userId);
-  const { data: downloadedAssets = [], isLoading: isAssetsDownloading, refetch } = useDownloadAssetsList(sinceValue);
+  const { data: assetsFromCategoryByDate = [], isLoading: isAssetsFromCategoryByDateLoading } =
+    useFetchAssetsFromCategoryByDate(sinceValue, user.userId);
 
   const closeFilter = () => setDisplayModal(false);
-
-  const downloadReports = () => {
-    refetch();
-  };
 
   const applyFilter = () => {
     setSinceValue(tempSinceValue);
     closeFilter();
   };
 
-  const totalAssetValuation = assets.reduce((acc, el) => {
-    acc += +el.price;
-    return acc;
-  }, 0);
+  useEffect(() => {
+    if (downloadedAssets.length > 0) {
+      const formattedAssets = produce(downloadedAssets, (draft) => {
+        draft.forEach((assetItem, index) => {
+          draft[index] = Object.fromEntries(
+            Object.values(ASSET_LIST_HEADERS)
+              .sort((a, b) => a.id - b.id) // Ensure order
+              .map(({ label, colName, modifier }) => [
+                label,
+                modifier && colName !== 'updatedAt' ? modifier(assetItem[colName]) : assetItem[colName] || '-',
+              ])
+          );
+        });
+      });
 
-  if (downloadedAssets.length > 0) {
-    const formattedAssets = downloadedAssets.map((v) =>
-      Object.assign(
-        {},
-        ...Object.values(ASSET_LIST_HEADERS)
-          .sort((a, b) => a.id - b.id) // Ensure order
-          .map((header) => ({
-            [header.label]: header.modifier ? header.modifier(v[header.colName]) : v[header.colName] || '-',
-          }))
-      )
-    );
+      buildXcel(
+        Object.values(ASSET_LIST_HEADERS).map((header) => header.label),
+        formattedAssets,
+        'reports.xlsx',
+        `reports-${dayjs().format('DD-MM-YYYY')}`
+      );
 
-    buildXcel(
-      Object.values(ASSET_LIST_HEADERS).map((header) => header.label),
-      formattedAssets,
-      'reports.xlsx',
-      `reports-${dayjs().format('DD-MM-YYYY')}`
-    );
-  }
+      reset();
+    }
+  }, [downloadedAssets, reset]);
 
   return (
     <Stack spacing={1} data-tour="reports-0">
       <ReportsHeader
         sinceValue={sinceValue}
-        reports={[]}
         loading={isAssetsLoading}
-        totalAssetValuation={totalAssetValuation}
+        totalAssetValuation={fetchAssetCosts(assets)}
+        isAssetsFromCategoryByDateLoading={isAssetsFromCategoryByDateLoading}
+        totalAssetsFromCategoryByDateValuation={fetchAssetCosts(assetsFromCategoryByDate)}
         selectedAsset={assets[0] || {}}
         setDisplayModal={setDisplayModal}
-        downloadReports={downloadReports}
+        downloadAssets={downloadAssets}
         isSecondaryButtonLoading={isAssetsDownloading}
         selectedMaintenancePlan={maintenancePlanList?.length > 0 ? maintenancePlanList[0] : {}}
       />

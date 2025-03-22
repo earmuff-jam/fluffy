@@ -100,7 +100,38 @@ export const useFetchAssetReportByDate = (dateStr, userId) => {
       });
       return response.data || [];
     },
-    enabled: !!dateStr,
+    enabled: !!dateStr && !!userId,
+  });
+};
+
+/**
+ * useFetchAssetsFromCategoryByDate ...
+ *
+ * retrieves the list of assets filtered by the date param that belongs to at least
+ * one category
+ *
+ * @param {string} dateStr - the string representation of the datetime field
+ * @param {string} userId - the string representation of the user id
+ */
+export const useFetchAssetsFromCategoryByDate = (dateStr, userId) => {
+  return useQuery({
+    queryKey: ['assetsAssociatedWithCategoryByUserId', dateStr],
+    queryFn: async () => {
+      const response = await client.models.CategoryItems.list({
+        filter: {
+          createdCategoryItemsIdRef: {
+            eq: userId,
+          },
+          updatedAt: {
+            ge: dateStr,
+          },
+        },
+        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'categoryId.*'],
+      });
+      return response.data || [];
+    },
+    enabled: !!dateStr && !!userId,
+    select: (data) => data.map((item) => item.assetId),
   });
 };
 
@@ -110,10 +141,9 @@ export const useFetchAssetReportByDate = (dateStr, userId) => {
  * downloads the list of all assets within a selected time period
  * @param {string} dateStr - the string representation of the datetime field
  */
-export const useDownloadAssetsList = (dateStr) => {
-  return useQuery({
-    queryKey: ['downloadAssetList'],
-    queryFn: async () => {
+export const useDownloadAssetsList = () => {
+  return useMutation({
+    mutationFn: async (dateStr) => {
       const response = await client.models.Assets.list({
         selectionSet: assetWithStorageLocationCols,
         filter: {
@@ -124,7 +154,6 @@ export const useDownloadAssetsList = (dateStr) => {
       });
       return response.data || [];
     },
-    enabled: false,
   });
 };
 
@@ -338,7 +367,9 @@ export const useUpdateAsset = () => {
 /**
  * useRemoveAssets ...
  *
- * removes assets that are within the matching list of array of ids passed in
+ * removes all assets with matching id. Invokes a promise where all passed in ids are removed.
+ * Also removes all assocations made in category items table or in maintenace plan items table
+ *
  */
 export const useRemoveAssets = () => {
   const queryClient = useQueryClient();
@@ -346,12 +377,44 @@ export const useRemoveAssets = () => {
   return useMutation({
     mutationFn: async (ids) => {
       if (!ids || !Array.isArray(ids) || ids.length === 0) {
-        throw new Error('Asset IDs is required for deletion.');
+        throw new Error('Asset IDs are required for deletion.');
       }
 
       const deletePromises = ids.map(async (id) => {
         const { data, errors } = await client.models.Assets.delete({ id });
         if (errors) throw new Error(errors);
+
+        const { data: categoryItems, error: categoryItemErr } = await client.models.CategoryItems.list({
+          filter: {
+            assetIdRef: {
+              eq: id,
+            },
+          },
+        });
+
+        if (!categoryItemErr && categoryItems.length > 0) {
+          await Promise.all(
+            categoryItems.map((categoryItem) => client.models.CategoryItems.delete({ id: categoryItem.id }))
+          );
+        }
+
+        const { data: maintenancePlanItems, error: maintenancePlanItemErr } =
+          await client.models.MaintenancePlanItems.list({
+            filter: {
+              assetIdRef: {
+                eq: id,
+              },
+            },
+          });
+
+        if (!maintenancePlanItemErr && maintenancePlanItems.length > 0) {
+          await Promise.all(
+            maintenancePlanItems.map((maintenancePlanItem) =>
+              client.models.MaintenancePlanItems.delete({ id: maintenancePlanItem.id })
+            )
+          );
+        }
+
         return data;
       });
 
