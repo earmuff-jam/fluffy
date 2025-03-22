@@ -51,6 +51,7 @@ export const useFetchMaintenancePlanById = (id) => {
     queryKey: ['maintenancePlan', id],
     queryFn: async () => {
       const response = await client.models.MaintenancePlans.get({ id: id });
+
       return response.data || {};
     },
     enabled: !!id,

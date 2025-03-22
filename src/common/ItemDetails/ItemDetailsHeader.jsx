@@ -32,6 +32,7 @@ export default function ItemDetailsHeader({
   label,
   caption,
   item,
+  creatorId,
   image,
 }) {
   const navigate = useNavigate();
@@ -120,7 +121,7 @@ export default function ItemDetailsHeader({
           <SharableGroups
             handleSubmit={updateCollaborators}
             existingGroups={item?.collaborators || []}
-            creator={item?.createdBy}
+            creatorId={creatorId}
           />
         </SimpleModal>
       )}

@@ -79,6 +79,7 @@ export default function CategoryItemDetails() {
         label={selectedCategory?.name ? `${selectedCategory.name} Overview` : 'Category Overview'}
         caption="View details of selected category"
         item={selectedCategory}
+        creatorId={selectedCategory?.createdCategoryIdRef}
         image={selectedCategoryImage}
         favBtnDataTour="selected-category-1"
         shareBtnDataTour="selected-category-2"

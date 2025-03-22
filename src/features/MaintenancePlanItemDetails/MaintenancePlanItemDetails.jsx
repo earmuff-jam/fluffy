@@ -81,6 +81,7 @@ export default function MaintenancePlanItemDetails() {
         label={selectedMaintenancePlan?.name ? `${selectedMaintenancePlan.name} Overview` : 'Maintenance Plan Overview'}
         caption="View details of selected maintenance plan"
         item={selectedMaintenancePlan}
+        creatorId={selectedMaintenancePlan?.createdMaintenancePlanIdRef}
         image={selectedMaintenancePlanImage}
         favBtnDataTour="selected-plan-1"
         shareBtnDataTour="selected-plan-2"
