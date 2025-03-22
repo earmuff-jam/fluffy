@@ -100,7 +100,38 @@ export const useFetchAssetReportByDate = (dateStr, userId) => {
       });
       return response.data || [];
     },
-    enabled: !!dateStr,
+    enabled: !!dateStr && !!userId,
+  });
+};
+
+/**
+ * useFetchAssetsFromCategoryByDate ...
+ *
+ * retrieves the list of assets filtered by the date param that belongs to at least
+ * one category
+ *
+ * @param {string} dateStr - the string representation of the datetime field
+ * @param {string} userId - the string representation of the user id
+ */
+export const useFetchAssetsFromCategoryByDate = (dateStr, userId) => {
+  return useQuery({
+    queryKey: ['assetsAssociatedWithCategoryByUserId', dateStr],
+    queryFn: async () => {
+      const response = await client.models.CategoryItems.list({
+        filter: {
+          createdCategoryItemsIdRef: {
+            eq: userId,
+          },
+          updatedAt: {
+            ge: dateStr,
+          },
+        },
+        selectionSet: ['id', 'assetId.*', 'assetId.storageLocationId.*', 'categoryId.*'],
+      });
+      return response.data || [];
+    },
+    enabled: !!dateStr && !!userId,
+    select: (data) => data.map((item) => item.assetId),
   });
 };
 

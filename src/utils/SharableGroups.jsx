@@ -59,9 +59,12 @@ export default function SharableGroups({ handleSubmit, existingGroups, creator }
         )}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => {
+            // TODO : this needs to be fixed
             console.log(option, creator);
             const { key, ...tagProps } = getTagProps({ index });
-            return <Chip key={key} label={option.display} {...tagProps} disabled={option.value === creator.emailAddress} />;
+            return (
+              <Chip key={key} label={option.display} {...tagProps} disabled={option.value === creator.emailAddress} />
+            );
           })
         }
       />

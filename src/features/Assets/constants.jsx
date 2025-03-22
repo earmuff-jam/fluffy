@@ -6,7 +6,7 @@ import { capitalizeFirstLetter } from '@utils/utils';
 
 import QrCodeGen from '@utils/QrCodeGen';
 
-import { CheckRounded, CloseRounded, EditRounded, FileOpenRounded, RemoveCircleRounded } from '@mui/icons-material';
+import { CheckRounded, CloseRounded } from '@mui/icons-material';
 
 dayjs.extend(relativeTime);
 

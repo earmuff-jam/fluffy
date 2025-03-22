@@ -15,7 +15,8 @@ dayjs.extend(relativeTime);
 
 export default function ReportsHeader({
   sinceValue,
-  reports,
+  isAssetsFromCategoryByDateLoading,
+  totalAssetsFromCategoryByDateValuation,
   loading,
   totalAssetValuation,
   selectedAsset,
@@ -60,9 +61,9 @@ export default function ReportsHeader({
         <ReportCardWrapper
           title="Categorized Assets"
           dataTour={'reports-4'}
-          loading={loading}
           chipLabel={`Since ${formatDate(sinceValue)}`}
-          value={`$${reports[0]?.costCategoryItems?.toFixed(2) || 0.0}`}
+          loading={isAssetsFromCategoryByDateLoading}
+          value={`$${totalAssetsFromCategoryByDateValuation.toFixed(2) || 0.0}`}
         />
       </Stack>
       <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>

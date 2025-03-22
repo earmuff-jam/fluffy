@@ -11,12 +11,17 @@ import ReportsHeader from '@features/Reports/ReportsHeader';
 import ReportContent from '@features/Reports/ReportContent';
 import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
 
-import { buildXcel } from '@utils/utils';
+import { buildXcel, fetchAssetCosts } from '@utils/utils';
 import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
 
-import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';
-import { useDownloadAssetsList, useFetchAssetReportByDate } from '@services/assetsApi';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+
+import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';
+import {
+  useDownloadAssetsList,
+  useFetchAssetReportByDate,
+  useFetchAssetsFromCategoryByDate,
+} from '@services/assetsApi';
 
 export default function Reports() {
   const { user } = useAuthenticator();
@@ -29,8 +34,11 @@ export default function Reports() {
   const [tempSinceValue, setTempSinceValue] = useState(sinceValue);
 
   const { data: maintenancePlanList = [] } = useFetchMaintenancePlans();
-  const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssetReportByDate(sinceValue, user.userId);
   const { data: downloadedAssets = [], isLoading: isAssetsDownloading, refetch } = useDownloadAssetsList(sinceValue);
+
+  const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssetReportByDate(sinceValue, user.userId);
+  const { data: assetsFromCategoryByDate = [], isLoading: isAssetsFromCategoryByDateLoading } =
+    useFetchAssetsFromCategoryByDate(sinceValue, user.userId);
 
   const closeFilter = () => setDisplayModal(false);
 
@@ -42,11 +50,6 @@ export default function Reports() {
     setSinceValue(tempSinceValue);
     closeFilter();
   };
-
-  const totalAssetValuation = assets.reduce((acc, el) => {
-    acc += +el.price;
-    return acc;
-  }, 0);
 
   if (downloadedAssets.length > 0) {
     const formattedAssets = downloadedAssets.map((v) =>
@@ -72,9 +75,10 @@ export default function Reports() {
     <Stack spacing={1} data-tour="reports-0">
       <ReportsHeader
         sinceValue={sinceValue}
-        reports={[]}
         loading={isAssetsLoading}
-        totalAssetValuation={totalAssetValuation}
+        totalAssetValuation={fetchAssetCosts(assets)}
+        isAssetsFromCategoryByDateLoading={isAssetsFromCategoryByDateLoading}
+        totalAssetsFromCategoryByDateValuation={fetchAssetCosts(assetsFromCategoryByDate)}
         selectedAsset={assets[0] || {}}
         setDisplayModal={setDisplayModal}
         downloadReports={downloadReports}
