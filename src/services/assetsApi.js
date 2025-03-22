@@ -386,7 +386,7 @@ export const useRemoveAssets = () => {
         const { data, errors } = await client.models.Assets.delete({ id });
         if (errors) throw new Error(errors);
 
-        const { data: categoryItem, error: categoryItemErr } = await client.models.CategoryItems.list({
+        const { data: categoryItems, error: categoryItemErr } = await client.models.CategoryItems.list({
           filter: {
             assetIdRef: {
               eq: id,
@@ -394,15 +394,13 @@ export const useRemoveAssets = () => {
           },
         });
 
-        // only one association per asset per category can be made
-        if (!categoryItemErr && categoryItem.length === 1) {
-          const currentAssetAssociationId = categoryItem.at(0);
-          await client.models.CategoryItems.delete({
-            id: currentAssetAssociationId.id,
-          });
+        if (!categoryItemErr && categoryItems.length > 0) {
+          await Promise.all(
+            categoryItems.map((categoryItem) => client.models.CategoryItems.delete({ id: categoryItem.id }))
+          );
         }
 
-        const { data: maintenancePlanItem, error: maintenancePlanItemErr } =
+        const { data: maintenancePlanItems, error: maintenancePlanItemErr } =
           await client.models.MaintenancePlanItems.list({
             filter: {
               assetIdRef: {
@@ -411,12 +409,12 @@ export const useRemoveAssets = () => {
             },
           });
 
-        // only one association per asset per maintenace plan can be made
-        if (!maintenancePlanItemErr && maintenancePlanItem.length === 1) {
-          const currentAssetAssociationId = maintenancePlanItem.at(0);
-          await client.models.MaintenancePlanItems.delete({
-            id: currentAssetAssociationId.id,
-          });
+        if (!maintenancePlanItemErr && maintenancePlanItems.length > 0) {
+          await Promise.all(
+            maintenancePlanItems.map((maintenancePlanItem) =>
+              client.models.MaintenancePlanItems.delete({ id: maintenancePlanItem.id })
+            )
+          );
         }
 
         return data;

@@ -58,7 +58,7 @@ export default function MenuActionBar({
   const formattedPinnedMenuItemList = favItems.map((item) => ({
     id: item.id,
     label: item?.categoryId?.name || item?.maintenancePlanId?.name,
-    to: item?.categoryId ? `/category/${item.categoryId?.id}` : `/plan/${item.maintenancePlanId?.id}`,
+    to: item?.categoryId ? `/assets/category/${item.categoryId?.id}` : `/assets/plan/${item.maintenancePlanId?.id}`,
     icon: <BookmarkRounded fontSize="small" color="warning" />,
   }));
 
