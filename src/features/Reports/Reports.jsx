@@ -10,6 +10,7 @@ import { FILTER_OPTIONS } from '@features/Reports/constants';
 import ReportsHeader from '@features/Reports/ReportsHeader';
 import ReportContent from '@features/Reports/ReportContent';
 import ReportsFilterMenu from '@features/Reports/ReportsFilterMenu';
+import { produce } from 'immer';
 
 import { buildXcel, fetchAssetCosts } from '@utils/utils';
 import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
@@ -17,6 +18,7 @@ import { ASSET_LIST_HEADERS } from '@features/Assets/constants';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 import { useFetchMaintenancePlans } from '@services/maintenancePlanApi';
+
 import {
   useDownloadAssetsList,
   useFetchAssetReportByDate,
@@ -54,16 +56,18 @@ export default function Reports() {
 
   useEffect(() => {
     if (downloadedAssets.length > 0) {
-      const formattedAssets = downloadedAssets.map((v) =>
-        Object.assign(
-          {},
-          ...Object.values(ASSET_LIST_HEADERS)
-            .sort((a, b) => a.id - b.id) // Ensure order
-            .map((header) => ({
-              [header.label]: header.modifier ? header.modifier(v[header.colName]) : v[header.colName] || '-',
-            }))
-        )
-      );
+      const formattedAssets = produce(downloadedAssets, (draft) => {
+        draft.forEach((assetItem, index) => {
+          draft[index] = Object.fromEntries(
+            Object.values(ASSET_LIST_HEADERS)
+              .sort((a, b) => a.id - b.id) // Ensure order
+              .map(({ label, colName, modifier }) => [
+                label,
+                modifier && colName !== 'updatedAt' ? modifier(assetItem[colName]) : assetItem[colName] || '-',
+              ])
+          );
+        });
+      });
 
       buildXcel(
         Object.values(ASSET_LIST_HEADERS).map((header) => header.label),
