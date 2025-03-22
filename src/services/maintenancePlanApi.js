@@ -303,12 +303,32 @@ export const useRemoveMaintenancePlan = () => {
   return useMutation({
     mutationFn: async (id) => {
       if (!id) throw new Error('Maintenance Plan ID is required for deletion.');
+
       const { data, errors } = await client.models.MaintenancePlans.delete({ id });
+
+      const { data: favItem, error: favItemErr } = await client.models.FavouriteItems.list({
+        filter: {
+          maintenancePlanIdRef: {
+            eq: id,
+          },
+        },
+      });
+
+      // only one favItem for categoryId can exists.
+      if (!favItemErr && favItem.length === 1) {
+        const currentAssetAssociationId = favItem.at(0);
+        await client.models.FavouriteItems.delete({
+          id: currentAssetAssociationId.id,
+        });
+      }
+
       if (errors) throw new Error(errors);
+
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['maintenancePlans'] });
+      queryClient.invalidateQueries({ queryKey: ['favouriteItems', data.createdMaintenancePlanIdRef] });
     },
   });
 };

@@ -71,7 +71,7 @@ export default function MaintenancePlanItemDetails() {
     resetSelection();
   };
 
-  if (loading) {
+  if (loading || Object.keys(selectedMaintenancePlan).length === 0) {
     return <Skeleton height="20rem" />;
   }
 

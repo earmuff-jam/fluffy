@@ -68,7 +68,7 @@ export default function CategoryItemDetails() {
     resetSelection();
   };
 
-  if (loading) {
+  if (loading || Object.keys(selectedCategory).length === 0) {
     return <Skeleton height="20rem" />;
   }
 

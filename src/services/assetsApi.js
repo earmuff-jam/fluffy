@@ -369,7 +369,9 @@ export const useUpdateAsset = () => {
 /**
  * useRemoveAssets ...
  *
- * removes assets that are within the matching list of array of ids passed in
+ * removes all assets with matching id. Invokes a promise where all passed in ids are removed.
+ * Also removes all assocations made in category items table or in maintenace plan items table
+ *
  */
 export const useRemoveAssets = () => {
   const queryClient = useQueryClient();
@@ -377,12 +379,46 @@ export const useRemoveAssets = () => {
   return useMutation({
     mutationFn: async (ids) => {
       if (!ids || !Array.isArray(ids) || ids.length === 0) {
-        throw new Error('Asset IDs is required for deletion.');
+        throw new Error('Asset IDs are required for deletion.');
       }
 
       const deletePromises = ids.map(async (id) => {
         const { data, errors } = await client.models.Assets.delete({ id });
         if (errors) throw new Error(errors);
+
+        const { data: categoryItem, error: categoryItemErr } = await client.models.CategoryItems.list({
+          filter: {
+            assetIdRef: {
+              eq: id,
+            },
+          },
+        });
+
+        // only one association per asset per category can be made
+        if (!categoryItemErr && categoryItem.length === 1) {
+          const currentAssetAssociationId = categoryItem.at(0);
+          await client.models.CategoryItems.delete({
+            id: currentAssetAssociationId.id,
+          });
+        }
+
+        const { data: maintenancePlanItem, error: maintenancePlanItemErr } =
+          await client.models.MaintenancePlanItems.list({
+            filter: {
+              assetIdRef: {
+                eq: id,
+              },
+            },
+          });
+
+        // only one association per asset per maintenace plan can be made
+        if (!maintenancePlanItemErr && maintenancePlanItem.length === 1) {
+          const currentAssetAssociationId = maintenancePlanItem.at(0);
+          await client.models.MaintenancePlanItems.delete({
+            id: currentAssetAssociationId.id,
+          });
+        }
+
         return data;
       });
 
