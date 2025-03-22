@@ -23,7 +23,7 @@ export default function ReportsHeader({
   selectedMaintenancePlan,
   isSecondaryButtonLoading,
   setDisplayModal,
-  downloadReports,
+  downloadAssets,
 }) {
   const renderCaption = () => {
     if (sinceValue) {
@@ -46,7 +46,7 @@ export default function ReportsHeader({
         primaryBtnDataTour={'reports-1'}
         secondaryBtnDataTour={'reports-2'}
         isSecondaryButtonLoading={isSecondaryButtonLoading}
-        handleClickSecondaryButton={() => downloadReports()}
+        handleClickSecondaryButton={() => downloadAssets(sinceValue)}
       />
       <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
         <ReportCardWrapper

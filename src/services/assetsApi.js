@@ -141,10 +141,9 @@ export const useFetchAssetsFromCategoryByDate = (dateStr, userId) => {
  * downloads the list of all assets within a selected time period
  * @param {string} dateStr - the string representation of the datetime field
  */
-export const useDownloadAssetsList = (dateStr) => {
-  return useQuery({
-    queryKey: ['downloadAssetList'],
-    queryFn: async () => {
+export const useDownloadAssetsList = () => {
+  return useMutation({
+    mutationFn: async (dateStr) => {
       const response = await client.models.Assets.list({
         selectionSet: assetWithStorageLocationCols,
         filter: {
@@ -155,7 +154,6 @@ export const useDownloadAssetsList = (dateStr) => {
       });
       return response.data || [];
     },
-    enabled: false,
   });
 };
 

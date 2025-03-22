@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import dayjs from 'dayjs';
 
@@ -34,7 +34,12 @@ export default function Reports() {
   const [tempSinceValue, setTempSinceValue] = useState(sinceValue);
 
   const { data: maintenancePlanList = [] } = useFetchMaintenancePlans();
-  const { data: downloadedAssets = [], isLoading: isAssetsDownloading, refetch } = useDownloadAssetsList(sinceValue);
+  const {
+    mutate: downloadAssets,
+    data: downloadedAssets = [],
+    isLoading: isAssetsDownloading,
+    reset,
+  } = useDownloadAssetsList();
 
   const { data: assets = [], isLoading: isAssetsLoading } = useFetchAssetReportByDate(sinceValue, user.userId);
   const { data: assetsFromCategoryByDate = [], isLoading: isAssetsFromCategoryByDateLoading } =
@@ -42,34 +47,34 @@ export default function Reports() {
 
   const closeFilter = () => setDisplayModal(false);
 
-  const downloadReports = () => {
-    refetch();
-  };
-
   const applyFilter = () => {
     setSinceValue(tempSinceValue);
     closeFilter();
   };
 
-  if (downloadedAssets.length > 0) {
-    const formattedAssets = downloadedAssets.map((v) =>
-      Object.assign(
-        {},
-        ...Object.values(ASSET_LIST_HEADERS)
-          .sort((a, b) => a.id - b.id) // Ensure order
-          .map((header) => ({
-            [header.label]: header.modifier ? header.modifier(v[header.colName]) : v[header.colName] || '-',
-          }))
-      )
-    );
+  useEffect(() => {
+    if (downloadedAssets.length > 0) {
+      const formattedAssets = downloadedAssets.map((v) =>
+        Object.assign(
+          {},
+          ...Object.values(ASSET_LIST_HEADERS)
+            .sort((a, b) => a.id - b.id) // Ensure order
+            .map((header) => ({
+              [header.label]: header.modifier ? header.modifier(v[header.colName]) : v[header.colName] || '-',
+            }))
+        )
+      );
 
-    buildXcel(
-      Object.values(ASSET_LIST_HEADERS).map((header) => header.label),
-      formattedAssets,
-      'reports.xlsx',
-      `reports-${dayjs().format('DD-MM-YYYY')}`
-    );
-  }
+      buildXcel(
+        Object.values(ASSET_LIST_HEADERS).map((header) => header.label),
+        formattedAssets,
+        'reports.xlsx',
+        `reports-${dayjs().format('DD-MM-YYYY')}`
+      );
+
+      reset();
+    }
+  }, [downloadedAssets, reset]);
 
   return (
     <Stack spacing={1} data-tour="reports-0">
@@ -81,7 +86,7 @@ export default function Reports() {
         totalAssetsFromCategoryByDateValuation={fetchAssetCosts(assetsFromCategoryByDate)}
         selectedAsset={assets[0] || {}}
         setDisplayModal={setDisplayModal}
-        downloadReports={downloadReports}
+        downloadAssets={downloadAssets}
         isSecondaryButtonLoading={isAssetsDownloading}
         selectedMaintenancePlan={maintenancePlanList?.length > 0 ? maintenancePlanList[0] : {}}
       />
