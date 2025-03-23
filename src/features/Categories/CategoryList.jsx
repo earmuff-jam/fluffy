@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 
+import dayjs from 'dayjs';
+
 import { Stack } from '@mui/material';
+
+import { produce } from 'immer';
+import { buildXcel } from '@utils/utils';
+import { CATEGORY_COLUMN_HEADERS } from '@features/Categories/constants';
 
 import SimpleModal from '@utils/SimpleModal';
 import AddCategory from '@features/Categories/AddCategory';
@@ -13,7 +19,12 @@ const CategoryList = ({ displayConcise = false }) => {
   const { data: categories, isLoading } = useFetchAllCategories();
 
   const { mutate: removeCategory } = useRemoveCategory();
-  const { mutate: downloadCategories } = useDownloadCategories();
+  const {
+    mutate: downloadCategories,
+    data: downloadedCategories = [],
+    isLoading: isCategoriesDownloading,
+    reset,
+  } = useDownloadCategories();
 
   const [sortedData, setSortedData] = useState([]);
   const [sortingOrder, setSortingOrder] = useState(true); // false ascending
@@ -36,6 +47,32 @@ const CategoryList = ({ displayConcise = false }) => {
       return sortedData;
     }
   };
+
+  useEffect(() => {
+    if (downloadedCategories.length > 0) {
+      const formattedCategories = produce(downloadedCategories, (draft) => {
+        draft.forEach((categoryItem, index) => {
+          draft[index] = Object.fromEntries(
+            Object.values(CATEGORY_COLUMN_HEADERS)
+              .sort((a, b) => a.id - b.id) // Ensure order
+              .map(({ label, colName, modifier }) => [
+                label,
+                modifier && colName !== 'updatedAt' ? modifier(categoryItem[colName]) : categoryItem[colName] || '-',
+              ])
+          );
+        });
+      });
+
+      buildXcel(
+        Object.values(CATEGORY_COLUMN_HEADERS).map((header) => header.label),
+        formattedCategories,
+        'categories.xlsx',
+        `categories-${dayjs().format('DD-MM-YYYY')}`
+      );
+
+      reset();
+    }
+  }, [downloadedCategories, reset]);
 
   useEffect(() => {
     if (categories?.length > 0) {
@@ -66,6 +103,7 @@ const CategoryList = ({ displayConcise = false }) => {
         downloadBtnDataTour={'categories-2'}
         filterBtnDataTour={'categories-3'}
         sortBtnDataTour={'categories-4'}
+        isSecondaryButtonLoading={isCategoriesDownloading}
         disableDownloadIcon={!categories || (Boolean(categories) && categories.length <= 0)}
       />
       <SectionCardContent

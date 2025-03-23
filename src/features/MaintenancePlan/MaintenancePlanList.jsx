@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 
+import dayjs from 'dayjs';
+
 import { Box } from '@mui/material';
+
+import { produce } from 'immer';
+import { buildXcel } from '@utils/utils';
+import { MAINTENANCE_PLAN_COLUMN_HEADERS } from '@features/MaintenancePlan/constants';
 
 import SimpleModal from '@utils/SimpleModal';
 import SectionCardHeader from '@common/SectionCard/SectionCardHeader';
@@ -17,7 +23,12 @@ const MaintenancePlanList = () => {
   const { data: maintenancePlans, isLoading } = useFetchMaintenancePlans();
 
   const { mutate: removeMaintenancePlan } = useRemoveMaintenancePlan();
-  const { mutate: downloadMaintenancePlans } = useDownloadMaintenancePlans();
+  const {
+    mutate: downloadMaintenancePlans,
+    data: downloadedMaintenancePlans = [],
+    isLoading: isMaintenancePlansLoading,
+    reset,
+  } = useDownloadMaintenancePlans();
 
   const [sortedData, setSortedData] = useState([]);
   const [sortingOrder, setSortingOrder] = useState(true); // false ascending
@@ -38,6 +49,34 @@ const MaintenancePlanList = () => {
       return sortedData;
     }
   };
+
+  useEffect(() => {
+    if (downloadedMaintenancePlans.length > 0) {
+      const formattedMaintenancePlans = produce(downloadedMaintenancePlans, (draft) => {
+        draft.forEach((maintenancePlanItem, index) => {
+          draft[index] = Object.fromEntries(
+            Object.values(MAINTENANCE_PLAN_COLUMN_HEADERS)
+              .sort((a, b) => a.id - b.id) // Ensure order
+              .map(({ label, colName, modifier }) => [
+                label,
+                modifier && colName !== 'updatedAt'
+                  ? modifier(maintenancePlanItem[colName])
+                  : maintenancePlanItem[colName] || '-',
+              ])
+          );
+        });
+      });
+
+      buildXcel(
+        Object.values(MAINTENANCE_PLAN_COLUMN_HEADERS).map((header) => header.label),
+        formattedMaintenancePlans,
+        'maintenancePlan.xlsx',
+        `maintenancePlan-${dayjs().format('DD-MM-YYYY')}`
+      );
+
+      reset();
+    }
+  }, [downloadedMaintenancePlans, reset]);
 
   useEffect(() => {
     if (maintenancePlans?.length > 0) {
@@ -68,6 +107,7 @@ const MaintenancePlanList = () => {
         downloadBtnDataTour={'plans-2'}
         filterBtnDataTour={'plans-3'}
         sortBtnDataTour={'plans-4'}
+        isSecondaryButtonLoading={isMaintenancePlansLoading}
         disableDownloadIcon={!maintenancePlans || (Boolean(maintenancePlans) && maintenancePlans.length <= 0)}
       />
       <SectionCardContent

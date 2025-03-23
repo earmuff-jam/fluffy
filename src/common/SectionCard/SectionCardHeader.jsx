@@ -1,4 +1,3 @@
-import { Button, IconButton, Stack } from '@mui/material';
 import { AddRounded, FileDownload } from '@mui/icons-material';
 
 import RowHeader from '@utils/RowHeader';
@@ -19,25 +18,24 @@ export default function SectionCardHeader({
   downloadBtnDataTour,
   filterBtnDataTour,
   sortBtnDataTour,
+  isSecondaryButtonLoading,
 }) {
   return (
     <>
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <RowHeader title={title} caption={caption} />
-        <Stack direction="row" spacing={1}>
-          <Button onClick={toggleModal} startIcon={<AddRounded />} variant="outlined" data-tour={addBtnDataTour}>
-            {primaryBtnTitle}
-          </Button>
-          <IconButton
-            size="small"
-            onClick={handleDownload}
-            disabled={disableDownloadIcon}
-            data-tour={downloadBtnDataTour}
-          >
-            <FileDownload fontSize="small" />
-          </IconButton>
-        </Stack>
-      </Stack>
+      <RowHeader
+        title={title}
+        caption={caption}
+        primaryStartIcon={<AddRounded />}
+        primaryButtonTextLabel={primaryBtnTitle}
+        handleClickPrimaryButton={toggleModal}
+        secondaryStartIcon={<FileDownload />}
+        secondaryButtonTextLabel={'Export'}
+        primaryBtnDataTour={addBtnDataTour}
+        secondaryBtnDataTour={downloadBtnDataTour}
+        secondaryButtonDisabled={disableDownloadIcon}
+        isSecondaryButtonLoading={isSecondaryButtonLoading}
+        handleClickSecondaryButton={handleDownload}
+      />
       <FilterAndSortMenu
         sortingOrder={sortingOrder}
         setSortingOrder={setSortingOrder}

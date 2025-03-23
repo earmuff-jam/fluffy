@@ -13,6 +13,12 @@ const GENERIC_TEXTAREA_VARIANT = {
   size: 'small',
 };
 
+/**
+ * ADD_CATEGORY_FORM_FIELDS ...
+ *
+ * Add Category Form Fields are used to build out the
+ * form required to add new category into the system.
+ */
 export const ADD_CATEGORY_FORM_FIELDS = {
   name: {
     name: 'name',
@@ -49,5 +55,56 @@ export const ADD_CATEGORY_FORM_FIELDS = {
       },
     ],
     ...GENERIC_TEXTAREA_VARIANT,
+  },
+};
+
+/**
+ * CATEGORY_COLUMN_HEADERS ...
+ *
+ * Category Column Headers are used to build out the headers for the
+ * column for categories to download list of categories. Collaborators can also
+ * download associated category plans.
+ */
+export const CATEGORY_COLUMN_HEADERS = {
+  name: {
+    id: 1,
+    colName: 'name',
+    label: 'NAME',
+    modifier: (value) => `${value || '-'}`,
+  },
+  description: {
+    id: 2,
+    colName: 'description',
+    label: 'DESCRIPTION',
+    displayName: 'Description',
+    modifier: (value) => `${value || '-'}`,
+  },
+  color: {
+    id: 2,
+    colName: 'color',
+    label: 'COLOR',
+    displayName: 'Color',
+    modifier: (value) => `${value || '-'}`,
+  },
+  status: {
+    id: 2,
+    colName: 'status',
+    label: 'Status',
+    displayName: 'Status',
+    modifier: (value) => `${value || '-'}`,
+  },
+  location: {
+    id: 2,
+    colName: 'location',
+    label: 'Location',
+    displayName: 'Location',
+    modifier: (value) => (value?.lat !== undefined && value?.lon !== undefined ? `${value.lat}, ${value.lon}` : '-'),
+  },
+  updator: {
+    id: 19,
+    colName: 'updatedBy',
+    label: 'UPDATED BY',
+    displayConcise: true,
+    modifier: (value) => `${value?.emailAddress || '-'}`,
   },
 };
