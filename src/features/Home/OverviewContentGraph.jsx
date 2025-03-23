@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 import { Bar, Pie } from 'react-chartjs-2';
 
@@ -10,7 +10,7 @@ import { fetchTopContentsWithLimit } from '@utils/utils';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcElement);
 
-const OverviewContentGraph = ({ assets = [], categories = [], maintenancePlans = [] }) => {
+const OverviewContentGraph = ({ assets = []}) => {
   const theme = useTheme();
   const [activeTab, setActiveTab] = useState('overview');
 

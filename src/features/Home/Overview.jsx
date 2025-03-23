@@ -89,7 +89,7 @@ export default function Overview() {
         <Stack spacing={2}>
           <OverviewContentSummary assets={assets} />
           <OverviewContentAssetBreakdown assets={assets} categories={categories} maintenancePlans={maintenancePlans} />
-          <OverviewContentGraph assets={assets} categories={categories} maintenancePlans={maintenancePlans} />
+          <OverviewContentGraph assets={assets} />
         </Stack>
       </Stack>
     </Stack>
