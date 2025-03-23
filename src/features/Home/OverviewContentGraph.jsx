@@ -22,7 +22,7 @@ const OverviewContentGraph = ({ assets = [], categories = [], maintenancePlans =
       '$100-$500': 0,
       'Over $500': 0,
     };
-    const creationDates = {};
+    const updatedDates = {};
 
     assets.forEach((asset) => {
       const status = asset.storageLocationId.location || 'unspecified';
@@ -34,18 +34,18 @@ const OverviewContentGraph = ({ assets = [], categories = [], maintenancePlans =
       else if (price < 500) priceRanges['$100-$500']++;
       else priceRanges['Over $500']++;
 
-      if (asset.createdAt) {
-        const date = new Date(asset.createdAt);
+      if (asset.updatedAt) {
+        const date = new Date(asset.updatedAt);
         const monthYear = `${date.getMonth() + 1}/${date.getFullYear()}`;
-        creationDates[monthYear] = (creationDates[monthYear] || 0) + 1;
+        updatedDates[monthYear] = (updatedDates[monthYear] || 0) + 1;
       }
     });
 
     const topFiveStatusCounts = fetchTopContentsWithLimit(statusCounts, 5);
     const topFivePriceRanges = fetchTopContentsWithLimit(priceRanges, 5);
-    const topFiveCreationDates = fetchTopContentsWithLimit(creationDates, 5);
+    const topFiveUpdatedDates = fetchTopContentsWithLimit(updatedDates, 5);
 
-    return { statusCounts: topFiveStatusCounts, priceRanges: topFivePriceRanges, creationDates: topFiveCreationDates };
+    return { statusCounts: topFiveStatusCounts, priceRanges: topFivePriceRanges, updatedDates: topFiveUpdatedDates };
   }, [assets]);
 
   const statusChartData = {
@@ -70,12 +70,12 @@ const OverviewContentGraph = ({ assets = [], categories = [], maintenancePlans =
     ],
   };
 
-  const creationDateChartData = {
-    labels: Object.keys(assetAnalysis.creationDates).sort(),
+  const updatedDatesChartData = {
+    labels: Object.keys(assetAnalysis.updatedDates).sort(),
     datasets: [
       {
-        label: 'Assets Created',
-        data: Object.values(assetAnalysis.creationDates),
+        label: 'Assets Last updated',
+        data: Object.values(assetAnalysis.updatedDates),
         backgroundColor: theme.palette.success.main,
       },
     ],
@@ -145,14 +145,14 @@ const OverviewContentGraph = ({ assets = [], categories = [], maintenancePlans =
         <Card sx={{ mt: 2 }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
-              Asset Acquisition Trend
+              Asset Revision Trend By Month
             </Typography>
             <Typography variant="caption" gutterBottom>
               Vewing top 5 distributions
             </Typography>
             <div>
               <Bar
-                data={creationDateChartData}
+                data={updatedDatesChartData}
                 options={{ maintainAspectRatio: false, barThickness: 30 }}
                 width={300}
                 height={250}
