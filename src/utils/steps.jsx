@@ -21,7 +21,7 @@ const OVERVIEW_PAGE_TOUR_STEPS = [
   },
   {
     title:
-      'This is your asset summary. You can see how many assets are assigned to categories or plans. You can also see how many assets are due for return. Hover over the categories and plans to view the list containing said assets.',
+      'This is your asset summary. View count of assets that are assigned to categories or plans. You can also view the count of assets that are due for return.',
   },
   {
     title:
@@ -32,14 +32,15 @@ const OVERVIEW_PAGE_TOUR_STEPS = [
   },
   {
     title:
-      'View the graphical representation of the combination of assets, categories and maintenance plans. Hover over them to see the count of each item.',
+      'View a graphical representation of your assets. View the top five distribution based on characteristics of your assets like price and storage location or click on trends to view the trends of when the asset was last modified.',
   },
   {
     title:
-      'This is where you can see notifications for the list of maintenance plans that are due. Click on it to disable the notification.',
+      'This is where you can see notifications for the list of maintenance plans that are due by yesterday. Click on individual notification to disable them.',
   },
   {
-    title: 'Switch appearances or logout of revisit tutorial within the application from here.',
+    title:
+      'Switch appearances or log out of the application. You can also revisit the tutorial based on where you are location in the application.',
   },
 ];
 

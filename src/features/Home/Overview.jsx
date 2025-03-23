@@ -8,7 +8,7 @@ import OverviewCardWrapper from '@features/Home/OverviewCardWrapper';
 import OverviewCardItem from '@features/Home/OverviewCardItem';
 import OverviewContentSummary from '@features/Home/OverviewContentSummary';
 import OverviewContentAssetBreakdown from '@features/Home/OverviewContentAssetBreakdown';
-import OverviewContentAssetGraph from '@features/Home/OverviewContentAssetGraph';
+import OverviewContentGraph from '@features/Home/OverviewContentGraph';
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
@@ -89,7 +89,7 @@ export default function Overview() {
         <Stack spacing={2}>
           <OverviewContentSummary assets={assets} />
           <OverviewContentAssetBreakdown assets={assets} categories={categories} maintenancePlans={maintenancePlans} />
-          <OverviewContentAssetGraph assets={assets} categories={categories} maintenancePlans={maintenancePlans} />
+          <OverviewContentGraph assets={assets} categories={categories} maintenancePlans={maintenancePlans} />
         </Stack>
       </Stack>
     </Stack>
