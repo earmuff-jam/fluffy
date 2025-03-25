@@ -21,7 +21,7 @@ const OVERVIEW_PAGE_TOUR_STEPS = [
   },
   {
     title:
-      'This is your asset summary. You can see how many assets are assigned to categories or plans. You can also see how many assets are due for return. Hover over the categories and plans to view the list containing said assets.',
+      'This is your asset summary. View count of assets that are assigned to categories or plans. You can also view the count of assets that are due for return.',
   },
   {
     title:
@@ -32,14 +32,15 @@ const OVERVIEW_PAGE_TOUR_STEPS = [
   },
   {
     title:
-      'View the graphical representation of the combination of assets, categories and maintenance plans. Hover over them to see the count of each item.',
+      'View a graphical representation of your assets. View the top five distribution based on characteristics of your assets like price and storage location or click on trends to view the trends of when the asset was last modified.',
   },
   {
     title:
-      'This is where you can see notifications for the list of maintenance plans that are due. Click on it to disable the notification.',
+      'This is where you can see notifications for the list of maintenance plans that are due by yesterday. Click on individual notification to disable them.',
   },
   {
-    title: 'Switch appearances or logout of revisit tutorial within the application from here.',
+    title:
+      'Switch appearances or log out of the application. You can also revisit the tutorial based on where you are location in the application.',
   },
 ];
 
@@ -55,10 +56,11 @@ const ASSETS_PAGE_TOUR_STEPS = [
 
 const CATEGORIES_PAGE_TOUR_STEPS = [
   {
-    title: 'This is where you can view your categories.',
+    title:
+      'This is where you can view your categories. Categories are used to group your assets together. You can associate many items into different categories. Removing an asset will remove it from all associated categories as well.',
   },
   {
-    title: 'Create new category from here',
+    title: 'Create new category from here.',
   },
   {
     title: 'Download a report of the categories from here.',
@@ -67,16 +69,17 @@ const CATEGORIES_PAGE_TOUR_STEPS = [
     title: 'Filter your categories in terms of the status of the category. Eg, draft, archived etc',
   },
   {
-    title: 'Sort categories from here. ',
+    title: 'Sort categories based on the last updated date from here.',
   },
 ];
 
 const MAINTENANCE_PAGE_TOUR_STEPS = [
   {
-    title: 'This is where you can view your maintenance plans.',
+    title:
+      'This is where you can view your maintenance plans. Maintenance plans can be configured to asses your individual assets on a regular basis. These assesments must be done by the individual periodically and must be updated into the system to keep itself up to date.',
   },
   {
-    title: 'Create new maintenance plan from here',
+    title: 'Create new maintenance plan from here.',
   },
   {
     title: 'Download a report of the maintenance plans from here.',
@@ -85,14 +88,14 @@ const MAINTENANCE_PAGE_TOUR_STEPS = [
     title: 'Filter your maintenance plans in terms of the status of the plan. Eg, draft, archived etc.',
   },
   {
-    title: 'Sort maintenance plans from here. ',
+    title: 'Sort maintenance plans based on the last updated date from here.',
   },
 ];
 
 const REPORTS_PAGE_TOUR_STEPS = [
   {
     title:
-      'View detailed reports of your assets from here. Reports are combined to instrument as a guide for you to understand your asset portfolio better. The data defaults to YTD to give you a perspective of how your assets perform over the course of the year.',
+      'View detailed reports of your assets from here. Reports are combined to instrument as a guide for you to understand your asset portfolio better. The data defaults to YTD to give you a perspective of how your assets perform over the course of the year. You can also change your assets to match more relevant data.',
   },
   {
     title: 'Filter results to match a more reasonable timeline.',
@@ -109,10 +112,10 @@ const REPORTS_PAGE_TOUR_STEPS = [
       'Displays the valuation of assets that are categoried under either one of the categories. If the asset does not belong to any category, then it is exempt from this report section.',
   },
   {
-    title: 'Displays the most recently added asset in this section.',
+    title: 'Displays the most recently added asset in this section by the logged in user.',
   },
   {
-    title: 'Displays the most recent maintenance plan that was created.',
+    title: 'Displays the most recent maintenance plan that was created by the logged in user.',
   },
   {
     title: 'View the list of assets that fall under the above filter results column.',
@@ -125,13 +128,13 @@ const PROFILE_PAGE_TOUR_STEPS = [
       'This is profile details where you can update details about yourself, choose your own avatar or view or edit settings.',
   },
   {
-    title: 'Change avatar from here if you get bored with your profile picture.',
+    title: 'Add a profile picture or avatar of yourself so others can know who you are easily.',
   },
   {
     title: 'This is your username and your biographic information.',
   },
   {
-    title: 'Add a description about yourself if you would want',
+    title: 'Add a description about yourself so others can know things about you.',
   },
   {
     title: 'Displays your general preferences in the app',
@@ -174,17 +177,17 @@ const SELECTED_CATEGORY_PAGE_DATA_TOUR_STEPS = [
     title: 'Share the category and its items to other collaborators.',
   },
   {
-    title: 'Upload images to represent the category',
+    title: 'Upload images to represent the category.',
   },
   {
     title:
-      'Click on the add button to add assets to a selected category. Assets can be shared across many other categories.',
+      'Click on the add button to associate assets to a selected category. Assets can be shared across many other categories.',
   },
   {
-    title: 'Select assets that you would like to remove and press remove button.',
+    title: 'Select assets that you would like to remove association from this category and press remove button.',
   },
   {
-    title: 'View list of all assets that are assigned to this specific category.',
+    title: 'View list of all assets that are associated to this specific category.',
   },
   {
     title:
@@ -207,13 +210,14 @@ const SELECTED_MAINTENANCE_PLAN_PAGE_DATA_TOUR_STEPS = [
   },
   {
     title:
-      'Click on the add button to add assets to a selected maintenance plan. Assets can be shared across many other maintenance plans.',
+      'Click on the add button to associate assets to a selected maintenance plan. Assets can be shared across many other maintenance plans.',
   },
   {
-    title: 'Select assets that you would like to remove and press remove button.',
+    title:
+      'Select assets that you would like to remove association from this maintenance plan and press remove button.',
   },
   {
-    title: 'View list of all assets that are assigned to this specific maintenance plan.',
+    title: 'View list of all assets that are associated to this specific maintenance plan.',
   },
   {
     title:
@@ -242,7 +246,7 @@ export const DEFAULT_STEP_MAPPER = {
     start: OVERVIEW_PAGE_TOUR_STEPS.length + ASSETS_PAGE_TOUR_STEPS.length,
     end: OVERVIEW_PAGE_TOUR_STEPS.length + ASSETS_PAGE_TOUR_STEPS.length + CATEGORIES_PAGE_TOUR_STEPS.length,
   },
-  'assets/plans': {
+  '/assets/plans': {
     start: OVERVIEW_PAGE_TOUR_STEPS.length + ASSETS_PAGE_TOUR_STEPS.length + CATEGORIES_PAGE_TOUR_STEPS.length,
     end:
       OVERVIEW_PAGE_TOUR_STEPS.length +
@@ -250,7 +254,7 @@ export const DEFAULT_STEP_MAPPER = {
       CATEGORIES_PAGE_TOUR_STEPS.length +
       MAINTENANCE_PAGE_TOUR_STEPS.length,
   },
-  'assets/reports': {
+  '/assets/reports': {
     start:
       OVERVIEW_PAGE_TOUR_STEPS.length +
       ASSETS_PAGE_TOUR_STEPS.length +
@@ -314,7 +318,7 @@ export const DEFAULT_STEP_MAPPER = {
       RECENT_ACTIVITIES_PAGE_TOUR_STEPS.length +
       PERSONAL_NOTES_PAGE_DATA_TOUR_STEPS.length,
   },
-  '/assets/category/id': {
+  '/category/id': {
     start:
       OVERVIEW_PAGE_TOUR_STEPS.length +
       ASSETS_PAGE_TOUR_STEPS.length +
@@ -335,7 +339,7 @@ export const DEFAULT_STEP_MAPPER = {
       PERSONAL_NOTES_PAGE_DATA_TOUR_STEPS.length +
       SELECTED_CATEGORY_PAGE_DATA_TOUR_STEPS.length,
   },
-  '/assets/plan/id': {
+  '/plan/id': {
     start:
       OVERVIEW_PAGE_TOUR_STEPS.length +
       ASSETS_PAGE_TOUR_STEPS.length +

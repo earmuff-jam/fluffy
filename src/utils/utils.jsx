@@ -263,3 +263,23 @@ export const fetchAssetCosts = (assets = []) => {
     return acc;
   }, 0);
 };
+
+/**
+ * fetchTopContentsWithLimit ...
+ *
+ * retrieves the top contents from the provided object. also can
+ * pass a param to limit how many items to retrieve for. used for
+ * graph distribution in overview page
+ *
+ * @param {Object} item - the object representation of key and value
+ * @param {int} limit - the limit of items that needs to be returned
+ * @returns Object - a new generated list of top items limited with the limit param
+ */
+export const fetchTopContentsWithLimit = (item, limit) => {
+  const draftItems = Object.fromEntries(
+    Object.entries(item)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, limit)
+  );
+  return draftItems;
+};
