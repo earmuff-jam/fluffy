@@ -139,6 +139,7 @@ export const ASSETS_LIST_HEADERS = [
       return (
         <Box
           sx={(theme) => ({
+            color: theme.palette.common.black,
             backgroundColor:
               cell.getValue() < 1000
                 ? theme.palette.success.light
@@ -146,7 +147,6 @@ export const ASSETS_LIST_HEADERS = [
                   ? theme.palette.warning.light
                   : theme.palette.info.light,
             borderRadius: '0.25rem',
-            color: '#fff',
             width: '9ch',
             p: '0.2rem 0.5rem',
           })}

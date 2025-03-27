@@ -14,6 +14,7 @@ export default function SelectedAssetFormFields({
   options,
   storageLocation,
   setStorageLocation,
+  setFormFieldChange,
   smallFormFactor = false,
 }) {
   return (
@@ -150,6 +151,7 @@ export default function SelectedAssetFormFields({
           } else {
             setStorageLocation(newValue);
           }
+          setFormFieldChange(true);
         }}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);

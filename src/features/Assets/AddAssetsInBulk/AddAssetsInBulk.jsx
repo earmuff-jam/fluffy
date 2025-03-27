@@ -1,12 +1,18 @@
 import * as XLSX from 'xlsx';
+
 import { useState } from 'react';
+
 import { enqueueSnackbar } from 'notistack';
+
 import { Button, Stack } from '@mui/material';
 import { SaveRounded } from '@mui/icons-material';
-import ViewFileContent from '@features/Assets/AddAssetsInBulk/ViewFileContent';
-import AddAssetsInBulkActions from '@features/Assets/AddAssetsInBulk/AddAssetsInBulkActions';
+
 import { buildXcel, renameXcelColValues } from '@utils/utils';
 import { BULK_ASSETS_HEADERS } from '@features/Assets/constants';
+
+import ViewFileContent from '@features/Assets/AddAssetsInBulk/ViewFileContent';
+import AddAssetsInBulkActions from '@features/Assets/AddAssetsInBulk/AddAssetsInBulkActions';
+
 import { useCreateAssetsInBulk } from '@services/assetsApi';
 
 export default function AddAssetsInBulk({ handleClose }) {

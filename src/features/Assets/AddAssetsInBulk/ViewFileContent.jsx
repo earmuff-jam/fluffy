@@ -14,7 +14,7 @@ export default function ViewFileContent({
 
   return (
     <Stack direction="row" spacing={1}>
-      <Avatar sx={{ height: '10rem', width: '10rem' }} variant="square" src="/csv-icon.png" alt="File preview" />
+      <Avatar sx={{ height: '10rem', width: '10rem' }} variant="square" src="/blank_canvas.png" alt="File preview" />
       <Card sx={{ overflow: 'visible' }}>
         <Stack
           alignItems={'flex-end'}

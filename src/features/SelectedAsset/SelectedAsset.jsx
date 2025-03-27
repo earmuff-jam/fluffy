@@ -218,6 +218,7 @@ export default function SelectedAsset() {
         storageLocation={storageLocation}
         setStorageLocation={setStorageLocation}
         smallFormFactor={smallFormFactor}
+        setFormFieldChange={setFormFieldChange}
       />
       <Divider sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
         <Typography variant="caption">More information</Typography>
